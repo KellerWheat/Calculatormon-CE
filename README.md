@@ -1,9 +1,11 @@
 # Calculatormon-CE
 A pokemon game for the ti-84 plus ce
 
-Dwonlo
+Put every file in the download folder on your calculator
 
-Requires the Ti-84 plus CE C libraries to run
+Requires the Ti-84 plus CE C libraries to run (they are in the download folder)
+
+The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible
 
 
 
