@@ -59,8 +59,8 @@ All information about game mechanics is from bulbapedia.bulbagarden.net
 Sprites - veekun.com/dex/downloads
 Move data - pokemondb.net/move/generation/1
 What moves pokemon learn - gamefaqs.gamespot.com/gameboy/367023-pokemon-red-version/faqs/5764
-Pokemon stats - bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_base_stats_(Generation_VII-present)
-Pokemon types - bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
-Base xp yield - bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_effort_value_yield
-xp types - bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_experience_type
+Pokemon stats - bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_base_stats_(Generation_VII-present)
+Pokemon types - bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_Kanto_Pokédex_number
+Base xp yield - bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_effort_value_yield
+xp types - bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_experience_type
 Evolution levels - pokemondb.net/evolution#evo-g1
