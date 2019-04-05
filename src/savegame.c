@@ -9,6 +9,8 @@
 #include "text.h"
 
 const char appVarName[] = "PKMNSV";
+const int version = 1;
+int readVersion = 0;
 
 bool newGame = true;
 
@@ -41,6 +43,9 @@ void save_Save(void) {
 	save = ti_Open(appVarName, "w");
 
 	if (save) {
+		if (ti_Write(&version, sizeof(version), 1, save) != 1) {
+			goto err;
+		}
 		if (ti_Write(&newGame, sizeof(newGame), 1, save) != 1) {
 			goto err;
 		}
@@ -108,6 +113,12 @@ void save_Load(void) {
 	save = ti_Open(appVarName, "r");
 
 	if (save) {
+		if (ti_Read(&readVersion, sizeof(readVersion), 1, save) != 1) {
+			goto err;
+		}
+		if (version != readVersion) {
+			goto err; /* do not load if wrong version */
+		}
 		if (ti_Read(&newGame, sizeof(newGame), 1, save) != 1) {
 			goto err;
 		}

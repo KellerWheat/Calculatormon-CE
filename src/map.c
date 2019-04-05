@@ -37,7 +37,7 @@ void TalkToNpc2(void);
 void EnterDoor(uint8_t index);
 void ExitBuilding(void);
 void ExitZone(uint8_t index);
-void FightTrainer(uint8_t index);
+bool FightTrainer(uint8_t index);
 
 int32_t Clamp(int32_t number, int min, int max);
 /* Gets the tile the player is facing*/
@@ -206,8 +206,9 @@ int map_Loop(void) {
 			EnterDoor(nextTile - 80);
 		}
 		else if (nextTile >= 0x60 && nextTile < 0x70) {
-			FightTrainer(nextTile - 96);
-			return 1;
+			if (FightTrainer(nextTile - 96)) {
+				return 1;
+			}
 		}
 	}
 	/* If moving */
@@ -261,8 +262,9 @@ int map_Loop(void) {
 				ExitZone(nextTile - 32);
 			}
 			else if (nextTile >= 0x30 && nextTile < 0x40) {
-				FightTrainer(nextTile - 48);
-				return 1;
+				if (FightTrainer(nextTile - 48)) {
+					return 1;
+				}
 			}
 		}
 	}
@@ -481,16 +483,19 @@ void ExitZone(uint8_t index) {
 	tx = playerX / 16;
 	ty = playerY / 16;
 }
-void FightTrainer(uint8_t index) {
+bool FightTrainer(uint8_t index) {
 	currentTrainer = index;
 	if (indoors && !defeatedTrainersIndoors[currentBuilding][currentTrainer]) {
 		text_Display(data_trainerText[data_buildingZoneData[currentBuilding].data_trainerText[index]], true);
 		battle_SpawnTrainer(data_buildingZoneData[currentBuilding].trainerspawnids, data_buildingZoneData[currentBuilding].trainerspawnlevels, index);
+		return true;
 	}
 	else if (!indoors && !defeatedTrainers[currentZone][currentTrainer]) {
 		text_Display(data_trainerText[data_zoneData[currentZone].data_trainerText[index]], true);
 		battle_SpawnTrainer(data_zoneData[currentZone].trainerspawnids, data_zoneData[currentZone].trainerspawnlevels, index);
+		return true;
 	}
+	return false;
 }
 int32_t Clamp(int32_t number, int min, int max) {
 	if (number < min) {
@@ -568,8 +573,8 @@ void map_Respawn(void) {
 			party[i].currentstatus[e] = 0;
 		}
 	}
-	playerX = 6*16;
-	playerY = 9*16;
+	playerX = 5*16;
+	playerY = 7*16;
 	indoors = false;
 	currentZone = 0;
 	moveDir = 3;

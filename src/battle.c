@@ -43,7 +43,6 @@ void attack(bool player, uint8_t move);
 uint8_t * getstatus(bool player);
 void applystatus(bool player);
 void resetstatus(bool player);
-void loadsprite(bool player);
 void takedamage(bool player, int amount);
 void heal(bool player, int amount);
 
@@ -255,6 +254,7 @@ bool playerturn() {
 			if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
 				currentplayer = i - 1;
 				resetstatus(true);
+				redrawcharacters();
 				return true;
 			}
 			return false;
@@ -263,7 +263,7 @@ bool playerturn() {
 				text_Display("Can't run from trainers!", true);
 				return false;
 			}
-			//NOT REAL SPEED FUNCTION
+			//NOT REAL RUN FUNCTION
 			if (stats[1].speed > stats[0].speed || (rand() % 3) == 0) {
 				run = true;
 				return true;
@@ -380,10 +380,14 @@ bool playerturn() {
 				run = true;
 				return true;
 			}
+			else {
+				chosenmove[true] = 0;
+			}
 		}
 		else {
 			if (items_UseItem(battleMenuCurrent)) {
 				redrawcharacters();
+				chosenmove[true] = 0;
 			}
 			else {
 				return false;
@@ -433,7 +437,7 @@ void redrawcharacters(void) {
 
 	pokemonID = party[currentplayer].id;
 	if (pokemonID < 28) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD6[i], 20, 60, 2, 2);
+		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD6[pokemonID], 20, 60, 2, 2);
 	}
 	else if (pokemonID < 56) {
 		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD7[pokemonID - 28], 20, 60, 2, 2);
@@ -453,7 +457,7 @@ void redrawcharacters(void) {
 
 	pokemonID = enemyparty[currentenemy].id;
 	if (pokemonID < 30) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD0[i], 190, 10, 2, 2);
+		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD0[pokemonID], 190, 10, 2, 2);
 	}
 	else if (pokemonID < 57) {
 		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD1[pokemonID - 30], 190, 10, 2, 2);
@@ -500,6 +504,7 @@ void redrawcharacters(void) {
 
 
 void attack(bool player, uint8_t move) {
+	
 	char username[20];
 	char nonusername[20];
 	uint32_t damage;
@@ -511,6 +516,10 @@ void attack(bool player, uint8_t move) {
 	uint8_t userelement2;
 	uint8_t nonuserelement1;
 	uint8_t nonuserelement2;
+
+	if (move == 0) {
+		return;
+	}
 
 	rage[player] = false;
 
@@ -936,6 +945,7 @@ void resetstatus(bool player) {
 	lastmove[player] = 0;
 	attackturns[player] = 0;
 	air[player] = false;
+	chosenmove[player] = 0;
 
 	if (player) {
 		sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
@@ -945,18 +955,6 @@ void resetstatus(bool player) {
 		sprintf(enemyname, "Enemy %s", data_pokemon[enemyparty[currentenemy].id].name);\
 		stats[0] = stats_CalculateStats(enemyparty[currentenemy]);
 	}
-	loadsprite(player);
-}
-
-void loadsprite(bool player) {
-	/*ti_var_t file = ti_Open("appvar0_DATA", "r");
-	if (player) {
-		ti_Read(&playersprite.data, sizeof(playersprite.data), 1, file);
-	}
-	else {
-		ti_Read(&enemysprite.data, sizeof(enemysprite.data), 1, file);
-	}
-	ti_CloseAll();*/
 }
 
 void takedamage(bool player, int amount) {
@@ -1050,7 +1048,7 @@ void addxp(void) {
 		for (i = 0; i < 10; i++)
 		{
 			if (data_pokemon[party[currentplayer].id].movelevels[i] == party[currentplayer].level) {
-				sprintf(str, "%s wants to learn%s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+				sprintf(str, "%s wants to learn %s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
 				text_Display(str, false);
 				sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
 				text_Display(str, false);
@@ -1150,9 +1148,9 @@ bool capture(uint8_t ball) {
 		sprintf(str, "%s was caught", data_pokemon[enemyparty[currentenemy].id].name);
 		text_Display(str, false);
 		for (slot = 0; slot < 36; slot++) {
-			if (party[i].id == 0) {
-				party[i] = enemyparty[currentenemy];
-				i = 40;
+			if (party[slot].id == 0) {
+				party[slot] = enemyparty[currentenemy];
+				slot = 40;
 			}
 			i++;
 		}
