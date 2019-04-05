@@ -7,7 +7,7 @@ Requires the Ti-84 plus CE C libraries to run (they are in the download folder)
 
 The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible
 
-
+The tools folder includes some python scripts I made to help generate game data (move list, maps, and pokemon stats)
 
 
 
