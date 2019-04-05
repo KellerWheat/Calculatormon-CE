@@ -20,6 +20,7 @@ ADD SOMETHING ABOUT NINTENDO
 Sprite Resources I used:
 
 Hero & Heroine - Ripped by Previous
+
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/
 
 
