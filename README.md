@@ -13,8 +13,6 @@ Requires the Ti-84 plus CE C libraries to run
 
 # Credits
 
-ADD SOMETHING ABOUT NINTENDO
-
 
 
 Sprite Resources I used:
