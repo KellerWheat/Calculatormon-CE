@@ -1,0 +1,151 @@
+001	Bulbasaur	Bulbasaur	Medium Slow
+002	Ivysaur	Ivysaur	Medium Slow
+003	Venusaur	Venusaur	Medium Slow
+004	Charmander	Charmander	Medium Slow
+005	Charmeleon	Charmeleon	Medium Slow
+006	Charizard	Charizard	Medium Slow
+007	Squirtle	Squirtle	Medium Slow
+008	Wartortle	Wartortle	Medium Slow
+009	Blastoise	Blastoise	Medium Slow
+010	Caterpie	Caterpie	Medium Fast
+011	Metapod	Metapod	Medium Fast
+012	Butterfree	Butterfree	Medium Fast
+013	Weedle	Weedle	Medium Fast
+014	Kakuna	Kakuna	Medium Fast
+015	Beedrill	Beedrill	Medium Fast
+016	Pidgey	Pidgey	Medium Slow
+017	Pidgeotto	Pidgeotto	Medium Slow
+018	Pidgeot	Pidgeot	Medium Slow
+019	Rattata	Rattata	Medium Fast
+020	Raticate	Raticate	Medium Fast
+021	Spearow	Spearow	Medium Fast
+022	Fearow	Fearow	Medium Fast
+023	Ekans	Ekans	Medium Fast
+024	Arbok	Arbok	Medium Fast
+025	Pikachu	Pikachu	Medium Fast
+026	Raichu	Raichu	Medium Fast
+027	Sandshrew	Sandshrew	Medium Fast
+028	Sandslash	Sandslash	Medium Fast
+029	Nidoran♀	Nidoran♀	Medium Slow
+030	Nidorina	Nidorina	Medium Slow
+031	Nidoqueen	Nidoqueen	Medium Slow
+032	Nidoran♂	Nidoran♂	Medium Slow
+033	Nidorino	Nidorino	Medium Slow
+034	Nidoking	Nidoking	Medium Slow
+035	Clefairy	Clefairy	Fast
+036	Clefable	Clefable	Fast
+037	Vulpix	Vulpix	Medium Fast
+038	Ninetales	Ninetales	Medium Fast
+039	Jigglypuff	Jigglypuff	Fast
+040	Wigglytuff	Wigglytuff	Fast
+041	Zubat	Zubat	Medium Fast
+042	Golbat	Golbat	Medium Fast
+043	Oddish	Oddish	Medium Slow
+044	Gloom	Gloom	Medium Slow
+045	Vileplume	Vileplume	Medium Slow
+046	Paras	Paras	Medium Fast
+047	Parasect	Parasect	Medium Fast
+048	Venonat	Venonat	Medium Fast
+049	Venomoth	Venomoth	Medium Fast
+050	Diglett	Diglett	Medium Fast
+051	Dugtrio	Dugtrio	Medium Fast
+052	Meowth	Meowth	Medium Fast
+053	Persian	Persian	Medium Fast
+054	Psyduck	Psyduck	Medium Fast
+055	Golduck	Golduck	Medium Fast
+056	Mankey	Mankey	Medium Fast
+057	Primeape	Primeape	Medium Fast
+058	Growlithe	Growlithe	Slow
+059	Arcanine	Arcanine	Slow
+060	Poliwag	Poliwag	Medium Slow
+061	Poliwhirl	Poliwhirl	Medium Slow
+062	Poliwrath	Poliwrath	Medium Slow
+063	Abra	Abra	Medium Slow
+064	Kadabra	Kadabra	Medium Slow
+065	Alakazam	Alakazam	Medium Slow
+066	Machop	Machop	Medium Slow
+067	Machoke	Machoke	Medium Slow
+068	Machamp	Machamp	Medium Slow
+069	Bellsprout	Bellsprout	Medium Slow
+070	Weepinbell	Weepinbell	Medium Slow
+071	Victreebel	Victreebel	Medium Slow
+072	Tentacool	Tentacool	Slow
+073	Tentacruel	Tentacruel	Slow
+074	Geodude	Geodude	Medium Slow
+075	Graveler	Graveler	Medium Slow
+076	Golem	Golem	Medium Slow
+077	Ponyta	Ponyta	Medium Fast
+078	Rapidash	Rapidash	Medium Fast
+079	Slowpoke	Slowpoke	Medium Fast
+080	Slowbro	Slowbro	Medium Fast
+081	Magnemite	Magnemite	Medium Fast
+082	Magneton	Magneton	Medium Fast
+083	Farfetch'd	Farfetch'd	Medium Fast
+084	Doduo	Doduo	Medium Fast
+085	Dodrio	Dodrio	Medium Fast
+086	Seel	Seel	Medium Fast
+087	Dewgong	Dewgong	Medium Fast
+088	Grimer	Grimer	Medium Fast
+089	Muk	Muk	Medium Fast
+090	Shellder	Shellder	Slow
+091	Cloyster	Cloyster	Slow
+092	Gastly	Gastly	Medium Slow
+093	Haunter	Haunter	Medium Slow
+094	Gengar	Gengar	Medium Slow
+095	Onix	Onix	Medium Fast
+096	Drowzee	Drowzee	Medium Fast
+097	Hypno	Hypno	Medium Fast
+098	Krabby	Krabby	Medium Fast
+099	Kingler	Kingler	Medium Fast
+100	Voltorb	Voltorb	Medium Fast
+101	Electrode	Electrode	Medium Fast
+102	Exeggcute	Exeggcute	Slow
+103	Exeggutor	Exeggutor	Slow
+104	Cubone	Cubone	Medium Fast
+105	Marowak	Marowak	Medium Fast
+106	Hitmonlee	Hitmonlee	Medium Fast
+107	Hitmonchan	Hitmonchan	Medium Fast
+108	Lickitung	Lickitung	Medium Fast
+109	Koffing	Koffing	Medium Fast
+110	Weezing	Weezing	Medium Fast
+111	Rhyhorn	Rhyhorn	Slow
+112	Rhydon	Rhydon	Slow
+113	Chansey	Chansey	Fast
+114	Tangela	Tangela	Medium Fast
+115	Kangaskhan	Kangaskhan	Medium Fast
+116	Horsea	Horsea	Medium Fast
+117	Seadra	Seadra	Medium Fast
+118	Goldeen	Goldeen	Medium Fast
+119	Seaking	Seaking	Medium Fast
+120	Staryu	Staryu	Slow
+121	Starmie	Starmie	Slow
+122	Mr. Mime	Mr. Mime	Medium Fast
+123	Scyther	Scyther	Medium Fast
+124	Jynx	Jynx	Medium Fast
+125	Electabuzz	Electabuzz	Medium Fast
+126	Magmar	Magmar	Medium Fast
+127	Pinsir	Pinsir	Slow
+128	Tauros	Tauros	Slow
+129	Magikarp	Magikarp	Slow
+130	Gyarados	Gyarados	Slow
+131	Lapras	Lapras	Slow
+132	Ditto	Ditto	Medium Fast
+133	Eevee	Eevee	Medium Fast
+134	Vaporeon	Vaporeon	Medium Fast
+135	Jolteon	Jolteon	Medium Fast
+136	Flareon	Flareon	Medium Fast
+137	Porygon	Porygon	Medium Fast
+138	Omanyte	Omanyte	Medium Fast
+139	Omastar	Omastar	Medium Fast
+140	Kabuto	Kabuto	Medium Fast
+141	Kabutops	Kabutops	Medium Fast
+142	Aerodactyl	Aerodactyl	Slow
+143	Snorlax	Snorlax	Slow
+144	Articuno	Articuno	Slow
+145	Zapdos	Zapdos	Slow
+146	Moltres	Moltres	Slow
+147	Dratini	Dratini	Slow
+148	Dragonair	Dragonair	Slow
+149	Dragonite	Dragonite	Slow
+150	Mewtwo	Mewtwo	Slow
+151	Mew	Mew	Medium Slow

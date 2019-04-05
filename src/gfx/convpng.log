@@ -1,0 +1,682 @@
+opened convpng.ini
+
+--- map_gfx (C) ---
+building palette with [256] available indices ...
+built palette with [183] indices.
+palette quality : 100.00%
+transparent color index : 0
+transparent color : 0x8318
+6:
+ tileset : 100.00%
+ outdoortileset : 100.00%
+ indoortileset : 100.00%
+ player : 100.00%
+ enemy : 100.00%
+ pokeball : 100.00%
+
+--- menu_gfx (C) ---
+building palette with [256] available indices ...
+built palette with [8] indices.
+palette quality : 100.00%
+transparent color index : 0
+transparent color : 0xFFFF
+3:
+ randomcolorsmenu : 100.00%
+ menucursor : 100.00%
+ movecursor : 100.00%
+
+--- battle_gfx (C) ---
+building palette with [256] available indices ...
+built palette with [251] indices.
+palette quality : 99.99%
+transparent color index : 0
+transparent color : 0xFFFF
+305:
+ randomcolorsbattle : 78.39%
+ c0 : 100.00%
+ c1 : 100.00%
+ c2 : 100.00%
+ c3 : 100.00%
+ c4 : 99.49%
+ c5 : 100.00%
+ c6 : 100.00%
+ c7 : 100.00%
+ c8 : 100.00%
+ c9 : 100.00%
+ c10 : 100.00%
+ c11 : 100.00%
+ c12 : 100.00%
+ c13 : 100.00%
+ c14 : 100.00%
+ c15 : 100.00%
+ c16 : 100.00%
+ c17 : 100.00%
+ c18 : 100.00%
+ c19 : 100.00%
+ c20 : 100.00%
+ c21 : 100.00%
+ c22 : 100.00%
+ c23 : 100.00%
+ c24 : 100.00%
+ c25 : 100.00%
+ c26 : 100.00%
+ c27 : 100.00%
+ c28 : 100.00%
+ c29 : 100.00%
+ c30 : 100.00%
+ c31 : 100.00%
+ c32 : 100.00%
+ c33 : 100.00%
+ c34 : 100.00%
+ c35 : 100.00%
+ c36 : 100.00%
+ c37 : 100.00%
+ c38 : 100.00%
+ c39 : 100.00%
+ c40 : 100.00%
+ c41 : 100.00%
+ c42 : 100.00%
+ c43 : 100.00%
+ c44 : 100.00%
+ c45 : 100.00%
+ c46 : 100.00%
+ c47 : 100.00%
+ c48 : 100.00%
+ c49 : 100.00%
+ c50 : 100.00%
+ c51 : 100.00%
+ c52 : 100.00%
+ c53 : 100.00%
+ c54 : 100.00%
+ c55 : 100.00%
+ c56 : 100.00%
+ c57 : 100.00%
+ c58 : 100.00%
+ c59 : 100.00%
+ c60 : 99.33%
+ c61 : 100.00%
+ c62 : 100.00%
+ c63 : 100.00%
+ c64 : 100.00%
+ c65 : 100.00%
+ c66 : 100.00%
+ c67 : 99.25%
+ c68 : 100.00%
+ c69 : 100.00%
+ c70 : 100.00%
+ c71 : 100.00%
+ c72 : 100.00%
+ c73 : 100.00%
+ c74 : 100.00%
+ c75 : 100.00%
+ c76 : 100.00%
+ c77 : 100.00%
+ c78 : 100.00%
+ c79 : 100.00%
+ c80 : 100.00%
+ c81 : 100.00%
+ c82 : 100.00%
+ c83 : 100.00%
+ c84 : 100.00%
+ c85 : 100.00%
+ c86 : 100.00%
+ c87 : 100.00%
+ c88 : 100.00%
+ c89 : 100.00%
+ c90 : 100.00%
+ c91 : 100.00%
+ c92 : 100.00%
+ c93 : 99.89%
+ c94 : 99.62%
+ c95 : 100.00%
+ c96 : 100.00%
+ c97 : 100.00%
+ c98 : 100.00%
+ c99 : 100.00%
+ c100 : 100.00%
+ c101 : 100.00%
+ c102 : 100.00%
+ c103 : 100.00%
+ c104 : 100.00%
+ c105 : 100.00%
+ c106 : 100.00%
+ c107 : 100.00%
+ c108 : 100.00%
+ c109 : 100.00%
+ c110 : 100.00%
+ c111 : 100.00%
+ c112 : 100.00%
+ c113 : 100.00%
+ c114 : 100.00%
+ c115 : 100.00%
+ c116 : 100.00%
+ c117 : 100.00%
+ c118 : 100.00%
+ c119 : 100.00%
+ c120 : 100.00%
+ c121 : 100.00%
+ c122 : 100.00%
+ c123 : 100.00%
+ c124 : 100.00%
+ c125 : 100.00%
+ c126 : 100.00%
+ c127 : 100.00%
+ c128 : 100.00%
+ c129 : 100.00%
+ c130 : 100.00%
+ c131 : 100.00%
+ c132 : 100.00%
+ c133 : 100.00%
+ c134 : 100.00%
+ c135 : 100.00%
+ c136 : 100.00%
+ c137 : 100.00%
+ c138 : 100.00%
+ c139 : 100.00%
+ c140 : 100.00%
+ c141 : 100.00%
+ c142 : 100.00%
+ c143 : 100.00%
+ c144 : 100.00%
+ c145 : 100.00%
+ c146 : 100.00%
+ c147 : 100.00%
+ c148 : 100.00%
+ c149 : 100.00%
+ c150 : 100.00%
+ c151 : 100.00%
+ cb0 : 100.00%
+ cb1 : 100.00%
+ cb2 : 100.00%
+ cb3 : 100.00%
+ cb4 : 99.59%
+ cb5 : 100.00%
+ cb6 : 100.00%
+ cb7 : 100.00%
+ cb8 : 100.00%
+ cb9 : 100.00%
+ cb10 : 100.00%
+ cb11 : 100.00%
+ cb12 : 100.00%
+ cb13 : 100.00%
+ cb14 : 100.00%
+ cb15 : 100.00%
+ cb16 : 100.00%
+ cb17 : 100.00%
+ cb18 : 100.00%
+ cb19 : 100.00%
+ cb20 : 100.00%
+ cb21 : 100.00%
+ cb22 : 100.00%
+ cb23 : 100.00%
+ cb24 : 100.00%
+ cb25 : 100.00%
+ cb26 : 100.00%
+ cb27 : 100.00%
+ cb28 : 100.00%
+ cb29 : 100.00%
+ cb30 : 100.00%
+ cb31 : 100.00%
+ cb32 : 100.00%
+ cb33 : 100.00%
+ cb34 : 100.00%
+ cb35 : 100.00%
+ cb36 : 100.00%
+ cb37 : 100.00%
+ cb38 : 100.00%
+ cb39 : 100.00%
+ cb40 : 100.00%
+ cb41 : 100.00%
+ cb42 : 100.00%
+ cb43 : 100.00%
+ cb44 : 100.00%
+ cb45 : 100.00%
+ cb46 : 100.00%
+ cb47 : 100.00%
+ cb48 : 100.00%
+ cb49 : 100.00%
+ cb50 : 100.00%
+ cb51 : 100.00%
+ cb52 : 100.00%
+ cb53 : 100.00%
+ cb54 : 100.00%
+ cb55 : 100.00%
+ cb56 : 100.00%
+ cb57 : 100.00%
+ cb58 : 100.00%
+ cb59 : 100.00%
+ cb60 : 99.34%
+ cb61 : 100.00%
+ cb62 : 100.00%
+ cb63 : 100.00%
+ cb64 : 100.00%
+ cb65 : 100.00%
+ cb66 : 100.00%
+ cb67 : 99.61%
+ cb68 : 100.00%
+ cb69 : 100.00%
+ cb70 : 100.00%
+ cb71 : 100.00%
+ cb72 : 100.00%
+ cb73 : 100.00%
+ cb74 : 100.00%
+ cb75 : 100.00%
+ cb76 : 100.00%
+ cb77 : 100.00%
+ cb78 : 100.00%
+ cb79 : 100.00%
+ cb80 : 100.00%
+ cb81 : 100.00%
+ cb82 : 100.00%
+ cb83 : 100.00%
+ cb84 : 100.00%
+ cb85 : 100.00%
+ cb86 : 100.00%
+ cb87 : 100.00%
+ cb88 : 100.00%
+ cb89 : 100.00%
+ cb90 : 100.00%
+ cb91 : 100.00%
+ cb92 : 100.00%
+ cb93 : 99.95%
+ cb94 : 99.81%
+ cb95 : 100.00%
+ cb96 : 100.00%
+ cb97 : 100.00%
+ cb98 : 100.00%
+ cb99 : 100.00%
+ cb100 : 100.00%
+ cb101 : 100.00%
+ cb102 : 100.00%
+ cb103 : 100.00%
+ cb104 : 100.00%
+ cb105 : 100.00%
+ cb106 : 100.00%
+ cb107 : 100.00%
+ cb108 : 100.00%
+ cb109 : 100.00%
+ cb110 : 100.00%
+ cb111 : 100.00%
+ cb112 : 100.00%
+ cb113 : 100.00%
+ cb114 : 100.00%
+ cb115 : 100.00%
+ cb116 : 100.00%
+ cb117 : 100.00%
+ cb118 : 100.00%
+ cb119 : 100.00%
+ cb120 : 100.00%
+ cb121 : 100.00%
+ cb122 : 100.00%
+ cb123 : 100.00%
+ cb124 : 100.00%
+ cb125 : 100.00%
+ cb126 : 100.00%
+ cb127 : 100.00%
+ cb128 : 100.00%
+ cb129 : 100.00%
+ cb130 : 100.00%
+ cb131 : 100.00%
+ cb132 : 100.00%
+ cb133 : 100.00%
+ cb134 : 100.00%
+ cb135 : 100.00%
+ cb136 : 100.00%
+ cb137 : 100.00%
+ cb138 : 100.00%
+ cb139 : 100.00%
+ cb140 : 100.00%
+ cb141 : 100.00%
+ cb142 : 100.00%
+ cb143 : 100.00%
+ cb144 : 100.00%
+ cb145 : 100.00%
+ cb146 : 100.00%
+ cb147 : 100.00%
+ cb148 : 100.00%
+ cb149 : 100.00%
+ cb150 : 100.00%
+ cb151 : 100.00%
+
+exporting appvar: PKMNSD0.8xp
+ c0
+ c1
+ c2
+ c3
+ c4
+ c5
+ c6
+ c7
+ c8
+ c9
+ c10
+ c11
+ c12
+ c13
+ c14
+ c15
+ c16
+ c17
+ c18
+ c19
+ c20
+ c21
+ c22
+ c23
+ c24
+ c25
+ c26
+ c27
+ c28
+ c29
+ battle_gfx (palette)
+exporting appvar: PKMNSD1.8xp
+ c30
+ c31
+ c32
+ c33
+ c34
+ c35
+ c36
+ c37
+ c38
+ c39
+ c40
+ c41
+ c42
+ c43
+ c44
+ c45
+ c46
+ c47
+ c48
+ c49
+ c50
+ c51
+ c52
+ c53
+ c54
+ c55
+ c56
+ battle_gfx (palette)
+exporting appvar: PKMNSD2.8xp
+ c57
+ c58
+ c59
+ c60
+ c61
+ c62
+ c63
+ c64
+ c65
+ c66
+ c67
+ c68
+ c69
+ c70
+ c71
+ c72
+ c73
+ c74
+ c75
+ c76
+ c77
+ c78
+ c79
+ c80
+ c81
+ c82
+ c83
+ battle_gfx (palette)
+exporting appvar: PKMNSD3.8xp
+ c84
+ c85
+ c86
+ c87
+ c88
+ c89
+ c90
+ c91
+ c92
+ c93
+ c94
+ c95
+ c96
+ c97
+ c98
+ c99
+ c100
+ c101
+ c102
+ c103
+ c104
+ c105
+ c106
+ c107
+ c108
+ battle_gfx (palette)
+exporting appvar: PKMNSD4.8xp
+ c109
+ c110
+ c111
+ c112
+ c113
+ c114
+ c115
+ c116
+ c117
+ c118
+ c119
+ c120
+ c121
+ c122
+ c123
+ c124
+ c125
+ c126
+ c127
+ c128
+ c129
+ c130
+ c131
+ battle_gfx (palette)
+exporting appvar: PKMNSD5.8xp
+ c132
+ c133
+ c134
+ c135
+ c136
+ c137
+ c138
+ c139
+ c140
+ c141
+ c142
+ c143
+ c144
+ c145
+ c146
+ c147
+ c148
+ c149
+ c150
+ c151
+ battle_gfx (palette)
+exporting appvar: PKMNSD6.8xp
+ cb0
+ cb1
+ cb2
+ cb3
+ cb4
+ cb5
+ cb6
+ cb7
+ cb8
+ cb9
+ cb10
+ cb11
+ cb12
+ cb13
+ cb14
+ cb15
+ cb16
+ cb17
+ cb18
+ cb19
+ cb20
+ cb21
+ cb22
+ cb23
+ cb24
+ cb25
+ cb26
+ cb27
+ battle_gfx (palette)
+exporting appvar: PKMNSD7.8xp
+ cb28
+ cb29
+ cb30
+ cb31
+ cb32
+ cb33
+ cb34
+ cb35
+ cb36
+ cb37
+ cb38
+ cb39
+ cb40
+ cb41
+ cb42
+ cb43
+ cb44
+ cb45
+ cb46
+ cb47
+ cb48
+ cb49
+ cb50
+ cb51
+ cb52
+ cb53
+ cb54
+ cb55
+ battle_gfx (palette)
+exporting appvar: PKMNSD8.8xp
+ cb56
+ cb57
+ cb58
+ cb59
+ cb60
+ cb61
+ cb62
+ cb63
+ cb64
+ cb65
+ cb66
+ cb67
+ cb68
+ cb69
+ cb70
+ cb71
+ cb72
+ cb73
+ cb74
+ cb75
+ cb76
+ cb77
+ cb78
+ cb79
+ cb80
+ cb81
+ cb82
+ cb83
+ battle_gfx (palette)
+exporting appvar: PKMNSD9.8xp
+ cb84
+ cb85
+ cb86
+ cb87
+ cb88
+ cb89
+ cb90
+ cb91
+ cb92
+ cb93
+ cb94
+ cb95
+ cb96
+ cb97
+ cb98
+ cb99
+ cb100
+ cb101
+ cb102
+ cb103
+ cb104
+ cb105
+ cb106
+ cb107
+ cb108
+ cb109
+ cb110
+ cb111
+ battle_gfx (palette)
+exporting appvar: PKMNSD10.8xp
+ cb112
+ cb113
+ cb114
+ cb115
+ cb116
+ cb117
+ cb118
+ cb119
+ cb120
+ cb121
+ cb122
+ cb123
+ cb124
+ cb125
+ cb126
+ cb127
+ cb128
+ cb129
+ cb130
+ cb131
+ cb132
+ cb133
+ cb134
+ cb135
+ cb136
+ cb137
+ cb138
+ cb139
+ battle_gfx (palette)
+exporting appvar: PKMNSD11.8xp
+ cb140
+ cb141
+ cb142
+ cb143
+ cb144
+ cb145
+ cb146
+ cb147
+ cb148
+ cb149
+ cb150
+ cb151
+ battle_gfx (palette)
+exporting appvar: PKMNSD12.8xp
+ outdoortileset
+ map_gfx (palette)
+exporting appvar: PKMNSD13.8xp
+ indoortileset
+ map_gfx (palette)
+
+converted in 3 s
+
+[warning] image quality might be too low.
+please try grouping similar images, reducing image colors, 
+or selecting a better palette if conversion is not ideal.
+
+finished!

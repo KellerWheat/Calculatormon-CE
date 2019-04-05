@@ -1,0 +1,1197 @@
+#001: Bulbasaur (Grass - Poison)
+
+Start - Tackle (Normal)
+Start - Growl (Normal)
+Level 7 - Leech Seed (Grass)
+Level 13 - Vine Whip (Grass)
+Level 20 - Poison Powder (Poison)
+Level 27 - Razor Leaf (Grass)
+Level 34 - Growth (Normal)
+Level 41 - Sleep Powder (Grass)
+Level 48 - Solar Beam (Grass)
+
+#002: Ivysaur (Grass - Poison)
+
+Level 13 - Vine Whip (Grass)
+Level 22 - Poison Powder (Poison)
+Level 30 - Razor Leaf (Grass)
+Level 38 - Growth (Normal)
+Level 46 - Sleep Powder (Grass)
+Level 54 - Solar Beam (Grass)
+
+#003: Venusaur (Grass - Poison)
+
+Level 43 - Growth (Normal)
+Level 55 - Sleep Powder (Grass)
+Level 65 - Solar Beam (Grass)
+
+#004: Charmander (Fire)
+
+Start - Scratch (Normal)
+Start - Growl (Normal)
+Level 9 - Ember (Fire)
+Level 15 - Leer (Normal)
+Level 22 - Rage (Normal)
+Level 30 - Slash (Normal)
+Level 38 - Flamethrower (Fire)
+Level 46 - Fire Spin (Fire)
+
+#005: Charmeleon (Fire)
+
+Level 15 - Leer (Normal)
+Level 24 - Rage (Normal)
+Level 33 - Slash (Normal)
+Level 42 - Flamethrower (Fire)
+Level 56 - Fire Spin (Fire)
+
+#006: Charizard (Fire - Flying)
+
+Level 36 - Slash (Normal)
+Level 46 - Flamethrower (Fire)
+Level 55 - Fire Spin (Fire)
+
+#007: Squirtle (Water)
+
+Start - Tackle (Normal)
+Start - Tail Whip (Normal)
+Level 8 - Bubble (Water)
+Level 15 - Water Gun (Water)
+Level 22 - Bite (Normal)
+Level 28 - Withdraw (Water)
+Level 35 - Skull Bash (Normal)
+Level 42 - Hydro Pump (Water)
+
+#008: Wartortle (Water)
+
+Level 15 - Water Gun (Water)
+Level 24 - Bite (Normal)
+Level 31 - Withdraw (Water)
+Level 39 - Skull Bash (Normal)
+Level 47 - Hydro Pump (Water)
+
+#009: Blastoise (Water)
+
+Level 24 - Bite (Normal)
+Level 31 - Withdraw (Water)
+Level 42 - Skull Bash (Normal)
+Level 52 - Hydro Pump (Water)
+
+#010: Caterpie (Bug)
+
+Start - Tackle (Normal)
+Start - String Shot (Bug)
+
+#011: Metapod (Bug)
+
+Start - Harden (Normal)
+
+#012: Butterfree (Bug - Flying)
+
+Level 12 - Confusion (Psychic)
+Level 15 - Poison Powder (Poison)
+Level 16 - Stun Spore (Grass)
+Level 17 - Sleep Powder (Grass)
+Level 21 - Supersonic (Normal)
+Level 26 - Whirlwind (Normal)
+Level 32 - Psybeam (Psychic)
+
+#013: Weedle (Bug - Poison)
+
+Start - Poison Sting (Poison)
+Start - String Shot (Bug)
+
+#014: Kakuna (Bug - Poison)
+
+Start - Harden (Normal)
+
+#015: Beedrill (Bug - Poison)
+
+Level 12 - Fury Attack (Normal)
+Level 16 - Focus Energy (Normal)
+Level 20 - Twineedle (Bug)
+Level 25 - Rage (Normal)
+Level 30 - Pin Missile (Bug)
+Level 35 - Agility (Psychic)
+
+#016: Pidgey (Normal - Flying)
+
+Start - Gust (Normal)
+Level 5 - Sand Attack (Normal)
+Level 12 - Quick Attack (Normal)
+Level 19 - Whirlwind (Normal)
+Level 28 - Wing Attack (Flying)
+Level 36 - Agility (Psychic)
+Level 44 - Mirror Move (Flying)
+
+#017: Pidgeotto (Normal - Flying)
+
+Level 21 - Whirlwind (Normal)
+Level 31 - Wing Attack (Flying)
+Level 40 - Agility (Psychic)
+Level 49 - Mirror Move (Flying)
+
+#018: Pidgeot (Normal - Flying)
+
+Level 44 - Agility (Psychic)
+Level 54 - Mirror Move (Flying)
+
+#019: Rattata (Normal)
+
+Start - Tackle (Normal)
+Start - Tail Whip (Normal)
+Level 7 - Quick Attack (Normal)
+Level 14 - Hyper Fang (Normal)
+Level 23 - Focus Energy (Normal)
+Level 34 - Super Fang (Normal)
+
+#020: Raticate (Normal)
+
+Level 14 - Hyper Fang (Normal)
+Level 27 - Focus Energy (Normal)
+Level 41 - Super Fang (Normal)
+
+#021: Spearow (Normal - Flying)
+
+Start - Peck (Flying)
+Start - Growl (Normal)
+Level 9 - Leer (Normal)
+Level 15 - Fury Attack (Normal)
+Level 22 - Mirror Move (Flying)
+Level 29 - Drill Peck (Flying)
+Level 36 - Agility (Psychic)
+
+#022: Fearow (Normal - Flying)
+
+Level 25 - Mirror Move (Flying)
+Level 34 - Drill Peck (Flying)
+Level 43 - Agility (Psychic)
+
+#023: Ekans (Poison)
+
+Start - Wrap (Normal)
+Start - Leer (Normal)
+Level 10 - Poison Sting (Poison)
+Level 17 - Bite (Normal)
+Level 24 - Glare (Normal)
+Level 31 - Screech (Normal)
+Level 38 - Acid (Poison)
+
+#024: Arbok (Poison)
+
+Level 17 - Bite (Normal)
+Level 27 - Glare (Normal)
+Level 36 - Screech (Normal)
+Level 47 - Acid (Poison)
+
+#025: Pikachu (Electric)
+
+Start - Thundershock (Electric)
+Start - Growl (Normal)
+Level 9 - Thunder Wave (Electric)
+Level 16 - Quick Attack (Normal)
+Level 26 - Swift (Normal)
+Level 33 - Agility (Psychic)
+Level 43 - Thunder (Electric)
+
+#026: Raichu (Electric)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Pikachu until after Level 43)
+
+#027: Sandshrew (Ground)
+
+Start - Scratch (Normal)
+Level 10 - Sand Attack (Normal)
+Level 17 - Slash (Normal)
+Level 24 - Poison Sting (Poison)
+Level 31 - Swift (Normal)
+Level 38 - Fury Swipes (Normal)
+
+#028: Sandslash (Ground)
+
+Level 27 - Poison Sting (Poison)
+Level 36 - Swift (Normal)
+Level 47 - Fury Swipes (Normal)
+
+#029: Nidoran Female (Poison)
+
+Start - Growl (Normal)
+Start - Tackle (Normal)
+Level 8 - Scratch (Normal)
+Level 14 - Poison Sting (Poison)
+Level 21 - Tail Whip (Normal)
+Level 29 - Bite (Normal)
+Level 36 - Fury Swipes (Normal)
+Level 43 - Double Kick (Fighting)
+
+#030: Nidorina (Poison)
+
+Level 14 - Poison Sting (Poison)
+Level 23 - Tail Whip (Normal)
+Level 32 - Bite (Normal)
+Level 41 - Fury Swipes (Normal)
+Level 50 - Double Kick (Fighting)
+
+#031: Nidoqueen (Poison - Ground)
+
+Level 14 - Poison Sting (Poison)
+Level 23 - Body Slam (Normal)
+
+#032: Nidoran Male (Poison)
+
+Start - Leer (Normal)
+Start - Tackle (Normal)
+Level 8 - Horn Attack (Normal)
+Level 14 - Poison Sting (Poison)
+Level 21 - Focus Energy (Normal)
+Level 29 - Fury Attack (Normal)
+Level 36 - Horn Drill (Normal)
+Level 43 - Double Kick (Fighting)
+
+#033: Nidorino (Poison)
+
+Level 23 - Focus Energy (Normal)
+Level 32 - Fury Attack (Normal)
+Level 41 - Horn Drill (Normal)
+Level 50 - Double Kick (Fighting)
+
+#034: Nidoking (Poison - Ground)
+
+Level 23 - Thrash (Normal)
+
+#035: Clefairy (Normal)
+
+Start - Pound (Normal)
+Start - Growl (Normal)
+Level 13 - Sing (Normal)
+Level 18 - Doubleslap (Normal)
+Level 24 - Minimize (Normal)
+Level 31 - Metronome (Normal)
+Level 39 - Defense Curl (Normal)
+Level 48 - Light Screen (Psychic)
+
+#036: Clefable (Normal)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Clefairy until after Level 31)
+
+#037: Vulpix (Fire)
+
+Start - Ember (Fire)
+Start - Tail Whip (Normal)
+Level 16 - Quick Attack (Normal)
+Level 21 - Roar (Normal)
+Level 28 - Confuse Ray (Ghost)
+Level 35 - Flamethrower (Fire)
+Level 42 - Fire Spin (Fire)
+
+#038: Ninetales (Fire)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Vulpix until after Level 42)
+
+#039: Jigglypuff (Normal)
+
+Start - Sing (Normal)
+Level 9 - Pound (Normal)
+Level 14 - Disable (Normal)
+Level 19 - Defense Curl (Normal)
+Level 24 - Doubleslap (Normal)
+Level 29 - Rest (Psychic)
+Level 34 - Body Slam (Normal)
+Level 39 - Double-Edge (Normal)
+
+#040: Wigglytuff (Normal)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Jigglypuff until after Level 34)
+
+#041: Zubat (Poison - Flying)
+
+Start - Leech Life (Bug)
+Level 10 - Supersonic (Normal)
+Level 15 - Bite (Normal)
+Level 21 - Confuse Ray (Ghost)
+Level 28 - Wing Attack (Flying)
+Level 36 - Haze (Ice)
+
+#042: Golbat (Poison - Flying)
+
+Level 32 - Wing Attack (Flying)
+Level 43 - Haze (Ice)
+
+#043: Oddish (Grass - Poison)
+
+Start - Absorb (Grass)
+Level 15 - Poison Powder (Poison)
+Level 17 - Stun Spore (Grass)
+Level 19 - Sleep Powder (Grass)
+Level 24 - Acid (Poison)
+Level 33 - Petal Dance (Grass)
+Level 46 - Solar Beam (Grass)
+
+#044: Gloom (Grass - Poison)
+
+Level 28 - Acid (Poison)
+Level 38 - Petal Dance (Grass)
+Level 52 - Solar Beam (Grass)
+
+#045: Vileplume (Grass - Poison)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Gloom until after Level 52 [if you learn Solar Beam with Gloom] or until after Level 46 [if you learn Solar Beam with Oddish])
+
+#046: Paras (Bug - Grass)
+
+Start - Scratch (Normal)
+Level 13 - Stun Spore (Grass)
+Level 20 - Leech Life (Bug)
+Level 27 - Spore (Grass)
+Level 34 - Slash (Normal)
+Level 41 - Growth (Normal)
+
+#047: Parasect (Bug - Grass)
+
+Level 30 - Spore (Grass)
+Level 39 - Slash (Normal)
+Level 48 - Growth (Normal)
+
+#048: Venonat (Bug - Poison)
+
+Start - Tackle (Normal)
+Start - Disable (Normal)
+Level 24 - Poison Powder (Poison)
+Level 27 - Leech Life (Bug)
+Level 30 - Stun Spore (Grass)
+Level 35 - Psybeam (Psychic)
+Level 38 - Sleep Powder (Grass)
+Level 43 - Psychic (Psychic)
+
+#049: Venomoth (Bug - Poison)
+
+Level 38 - Psybeam (Psychic)
+Level 43 - Sleep Powder (Grass)
+Level 50 - Psychic (Psychic)
+
+#050: Diglett (Ground)
+
+Start - Scratch (Normal)
+Level 15 - Growl (Normal)
+Level 19 - Dig (Ground)
+Level 24 - Sand Attack (Normal)
+Level 31 - Slash (Normal)
+Level 40 - Earthquake (Ground)
+
+#051: Dugtrio (Ground)
+
+Level 35 - Slash (Normal)
+Level 47 - Earthquake (Ground)
+
+#052: Meowth (Normal)
+
+Start - Scratch (Normal)
+Start - Growl (Normal)
+Level 12 - Bite (Normal)
+Level 17 - Pay Day (Normal)
+Level 24 - Screech (Normal)
+Level 33 - Fury Swipes (Normal)
+Level 44 - Slash (Normal)
+
+#053: Persian (Normal)
+
+Level 37 - Fury Swipes (Normal)
+Level 51 - Slash (Normal)
+
+#054: Psyduck (Water)
+
+Start - Scratch (Normal)
+Level 28 - Tail Whip (Normal)
+Level 31 - Disable (Normal)
+Level 36 - Confusion (Psychic)
+Level 43 - Fury Swipes (Normal)
+Level 52 - Hydro Pump (Water)
+
+#055: Golduck (Water)
+
+Level 39 - Confusion (Psychic)
+Level 48 - Fury Swipes (Normal)
+Level 59 - Hydro Pump (Water)
+
+#056: Mankey (Fighting)
+
+Start - Scratch (Normal)
+Start - Leer (Normal)
+Level 15 - Karate Chop (Normal)
+Level 21 - Fury Attack (Normal)
+Level 27 - Focus Energy (Normal)
+Level 33 - Seismic Toss (Fighting)
+Level 39 - Thrash (Normal)
+
+#057: Primeape (Fighting)
+
+Level 37 - Seismic Toss (Fighting)
+Level 46 - Thrash (Normal)
+
+#058: Growlithe (Fire)
+
+Start - Bite (Normal)
+Start - Roar (Normal)
+Level 18 - Ember (Fire)
+Level 23 - Leer (Normal)
+Level 30 - Take Down (Normal)
+Level 39 - Agility (Psychic)
+Level 50 - Flamethrower (Fire)
+
+#059: Arcanine (Fire)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Growlithe until after Level 50)
+
+#060: Poliwag (Water)
+
+Start - Bubble (Water)
+Level 16 - Hypnosis (Psychic)
+Level 19 - Water Gun (Water)
+Level 25 - Doubleslap (Normal)
+Level 31 - Body Slam (Normal)
+Level 38 - Amnesia (Psychic)
+Level 45 - Hydro Pump (Water)
+
+#061: Poliwhirl (Water)
+
+Level 26 - Doubleslap (Normal)
+Level 33 - Body Slam (Normal)
+Level 41 - Amnesia (Psychic)
+Level 49 - Hydro Pump (Water)
+
+#062: Poliwrath (Water - Fighting)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Poliwhirl until after Level 49 [if you learn Hydro Pump with Poliwhirl] or until after Level 45 [if you learn Hydro Pump with Poliwag])
+
+#063: Abra (Psychic)
+
+Start - Teleport (Psychic)
+
+#064: Kadabra (Psychic)
+
+Start - Teleport (Psychic)
+Start - Confusion (Psychic)
+Level 20 - Disable (Normal)
+Level 27 - Psybeam (Psychic)
+Level 31 - Recover (Normal)
+Level 38 - Psychic (Psychic)
+Level 42 - Reflect (Psychic)
+
+#065: Alakazam (Psychic)
+
+Level 20 - Disable (Normal)
+Level 27 - Psybeam (Psychic)
+Level 31 - Recover (Normal)
+Level 38 - Psychic (Psychic)
+Level 42 - Reflect (Psychic)
+
+#066: Machop (Fighting)
+
+Start - Karate Chop (Normal)
+Level 20 - Low Kick (Fighting)
+Level 25 - Leer (Normal)
+Level 32 - Focus Energy (Normal)
+Level 39 - Seismic Toss (Fighting)
+Level 46 - Submission (Fighting)
+
+#067: Machoke (Fighting)
+
+Level 36 - Focus Energy (Normal)
+Level 44 - Seismic Toss (Fighting)
+Level 52 - Submission (Fighting)
+
+#068: Machamp (Fighting)
+
+Level 36 - Focus Energy (Normal)
+Level 44 - Seismic Toss (Fighting)
+Level 52 - Submission (Fighting)
+
+#069: Bellsprout (Grass - Poison)
+
+Start - Vine Whip (Grass)
+Start - Growth (Normal)
+Level 13 - Wrap (Normal)
+Level 15 - Poison Powder (Poison)
+Level 18 - Sleep Powder (Grass)
+Level 21 - Stun Spore (Grass)
+Level 26 - Acid (Poison)
+Level 33 - Razor Leaf (Grass)
+Level 42 - Slam (Normal)
+
+#070: Weepinbell (Grass - Poison)
+
+Level 23 - Stun Spore (Grass)
+Level 29 - Acid (Poison)
+Level 38 - Razor Leaf (Grass)
+Level 49 - Slam (Normal)
+
+#071: Victreebel (Grass - Poison)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Weepinbell until after Level 49 [if you learn Slam with Weepinbell] or until after Level 42 [if you learn Slam with Bellsprout])
+
+#072: Tentacool (Water - Poison)
+
+Start - Acid (Poison)
+Level 7 - Supersonic (Normal)
+Level 13 - Wrap (Normal)
+Level 18 - Poison Sting (Poison)
+Level 22 - Water Gun (Water)
+Level 27 - Constrict (Normal)
+Level 33 - Barrier (Psychic)
+Level 40 - Screech (Normal)
+Level 48 - Hydro Pump (Water)
+
+#073: Tentacruel (Water - Poison)
+
+Level 35 - Barrier (Psychic)
+Level 43 - Screech (Normal)
+Level 50 - Hydro Pump (Water)
+
+#074: Geodude (Rock - Ground)
+
+Start - Tackle (Normal)
+Level 11 - Defense Curl (Normal)
+Level 16 - Rock Throw (Rock)
+Level 21 - Self-Destruct (Normal)
+Level 26 - Harden (Normal)
+Level 31 - Earthquake (Ground)
+Level 36 - Explosion (Normal)
+
+#075: Graveler (Rock - Ground)
+
+Level 29 - Harden (Normal)
+Level 36 - Earthquake (Ground)
+Level 43 - Explosion (Normal)
+
+#076: Golem (Rock - Ground)
+
+Level 29 - Harden (Normal)
+Level 36 - Earthquake (Ground)
+Level 43 - Explosion (Normal)
+
+#077: Ponyta (Fire)
+
+Start - Ember (Fire)
+Level 30 - Tail Whip (Normal)
+Level 32 - Stomp (Normal)
+Level 35 - Growl (Normal)
+Level 39 - Fire Spin (Fire)
+Level 43 - Take Down (Normal)
+Level 48 - Agility (Psychic)
+
+#078: Rapidash (Fire)
+
+Level 47 - Take Down (Normal)
+Level 55 - Agility (Psychic)
+
+#079: Slowpoke (Water - Psychic)
+
+Start - Confusion (Psychic)
+Level 18 - Disable (Normal)
+Level 22 - Head Butt (Normal)
+Level 27 - Growl (Normal)
+Level 33 - Water Gun (Water)
+Level 40 - Amnesia (Psychic)
+Level 48 - Psychic (Psychic)
+
+#080: Slowbro (Water - Psychic)
+
+Level 44 - Amnesia (Psychic)
+Level 55 - Psychic (Psychic)
+
+#081: Magnemite (Electric)
+
+Start - Tackle (Normal)
+Level 21 - Sonic Boom (Normal)
+Level 25 - Thundershock (Electric)
+Level 29 - Supersonic (Normal)
+Level 35 - Thunder Wave (Electric)
+Level 41 - Swift (Normal)
+Level 47 - Screech (Normal)
+
+#082: Magneton (Electric)
+
+Level 38 - Thunder Wave (Electric)
+Level 46 - Swift (Normal)
+Level 54 - Screech (Normal)
+
+#083: Farfetch'd (Normal - Flying)
+
+Start - Peck (Flying)
+Start - Sand Attack (Normal)
+Level 7 - Leer (Normal)
+Level 15 - Fury Attack (Normal)
+Level 23 - Swords Dance (Normal)
+Level 31 - Agility (Psychic)
+Level 39 - Slash (Normal)
+
+#084: Doduo (Normal - Flying)
+
+Start - Peck (Flying)
+Level 20 - Growl (Normal)
+Level 24 - Fury Attack (Normal)
+Level 30 - Drill Peck (Flying)
+Level 36 - Rage (Normal)
+Level 40 - Tri Attack (Normal)
+Level 44 - Agility (Psychic)
+
+#085: Dodrio (Normal - Flying)
+
+Level 39 - Rage (Normal)
+Level 45 - Tri Attack (Normal)
+Level 51 - Agility (Psychic)
+
+#086: Seel (Water)
+
+Start - Head Butt (Normal)
+Level 30 - Growl (Normal)
+Level 35 - Aurora Beam (Ice)
+Level 40 - Rest (Psychic)
+Level 45 - Take Down (Normal)
+Level 50 - Ice Beam (Ice)
+
+#087: Dewgong (Water - Ice)
+
+Level 35 - Aurora Beam (Ice)
+Level 44 - Rest (Psychic)
+Level 50 - Take Down (Normal)
+Level 56 - Ice Beam (Ice)
+
+#088: Grimer (Poison)
+
+Start - Pound (Normal)
+Start - Disable (Normal)
+Level 30 - Poison Gas (Poison)
+Level 33 - Minimize (Normal)
+Level 37 - Sludge (Poison)
+Level 42 - Harden (Normal)
+Level 48 - Screech (Normal)
+Level 55 - Acid Armor (Poison)
+
+#089: Muk (Poison)
+
+Level 45 - Harden (Normal)
+Level 53 - Screech (Normal)
+Level 60 - Acid Armor (Poison)
+
+#090: Shellder (Water)
+
+Start - Tackle (Normal)
+Start - Withdraw (Water)
+Level 18 - Supersonic (Normal)
+Level 23 - Clamp (Water)
+Level 30 - Aurora Beam (Ice)
+Level 39 - Leer (Normal)
+Level 50 - Ice Beam (Ice)
+
+#091: Cloyster (Water - Ice)
+
+Level 50 - Spike Cannon (Normal)
+
+#092: Gastly (Ghost - Poison)
+
+Start - Lick (Ghost)
+Start - Confuse Ray (Ghost)
+Start - Night Shade (Ghost)
+Level 27 - Hypnosis (Psychic)
+Level 35 - Dream Eater (Psychic)
+
+#093: Haunter (Ghost - Poison)
+
+Level 29 - Hypnosis (Psychic)
+Level 38 - Dream Eater (Psychic)
+
+#094: Gengar (Ghost - Poison)
+
+Level 29 - Hypnosis (Psychic)
+Level 38 - Dream Eater (Psychic)
+
+#095: Onix (Rock - Ground)
+
+Start - Tackle (Normal)
+Start - Screech (Normal)
+Level 15 - Bind (Normal)
+Level 19 - Rock Throw (Rock)
+Level 25 - Rage (Normal)
+Level 33 - Slam (Normal)
+Level 43 - Harden (Normal)
+
+#096: Drowzee (Psychic)
+
+Start - Pound (Normal)
+Start - Hypnosis (Psychic)
+Level 12 - Disable (Normal)
+Level 17 - Confusion (Psychic)
+Level 24 - Head Butt (Normal)
+Level 29 - Poison Gas (Poison)
+Level 32 - Psychic (Psychic)
+Level 37 - Meditate (Psychic)
+
+#097: Hypno (Psychic)
+
+Level 33 - Poison Gas (Poison)
+Level 37 - Psychic (Psychic)
+Level 43 - Meditate (Psychic)
+
+#098: Krabby (Water)
+
+Start - Bubble (Water)
+Start - Leer (Normal)
+Level 20 - Vice Grip (Normal)
+Level 25 - Guillotine (Normal)
+Level 30 - Stomp (Normal)
+Level 35 - Crab Hammer (Water)
+Level 40 - Harden (Normal)
+
+#099: Kingler (Water)
+
+Level 34 - Stomp (Normal)
+Level 42 - Crab Hammer (Water)
+Level 49 - Harden (Normal)
+
+#100: Voltorb (Electric)
+
+Start - Tackle (Normal)
+Start - Screech (Normal)
+Level 17 - Sonic Boom (Normal)
+Level 22 - Self-Destruct (Normal)
+Level 29 - Light Screen (Psychic)
+Level 36 - Swift (Normal)
+Level 43 - Explosion (Normal)
+
+#101: Electrode (Electric)
+
+Level 40 - Swift (Normal)
+Level 50 - Explosion (Normal)
+
+#102: Exeggcute (Grass - Psychic)
+
+Start - Barrage (Normal)
+Start - Hypnosis (Psychic)
+Level 25 - Reflect (Psychic)
+Level 28 - Leech Seed (Grass)
+Level 32 - Stun Spore (Grass)
+Level 37 - Poison Powder (Poison)
+Level 42 - Solar Beam (Grass)
+Level 48 - Sleep Powder (Grass)
+
+#103: Exeggutor (Grass - Psychic)
+
+Level 28 - Stomp (Normal)
+
+#104: Cubone (Ground)
+
+Start - Bone Club (Ground)
+Start - Growl (Normal)
+Level 25 - Leer (Normal)
+Level 31 - Focus Energy (Normal)
+Level 38 - Thrash (Normal)
+Level 43 - Bonemerang (Ground)
+Level 46 - Rage (Normal)
+
+#105: Marowak (Ground)
+
+Level 33 - Focus Energy (Normal)
+Level 41 - Thrash (Normal)
+Level 48 - Bonemerang (Ground)
+Level 55 - Rage (Normal)
+
+#106: Hitmonlee (Fighting)
+
+Start - Double Kick (Fighting)
+Start - Meditate (Psychic)
+Level 33 - Rolling Kick (Fighting)
+Level 38 - Jump Kick (Fighting)
+Level 43 - Focus Energy (Normal)
+Level 48 - High Jump Kick (Fighting)
+Level 53 - Mega Kick (Normal)
+
+#107: Hitmonchan (Fighting)
+
+Start - Comet Punch (Normal)
+Start - Agility (Psychic)
+Level 33 - Fire Punch (Fire)
+Level 38 - Ice Punch (Ice)
+Level 43 - Thunder Punch (Electric)
+Level 48 - Mega Punch (Normal)
+Level 53 - Counter (Fighting)
+
+#108: Lickitung (Normal)
+
+Start - Wrap (Normal)
+Start - Supersonic (Normal)
+Level 7 - Stomp (Normal)
+Level 15 - Disable (Normal)
+Level 23 - Defense Curl (Normal)
+Level 31 - Slam (Normal)
+Level 39 - Screech (Normal)
+
+#109: Koffing (Poison)
+
+Start - Tackle (Normal)
+Start - Smog (Poison)
+Level 32 - Sludge (Poison)
+Level 37 - Smoke Screen (Normal)
+Level 40 - Self-Destruct (Normal)
+Level 45 - Haze (Ice)
+Level 48 - Explosion (Normal)
+
+#110: Weezing (Poison)
+
+Level 39 - Smoke Screen (Normal)
+Level 43 - Self-Destruct (Normal)
+Level 49 - Haze (Ice)
+Level 53 - Explosion (Normal)
+
+#111: Rhyhorn (Ground - Rock)
+
+Start - Horn Attack (Normal)
+Level 30 - Stomp (Normal)
+Level 35 - Tail Whip (Normal)
+Level 40 - Fury Attack (Normal)
+Level 45 - Horn Drill (Normal)
+Level 50 - Leer (Normal)
+Level 55 - Take Down (Normal)
+
+#112: Rhydon (Ground - Rock)
+
+Level 48 - Horn Drill (Normal)
+Level 55 - Leer (Normal)
+Level 64 - Take Down (Normal)
+
+#113: Chansey (Normal)
+
+Start - Pound (Normal)
+Start - Doubleslap (Normal)
+Level 24 - Sing (Normal)
+Level 30 - Growl (Normal)
+Level 38 - Minimize (Normal)
+Level 44 - Defense Curl (Normal)
+Level 48 - Light Screen (Psychic)
+Level 54 - Double-Edge (Normal)
+
+#114: Tangela (Grass)
+
+Start - Constrict (Normal)
+Start - Bind (Normal)
+Level 29 - Absorb (Grass)
+Level 32 - Poison Powder (Poison)
+Level 36 - Stun Spore (Grass)
+Level 39 - Sleep Powder (Grass)
+Level 45 - Slam (Normal)
+Level 49 - Growth (Normal)
+
+#115: Kangaskhan (Normal)
+
+Start - Comet Punch (Normal)
+Start - Rage (Normal)
+Level 26 - Bite (Normal)
+Level 31 - Tail Whip (Normal)
+Level 36 - Mega Punch (Normal)
+Level 41 - Leer (Normal)
+Level 46 - Dizzy Punch (Normal)
+
+#116: Horsea (Water)
+
+Start - Bubble (Water)
+Level 19 - Smoke Screen (Normal)
+Level 24 - Leer (Normal)
+Level 30 - Water Gun (Water)
+Level 37 - Agility (Psychic)
+Level 45 - Hydro Pump (Water)
+
+#117: Seadra (Water)
+
+Level 41 - Agility (Psychic)
+Level 52 - Hydro Pump (Water)
+
+#118: Goldeen (Water)
+
+Start - Peck (Flying)
+Start - Tail Whip (Normal)
+Level 19 - Supersonic (Normal)
+Level 24 - Horn Attack (Normal)
+Level 30 - Fury Attack (Normal)
+Level 37 - Waterfall (Water)
+Level 45 - Horn Drill (Normal)
+Level 54 - Agility (Psychic)
+
+#119: Seaking (Water)
+
+Level 39 - Waterfall (Water)
+Level 48 - Horn Drill (Normal)
+Level 54 - Agility (Psychic)
+
+#120: Staryu (Water)
+
+Start - Tackle (Normal)
+Level 17 - Water Gun (Water)
+Level 22 - Harden (Normal)
+Level 27 - Recover (Normal)
+Level 32 - Swift (Normal)
+Level 37 - Minimize (Normal)
+Level 42 - Light Screen (Psychic)
+Level 47 - Hydro Pump (Water)
+
+#121: Starmie (Water - Psychic)
+
+DOESN'T LEARN ANYTHING (Wait to evolve Staryu until after Level 47)
+
+#122: Mr. Mime (Psychic)
+
+Start - Confusion (Psychic)
+Start - Barrier (Psychic)
+Level 23 - Light Screen (Psychic)
+Level 31 - Doubleslap (Normal)
+Level 39 - Meditate (Psychic)
+Level 47 - Substitute (Normal)
+
+#123: Scyther (Bug - Flying)
+
+Start - Quick Attack (Normal)
+Level 17 - Leer (Normal)
+Level 20 - Focus Energy (Normal)
+Level 24 - Double Team (Normal)
+Level 29 - Slash (Normal)
+Level 35 - Swords Dance (Normal)
+Level 42 - Agility (Psychic)
+
+#124: Jynx (Ice - Psychic)
+
+Start - Pound (Normal)
+Start - Lovely Kiss (Normal)
+Level 15 - Sing (Normal)
+Level 23 - Doubleslap (Normal)
+Level 31 - Ice Punch (Ice)
+Level 39 - Meditate (Normal)
+Level 47 - Blizzard (Ice)
+
+#125: Electabuzz (Electric)
+
+Start - Quick Attack (Normal)
+Start - Leer (Normal)
+Level 34 - Thundershock (Electric)
+Level 37 - Screech (Normal)
+Level 42 - Thunder Punch (Electric)
+Level 49 - Light Screen (Psychic)
+Level 54 - Thunder (Electric)
+
+#126: Magmar (Fire)
+
+Start - Ember (Fire)
+Level 36 - Leer (Normal)
+Level 39 - Confuse Ray (Ghost)
+Level 43 - Fire Punch (Fire)
+Level 48 - Smoke Screen (Normal)
+Level 52 - Smog (Poison)
+Level 55 - Flamethrower (Fire)
+
+#127: Pinsir (Bug)
+
+Start - Vicegrip (Normal)
+Level 25 - Seismic Toss (Fighting)
+Level 30 - Guillotine (Normal)
+Level 36 - Focus Energy (Normal)
+Level 43 - Harden (Normal)
+Level 49 - Slash (Normal)
+Level 54 - Swords Dance (Normal)
+
+#128: Tauros (Normal)
+
+Start - Tackle (Normal)
+Level 21 - Stomp (Normal)
+Level 28 - Tail Whip (Normal)
+Level 35 - Leer (Normal)
+Level 44 - Rage (Normal)
+Level 51 - Take Down (Normal)
+
+#129: Magikarp (Water)
+
+Start - Splash (Water)
+Level 15 - Tackle (Normal)
+
+#130: Gyarados (Water - Flying)
+
+Level 20 - Bite (Normal)
+Level 25 - Dragon Rage (Dragon)
+Level 32 - Leer (Normal)
+Level 41 - Hydro Pump (Water)
+Level 52 - Hyper Beam (Normal)
+
+#131: Lapras (Water - Ice)
+
+Start - Water Gun (Water)
+Start - Growl (Normal)
+Level 16 - Sing (Normal)
+Level 20 - Mist (Ice)
+Level 25 - Body Slam (Normal)
+Level 31 - Confuse Ray (Ghost)
+Level 38 - Ice Beam (Ice)
+Level 46 - Hydro Pump (Water)
+
+#132: Ditto (Normal)
+
+Start - Transform (Normal)
+
+#133: Eevee (Normal)
+
+Start - Tackle (Normal)
+Start - Sand Attack (Normal)
+Level 27 - Quick Attack (Normal)
+Level 31 - Tail Whip (Normal)
+Level 37 - Bite (Normal)
+Level 45 - Take Down (Normal)
+
+#134: Vaporeon (Water)
+
+Level 27 - Quick Attack (Normal)
+Level 31 - Water Gun (Water)
+Level 37 - Tail Whip (Normal)
+Level 40 - Bite (Normal)
+Level 42 - Acid Armor (Poison)
+Level 44 - Haze (Ice)
+Level 48 - Mist (Ice)
+Level 54 - Hydro Pump (Water)
+
+#135: Jolteon (Electric)
+
+Level 27 - Quick Attack (Normal)
+Level 31 - Thundershock (Electric)
+Level 37 - Tail Whip (Normal)
+Level 40 - Thunder Wave (Electric)
+Level 42 - Double Kick (Fighting)
+Level 44 - Agility (Psychic)
+Level 48 - Pin Missile (Bug)
+Level 54 - Thunder (Electric)
+
+#136: Flareon (Fire)
+
+Level 27 - Quick Attack (Normal)
+Level 31 - Ember (Fire)
+Level 37 - Tail Whip (Normal)
+Level 40 - Bite (Normal)
+Level 42 - Leer (Normal)
+Level 44 - Fire Spin (Fire)
+Level 48 - Rage (Normal)
+Level 54 - Flamethrower (Fire)
+
+#137: Porygon (Normal)
+
+Start - Tackle (Normal)
+Start - Sharpen (Normal)
+Start - Conversion (Normal)
+Level 23 - Psybeam (Psychic)
+Level 28 - Recover (Normal)
+Level 35 - Agility (Psychic)
+Level 42 - Tri Attack (Normal)
+
+#138: Omanyte (Rock - Water)
+
+Start - Water Gun (Water)
+Start - Withdraw (Water)
+Level 34 - Horn Attack (Normal)
+Level 39 - Leer (Normal)
+Level 46 - Spike Cannon (Normal)
+Level 53 - Hydro Pump (Water)
+
+#139: Omastar (Rock - Water)
+
+Level 44 - Spike Cannon (Normal)
+Level 49 - Hydro Pump (Water)
+
+#140: Kabuto (Rock - Water)
+
+Start - Scratch (Normal)
+Start - Harden (Normal)
+Level 34 - Absorb (Grass)
+Level 39 - Slash (Normal)
+Level 44 - Leer (Normal)
+Level 49 - Hydro Pump (Water)
+
+#141: Kabutops (Rock - Water)
+
+Level 46 - Leer (Normal)
+Level 53 - Hydro Pump (Water)
+
+#142: Aerodactyl (Rock - Flying)
+
+Start - Wing Attack (Flying)
+Start - Agility (Psychic)
+Level 33 - Supersonic (Normal)
+Level 38 - Bite (Normal)
+Level 45 - Take Down (Normal)
+Level 54 - Hyper Beam (Normal)
+
+#143: Snorlax (Normal)
+
+Start - Head Butt (Normal)
+Start - Amnesia (Psychic)
+Start - Rest (Psychic)
+Level 35 - Body Slam (Normal)
+Level 41 - Harden (Normal)
+Level 48 - Double-Edge (Normal)
+Level 56 - Hyper Beam (Normal)
+
+#144: Articuno (Ice - Flying)
+
+Start - Peck (Flying)
+Start - Ice Beam (Ice)
+Level 51 - Blizzard (Ice)
+Level 55 - Agility (Psychic)
+Level 60 - Mist (Ice)
+
+#145: Zapdos (Electric - Flying)
+
+Start - Thundershock (Electric)
+Start - Drill Peck (Flying)
+Level 51 - Thunder (Electric)
+Level 55 - Agility (Psychic)
+Level 60 - Light Screen (Psychic)
+
+#146: Moltres (Fire - Flying)
+
+Start - Peck (Flying)
+Start - Fire Spin (Fire)
+Level 51 - Leer (Normal)
+Level 55 - Agility (Psychic)
+Level 60 - Sky Attack (Flying)
+
+#147: Dratini (Dragon)
+
+Start - Wrap (Normal)
+Start - Leer (Normal)
+Level 10 - Thunder Wave (Electric)
+Level 20 - Agility (Psychic)
+Level 30 - Slam (Normal)
+Level 40 - Dragon Rage (Dragon)
+Level 50 - Hyper Beam (Normal)
+
+#148: Dragonair (Dragon)
+
+Level 35 - Slam (Normal)
+Level 45 - Dragon Rage (Dragon)
+Level 55 - Hyper Beam (Normal)
+
+#149: Dragonite (Dragon - Flying)
+
+Level 60 - Hyper Beam (Normal)
+
+#150: Mewtwo (Psychic)
+
+Start - Confusion (Psychic)
+Start - Disable (Normal)
+Start - Swift (Normal)
+Level 63 - Barrier (Psychic)
+Level 66 - Psychic (Psychic)
+Level 70 - Recover (Normal)
+Level 75 - Mist (Ice)
+Level 81 - Amnesia (Psychic)
+
+#151: Mew (Psychic)
+
+Start - Pound (Normal)
+Level 10 - Transform (Normal)
+Level 20 - Mega Punch (Normal)
+Level 30 - Metronome (Normal)
+Level 40 - Psychic (Psychic)
+
+#End

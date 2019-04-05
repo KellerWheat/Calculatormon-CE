@@ -1,0 +1,165 @@
+Absorb	GRASS	Special	20	100	25	User recovers half the HP inflicted on opponent.
+Acid	POISON	Special	40	100	30	May lower opponent's Special Defense.
+Acid Armor	POISON	Status	—	—	20	Sharply raises user's Defense.
+Agility	PSYCHIC	Status	—	—	30	Sharply raises user's Speed.
+Amnesia	PSYCHIC	Status	—	—	20	Sharply raises user's Special Defense.
+Aurora Beam	ICE	Special	65	100	20	May lower opponent's Attack.
+Barrage	NORMAL	Physical	15	85	20	Hits 2-5 times in one turn.
+Barrier	PSYCHIC	Status	—	—	20	Sharply raises user's Defense.
+Bide	NORMAL	Physical	—	—	10	User takes damage for two turns then strikes back double.
+Bind	NORMAL	Physical	15	85	20	Traps opponent, damaging them for 4-5 turns.
+Bite	DARK	Physical	60	100	25	May cause flinching.
+Blizzard	ICE	Special	110	70	5	May freeze opponent.
+Body Slam	NORMAL	Physical	85	100	15	May paralyze opponent.
+Bone Club	GROUND	Physical	65	85	20	May cause flinching.
+Bonemerang	GROUND	Physical	50	90	10	Hits twice in one turn.
+Bubble	WATER	Special	40	100	30	May lower opponent's Speed.
+Bubble Beam	WATER	Special	65	100	20	May lower opponent's Speed.
+Clamp	WATER	Physical	35	85	10	Traps opponent, damaging them for 4-5 turns.
+Comet Punch	NORMAL	Physical	18	85	15	Hits 2-5 times in one turn.
+Confuse Ray	GHOST	Status	—	100	10	Confuses opponent.
+Confusion	PSYCHIC	Special	50	100	25	May confuse opponent.
+Constrict	NORMAL	Physical	10	100	35	May lower opponent's Speed by one stage.
+Conversion	NORMAL	Status	—	—	30	Changes user's type to that of its first move.
+Counter	FIGHTING	Physical	—	100	20	When hit by a Physical Attack, user strikes back with 2x power.
+Crabhammer	WATER	Physical	100	90	10	High critical hit ratio.
+Cut	NORMAL	Physical	50	95	30	 
+Defense Curl	NORMAL	Status	—	—	40	Raises user's Defense.
+Dig	GROUND	Physical	80	100	10	Digs underground on first turn, attacks on second. Can also escape from caves.
+Disable	NORMAL	Status	—	100	20	Opponent can't use its last attack for a few turns.
+Dizzy Punch	NORMAL	Physical	70	100	10	May confuse opponent.
+Double Kick	FIGHTING	Physical	30	100	30	Hits twice in one turn.
+Double Slap	NORMAL	Physical	15	85	10	Hits 2-5 times in one turn.
+Double Team	NORMAL	Status	—	—	15	Raises user's Evasiveness.
+Double-Edge	NORMAL	Physical	120	100	15	User receives recoil damage.
+Dragon Rage	DRAGON	Special	—	100	10	Always inflicts 40 HP.
+Dream Eater	PSYCHIC	Special	100	100	15	User recovers half the HP inflicted on a sleeping opponent.
+Drill Peck	FLYING	Physical	80	100	20	 
+Earthquake	GROUND	Physical	100	100	10	Power is doubled if opponent is underground from using Dig.
+Egg Bomb	NORMAL	Physical	100	75	10	 
+Ember	FIRE	Special	40	100	25	May burn opponent.
+Explosion	NORMAL	Physical	250	100	5	User faints.
+Fire Blast	FIRE	Special	110	85	5	May burn opponent.
+Fire Punch	FIRE	Physical	75	100	15	May burn opponent.
+Fire Spin	FIRE	Special	35	85	15	Traps opponent, damaging them for 4-5 turns.
+Fissure	GROUND	Physical	—	—	5	One-Hit-KO, if it hits.
+Flamethrower	FIRE	Special	90	100	15	May burn opponent.
+Flash	NORMAL	Status	—	100	20	Lowers opponent's Accuracy.
+Fly	FLYING	Physical	90	95	15	Flies up on first turn, attacks on second turn.
+Focus Energy	NORMAL	Status	—	—	30	Increases critical hit ratio.
+Fury Attack	NORMAL	Physical	15	85	20	Hits 2-5 times in one turn.
+Fury Swipes	NORMAL	Physical	18	80	15	Hits 2-5 times in one turn.
+Glare	NORMAL	Status	—	100	30	Paralyzes opponent.
+Growl	NORMAL	Status	—	100	40	Lowers opponent's Attack.
+Growth	NORMAL	Status	—	—	40	Raises user's Attack and Special Attack.
+Guillotine	NORMAL	Physical	—	—	5	One-Hit-KO, if it hits.
+Gust	FLYING	Special	40	100	35	Hits Pokémon using Fly/Bounce with double power.
+Harden	NORMAL	Status	—	—	30	Raises user's Defense.
+Haze	ICE	Status	—	—	30	Resets all stat changes.
+Headbutt	NORMAL	Physical	70	100	15	May cause flinching.
+High Jump Kick	FIGHTING	Physical	130	90	10	If it misses, the user loses half their HP.
+Horn Attack	NORMAL	Physical	65	100	25	 
+Horn Drill	NORMAL	Physical	—	—	5	One-Hit-KO, if it hits.
+Hydro Pump	WATER	Special	110	80	5	 
+Hyper Beam	NORMAL	Special	150	90	5	User must recharge next turn.
+Hyper Fang	NORMAL	Physical	80	90	15	May cause flinching.
+Hypnosis	PSYCHIC	Status	—	60	20	Puts opponent to sleep.
+Ice Beam	ICE	Special	90	100	10	May freeze opponent.
+Ice Punch	ICE	Physical	75	100	15	May freeze opponent.
+Jump Kick	FIGHTING	Physical	100	95	10	If it misses, the user loses half their HP.
+Karate Chop	FIGHTING	Physical	50	100	25	High critical hit ratio.
+Kinesis	PSYCHIC	Status	—	80	15	Lowers opponent's Accuracy.
+Leech Life	BUG	Physical	80	100	10	User recovers half the HP inflicted on opponent.
+Leech Seed	GRASS	Status	—	90	10	Drains HP from opponent each turn.
+Leer	NORMAL	Status	—	100	30	Lowers opponent's Defense.
+Lick	GHOST	Physical	30	100	30	May paralyze opponent.
+Light Screen	PSYCHIC	Status	—	—	30	Halves damage from Special attacks for 5 turns.
+Lovely Kiss	NORMAL	Status	—	75	10	Puts opponent to sleep.
+Low Kick	FIGHTING	Physical	—	100	20	The heavier the opponent, the stronger the attack.
+Meditate	PSYCHIC	Status	—	—	40	Raises user's Attack.
+Mega Drain	GRASS	Special	40	100	15	User recovers half the HP inflicted on opponent.
+Mega Kick	NORMAL	Physical	120	75	5	 
+Mega Punch	NORMAL	Physical	80	85	20	 
+Metronome	NORMAL	Status	—	—	10	User performs almost any move in the game at random.
+Mimic	NORMAL	Status	—	—	10	Copies the opponent's last move.
+Minimize	NORMAL	Status	—	—	10	Sharply raises user's Evasiveness.
+Mirror Move	FLYING	Status	—	—	20	User performs the opponent's last move.
+Mist	ICE	Status	—	—	30	User's stats cannot be changed for a period of time.
+Night Shade	GHOST	Special	—	100	15	Inflicts damage equal to user's level.
+Pay Day	NORMAL	Physical	40	100	20	A small amount of money is gained after the battle resolves.
+Peck	FLYING	Physical	35	100	35	 
+Petal Dance	GRASS	Special	120	100	10	User attacks for 2-3 turns but then becomes confused.
+Pin Missile	BUG	Physical	25	95	20	Hits 2-5 times in one turn.
+Poison Gas	POISON	Status	—	90	40	Poisons opponent.
+Poison Powder	POISON	Status	—	75	35	Poisons opponent.
+Poison Sting	POISON	Physical	15	100	35	May poison the opponent.
+Pound	NORMAL	Physical	40	100	35	 
+Psybeam	PSYCHIC	Special	65	100	20	May confuse opponent.
+Psychic	PSYCHIC	Special	90	100	10	May lower opponent's Special Defense.
+Psywave	PSYCHIC	Special	—	80	15	Inflicts damage 50-150% of user's level.
+Quick Attack	NORMAL	Physical	40	100	30	User attacks first.
+Rage	NORMAL	Physical	20	100	20	Raises user's Attack when hit.
+Razor Leaf	GRASS	Physical	55	95	25	High critical hit ratio.
+Razor Wind	NORMAL	Special	80	100	10	Charges on first turn, attacks on second. High critical hit ratio.
+Recover	NORMAL	Status	—	—	10	User recovers half its max HP.
+Reflect	PSYCHIC	Status	—	—	20	Halves damage from Physical attacks for 5 turns.
+Rest	PSYCHIC	Status	—	—	10	User sleeps for 2 turns, but user is fully healed.
+Roar	NORMAL	Status	—	—	20	In battles, the opponent switches. In the wild, the Pokémon runs.
+Rock Slide	ROCK	Physical	75	90	10	May cause flinching.
+Rock Throw	ROCK	Physical	50	90	15	 
+Rolling Kick	FIGHTING	Physical	60	85	15	May cause flinching.
+Sand Attack	GROUND	Status	—	100	15	Lowers opponent's Accuracy.
+Scratch	NORMAL	Physical	40	100	35	 
+Screech	NORMAL	Status	—	85	40	Sharply lowers opponent's Defense.
+Seismic Toss	FIGHTING	Physical	—	100	20	Inflicts damage equal to user's level.
+Self-Destruct	NORMAL	Physical	200	100	5	User faints.
+Sharpen	NORMAL	Status	—	—	30	Raises user's Attack.
+Sing	NORMAL	Status	—	55	15	Puts opponent to sleep.
+Skull Bash	NORMAL	Physical	130	100	10	Raises Defense on first turn, attacks on second.
+Sky Attack	FLYING	Physical	140	90	5	Charges on first turn, attacks on second. May cause flinching.
+Slam	NORMAL	Physical	80	75	20	 
+Slash	NORMAL	Physical	70	100	20	High critical hit ratio.
+Sleep Powder	GRASS	Status	—	75	15	Puts opponent to sleep.
+Sludge	POISON	Special	65	100	20	May poison opponent.
+Smog	POISON	Special	30	70	20	May poison opponent.
+Smokescreen	NORMAL	Status	—	100	20	Lowers opponent's Accuracy.
+Soft-Boiled	NORMAL	Status	—	—	10	User recovers half its max HP.
+Solar Beam	GRASS	Special	120	100	10	Charges on first turn, attacks on second.
+Sonic Boom	NORMAL	Special	—	90	20	Always inflicts 20 HP.
+Spike Cannon	NORMAL	Physical	20	100	15	Hits 2-5 times in one turn.
+Splash	NORMAL	Status	—	—	40	Doesn't do ANYTHING.
+Spore	GRASS	Status	—	100	15	Puts opponent to sleep.
+Stomp	NORMAL	Physical	65	100	20	May cause flinching.
+Strength	NORMAL	Physical	80	100	15	 
+String Shot	BUG	Status	—	95	40	Sharply lowers opponent's Speed.
+Struggle	NORMAL	Physical	50	100	—	Only usable when all PP are gone. Hurts the user.
+Stun Spore	GRASS	Status	—	75	30	Paralyzes opponent.
+Submission	FIGHTING	Physical	80	80	20	User receives recoil damage.
+Substitute	NORMAL	Status	—	—	10	Uses HP to creates a decoy that takes hits.
+Super Fang	NORMAL	Physical	—	90	10	Always takes off half of the opponent's HP.
+Supersonic	NORMAL	Status	—	55	20	Confuses opponent.
+Surf	WATER	Special	90	100	15	Hits all adjacent Pokémon.
+Swift	NORMAL	Special	60	?	20	Ignores Accuracy and Evasiveness.
+Swords Dance	NORMAL	Status	—	—	20	Sharply raises user's Attack.
+Tackle	NORMAL	Physical	40	100	35	 
+Tail Whip	NORMAL	Status	—	100	30	Lowers opponent's Defense.
+Take Down	NORMAL	Physical	90	85	20	User receives recoil damage.
+Teleport	PSYCHIC	Status	—	—	20	Allows user to flee wild battles; also warps player to last PokéCenter.
+Thrash	NORMAL	Physical	120	100	10	User attacks for 2-3 turns but then becomes confused.
+Thunder	ELECTRIC	Special	110	70	10	May paralyze opponent.
+Thunder Punch	ELECTRIC	Physical	75	100	15	May paralyze opponent.
+Thunder Shock	ELECTRIC	Special	40	100	30	May paralyze opponent.
+Thunder Wave	ELECTRIC	Status	—	90	20	Paralyzes opponent.
+Thunderbolt	ELECTRIC	Special	90	100	15	May paralyze opponent.
+Toxic	POISON	Status	—	90	10	Badly poisons opponent.
+Transform	NORMAL	Status	—	—	10	User takes on the form and attacks of the opponent.
+Tri Attack	NORMAL	Special	80	100	10	May paralyze, burn or freeze opponent.
+Twineedle	BUG	Physical	25	100	20	Hits twice in one turn. May poison opponent.
+Vice Grip	NORMAL	Physical	55	100	30	 
+Vine Whip	GRASS	Physical	45	100	25	 
+Water Gun	WATER	Special	40	100	25	 
+Waterfall	WATER	Physical	80	100	15	May cause flinching.
+Whirlwind	NORMAL	Status	—	—	20	In battles, the opponent switches. In the wild, the Pokémon runs.
+Wing Attack	FLYING	Physical	60	100	35	 
+Withdraw	WATER	Status	—	—	40	Raises user's Defense.
+Wrap	NORMAL	Physical	15	90	20	Traps opponent, damaging them for 4-5 turns.
