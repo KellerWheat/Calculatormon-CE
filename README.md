@@ -3,6 +3,7 @@ A pokemon game for the ti-84 plus ce
 
 The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from gen 2 and the map sprites are from firered and leafgreen
 
+Controls: 2nd is A, clear is B, enter opens the menu
 
 Put every file in the download folder on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible.
 
