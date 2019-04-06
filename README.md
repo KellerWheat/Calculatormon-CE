@@ -1,14 +1,13 @@
 # Calculatormon-CE
 A pokemon game for the ti-84 plus ce
 
-Put every file in the download folder on your calculator
+The game mostly uses gen 1 pokemon and mechanics. The 
 
-Requires the Ti-84 plus CE C libraries to run (they are in the download folder)
 
-The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible
+Put every file in the download folder on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible.
+
 
 The tools folder includes some python scripts I made to help generate game data (move list, maps, and pokemon stats)
-
 
 
 
