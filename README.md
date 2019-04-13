@@ -23,38 +23,22 @@ Hero & Heroine - Ripped by Previous
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/)
 
-
-Fuchsia City - Ripped by Guille
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3776/
-
-Viridian City - Ripped by fabnt
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3777/
-
-Trainer Tower - Ripped by Satoshi-kun
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3796/
-
-Pokemon League - Ripped by axmarrone
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/23580/
-
-www.spriters-resource.com/submitter/axmarrone/
-
-Pewter City - Ripped by Sapphire Dragon
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3774/
-
-Five Island Meadow - Ripped by i2needspeed
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3809/
-
 Overworld NPCs - Submitted by ebuddy and Silentninja (it doesn't say who ripped it but it was probably them)
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3698/
 
+Tileset 0 - Ripped by Hoeloe
 
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
+
+Tileset 1 - Ripped by fabnt
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/
+
+Tileset 2 - Ripped by fabnt
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
+  
   
 All information about game mechanics is from bulbapedia.bulbagarden.net
 
