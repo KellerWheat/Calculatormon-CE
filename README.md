@@ -27,6 +27,14 @@ Overworld NPCs - Submitted by ebuddy and Silentninja (it doesn't say who ripped 
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3698/
 
+Battle Backgrounds - Ripped By redblueyellow
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/
+
+HP Bars & In-battle Menu - Ripped By redblueyellow
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/
+
 Tileset 0 - Ripped by Hoeloe
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
