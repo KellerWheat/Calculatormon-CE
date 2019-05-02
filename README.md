@@ -29,15 +29,27 @@ www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3698/
 
 Battle Backgrounds - Ripped By redblueyellow
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/
 
 HP Bars & In-battle Menu - Ripped By redblueyellow
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/
 
 Status Icons - Superjustinbros
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/
+
+Pokémon Summary Menu - Ripped by Pnick0509
+
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/112720/
+
+Interface & Bag Screens - Ripped by Casquall, Redzagoon, and Waudby
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3865/
+
+Pokémon Menu - Ripped by Redzagoon
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3854/
 
 Tileset 0 - Ripped by Hoeloe
 
@@ -45,11 +57,11 @@ www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
 
 Tileset 1 - Ripped by fabnt
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/
 
 Tileset 2 - Ripped by fabnt
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
   
   
 All information about game mechanics is from bulbapedia.bulbagarden.net
