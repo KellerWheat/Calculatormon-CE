@@ -6,10 +6,15 @@
 
 #define battle_gfx_transparent_color_index 0
 
-#define randomcolorsbattle_width 7
-#define randomcolorsbattle_height 1
-#define randomcolorsbattle_size 9
-extern uint8_t randomcolorsbattle_data[9];
-#define randomcolorsbattle ((gfx_sprite_t*)randomcolorsbattle_data)
+#define menucursor_width 13
+#define menucursor_height 20
+#define menucursor_size 262
+extern uint8_t menucursor_data[262];
+#define menucursor ((gfx_sprite_t*)menucursor_data)
+#define menucursorsmall_width 7
+#define menucursorsmall_height 10
+#define menucursorsmall_size 72
+extern uint8_t menucursorsmall_data[72];
+#define menucursorsmall ((gfx_sprite_t*)menucursorsmall_data)
 
 #endif

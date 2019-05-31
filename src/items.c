@@ -10,6 +10,7 @@
 #include "misc.h"
 #include "stats.h"
 #include "map.h"
+#include "menu.h"
 
 void HealHp(uint8_t index, uint16_t amount);
 void HealStatus(uint8_t index, uint8_t type);
@@ -40,6 +41,7 @@ char itemNames[20][16] = {
 	"Leaf Stone",
 	"Water Stone"
 };
+/* Used in shop */
 uint16_t itemPrices[20] = {
 	200,600,1200,15000,300,700,1200,2500,600,3000,100,250,200,250,200,2100,2100,2100,2100,2100
 };
@@ -132,7 +134,7 @@ bool items_UseItem(uint8_t index) {
 	if (index < 4 || playerItems[index] == 0) {
 		return false;
 	}
-	i = text_AskQuestion6(data_pokemon[party[0].id].name, data_pokemon[party[1].id].name, data_pokemon[party[2].id].name, data_pokemon[party[3].id].name, data_pokemon[party[4].id].name, data_pokemon[party[5].id].name);
+	i = menu_PokemonMenu(false);
 	if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
 		return false;
 	}
@@ -187,19 +189,19 @@ bool items_UseItem(uint8_t index) {
 		if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
 			sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
 			text_Display(str, false);
-			switch (text_AskQuestion4(data_moves[party[i].move1].name, data_moves[party[i].move2].name, data_moves[party[i].move3].name, data_moves[party[i].move4].name, false))
+			switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
 			{
 			case 1:
-				party[i].move1 = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
 				break;
 			case 2:
-				party[i].move2 = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
 				break;
 			case 3:
-				party[i].move3 = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
 				break;
 			case 4:
-				party[i].move4 = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
 				break;
 			}
 		}
@@ -224,5 +226,5 @@ void HealHp(uint8_t index, uint16_t amount) {
 	}
 }
 void HealStatus(uint8_t index, uint8_t type) {
-	party[index].currentstatus[type] = 0;
+	party[index].currentstatus = 0;
 }

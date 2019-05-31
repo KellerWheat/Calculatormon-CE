@@ -1,4 +1,4 @@
-/* This contains all the data that can be edited */
+ /* This contains all the data that can be edited */
 
 #ifndef DATA_H
 #define DATA_H
@@ -11,15 +11,13 @@
 
 struct pokemonData {
 	uint8_t id;
-	uint8_t move1;
-	uint8_t move2;
-	uint8_t move3;
-	uint8_t move4;
+	uint8_t moves[4];
+	uint8_t pp[4];
 	uint8_t level;
 	uint32_t xp;
 
 	uint16_t currenthealth;
-	uint8_t currentstatus[5];
+	uint8_t currentstatus;
 
 	uint8_t healthIV;
 	uint8_t attackIV;
@@ -93,22 +91,13 @@ struct zoneData {
 	uint8_t trainerreward[16];//Reward is an item (number is one more than actual id)
 };
 
-/* Character Data */
+/* Data from other structs */
+
 extern struct pokemonType data_pokemon[];
 extern struct move data_moves[];
 extern uint8_t elements[18][18];
 extern char elementNames[18][16];
 extern const uint32_t xpPerLevel[4][101];
-
-
-/* Map Data */
-
-extern uint8_t data_tileMaps[][1920];
-extern uint8_t data_typeMaps[][1920];
-extern uint8_t data_buildingTileMaps[][315];
-extern uint8_t data_buildingTypeMaps[][315];
-extern struct zoneData data_zoneData[];
-extern struct zoneData data_buildingZoneData[];
 
 extern char data_trainerText[][32];
 extern char data_npcText[][32];

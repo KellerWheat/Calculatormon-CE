@@ -35,6 +35,10 @@
 #include "menu.h"
 #include "items.h"
 
+#include "gfx/battle_gfx.h"
+#include "gfx/map_gfx.h"
+
+
 /* Variables */
 
 uint8_t gameState = 0;
@@ -45,6 +49,7 @@ void main(void) {
 	unsigned seed = rtc_Time();
 
 	/* Setup gfx */
+	dbg_ClearConsole();
 	gfx_Begin();
 	gfx_SetDrawBuffer();
 	gfx_SetMonospaceFont(8);
@@ -52,22 +57,16 @@ void main(void) {
 	/* Game */
 
 	srand(seed);
-	
-	save_Load();
+
+	textBoxSprite1 = gfx_MallocSprite(160, 64);
+	textBoxSprite2 = gfx_MallocSprite(160, 64);
 
 	map_Initialize();
 	battle_Initialize();
-	menu_Initialize();
+
+	FindColors();
 
 	map_Setup();
-
-
-	/* Debug all colors */
-	dbg_sprintf(dbgout, "\nColors:\n");
-	for (colorIndex = 0; colorIndex < 256; colorIndex++) {
-		dbg_sprintf(dbgout, "%u : %u\n", colorIndex, gfx_palette[colorIndex]);
-	}
-
 
 	if (newGame) {
 		uint8_t starter = 0;
@@ -77,44 +76,41 @@ void main(void) {
 			starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
 		}
 		if (starter == 4) {
-			party[0] = stats_NewCharacter(151, 100);
+			party[0] = stats_NewCharacter(152, 100);
 		}
 		else {
 			party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
 		}
+		for (starter = 0; starter < 185; starter++) {
+			if (rand() % 2) {
+				playerItems[starter] = 1;
+			}
+		}
 	}
-
-	map_Setup();
-
+	map_LoadPokeballs();
 	do {
 		kb_Scan();
 		if (gameState == 0) {
 			gameState = map_Loop();
 			if (gameState == 1) {
+				map_End();
 				battle_Setup();
-			}
-			if (gameState == 2) {
-				menu_Setup();
 			}
 		}
 		else if (gameState == 1) {
 			gameState = battle_Loop();
 			if (gameState == 0) {
+				battle_End();
 				map_Setup();
 			}
-			if (gameState == 2) {
-				menu_Setup();
-			}
 		}
-		else if (gameState == 2) {
-			gameState = menu_Loop();
-			if (gameState == 0) {
-				map_Setup();
-			}
-			if (gameState == 1) {
-				battle_Setup();
-			}
-		}
-	} while (gameState < 3);
+	} while (gameState < 2);
+
+	map_End();
+	battle_End();
+	free(textBoxSprite1);
+	free(textBoxSprite2);
+
+
 	gfx_End();
 }

@@ -160,67 +160,7 @@ def ChangeMap():
 def CopyAll():
     UpdateTrainer(currentTrainer.get())
     UpdateNpc(currentNpc.get())
-    text = "uint8_t data_tileMaps[][" + str(Setting_SizeX*Setting_SizeY) + "] = {\n"
-    for i in range(0,Var_ZoneCount.get()):
-        name = 'tilemap_'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\nuint8_t data_typeMaps[][" + str(Setting_SizeX*Setting_SizeY) + "] = {\n"
-    for i in range(0,Var_ZoneCount.get()):
-        name = 'typemap_'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\nstruct zoneData data_zoneData[] = {\n"
-    for i in range(0,Var_ZoneCount.get()):
-        name = 'zonedata_'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\nuint8_t data_buildingTileMaps[][" + str(Setting_BSizeX*Setting_BSizeY) + "] = {\n"
-    for i in range(0,Var_BuildingCount.get()):
-        name = 'tilemap_B'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\nuint8_t data_buildingTypeMaps[][" + str(Setting_BSizeX*Setting_BSizeY) + "] = {\n"
-    for i in range(0,Var_BuildingCount.get()):
-        name = 'typemap_B'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\nstruct zoneData data_buildingZoneData[] = {\n"
-    for i in range(0,Var_BuildingCount.get()):
-        name = 'zonedata_B'
-        name += str(i)
-        data = np.load(name + '.npy')
-        text += "\t{"
-        for x in data:
-            text += str(x)
-            text += ","
-        text += "},\n"
-    text += "\n};\n\n"
+    text = ""
     text += "char data_trainerText["+str(trainerTextCount)+"][32] = {\n\t"
     for i in range(0,trainerTextCount):
         text += '"'+trainerText[i]+'",'
@@ -235,6 +175,27 @@ def CopyAll():
     text += "\n};\n"
     
     pyperclip.copy(text)
+
+def ExportFile():
+    output0 = np.array([])
+    output1 = np.array([])
+    for i in range(0, Var_ZoneCount.get()):
+        output0 = np.append(output0, np.load('tilemap_' + str(i) + '.npy'))
+        output0 = np.append(output0, np.load('typemap_' + str(i) + '.npy'))
+        output0 = np.append(output0, np.load('zonedata_' + str(i) + '.npy'))
+    for i in range(0, Var_BuildingCount.get()):
+        output1 = np.append(output1, np.load('tilemap_B' + str(i) + '.npy'))
+        output1 = np.append(output1, np.load('typemap_B' + str(i) + '.npy'))
+        output1 = np.append(output1, np.load('zonedata_B' + str(i) + '.npy'))
+    #with open('PKMNMD0.bin', 'wb') as f:
+    #    f.write(output0.astype('B'))
+    #with open('PKMNMD1.bin', 'wb') as f:
+    #    f.write(output1.astype('B'))
+    output0.astype('B').tofile('PKMNMD0.bin')
+    print(output0.astype('B'))
+    output1.astype('B').tofile('PKMNMD1.bin')
+    
+        
 
 Canvas_SetMap = Frame(root)
 Canvas_SetMap.grid(row=0,column=0, padx=16, sticky=N)
@@ -277,6 +238,8 @@ Input_BuildingCount.grid(row=12,column=0)
 
 Button_CopyAll = Button(Canvas_SetMap,text="Copy All", command=CopyAll)
 Button_CopyAll.grid(row=13,column=0)
+Button_CopyAll = Button(Canvas_SetMap,text="Export Data", command=ExportFile)
+Button_CopyAll.grid(row=14,column=0)
 
 ChangeMap()
 
@@ -300,7 +263,7 @@ pygame.display.flip()
 tilefont = pygame.font.SysFont('comicsansms', 10)
 infofont = pygame.font.SysFont('comicsansms', 30)
 def draw():
-    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode,
+    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode
     events = pygame.event.get()
     
     keys = pygame.key.get_pressed()
@@ -586,15 +549,15 @@ def itemid():
 Var_PokemonToConvert = StringVar()
 Var_ItemToConvert = StringVar()
 
-Canvas_SetMap.grid_rowconfigure(14, minsize=20)
-Entry(Canvas_SetMap,textvar=Var_PokemonToConvert).grid(row=15,column=0)
-Button(Canvas_SetMap,text="Convert Pokemon to ID",command=pokemonid).grid(row=16,column=0)
-Entry(Canvas_SetMap,textvar=Var_ItemToConvert).grid(row=17,column=0)
-Button(Canvas_SetMap,text="Convert Item to ID",command=itemid).grid(row=18,column=0)
+Canvas_SetMap.grid_rowconfigure(15, minsize=20)
+Entry(Canvas_SetMap,textvar=Var_PokemonToConvert).grid(row=16,column=0)
+Button(Canvas_SetMap,text="Convert Pokemon to ID",command=pokemonid).grid(row=17,column=0)
+Entry(Canvas_SetMap,textvar=Var_ItemToConvert).grid(row=18,column=0)
+Button(Canvas_SetMap,text="Convert Item to ID",command=itemid).grid(row=19,column=0)
 
 #Trainer:
 
-Canvas_SetMap.grid_rowconfigure(19, minsize=20)
+Canvas_SetMap.grid_rowconfigure(20, minsize=20)
 def DecreaseTrainer():
     if(currentTrainer.get()-1==-1):
         UpdateTrainer(trainerTextCount-1)
@@ -606,18 +569,18 @@ def IncreaseTrainer():
     else:
         UpdateTrainer(currentTrainer.get()+1)
 
-Label(Canvas_SetMap,text="Trainer Text").grid(row=20,column=0)
+Label(Canvas_SetMap,text="Trainer Text").grid(row=21,column=0)
 Frame_ChangeTrainer = Frame(Canvas_SetMap)
 Button(Frame_ChangeTrainer,command=DecreaseTrainer,text="-").grid(row=0,column=0)
 Label(Frame_ChangeTrainer,textvariable=currentTrainer).grid(row=0,column=1)
 Button(Frame_ChangeTrainer,command=IncreaseTrainer,text="+").grid(row=0,column=2)
-Frame_ChangeTrainer.grid(row=21,column=0)
+Frame_ChangeTrainer.grid(row=22,column=0)
 
-Entry(Canvas_SetMap,textvar=Var_TrainerText).grid(row=22,column=0)
+Entry(Canvas_SetMap,textvar=Var_TrainerText).grid(row=23,column=0)
 
 #Trainer:
 
-Canvas_SetMap.grid_rowconfigure(23, minsize=20)
+Canvas_SetMap.grid_rowconfigure(24, minsize=20)
 def DecreaseNpc():
     if(currentNpc.get()-1==-1):
         UpdateNpc(npcCount-1)
@@ -629,15 +592,15 @@ def IncreaseNpc():
     else:
         UpdateNpc(currentNpc.get()+1)
 
-Label(Canvas_SetMap,text="Npc Text/Reward").grid(row=24,column=0)
+Label(Canvas_SetMap,text="Npc Text/Reward").grid(row=25,column=0)
 Frame_ChangeNpc = Frame(Canvas_SetMap)
 Button(Frame_ChangeNpc,command=DecreaseNpc,text="-").grid(row=0,column=0)
 Label(Frame_ChangeNpc,textvariable=currentNpc).grid(row=0,column=1)
 Button(Frame_ChangeNpc,command=IncreaseNpc,text="+").grid(row=0,column=2)
-Frame_ChangeNpc.grid(row=25,column=0)
+Frame_ChangeNpc.grid(row=26,column=0)
 
-Entry(Canvas_SetMap,textvar=Var_NpcText).grid(row=26,column=0)
-Entry(Canvas_SetMap,textvar=Var_NpcReward).grid(row=27,column=0)
+Entry(Canvas_SetMap,textvar=Var_NpcText).grid(row=27,column=0)
+Entry(Canvas_SetMap,textvar=Var_NpcReward).grid(row=28,column=0)
 
 #----
 #Loop

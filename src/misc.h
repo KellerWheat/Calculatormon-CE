@@ -3,18 +3,26 @@
 
 #include <stdint.h>
 
-/* Multipurpose string variable */
+void Wait(uint16_t amount);
+void SetColors(uint8_t gameState);
+void FindColors(void);
+
+uint8_t * color_1555ToRGB(uint16_t input);
+
+void MallocIcons(void);
+void FreeIcons(void);
+
 extern char str[100];
-
-extern uint16_t i1;
-extern uint16_t i2;
-
 extern uint16_t i;
 extern uint16_t e;
 
 extern uint8_t colors[];
 
-void Wait(uint16_t amount);
-void SetColors(uint8_t gameState);
+extern gfx_sprite_t *typeIcons[17];
+extern gfx_sprite_t *statusIcons[5];
+extern gfx_sprite_t *categoryIcons[3];
+
+
+
 
 #endif

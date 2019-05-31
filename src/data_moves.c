@@ -5,7 +5,7 @@
 1 - special
 2 - raise user stat (power is number of times)
 3 - lower non-user stat (power is number of times)
-4 - status data_moves (power is meaningless, but a normal move can also have a status effect)
+4 - status move (power is meaningless, but a normal move can also have a status effect)
 5 - specific damage
 6 - leave battle
 7 - switch opponent/leave battle (switch opponent not working)
@@ -166,7 +166,7 @@ struct move data_moves[] = {
 	{"Pin Missile",12,0,25,95,20,22,0},// 92 - Hits 2-5 times in one turn.
 	{"Poison Gas",8,4,0,90,40,7,0},// 93 - Poisons opponent.
 	{"Poison Powder",8,4,0,75,35,7,0},// 94 - Poisons opponent.
-	{"Poison Sting",8,0,15,100,35,7,10},// 95 - May poison the opponent.
+	{"Poison Sting",8,0,15,100,35,7,20},// 95 - May poison the opponent.
 	{"Pound",1,0,40,100,35,0,0},// 96 -  
 	{"Psybeam",11,1,65,100,20,12,0},// 97 - May confuse opponent.
 	{"Psychic",11,1,90,100,10,3,10},// 98 - May lower opponent's Special Defense.
@@ -237,4 +237,5 @@ struct move data_moves[] = {
 	{"Wing Attack",10,0,60,100,35,0,0},// 163 -  
 	{"Withdraw",3,2,1,100,40,1,0},// 164 - Raises user's Defense.
 	{"Wrap",1,0,15,90,20,14,100},// 165 - Traps opponent, damaging them for 4-5 turns.
+	{"Ricardo Punch",2,0,255,100,50,21,0 },// 166 - Absorbs HP from opponent
 };

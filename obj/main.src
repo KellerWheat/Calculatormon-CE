@@ -1,0 +1,394 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\SRC\MAIN.C"
+	.assume ADL=1
+	SEGMENT DATA
+_gameState:
+	DB	0
+;    1	/*
+;    2	 *--------------------------------------
+;    3	 * Program Name: Pokemon
+;    4	 * Author: FBDAJH
+;    5	 * License: MIT License
+;    6	 * Description: Pokemon (pokemon and mechanics are mostly from gen 1)
+;    7	 *--------------------------------------
+;    8	*/
+;    9	
+;   10	/* Keep these headers */
+;   11	#include <stdbool.h>
+;   12	#include <stddef.h>
+;   13	#include <stdint.h>
+;   14	#include <tice.h>
+;   15	
+;   16	/* Standard headers (recommended) */
+;   17	#include <math.h>
+;   18	#include <stdio.h>
+;   19	#include <stdlib.h>
+;   20	#include <string.h>
+;   21	
+;   22	/* More headers */
+;   23	#include <keypadc.h>
+;   24	#include <graphx.h>
+;   25	#include <debug.h>
+;   26	
+;   27	/* Include Data */
+;   28	#include "text.h"
+;   29	#include "misc.h"
+;   30	#include "data.h"
+;   31	#include "savegame.h"
+;   32	#include "stats.h"
+;   33	#include "map.h"
+;   34	#include "battle.h"
+;   35	#include "menu.h"
+;   36	#include "items.h"
+;   37	
+;   38	#include "gfx/battle_gfx.h"
+;   39	#include "gfx/map_gfx.h"
+;   40	
+;   41	
+;   42	/* Variables */
+;   43	
+;   44	uint8_t gameState = 0;
+	SEGMENT CODE
+;   45	
+;   46	void main(void) {
+_main:
+	LD	HL,-74
+	CALL	__frameset
+;   47		int colorIndex;
+;   48		/* Seed RNG */
+;   49		unsigned seed = rtc_Time();
+	LD	BC,(15925316)
+	LD	(IX+-4),BC
+;   50	
+;   51		/* Setup gfx */
+;   52		dbg_ClearConsole();
+;   53		gfx_Begin();
+	CALL	_gfx_Begin
+;   54		gfx_SetDrawBuffer();
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_SetDraw
+	POP	BC
+;   55		gfx_SetMonospaceFont(8);
+	LD	BC,8
+	PUSH	BC
+	CALL	_gfx_SetMonospaceFont
+	POP	BC
+;   56	
+;   57		/* Game */
+;   58	
+;   59		srand(seed);
+	LD	BC,(IX+-4)
+	PUSH	BC
+	CALL	_srand
+	POP	BC
+;   60	
+;   61		textBoxSprite1 = gfx_MallocSprite(160, 64);
+	LD	BC,_malloc
+	PUSH	BC
+	LD	BC,64
+	PUSH	BC
+	LD	BC,160
+	PUSH	BC
+	CALL	_gfx_AllocSprite
+	POP	BC
+	POP	BC
+	POP	BC
+;   62		textBoxSprite2 = gfx_MallocSprite(160, 64);
+	LD	BC,_malloc
+	PUSH	BC
+	LD	BC,64
+	PUSH	BC
+	LD	BC,160
+	PUSH	BC
+	LD	(_textBoxSprite1),HL
+	CALL	_gfx_AllocSprite
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(_textBoxSprite2),HL
+;   63	
+;   64		map_Initialize();
+	CALL	_map_Initialize
+;   65		battle_Initialize();
+	CALL	_battle_Initialize
+;   66	
+;   67		FindColors();
+	CALL	_FindColors
+;   68	
+;   69		map_Setup();
+	CALL	_map_Setup
+;   70	
+;   71		if (newGame) {
+	LD	A,(_newGame)
+	OR	A,A
+	JR	Z,L_12
+;   72			uint8_t starter = 0;
+	LD	(IX+-1),0
+;   73			newGame = false;
+;   74			text_Display("Choose Starter", false);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,L__1
+	PUSH	BC
+	XOR	A,A
+	LD	(_newGame),A
+	CALL	_text_Display
+	POP	BC
+	POP	BC
+;   75			while (starter == 0) {
+	JR	L_0
+L_1:
+;   76				starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,L__2
+	PUSH	BC
+	LD	BC,L__3
+	PUSH	BC
+	LD	BC,L__4
+	PUSH	BC
+	LD	BC,L__5
+	PUSH	BC
+	CALL	_text_AskQuestion4
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(IX+-1),L
+;   77			}
+L_0:
+	LD	A,(IX+-1)
+	OR	A,A
+	JR	Z,L_1
+;   78			if (starter == 4) {
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_3
+;   79				party[0] = stats_NewCharacter(152, 100);
+	LD	BC,100
+	PUSH	BC
+	LD	BC,152
+	PUSH	BC
+	PEA	IX+-39
+	CALL	_stats_NewCharacter
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	DE,_party
+	LD	BC,35
+	LDIR	
+;   80			}
+;   81			else {
+	JR	L_10
+L_3:
+;   82				party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
+	LD	BC,5
+	PUSH	BC
+	LD	B,(IX+-1)
+	DEC	B
+	LD	C,3
+	MLT	BC
+	INC	C
+	LD	B,0
+	PUSH	BC
+	PEA	IX+-74
+	CALL	_stats_NewCharacter
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	DE,_party
+	LD	BC,35
+	LDIR	
+;   83			}
+L_10:
+;   84			for (starter = 0; starter < 185; starter++) {
+	LD	(IX+-1),0
+	JR	L_9
+L_7:
+;   85				if (rand() % 2) {
+	CALL	_rand
+	LD	BC,2
+	CALL	__irems
+	CALL	__icmpzero
+	JR	Z,L_8
+;   86					playerItems[starter] = 1;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,_playerItems
+	ADD	HL,BC
+	LD	(HL),1
+;   87				}
+;   88			}
+L_8:
+	INC	(IX+-1)
+L_9:
+	LD	A,(IX+-1)
+	CP	A,185
+	JR	C,L_7
+;   89		}
+L_12:
+;   90		map_LoadPokeballs();
+	CALL	_map_LoadPokeballs
+;   91		do {
+L_18:
+;   92			kb_Scan();
+	CALL	_kb_Scan
+;   93			if (gameState == 0) {
+	LD	A,(_gameState)
+	OR	A,A
+	JR	NZ,L_17
+;   94				gameState = map_Loop();
+	CALL	_map_Loop
+	LD	A,L
+;   95				if (gameState == 1) {
+	CP	A,1
+	LD	(_gameState),A
+	JR	NZ,L_19
+;   96					map_End();
+	CALL	_map_End
+;   97					battle_Setup();
+	CALL	_battle_Setup
+;   98				}
+;   99			}
+;  100			else if (gameState == 1) {
+	JR	L_19
+L_17:
+	LD	A,(_gameState)
+	CP	A,1
+	JR	NZ,L_19
+;  101				gameState = battle_Loop();
+	CALL	_battle_Loop
+	LD	A,L
+	LD	(_gameState),A
+;  102				if (gameState == 0) {
+	OR	A,A
+	JR	NZ,L_19
+;  103					battle_End();
+	CALL	_battle_End
+;  104					map_Setup();
+	CALL	_map_Setup
+;  105				}
+;  106			}
+;  107		} while (gameState < 2);
+L_19:
+	LD	A,(_gameState)
+	CP	A,2
+	JR	C,L_18
+;  108	
+;  109		map_End();
+	CALL	_map_End
+;  110		battle_End();
+	CALL	_battle_End
+;  111		free(textBoxSprite1);
+	LD	BC,(_textBoxSprite1)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;  112		free(textBoxSprite2);
+	LD	BC,(_textBoxSprite2)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;  113	
+;  114	
+;  115		gfx_End();
+	CALL	_gfx_End
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_free                               IMPORT  -----   function
+;_battle_End                         IMPORT  -----   function
+;_battle_Loop                        IMPORT  -----   function
+;_battle_Setup                       IMPORT  -----   function
+;_map_End                            IMPORT  -----   function
+;_map_Loop                           IMPORT  -----   function
+;_gameState                          STATIC      1   variable
+;_kb_Scan                            IMPORT  -----   function
+;_map_LoadPokeballs                  IMPORT  -----   function
+;_playerItems                        IMPORT    185   variable
+;_rand                               IMPORT  -----   function
+;_party                              IMPORT   1260   variable
+;_stats_NewCharacter                 IMPORT  -----   function
+;_text_AskQuestion4                  IMPORT  -----   function
+;_text_Display                       IMPORT  -----   function
+;_newGame                            IMPORT      1   variable
+;_map_Setup                          IMPORT  -----   function
+;_FindColors                         IMPORT  -----   function
+;_battle_Initialize                  IMPORT  -----   function
+;_map_Initialize                     IMPORT  -----   function
+;_textBoxSprite2                     IMPORT      3   variable
+;_textBoxSprite1                     IMPORT      3   variable
+;_malloc                             IMPORT  -----   function
+;_gfx_AllocSprite                    IMPORT  -----   function
+;_srand                              IMPORT  -----   function
+;_gfx_SetMonospaceFont               IMPORT  -----   function
+;_gfx_SetDraw                        IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+;seed                                  IX-4      3   variable
+;starter                               IX-1      1   variable
+
+
+; Stack Frame Size: 80 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__1:
+	DB	"Choose Starter"
+	DB	0
+L__2:
+	DB	" "
+	DB	0
+L__3:
+	DB	"Squirtle"
+	DB	0
+L__4:
+	DB	"Charmander"
+	DB	0
+L__5:
+	DB	"Bulbasaur"
+	DB	0
+	XREF _battle_End:ROM
+	XREF _battle_Loop:ROM
+	XREF _battle_Setup:ROM
+	XREF _battle_Initialize:ROM
+	XREF _map_LoadPokeballs:ROM
+	XREF _map_End:ROM
+	XREF _map_Loop:ROM
+	XREF _map_Setup:ROM
+	XREF _map_Initialize:ROM
+	XREF _stats_NewCharacter:ROM
+	XREF _playerItems:ROM
+	XREF _party:ROM
+	XREF _newGame:ROM
+	XREF _FindColors:ROM
+	XREF _textBoxSprite2:ROM
+	XREF _textBoxSprite1:ROM
+	XREF _text_AskQuestion4:ROM
+	XREF _text_Display:ROM
+	XREF _gfx_SetMonospaceFont:ROM
+	XREF _gfx_SetDraw:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XREF _gfx_AllocSprite:ROM
+	XREF _kb_Scan:ROM
+	XREF _rand:ROM
+	XREF _srand:ROM
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF __irems:ROM
+	XREF __frameset:ROM
+	XREF __icmpzero:ROM
+	XDEF _main
+	XDEF _gameState
+	END

@@ -1,0 +1,172 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\..\SRC\GFX\PKMNSD7.C"
+	.assume ADL=1
+	SEGMENT DATA
+_PKMNSD7:
+	DW24	0
+	DW24	566
+	DW24	1050
+	DW24	1613
+	DW24	2160
+	DW24	2766
+	DW24	3301
+	DW24	4018
+	DW24	4495
+	DW24	5066
+	DW24	5530
+	DW24	6163
+	DW24	6499
+	DW24	6861
+	DW24	7386
+	DW24	7663
+	DW24	8030
+	DW24	8561
+	DW24	9082
+	DW24	9525
+	DW24	9956
+	DW24	10435
+	DW24	11066
+	DW24	11323
+	DW24	11753
+	DW24	12246
+	DW24	12799
+	DW24	13262
+	DW24	13764
+;    1	// convpng v6.8
+;    2	#include <stdint.h>
+;    3	#include "PKMNSD7.h"
+;    4	
+;    5	#include <fileioc.h>
+;    6	uint8_t *PKMNSD7[29] = {
+	SEGMENT CODE
+;    7	 (uint8_t*)0,
+;    8	 (uint8_t*)566,
+;    9	 (uint8_t*)1050,
+;   10	 (uint8_t*)1613,
+;   11	 (uint8_t*)2160,
+;   12	 (uint8_t*)2766,
+;   13	 (uint8_t*)3301,
+;   14	 (uint8_t*)4018,
+;   15	 (uint8_t*)4495,
+;   16	 (uint8_t*)5066,
+;   17	 (uint8_t*)5530,
+;   18	 (uint8_t*)6163,
+;   19	 (uint8_t*)6499,
+;   20	 (uint8_t*)6861,
+;   21	 (uint8_t*)7386,
+;   22	 (uint8_t*)7663,
+;   23	 (uint8_t*)8030,
+;   24	 (uint8_t*)8561,
+;   25	 (uint8_t*)9082,
+;   26	 (uint8_t*)9525,
+;   27	 (uint8_t*)9956,
+;   28	 (uint8_t*)10435,
+;   29	 (uint8_t*)11066,
+;   30	 (uint8_t*)11323,
+;   31	 (uint8_t*)11753,
+;   32	 (uint8_t*)12246,
+;   33	 (uint8_t*)12799,
+;   34	 (uint8_t*)13262,
+;   35	 (uint8_t*)13764,
+;   36	};
+;   37	
+;   38	bool PKMNSD7_init(void) {
+_PKMNSD7_init:
+	LD	HL,-10
+	CALL	__frameset
+;   39	    unsigned int data, i;
+;   40	    ti_var_t appvar;
+;   41	
+;   42	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;   43	
+;   44	    appvar = ti_Open("PKMNSD7", "r");
+	LD	BC,L__0
+	PUSH	BC
+	LD	BC,L__1
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-4),A
+;   45	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD7[0];
+	LD	C,(IX+-4)
+	LD	B,0
+	PUSH	BC
+	CALL	_ti_GetDataPtr
+	POP	BC
+	LD	BC,(_PKMNSD7)
+	OR	A,A
+	SBC	HL,BC
+	LD	(IX+-7),HL
+;   46	    for (i = 0; i < PKMNSD7_num; i++) {
+	LD	BC,0
+	LD	(IX+-3),BC
+	JR	L_3
+L_1:
+;   47	        PKMNSD7[i] += data;
+	LD	HL,(IX+-3)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_PKMNSD7
+	ADD	HL,BC
+	LD	(IX+-10),HL
+	LD	HL,(HL)
+	LD	IY,(IX+-10)
+	LD	BC,(IX+-7)
+	ADD	HL,BC
+	LD	(IY),HL
+	LD	BC,(IX+-3)
+	INC	BC
+	LD	(IX+-3),BC
+;   48	    }
+L_3:
+	LD	BC,29
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	C,L_1
+;   49	
+;   50	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;   51	
+;   52	    return (bool)appvar;
+	LD	A,(IX+-4)
+;   53	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _PKMNSD7_init ***************************
+;Name                         Addr/Register   Size   Type
+;_PKMNSD7                            STATIC     87   variable
+;_ti_GetDataPtr                      IMPORT  -----   function
+;_ti_Open                            IMPORT  -----   function
+;_ti_CloseAll                        IMPORT  -----   function
+;data                                  IX-7      3   variable
+;appvar                                IX-4      1   variable
+;i                                     IX-3      3   variable
+
+
+; Stack Frame Size: 16 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__0:
+	DB	"r"
+	DB	0
+L__1:
+	DB	"PKMNSD7"
+	DB	0
+	XREF _ti_GetDataPtr:ROM
+	XREF _ti_Open:ROM
+	XREF _ti_CloseAll:ROM
+	XREF __frameset:ROM
+	XDEF _PKMNSD7_init
+	XDEF _PKMNSD7
+	END

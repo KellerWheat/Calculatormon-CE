@@ -1,0 +1,155 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\..\SRC\GFX\PKMNMS1.C"
+	.assume ADL=1
+	SEGMENT DATA
+_PKMNMS1:
+	DW24	0
+	DW24	33024
+;    1	// convpng v6.8
+;    2	#include <stdint.h>
+;    3	#include "PKMNMS1.h"
+;    4	
+;    5	#include <fileioc.h>
+;    6	uint8_t *PKMNMS1[2] = {
+	SEGMENT CODE
+;    7	 (uint8_t*)0,
+;    8	 (uint8_t*)33024,
+;    9	};
+;   10	
+;   11	bool PKMNMS1_init(void) {
+_PKMNMS1_init:
+	LD	HL,-13
+	CALL	__frameset
+;   12	    unsigned int data, i;
+;   13	    ti_var_t appvar;
+;   14	
+;   15	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;   16	
+;   17	    appvar = ti_Open("PKMNMS1", "r");
+	LD	BC,L__0
+	PUSH	BC
+	LD	BC,L__1
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-4),A
+;   18	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNMS1[0];
+	LD	C,(IX+-4)
+	LD	B,0
+	PUSH	BC
+	CALL	_ti_GetDataPtr
+	POP	BC
+	LD	BC,(_PKMNMS1)
+	OR	A,A
+	SBC	HL,BC
+	LD	(IX+-7),HL
+;   19	    for (i = 0; i < PKMNMS1_num; i++) {
+	LD	BC,0
+	LD	(IX+-3),BC
+	JR	L_3
+L_1:
+;   20	        PKMNMS1[i] += data;
+	LD	HL,(IX+-3)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_PKMNMS1
+	ADD	HL,BC
+	LD	(IX+-10),HL
+	LD	HL,(HL)
+	LD	IY,(IX+-10)
+	LD	BC,(IX+-7)
+	ADD	HL,BC
+	LD	(IY),HL
+	LD	BC,(IX+-3)
+	INC	BC
+	LD	(IX+-3),BC
+;   21	    }
+L_3:
+	LD	BC,2
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	C,L_1
+;   22	
+;   23	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;   24	
+;   25	    data = (unsigned int)PKMNMS1[0] - (unsigned int)indoortileset_tiles_data[0];
+	LD	HL,(_PKMNMS1)
+	LD	BC,(_indoortileset_tiles_data)
+	OR	A,A
+	SBC	HL,BC
+	LD	(IX+-7),HL
+;   26	    for (i = 0; i < indoortileset_tiles_num; i++) {
+	LD	BC,0
+	LD	(IX+-3),BC
+	JR	L_8
+L_6:
+;   27	        indoortileset_tiles_data[i] += data;
+	LD	HL,(IX+-3)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_indoortileset_tiles_data
+	ADD	HL,BC
+	LD	(IX+-13),HL
+	LD	HL,(HL)
+	LD	IY,(IX+-13)
+	LD	BC,(IX+-7)
+	ADD	HL,BC
+	LD	(IY),HL
+	LD	BC,(IX+-3)
+	INC	BC
+	LD	(IX+-3),BC
+;   28	    }
+L_8:
+	LD	BC,128
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	C,L_6
+;   29	
+;   30	    return (bool)appvar;
+	LD	A,(IX+-4)
+;   31	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _PKMNMS1_init ***************************
+;Name                         Addr/Register   Size   Type
+;_indoortileset_tiles_data           IMPORT    384   variable
+;_PKMNMS1                            STATIC      6   variable
+;_ti_GetDataPtr                      IMPORT  -----   function
+;_ti_Open                            IMPORT  -----   function
+;_ti_CloseAll                        IMPORT  -----   function
+;data                                  IX-7      3   variable
+;appvar                                IX-4      1   variable
+;i                                     IX-3      3   variable
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__0:
+	DB	"r"
+	DB	0
+L__1:
+	DB	"PKMNMS1"
+	DB	0
+	XREF _ti_GetDataPtr:ROM
+	XREF _ti_Open:ROM
+	XREF _ti_CloseAll:ROM
+	XREF _indoortileset_tiles_data:ROM
+	XREF __frameset:ROM
+	XDEF _PKMNMS1_init
+	XDEF _PKMNMS1
+	END

@@ -1,0 +1,17 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\..\SRC\GFX\POKEBALL.C"
+	.assume ADL=1
+	SEGMENT DATA
+_pokeball_tiles_compressed:
+	DW24	0
+	DW24	65
+	DW24	130
+	XDEF _pokeball_tiles_compressed
+;    1	// convpng v6.8
+;    2	#include <stdint.h>
+;    3	#include "map_gfx.h"
+;    4	
+;    5	uint8_t *pokeball_tiles_compressed[3] = {
+	END

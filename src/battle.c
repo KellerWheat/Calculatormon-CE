@@ -10,6 +10,7 @@
 #include <graphx.h>
 #include <fileioc.h>
 #include <debug.h>
+#include <compression.h>
 
 #include "map.h"
 #include "battle.h"
@@ -26,28 +27,22 @@
 #include "gfx/PKMNSD1.h"
 #include "gfx/PKMNSD2.h"
 #include "gfx/PKMNSD3.h"
-#include "gfx/PKMNSD4.h"
 #include "gfx/PKMNSD5.h"
-#include "gfx/PKMNSD6.h"
-#include "gfx/PKMNSD7.h"
-#include "gfx/PKMNSD8.h"
-#include "gfx/PKMNSD9.h"
-#include "gfx/PKMNSD10.h"
-#include "gfx/PKMNSD11.h"
+
+void SetupBattleGfx(void);
 
 bool playerturn(void);
 bool enemyturn(void);
+int selectMove(void);
 void redrawcharacters(void);
 void attack(bool player, uint8_t move);
 
-uint8_t * getstatus(bool player);
+uint8_t CalculateXpPercent(void);
 void applystatus(bool player);
 void resetstatus(bool player);
 void takedamage(bool player, int amount);
 void heal(bool player, int amount);
 
-void winfight(void);
-void losefight(void);
 void addxp(void);
 bool capture(uint8_t ball);
 
@@ -61,12 +56,20 @@ uint8_t currentenemy;
 char playername[20];
 char enemyname[20];
 
+gfx_sprite_t *playerSprite;
+gfx_sprite_t *enemySprite;
+
+gfx_sprite_t *backgroundSprite;
+gfx_sprite_t *hpBarSprite;
+gfx_sprite_t *statusSprites[5];
+
 struct pokemonData enemyparty[6];
 uint8_t attackturn = 0;
 uint8_t chosenmove[2];
 bool wild;
 
 struct pokemonStats stats[2];
+uint8_t *currentStatusPointer[2];
 uint8_t statmods[2][7];
 
 uint8_t confusedturns[2];
@@ -97,14 +100,7 @@ void battle_Initialize(void) {
 	PKMNSD1_init();
 	PKMNSD2_init();
 	PKMNSD3_init();
-	PKMNSD4_init();
 	PKMNSD5_init();
-	PKMNSD6_init();
-	PKMNSD7_init();
-	PKMNSD8_init();
-	PKMNSD9_init();
-	PKMNSD10_init();
-	PKMNSD11_init();
 }
 void battle_Setup(void) {
 	int pokemonIndex;
@@ -114,10 +110,9 @@ void battle_Setup(void) {
 			pokemonIndex = 6;
 		}
 	}
-	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
-	SetColors(1);
-	gfx_SetTextScale(1, 1);
-	gfx_SetTextFGColor(colors[1]);
+	
+	SetupBattleGfx();
+
 	battleMenuState1 = 0;
 	battleMenuState2 = 0;
 	battleMenuCurrent = 1;
@@ -127,10 +122,31 @@ void battle_Setup(void) {
 	currentenemy = 0;
 	attackturn = 0;
 
+	playerSprite = gfx_MallocSprite(56, 56);
+	enemySprite = gfx_MallocSprite(56, 56);
+
 	resetstatus(true);
 	resetstatus(false);
 
 	run = false;
+}
+void SetupBattleGfx(void) {
+	zx7_Decompress(textBoxSprite1, battletextbox1_compressed);
+	zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
+	backgroundSprite = gfx_MallocSprite(160, 88);
+	zx7_Decompress(backgroundSprite, background_compressed);
+	hpBarSprite = gfx_MallocSprite(98, 10);
+	zx7_Decompress(hpBarSprite, hpbar_compressed);
+
+	MallocIcons();
+
+	SetColors(1);
+	gfx_FillScreen(colors[0]);
+	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+	gfx_SwapDraw();
+	gfx_SetTextScale(1, 1);
+	gfx_SetTextFGColor(colors[1]);
+	gfx_SetColor(colors[0]);
 }
 int battle_Loop(void) {
 	/* Battle */
@@ -151,7 +167,7 @@ int battle_Loop(void) {
 			i++;
 		}
 
-		losefight();
+		map_LoseFight();
 		return 0;
 	}
 	if (enemyparty[currentenemy].currenthealth == 0) {
@@ -170,8 +186,8 @@ int battle_Loop(void) {
 			i++;
 		}
 
-
-		winfight();
+		
+		map_WinFight(wild, enemyparty[0].level * 40);
 		return 0;
 	}
 	/* If 0 determine who attacks first, if 1 or 2 let other character attack, if 3 do end of turn stuff */
@@ -181,8 +197,8 @@ int battle_Loop(void) {
 		if (run) {
 			return 0;
 		}
-
-		if ((stats[0].speed / (1+(getstatus(0)[2]*3))) > (stats[1].speed / (1 + (getstatus(1)[2] * 3)))) {
+		/* Paralysis gets a speed reduction */
+		if ((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) {
 			attack(false, chosenmove[false]);
 			attackturn = 1;
 		}
@@ -215,6 +231,7 @@ int battle_Loop(void) {
 	return 1;
 }
 
+
 void battle_SpawnWild(uint8_t id, uint8_t minlevel, uint8_t maxlevel) {
 	int partyIndex;
 	for(partyIndex = 0; partyIndex < 6; partyIndex++){
@@ -232,7 +249,7 @@ void battle_SpawnTrainer(uint8_t ids[6][16], uint8_t levels[6][16], uint8_t trai
 }
 
 bool playerturn() {
-	if (attackturns[true] > 0) {
+	if (attackturns[true] > 0 && party[currentplayer].pp[lastmove[true]] > 0) {
 		chosenmove[true] = lastmove[true];
 		return true;
 	}
@@ -278,42 +295,13 @@ bool playerturn() {
 	/* Select which move to use */
 	if (battleMenuState1 == 1) {
 		int selectedMove;
-		selectedMove = text_AskQuestion4(data_moves[party[currentplayer].move1].name, data_moves[party[currentplayer].move2].name, data_moves[party[currentplayer].move3].name, data_moves[party[currentplayer].move4].name, true);
-		if (selectedMove == 0) {
-			battleMenuState1 = 0;
+		selectedMove = selectMove();
+		battleMenuState1 = 0;
+		/* Checks if the move can be used */
+		if (selectedMove == 0 || party[currentplayer].pp[selectedMove] == 0 || disabledmove[true] == selectedMove + 1) {
 			return false;
 		}
-		switch (selectedMove)
-		{
-		case 1:
-			if (party[currentplayer].move1 == 0 || disabledmove[true] == 1) {
-				return false;
-			}
-			battleMenuState1 = 0;
-			chosenmove[true] = party[currentplayer].move1;
-			break;
-		case 2:
-			if (party[currentplayer].move2 == 0 || disabledmove[true] == 2) {
-				return false;
-			}
-			battleMenuState1 = 0;
-			chosenmove[true] = party[currentplayer].move2;
-			break;
-		case 3:
-			if (party[currentplayer].move3 == 0 || disabledmove[true] == 3) {
-				return false;
-			}
-			battleMenuState1 = 0;
-			chosenmove[true] = party[currentplayer].move3;
-			break;
-		case 4:
-			if (party[currentplayer].move4 == 0 || disabledmove[true] == 4) {
-				return false;
-			}
-			battleMenuState1 = 0;
-			chosenmove[true] = party[currentplayer].move4;
-			break;
-		}
+		chosenmove[true] = party[currentplayer].moves[selectedMove];
 	}
 	/* Items */
 	else if (battleMenuState1 == 2) {
@@ -376,7 +364,7 @@ bool playerturn() {
 			text_Display(str, true);
 			playerItems[battleMenuCurrent]--;
 			if (capture(battleMenuCurrent + 1)) {
-				winfight();
+				map_WinFight(wild, enemyparty[0].level * 40);
 				run = true;
 				return true;
 			}
@@ -396,6 +384,90 @@ bool playerturn() {
 	}
 	return true;
 }
+
+int selectMove(void) {
+	int8_t tv1, tv2, iconIndex;
+	tv1 = 0;
+	tv2 = 0;
+
+	zx7_Decompress(textBoxSprite2, battletextbox3_compressed);
+	gfx_Blit(gfx_screen);
+	text_DrawTextBox();
+
+
+
+	gfx_PrintStringXY(">", 15, 190);
+	gfx_PrintStringXY(data_moves[party[currentplayer].moves[0]].name, 25, 190);
+	gfx_PrintStringXY(data_moves[party[currentplayer].moves[1]].name, 25, 205);
+	gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
+	gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
+
+	if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
+		gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
+		sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
+		gfx_PrintStringXY(str, 271, 209);
+	}
+	
+
+	gfx_SwapDraw();
+	gfx_SetDrawScreen();
+
+	kb_Scan();
+	if ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
+		Wait(50);
+	}
+	kb_Scan();
+	while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
+		kb_Scan();
+		if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
+			if (tv1 == 1) {
+				tv1 = 0;
+			}
+			else {
+				tv1 = 1;
+			}
+			gfx_FillRectangle(14, 185, 10, 45);
+			gfx_FillRectangle(134, 185, 10, 45);
+			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
+
+			gfx_FillRectangle(263, 185, 48, 46);
+			if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
+				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
+			}
+			//sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
+			gfx_PrintStringXY(str, 271, 209);
+
+			Wait(20);
+		}
+		if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+			if (tv2 == 1) {
+				tv2 = 0;
+			}
+			else {
+				tv2 = 1;
+			}
+			gfx_FillRectangle(14, 185, 10, 45);
+			gfx_FillRectangle(134, 185, 10, 45);
+			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
+
+			gfx_FillRectangle(263, 185, 48, 46);
+			if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
+				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
+			}
+			//sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
+			gfx_PrintStringXY(str, 271, 209);
+
+			Wait(20);
+		}
+	}
+	zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
+	if (kb_Data[6] & kb_Clear) {
+		return(0);
+	}
+	gfx_SetDrawBuffer();
+	return (tv1 + 1 + 2 * (tv2));
+}
+
 bool enemyturn() {
 	if (attackturns[false] > 0) {
 		chosenmove[false] = lastmove[false];
@@ -404,104 +476,110 @@ bool enemyturn() {
 	switch (rand() % 4)
 	{
 	case 0:
-		if (enemyparty[currentenemy].move1 == 0 || disabledmove[false] == 1) {
+		if (enemyparty[currentenemy].moves[0] == 0 || disabledmove[false] == 1) {
 			return false;
 		}
-		chosenmove[false] = enemyparty[currentenemy].move1;
+		chosenmove[false] = enemyparty[currentenemy].moves[0];
 		break;
 	case 1:
-		if (enemyparty[currentenemy].move2 == 0 || disabledmove[false] == 2) {
+		if (enemyparty[currentenemy].moves[1] == 0 || disabledmove[false] == 2) {
 			return false;
 		}
-		chosenmove[false] = enemyparty[currentenemy].move2;
+		chosenmove[false] = enemyparty[currentenemy].moves[1];
 		break;
 	case 2:
-		if (enemyparty[currentenemy].move3 == 0 || disabledmove[false] == 3) {
+		if (enemyparty[currentenemy].moves[2] == 0 || disabledmove[false] == 3) {
 			return false;
 		}
-		chosenmove[false] = enemyparty[currentenemy].move3;
+		chosenmove[false] = enemyparty[currentenemy].moves[2];
 		break;
 	case 3:
-		if (enemyparty[currentenemy].move4 == 0 || disabledmove[false] == 4) {
+		if (enemyparty[currentenemy].moves[3] == 0 || disabledmove[false] == 4) {
 			return false;
 		}
-		chosenmove[false] = enemyparty[currentenemy].move4;
+		chosenmove[false] = enemyparty[currentenemy].moves[3];
 		break;
 	}
 	return true;
 }
 void redrawcharacters(void) {
-	int pokemonID, statusIndex;
-	gfx_FillScreen(colors[0]);
+	int statusIndex, healthRatio;
 	gfx_SetColor(colors[1]);
+	text_DrawTextBox();
 
-	pokemonID = party[currentplayer].id;
-	if (pokemonID < 28) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD6[pokemonID], 20, 60, 2, 2);
-	}
-	else if (pokemonID < 56) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD7[pokemonID - 28], 20, 60, 2, 2);
-	}
-	else if (pokemonID < 84) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD8[pokemonID - 56], 20, 60, 2, 2);
-	}
-	else if (pokemonID < 112) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD9[pokemonID - 84], 20, 60, 2, 2);
-	}
-	else if (pokemonID < 140) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD10[pokemonID - 112], 20, 60, 2, 2);
-	}
-	else if (pokemonID < 160) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD11[pokemonID - 140], 20, 60, 2, 2);
-	}
-
-	pokemonID = enemyparty[currentenemy].id;
-	if (pokemonID < 30) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD0[pokemonID], 190, 10, 2, 2);
-	}
-	else if (pokemonID < 57) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD1[pokemonID - 30], 190, 10, 2, 2);
-	}
-	else if (pokemonID < 84) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD2[pokemonID - 57], 190, 10, 2, 2);
-	}
-	else if (pokemonID < 109) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD3[pokemonID - 84], 190, 10, 2, 2);
-	}
-	else if (pokemonID < 132) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD4[pokemonID - 109], 190, 10, 2, 2);
-	}
-	else if (pokemonID < 160) {
-		gfx_ScaledSprite_NoClip((gfx_sprite_t*)PKMNSD5[pokemonID - 132], 190, 10, 2, 2);
-	}
-	
+	gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+	gfx_ScaledTransparentSprite_NoClip(playerSprite, 20, 64, 2, 2);
+	gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 34, 2, 2);
 
 	/* Display Information about player and enemy */
-	gfx_Rectangle(20, 20, 150, 30);
-	sprintf(str, "LV%u %s", enemyparty[currentenemy].level, data_pokemon[enemyparty[currentenemy].id].name);
-	gfx_PrintStringXY(str, 25, 25);
-	sprintf(str, "%u/%u", enemyparty[currentenemy].currenthealth, stats[0].health);
-	gfx_PrintStringXY(str, 25, 35);
-
-	gfx_Rectangle(140, 125, 150, 30);
-	sprintf(str, "LV%u %s", party[currentplayer].level, data_pokemon[party[currentplayer].id].name);
-	gfx_PrintStringXY(str, 145, 130);
-	sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
-	gfx_PrintStringXY(str, 145, 140);
-
-	for (statusIndex = 0; statusIndex < 5; statusIndex++) {
-		gfx_SetColor(colors[statuscolors[statusIndex]]);
-		if (getstatus(1)[statusIndex]) {
-			gfx_FillCircle(215 + (15* statusIndex), 145, 4);
-		}
-		if(getstatus(0)[statusIndex]) {
-			gfx_FillCircle(95 + (15* statusIndex), 25, 4);
-		}
+	
+	gfx_PrintStringXY(data_pokemon[enemyparty[currentenemy].id].name, 17, 29);
+	sprintf(str, "Lv%u", enemyparty[currentenemy].level);
+	gfx_PrintStringXY(str, 98, 29);
+	gfx_Sprite(hpBarSprite, 40, 40);
+	healthRatio = (enemyparty[currentenemy].currenthealth * 78) / stats[0].health;
+	if (healthRatio > 34) {
+		gfx_SetColor(colors[8]);
+	}else if (healthRatio > 14) {
+		gfx_SetColor(colors[9]);
+	}else {
+		gfx_SetColor(colors[10]);
+	}
+	gfx_FillRectangle(58, 42, healthRatio, 6);
+	if (enemyparty[currentenemy].currentstatus > 0) {
+		gfx_TransparentSprite_NoClip(statusSprites[enemyparty[currentenemy].currentstatus-1], 18, 41);
 	}
 
+	gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
+	sprintf(str, "Lv%u", party[currentplayer].level);
+	gfx_PrintStringXY(str, 264, 129);
+	gfx_Sprite(hpBarSprite, 204, 140);
+	healthRatio = (party[currentplayer].currenthealth * 78) / stats[1].health;
+	if (healthRatio > 34) {
+		gfx_SetColor(colors[8]);
+	}
+	else if (healthRatio > 14) {
+		gfx_SetColor(colors[9]);
+	}
+	else {
+		gfx_SetColor(colors[10]);
+	}
+	gfx_FillRectangle(222, 142, healthRatio, 6);
+	
+	sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
+	gfx_PrintStringXY(str, 247, 153);
+
+	gfx_SetTextFGColor(colors[11]);
+	gfx_PrintStringXY("XP", 193, 166);
+	gfx_SetColor(colors[7]);
+	if (party[currentplayer].level < 100) {
+		gfx_FillRectangle(210, 168, CalculateXpPercent(), 4);
+	}
+	if (party[currentplayer].currentstatus > 0) {
+		gfx_TransparentSprite_NoClip(statusSprites[party[currentplayer].currentstatus - 1], 182, 141);
+	}
+
+	gfx_SetColor(colors[0]);
+	gfx_SetTextFGColor(colors[1]);
 	gfx_SwapDraw();
 }
 
+uint8_t CalculateXpPercent(void) {
+	int cXp, sXp, mXp;
+	cXp = party[currentplayer].xp;
+	sXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level];
+	mXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1];
+	return((uint8_t)((92 * (cXp - sXp)) / (mXp - sXp)));
+
+}
+
+void battle_End(void) {
+	free(playerSprite);
+	free(enemySprite);
+	free(backgroundSprite);
+	free(hpBarSprite);
+	FreeIcons();
+}
 
 void attack(bool player, uint8_t move) {
 	
@@ -520,7 +598,8 @@ void attack(bool player, uint8_t move) {
 	if (move == 0) {
 		return;
 	}
-
+	
+	
 	rage[player] = false;
 
 	if (player) {
@@ -593,20 +672,34 @@ void attack(bool player, uint8_t move) {
 	
 
 	/* Exit if character's status prevents movement */
-	if (getstatus(player)[2] && (rand() % 4 == 1)) {
+	if ((*currentStatusPointer[player] == 3) && (rand() % 4 == 1)) {
 		sprintf(str, "%s is paralysed", username);
 		text_Display(str, true);
 		return;
 	}
-	if (getstatus(player)[3]) {
-		sprintf(str, "%s is asleep", username);
-		text_Display(str, true);
-		return;
+	if (*currentStatusPointer[player] == 4) {
+		if (rand() % 3 == 0) {
+			*currentStatusPointer[player] = 1;
+			sprintf(str, "%s woke up", username);
+			text_Display(str, true);
+		}
+		else {
+			sprintf(str, "%s is asleep", username);
+			text_Display(str, true);
+			return;
+		}
 	}
-	if (getstatus(player)[4]) {
-		sprintf(str, "%s is frozen", username);
-		text_Display(str, true);
-		return;
+	if (*currentStatusPointer[player] == 5) {
+		if (rand() % 5 == 0) {
+			*currentStatusPointer[player] = 0;
+			sprintf(str, "%s thawed out", username);
+			text_Display(str, true);
+		}
+		else {
+			sprintf(str, "%s is frozen", username);
+			text_Display(str, true);
+			return;
+		}
 	}
 	if (confusedturns[player] > 0) {
 		confusedturns[player] --;
@@ -624,7 +717,7 @@ void attack(bool player, uint8_t move) {
 		}
 		return;
 	}
-	if (getstatus(!player)[3] == false && data_moves[move].statustype == 26) {
+	if (!(*currentStatusPointer[player] == 4) && data_moves[move].statustype == 26) {
 		text_Display("It Failed", true);
 	}
 	if (data_moves[move].statustype == 22) {
@@ -762,7 +855,7 @@ startattack:
 		}
 	}
 	else if (data_moves[move].type == 13) {
-		getstatus(player)[3] = 2;
+		*currentStatusPointer[player] = 4;
 		heal(player, 1000);
 	}
 	else if (data_moves[move].type == 14) {
@@ -796,29 +889,54 @@ startattack:
 			}
 		}
 		if (data_moves[move].statustype == 7) {
-			getstatus(!player)[0] = true;
-			sprintf(str, "%s was poisoned", nonusername);
-			text_Display(str, true);
+			if (*currentStatusPointer[!player] == 0) {
+				*currentStatusPointer[!player] = 1;
+				sprintf(str, "%s was poisoned", nonusername);
+				text_Display(str, true);
+			}
+			else if (data_moves[move].type == 4) {
+				text_Display("It failed", true);
+			}
 		}
 		if (data_moves[move].statustype == 8 || e == 0) {
-			getstatus(!player)[1] = true;
-			sprintf(str, "%s was burned", nonusername);
-			text_Display(str, true);
+			if (*currentStatusPointer[!player] == 0) {
+				*currentStatusPointer[!player] = 2;
+				sprintf(str, "%s was burned", nonusername);
+				text_Display(str, true);
+			}
+			else if (data_moves[move].type == 4) {
+				text_Display("It failed", true);
+			}
 		}
 		if (data_moves[move].statustype == 9 || e == 1) {
-			getstatus(!player)[2] = true;
-			sprintf(str, "%s was paralysed", nonusername);
-			text_Display(str, true);
+			if (*currentStatusPointer[!player] == 0) {
+				*currentStatusPointer[!player] = 3;
+				sprintf(str, "%s was paralysed", nonusername);
+				text_Display(str, true);
+			}
+			else if (data_moves[move].type == 4) {
+				text_Display("It failed", true);
+			}
 		}
 		if (data_moves[move].statustype == 10) {
-			getstatus(!player)[3] = true;
-			sprintf(str, "%s fell asleep", nonusername);
-			text_Display(str, true);
+			if (*currentStatusPointer[!player] == 0) {
+				*currentStatusPointer[!player] = 4;
+				sprintf(str, "%s fell asleep", nonusername);
+				text_Display(str, true);
+			}
+			else if (data_moves[move].type == 4) {
+				text_Display("It failed", true);
+			}
 		}
 		if (data_moves[move].statustype == 11 || e == 2) {
-			getstatus(!player)[4] = true;
-			sprintf(str, "%s was frozen", nonusername);
-			text_Display(str, true);
+			if (*currentStatusPointer[!player] == 0) {
+				*currentStatusPointer[!player] = 5;
+				sprintf(str, "%s was frozen", nonusername);
+				text_Display(str, true);
+			}
+			else if (data_moves[move].type == 4) {
+				text_Display("It failed", true);
+			}
 		}
 
 		if (data_moves[move].statustype == 12) {
@@ -870,15 +988,6 @@ startattack:
 	}
 }
 
-uint8_t * getstatus(bool player) {
-	if (player) {
-		return(party[currentplayer].currentstatus);
-	}
-	else {
-		return(enemyparty[currentenemy].currentstatus);
-	}
-}
-
 void applystatus(bool player) {
 	char name[20];
 	if (player) {
@@ -888,13 +997,13 @@ void applystatus(bool player) {
 		strcpy(name, enemyname);
 	}
 	/* Poison */
-	if (getstatus(player)[0]) {
+	if (*currentStatusPointer[player] == 1) {
 		sprintf(str, "%s was hurt by its poison", name);
 		text_Display(str, true);
 		takedamage(player, stats[player].health / 12);
 	}
 	/* Burn */
-	if (getstatus(player)[1]) {
+	if (*currentStatusPointer[player] == 2) {
 		sprintf(str, "%s was hurt by its burn", name);
 		text_Display(str, true);
 		takedamage(player, stats[player].health / 12);
@@ -922,7 +1031,9 @@ void applystatus(bool player) {
 	}
 	disabledturns[player]--;
 }
-/* When a new pokemon is sent out, reset everything */
+/* When a new pokemon is sent out, reset everything 
+   This also decompresses the new pokemon's sprite
+ */
 void resetstatus(bool player) {
 	i = 0;
 	while (i < sizeof(statmods[player])) {
@@ -948,12 +1059,33 @@ void resetstatus(bool player) {
 	chosenmove[player] = 0;
 
 	if (player) {
+		uint8_t pokemonID;
 		sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
 		stats[1] = stats_CalculateStats(party[currentplayer]);
+
+		pokemonID = party[currentplayer].id;
+		if (pokemonID < 80) {
+			zx7_Decompress(playerSprite, PKMNSD2[pokemonID]);
+		}
+		else {
+			zx7_Decompress(playerSprite, PKMNSD3[pokemonID - 80]);
+		}
+		currentStatusPointer[1] = &party[currentplayer].currentstatus;
 	}
 	else {
-		sprintf(enemyname, "Enemy %s", data_pokemon[enemyparty[currentenemy].id].name);\
+		uint8_t pokemonID;
+		sprintf(enemyname, "Enemy %s", data_pokemon[enemyparty[currentenemy].id].name);
 		stats[0] = stats_CalculateStats(enemyparty[currentenemy]);
+
+		pokemonID = enemyparty[currentenemy].id;
+		
+		if (pokemonID < 80) {
+			zx7_Decompress(enemySprite, PKMNSD0[pokemonID]);
+		}
+		else {
+			zx7_Decompress(enemySprite, PKMNSD1[pokemonID - 80]);
+		}
+		currentStatusPointer[0] = &enemyparty[currentenemy].currentstatus;
 	}
 }
 
@@ -994,50 +1126,6 @@ void heal(bool player, int amount) {
 
 
 
-void winfight(void) {
-	char str1[16];
-	if (!wild) {
-		playerMoney += enemyparty[0].level * 40;
-		if (indoors) {
-			defeatedTrainersIndoors[currentBuilding][currentTrainer] = true;
-			if (data_buildingZoneData[currentBuilding].trainerreward[currentTrainer] != 0) {
-				if (data_buildingZoneData[currentBuilding].trainerreward[currentTrainer] == 255) {
-					badgeCount++;
-					sprintf(str, "Recieved a badge");
-				}
-				else {
-					playerItems[data_buildingZoneData[currentBuilding].trainerreward[currentTrainer] - 1]++;
-					items_IndexToName(str1, data_buildingZoneData[currentBuilding].trainerreward[currentTrainer] - 1);
-					if (data_buildingZoneData[currentBuilding].trainerreward[currentTrainer] - 1 >= 20) {
-						sprintf(str, "Recieved the TM for %s", str1);
-					}
-					else {
-						sprintf(str, "Recieved a %s", str1);
-					}
-				}
-				text_Display(str, false);
-			}
-		}
-		else {
-			defeatedTrainers[currentZone][currentTrainer] = true;
-			if (data_zoneData[currentZone].trainerreward[currentTrainer] != 0) {
-				playerItems[data_zoneData[currentZone].trainerreward[currentTrainer]-1]++;
-				items_IndexToName(str1, data_zoneData[currentZone].trainerreward[currentTrainer] - 1);
-				if (data_zoneData[currentZone].trainerreward[currentTrainer] - 1 >= 20) {
-					sprintf(str, "Recieved the TM for %s", str1);
-				}
-				else {
-					sprintf(str, "Recieved a %s", str1);
-				}
-				text_Display(str, false);
-			}
-		}
-	}
-}
-void losefight(void) {
-	text_Display("All your pokemon have fainted", false);
-	map_Respawn();
-}
 void addxp(void) {
 	uint16_t xpgain = (enemyparty[currentenemy].level * data_pokemon[enemyparty[currentenemy].id].xpdrop) / 7;
 	party[currentplayer].xp += xpgain;
@@ -1052,19 +1140,19 @@ void addxp(void) {
 				text_Display(str, false);
 				sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
 				text_Display(str, false);
-				switch (text_AskQuestion4(data_moves[party[currentplayer].move1].name, data_moves[party[currentplayer].move2].name, data_moves[party[currentplayer].move3].name, data_moves[party[currentplayer].move4].name, false))
+				switch (text_AskQuestion4(data_moves[party[currentplayer].moves[0]].name, data_moves[party[currentplayer].moves[1]].name, data_moves[party[currentplayer].moves[2]].name, data_moves[party[currentplayer].moves[3]].name, false))
 				{
 				case 1:
-					party[currentplayer].move1 = data_pokemon[party[currentplayer].id].moveids[i];
+					party[currentplayer].moves[0] = data_pokemon[party[currentplayer].id].moveids[i];
 					break;
 				case 2:
-					party[currentplayer].move2 = data_pokemon[party[currentplayer].id].moveids[i];
+					party[currentplayer].moves[1] = data_pokemon[party[currentplayer].id].moveids[i];
 					break;
 				case 3:
-					party[currentplayer].move3 = data_pokemon[party[currentplayer].id].moveids[i];
+					party[currentplayer].moves[2] = data_pokemon[party[currentplayer].id].moveids[i];
 					break;
 				case 4:
-					party[currentplayer].move4 = data_pokemon[party[currentplayer].id].moveids[i];
+					party[currentplayer].moves[3] = data_pokemon[party[currentplayer].id].moveids[i];
 					break;
 				}
 			}
@@ -1111,7 +1199,7 @@ bool capture(uint8_t ball) {
 			n1 = rand() % 150;
 		}
 		n2 = n1;
-		if (getstatus(false)[3] || getstatus(false)[4]) {
+		if (*currentStatusPointer[false] == 4 || *currentStatusPointer[false] == 5) {
 			if (n1 < 25) {
 				captured = true;
 			}
@@ -1119,7 +1207,7 @@ bool capture(uint8_t ball) {
 				n2 -= 25;
 			}
 		}
-		if (getstatus(false)[0] || getstatus(false)[1] || getstatus(false)[2]) {
+		if (*currentStatusPointer[false] == 1 || *currentStatusPointer[false] == 2 || *currentStatusPointer[false] == 3) {
 			if (n1 < 12) {
 				captured = true;
 			}

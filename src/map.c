@@ -9,6 +9,8 @@
 #include <keypadc.h>
 #include <graphx.h>
 #include <debug.h>
+#include <compression.h>
+#include <fileioc.h>
 
 #include "map.h"
 #include "battle.h"
@@ -22,13 +24,12 @@
 #include "gfx/map_gfx.h"
 #include "items.h"
 
-#include "gfx/PKMNSD12.h"
-#include "gfx/PKMNSD13.h"
+#include "gfx/PKMNSD4.h"
 
 #define OUTDOORWIDTH 48
 #define OUTDOORHEIGHT 40
-#define MAX_X ((OUTDOORWIDTH - 21)*16) // (Tilemap Width - Draw Width) * 16
-#define MAX_Y ((OUTDOORHEIGHT - 15)*16) // (Tilemap Height - Draw Height) * 16
+#define MAX_X ((OUTDOORWIDTH - 21)*16)
+#define MAX_Y ((OUTDOORHEIGHT - 15)*16)
 
 void HealParty(void);
 void OpenBox(void);
@@ -44,7 +45,10 @@ int32_t Clamp(int32_t number, int min, int max);
 uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width);
 /* Gets the typemap at a specific tile */
 uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width);
+/* Draw 16 enemy trainers */
 void DrawEnemies(void);
+/* Loads the tilemap, typemap ,and zonedata for current area */
+void LoadMap(void);
 
 const int battlechance = 10; /* Chance for enemy to spawn out of 100 */
 
@@ -74,6 +78,17 @@ gfx_tilemap_t playermap;
 gfx_tilemap_t enemymap;
 gfx_tilemap_t pokeballmap;
 
+gfx_sprite_t *mapTiles[128];
+gfx_sprite_t *playerTiles[24];
+gfx_sprite_t *enemyTiles[8];
+gfx_sprite_t *pokeballTiles[3];
+gfx_sprite_t *pauseMenuSprite;
+
+uint8_t currentTileMap[1920];
+uint8_t currentTypeMap[1920];
+struct zoneData currentZoneData;
+/* zoneData is in header file because battle.c needs it*/
+
 uint8_t npc1;
 uint8_t npc2;
 
@@ -84,12 +99,19 @@ const struct pokemonData clearcharacter2 = {0};
 char str1[20];
 
 void map_Initialize(void) {
-	PKMNSD12_init();
-	PKMNSD13_init();
+	PKMNSD4_init();
+
+	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+	SetColors(0);
+	gfx_SetTextFGColor(colors[1]);
+	zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
+	zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
+	save_SelectSave();
+	save_Load();
 
 	/* Initialize the tilemap */
-	tilemap.map = data_tileMaps[currentZone];
-	tilemap.tiles = tileset_tiles;
+	tilemap.map = currentTileMap;
+	tilemap.tiles = mapTiles;
 	tilemap.type_width = gfx_tile_16_pixel;
 	tilemap.type_height = gfx_tile_16_pixel;
 	tilemap.tile_height = 16;
@@ -103,7 +125,7 @@ void map_Initialize(void) {
 
 	/* Initialize player tilemap */
 	playermap.map = playertilemap;
-	playermap.tiles = player_tiles;
+	playermap.tiles = playerTiles;
 	playermap.type_width = gfx_tile_16_pixel;
 	playermap.type_height = gfx_tile_16_pixel;
 	playermap.tile_height = 16;
@@ -117,7 +139,7 @@ void map_Initialize(void) {
 
 	/* Initialize tilemap for other trainers */
 	enemymap.map = enemytilemap;
-	enemymap.tiles = enemy_tiles;
+	enemymap.tiles = enemyTiles;
 	enemymap.type_width = gfx_tile_16_pixel;
 	enemymap.type_height = gfx_tile_16_pixel;
 	enemymap.tile_height = 16;
@@ -131,7 +153,7 @@ void map_Initialize(void) {
 
 	/* Initialize Pokeball Tilemap (shows which pokemon have fainted)*/
 	pokeballmap.map = pokeballtilemap;
-	pokeballmap.tiles = pokeball_tiles;
+	pokeballmap.tiles = pokeballTiles;
 	pokeballmap.type_width = gfx_tile_16_pixel;
 	pokeballmap.type_height = gfx_tile_16_pixel;
 	pokeballmap.tile_height = 16;
@@ -146,43 +168,67 @@ void map_Initialize(void) {
 	if (indoors) {
 		tilemap.width = 21;
 		tilemap.height = 15;
-		tilemap.map = data_buildingTileMaps[currentBuilding];
 	}
+
+	tx = playerX / 16;
+	ty = playerY / 16;
+	LoadMap();
+}
+void map_Setup(void) {
+	map_SetupGfx();
 
 	tx = playerX / 16;
 	ty = playerY / 16;
 }
-void map_Setup(void) {
-	int pokemonIndex;
-	/* Generate pokemon info To Display At Top of Screen */
-	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
-		if (party[pokemonIndex].id == 0) {
-			pokeballtilemap[pokemonIndex] = 2;
+
+void map_SetupGfx(void) {
+	int tileIndex = 0;
+	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+		mapTiles[tileIndex] = gfx_MallocSprite(16, 16);
+		if (indoors) {
+			zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
 		}
 		else {
-			if (party[pokemonIndex].currenthealth > 0) {
-				pokeballtilemap[pokemonIndex] = 0;
-			}
-			else {
-				pokeballtilemap[pokemonIndex] = 1;
-			}
+			zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
 		}
 	}
-
-
-	tx = playerX / 16;
-	ty = playerY / 16;
+	for (tileIndex = 0; tileIndex < 24; tileIndex++) {
+		playerTiles[tileIndex] = gfx_MallocSprite(16, 16);
+		zx7_Decompress(playerTiles[tileIndex], player_tiles_compressed[tileIndex]);
+	}
+	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
+		enemyTiles[tileIndex] = gfx_MallocSprite(16, 16);
+		zx7_Decompress(enemyTiles[tileIndex], enemy_tiles_compressed[tileIndex]);
+	}
+	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
+		pokeballTiles[tileIndex] = gfx_MallocSprite(16, 16);
+		zx7_Decompress(pokeballTiles[tileIndex], pokeball_tiles_compressed[tileIndex]);
+	}
+	pauseMenuSprite = gfx_MallocSprite(112, 96);
+	zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
+	zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
+	zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
 	gfx_SetTextScale(1, 1);
 	gfx_SetTextFGColor(colors[1]);
-
+	map_LoadPokeballs();
 }
+
 int map_Loop(void) {
 	/* Open Menu */
 	if (kb_Data[6] & kb_Enter) {
+		int menuReturn;
 		Wait(20);
-		return 2;
+		gfx_Blit(gfx_screen);
+		gfx_Sprite(pauseMenuSprite, 195, 25);
+		map_End();
+
+		menuReturn = menu_Menu();
+		map_SetupGfx();
+		map_LoadPokeballs();
+		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+		return menuReturn;
 	}
 	/* If player presses 2nd */
 	if ((kb_Data[1] & kb_2nd)) {
@@ -251,7 +297,7 @@ int map_Loop(void) {
 				if ((rand() % 100) <= battlechance) {
 					uint8_t wildSpawn;
 					wildSpawn = rand() % 5;
-					battle_SpawnWild(data_zoneData[currentZone].spawnids[wildSpawn][nextTile -16], data_zoneData[currentZone].spawnminlevels[wildSpawn][nextTile - 16], data_zoneData[currentZone].spawnmaxlevels[wildSpawn][nextTile - 16]);
+					battle_SpawnWild(currentZoneData.spawnids[wildSpawn][nextTile -16], currentZoneData.spawnminlevels[wildSpawn][nextTile - 16], currentZoneData.spawnmaxlevels[wildSpawn][nextTile - 16]);
 					return 1;
 				}
 			}
@@ -300,6 +346,30 @@ int map_Loop(void) {
 		}
 	}
 
+	map_Draw();
+
+	gfx_SwapDraw();
+	return 0;
+}
+void map_End(void) {
+	int tileIndex = 0;
+	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+		free(mapTiles[tileIndex]);
+	}
+	for (tileIndex = 0; tileIndex < 24; tileIndex++) {
+		free(playerTiles[tileIndex]);
+	}
+	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
+		free(enemyTiles[tileIndex]);
+
+	}
+	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
+		free(pokeballTiles[tileIndex]);
+	}
+	free(pauseMenuSprite);
+}
+
+void map_Draw(void) {
 	/* Move Screen and Redraw */
 	if (indoors) {
 		screenX = 0;
@@ -321,21 +391,17 @@ int map_Loop(void) {
 		gfx_TransparentTilemap(&playermap, 16 * (moveDir * 3 + playerState - 3), 0);
 	}
 	DrawEnemies();
-	
 	map_DrawInformationBar();
-	gfx_SwapDraw();
-	return 0;
 }
 
 void HealParty(void) {
-	int pokemonIndex, statusIndex;
+	int pokemonIndex;
 	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 		party[pokemonIndex].currenthealth = stats_CalculateStats(party[pokemonIndex]).health;
-		for (statusIndex = 0; statusIndex < 5; statusIndex++) {
-			party[pokemonIndex].currentstatus[statusIndex] = 0;
-		}
+		party[pokemonIndex].currentstatus = 0;
 	}
 	text_Display("Your party has been healed", true);
+	map_LoadPokeballs();
 }
 void OpenBox(void) {
 	uint8_t boxMode;
@@ -410,6 +476,7 @@ void OpenBox(void) {
 			}
 		}
 	}
+	map_LoadPokeballs();
 }
 void TalkToNpc1(void) {
 	text_Display(data_npcText[npc1], false);
@@ -446,57 +513,94 @@ void EnterDoor(uint8_t index) {
 	lastPlayerX = playerX;
 	lastPlayerY = playerY;
 	indoors = true;
-	currentBuilding = data_zoneData[currentZone].doorzones[index];
+	currentBuilding = currentZoneData.doorzones[index];
 
-	for (tileIndex = 0; tileIndex < tileset_tiles_num; tileIndex++) {
-		memcpy(tileset_tiles_data[tileIndex], indoortileset_tiles_data[tileIndex], 258);
+	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+		zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
 	}
 	tilemap.width = 21;
 	tilemap.height = 15;
-	tilemap.map = data_buildingTileMaps[currentBuilding];
-	playerX = data_zoneData[currentZone].doorx[index] * 16;
-	playerY = data_zoneData[currentZone].doory[index] * 16;
+	playerX = currentZoneData.doorx[index] * 16;
+	playerY = currentZoneData.doory[index] * 16;
 	tx = playerX / 16;
 	ty = playerY / 16;
-	npc1 = data_zoneData[currentZone].doornpc1[index];
-	npc2 = data_zoneData[currentZone].doornpc2[index];
+	npc1 = currentZoneData.doornpc1[index];
+	npc2 = currentZoneData.doornpc2[index];
+	LoadMap();
 }
 void ExitBuilding(void) {
 	int tileIndex;
 	playerX = lastPlayerX;
 	playerY = lastPlayerY;
 	indoors = false;
-	for (tileIndex = 0; tileIndex < tileset_tiles_num; tileIndex++) {
-		memcpy(tileset_tiles_data[tileIndex], outdoortileset_tiles_data[tileIndex], 258);
+	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+		zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
 	}
 	tilemap.width = OUTDOORWIDTH;
 	tilemap.height = OUTDOORHEIGHT;
 	tx = playerX / 16;
 	ty = playerY / 16;
-	tilemap.map = data_tileMaps[currentZone];
+	LoadMap();
 }
 void ExitZone(uint8_t index) {
-	playerX = data_zoneData[currentZone].exitx[index] * 16;
-	playerY = data_zoneData[currentZone].exity[index] * 16;
-	currentZone = data_zoneData[currentZone].exitzone[index];
-	tilemap.map = data_tileMaps[currentZone];
+	playerX = currentZoneData.exitx[index] * 16;
+	playerY = currentZoneData.exity[index] * 16;
+	currentZone = currentZoneData.exitzone[index];
 	tx = playerX / 16;
 	ty = playerY / 16;
+	LoadMap();
 }
 bool FightTrainer(uint8_t index) {
 	currentTrainer = index;
 	if (indoors && !defeatedTrainersIndoors[currentBuilding][currentTrainer]) {
-		text_Display(data_trainerText[data_buildingZoneData[currentBuilding].data_trainerText[index]], true);
-		battle_SpawnTrainer(data_buildingZoneData[currentBuilding].trainerspawnids, data_buildingZoneData[currentBuilding].trainerspawnlevels, index);
+		text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
+		battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 		return true;
 	}
 	else if (!indoors && !defeatedTrainers[currentZone][currentTrainer]) {
-		text_Display(data_trainerText[data_zoneData[currentZone].data_trainerText[index]], true);
-		battle_SpawnTrainer(data_zoneData[currentZone].trainerspawnids, data_zoneData[currentZone].trainerspawnlevels, index);
+		text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
+		battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 		return true;
 	}
 	return false;
 }
+
+void map_LoadPokeballs(void) {
+	int pokemonIndex;
+	/* Generate pokemon info To Display At Top of Screen */
+	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
+		if (party[pokemonIndex].id == 0) {
+			pokeballtilemap[pokemonIndex] = 2;
+		}
+		else {
+			if (party[pokemonIndex].currenthealth > 0) {
+				pokeballtilemap[pokemonIndex] = 0;
+			}
+			else {
+				pokeballtilemap[pokemonIndex] = 1;
+			}
+		}
+	}
+}
+void LoadMap(void) {
+	ti_var_t mapAV;
+	if (indoors) {
+		mapAV = ti_Open("PKMNMD1", "r");
+		ti_Seek(((int)currentBuilding) * 1270, 0, mapAV);
+		ti_Read(&currentTileMap, 315, 1, mapAV);
+		ti_Read(&currentTypeMap, 315, 1, mapAV);
+		ti_Read(&currentZoneData, 640, 1, mapAV);
+	}
+	else {
+		mapAV = ti_Open("PKMNMD0", "r");
+		ti_Seek(((int)currentZone) * 4480, 0, mapAV);
+		ti_Read(&currentTileMap, 1920, 1, mapAV);
+		ti_Read(&currentTypeMap, 1920, 1, mapAV);
+		ti_Read(&currentZoneData, 640, 1, mapAV);
+	}
+	ti_CloseAll();
+}
+
 int32_t Clamp(int32_t number, int min, int max) {
 	if (number < min) {
 		number = min;
@@ -523,10 +627,10 @@ uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width) {
 
 uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
 	if (indoors) {
-		return (data_buildingTypeMaps[currentBuilding][(tx)+(ty)* width]);
+		return (currentTypeMap[(tx)+(ty)* width]);
 	}
 	else {
-		return (data_typeMaps[currentZone][(tx)+(ty)* width]);
+		return (currentTypeMap[(tx)+(ty)* width]);
 	}
 }
 
@@ -535,22 +639,22 @@ void DrawEnemies(void) {
 	uint32_t yloc = 0;
 	for (i = 0; i < 16; i++) {
 		if (indoors){
-			if (data_buildingZoneData[currentBuilding].trainerdir[i] != 0) {
-				xloc = data_buildingZoneData[currentBuilding].trainerx[i] * 16 - 8;
-				yloc = data_buildingZoneData[currentBuilding].trainery[i] * 16 - 8;
+			if (currentZoneData.trainerdir[i] != 0) {
+				xloc = currentZoneData.trainerx[i] * 16 - 8;
+				yloc = currentZoneData.trainery[i] * 16 - 8;
 				enemymap.x_loc = (xloc);
 				enemymap.y_loc = (yloc);
-				gfx_TransparentTilemap(&enemymap, 16 * (data_buildingZoneData[currentBuilding].trainerdir[i] - 1), 0);
+				gfx_TransparentTilemap(&enemymap, 16 * (currentZoneData.trainerdir[i] - 1), 0);
 			}
 		}
 		else {
-			if (data_zoneData[currentZone].trainerdir[i] != 0) {
-				xloc = data_zoneData[currentZone].trainerx[i] * 16 - screenX - 8;
-				yloc = data_zoneData[currentZone].trainery[i] * 16 - screenY - 8;
+			if (currentZoneData.trainerdir[i] != 0) {
+				xloc = currentZoneData.trainerx[i] * 16 - screenX - 8;
+				yloc = currentZoneData.trainery[i] * 16 - screenY - 8;
 				if (xloc < 336 && yloc < 240 && xloc > 0 && yloc > 0) {
 				enemymap.x_loc = (xloc);
 				enemymap.y_loc = (yloc);
-				gfx_TransparentTilemap(&enemymap, 16 * (data_zoneData[currentZone].trainerdir[i] - 1), 0);
+				gfx_TransparentTilemap(&enemymap, 16 * (currentZoneData.trainerdir[i] - 1), 0);
 				}
 			}
 		}
@@ -566,12 +670,12 @@ void map_DrawInformationBar(void) {
 	gfx_PrintStringXY(str, 100, 5);
 }
 
-void map_Respawn(void) {
-	for (i = 0; i < 6; i++) {
-		party[i].currenthealth = stats_CalculateStats(party[i]).health;
-		for (e = 0; e < 5; e++) {
-			party[i].currentstatus[e] = 0;
-		}
+void map_LoseFight(void) {
+	int tileIndex, partyIndex;
+	text_Display("All your pokemon have fainted", false);
+	for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+		party[partyIndex].currenthealth = stats_CalculateStats(party[partyIndex]).health;
+		party[partyIndex].currentstatus = 0;
 	}
 	playerX = 5*16;
 	playerY = 7*16;
@@ -582,5 +686,46 @@ void map_Respawn(void) {
 	tilemap.height = OUTDOORHEIGHT;
 	tx = playerX / 16;
 	ty = playerY / 16;
-	tilemap.map = data_tileMaps[currentZone];
+	LoadMap();
+}
+
+void map_WinFight(bool wild, uint16_t rewardMoney) {
+	char str1[16];
+	if (!wild) {
+		playerMoney += rewardMoney;
+		if (indoors) {
+			defeatedTrainersIndoors[currentBuilding][currentTrainer] = true;
+			if (currentZoneData.trainerreward[currentTrainer] != 0) {
+				if (currentZoneData.trainerreward[currentTrainer] == 255) {
+					badgeCount++;
+					sprintf(str, "Recieved a badge");
+				}
+				else {
+					playerItems[currentZoneData.trainerreward[currentTrainer] - 1]++;
+					items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
+					if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
+						sprintf(str, "Recieved the TM for %s", str1);
+					}
+					else {
+						sprintf(str, "Recieved a %s", str1);
+					}
+				}
+				text_Display(str, false);
+			}
+		}
+		else {
+			defeatedTrainers[currentZone][currentTrainer] = true;
+			if (currentZoneData.trainerreward[currentTrainer] != 0) {
+				playerItems[currentZoneData.trainerreward[currentTrainer]-1]++;
+				items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
+				if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
+					sprintf(str, "Recieved the TM for %s", str1);
+				}
+				else {
+					sprintf(str, "Recieved a %s", str1);
+				}
+				text_Display(str, false);
+			}
+		}
+	}
 }

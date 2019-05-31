@@ -2,449 +2,766 @@ opened convpng.ini
 
 --- map_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [183] indices.
+built palette with [213] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0x8318
-6:
- tileset : 100.00%
+8:
+ maptextbox1 : 100.00% (10242 > 180 bytes)
+ maptextbox2 : 100.00% (10242 > 179 bytes)
+ pausemenu : 100.00% (10754 > 66 bytes)
  outdoortileset : 100.00%
+ outdoortileset_tile_0_compressed (258 > 19 bytes)
+ outdoortileset_tile_1_compressed (258 > 32 bytes)
+ outdoortileset_tile_2_compressed (258 > 126 bytes)
+ outdoortileset_tile_3_compressed (258 > 108 bytes)
+ outdoortileset_tile_4_compressed (258 > 130 bytes)
+ outdoortileset_tile_5_compressed (258 > 110 bytes)
+ outdoortileset_tile_6_compressed (258 > 115 bytes)
+ outdoortileset_tile_7_compressed (258 > 73 bytes)
+ outdoortileset_tile_8_compressed (258 > 82 bytes)
+ outdoortileset_tile_9_compressed (258 > 95 bytes)
+ outdoortileset_tile_10_compressed (258 > 98 bytes)
+ outdoortileset_tile_11_compressed (258 > 96 bytes)
+ outdoortileset_tile_12_compressed (258 > 9 bytes)
+ outdoortileset_tile_13_compressed (258 > 9 bytes)
+ outdoortileset_tile_14_compressed (258 > 9 bytes)
+ outdoortileset_tile_15_compressed (258 > 9 bytes)
+ outdoortileset_tile_16_compressed (258 > 20 bytes)
+ outdoortileset_tile_17_compressed (258 > 30 bytes)
+ outdoortileset_tile_18_compressed (258 > 59 bytes)
+ outdoortileset_tile_19_compressed (258 > 42 bytes)
+ outdoortileset_tile_20_compressed (258 > 52 bytes)
+ outdoortileset_tile_21_compressed (258 > 65 bytes)
+ outdoortileset_tile_22_compressed (258 > 65 bytes)
+ outdoortileset_tile_23_compressed (258 > 58 bytes)
+ outdoortileset_tile_24_compressed (258 > 88 bytes)
+ outdoortileset_tile_25_compressed (258 > 108 bytes)
+ outdoortileset_tile_26_compressed (258 > 111 bytes)
+ outdoortileset_tile_27_compressed (258 > 94 bytes)
+ outdoortileset_tile_28_compressed (258 > 9 bytes)
+ outdoortileset_tile_29_compressed (258 > 9 bytes)
+ outdoortileset_tile_30_compressed (258 > 9 bytes)
+ outdoortileset_tile_31_compressed (258 > 9 bytes)
+ outdoortileset_tile_32_compressed (258 > 44 bytes)
+ outdoortileset_tile_33_compressed (258 > 40 bytes)
+ outdoortileset_tile_34_compressed (258 > 47 bytes)
+ outdoortileset_tile_35_compressed (258 > 20 bytes)
+ outdoortileset_tile_36_compressed (258 > 45 bytes)
+ outdoortileset_tile_37_compressed (258 > 126 bytes)
+ outdoortileset_tile_38_compressed (258 > 122 bytes)
+ outdoortileset_tile_39_compressed (258 > 73 bytes)
+ outdoortileset_tile_40_compressed (258 > 93 bytes)
+ outdoortileset_tile_41_compressed (258 > 94 bytes)
+ outdoortileset_tile_42_compressed (258 > 95 bytes)
+ outdoortileset_tile_43_compressed (258 > 81 bytes)
+ outdoortileset_tile_44_compressed (258 > 9 bytes)
+ outdoortileset_tile_45_compressed (258 > 9 bytes)
+ outdoortileset_tile_46_compressed (258 > 9 bytes)
+ outdoortileset_tile_47_compressed (258 > 9 bytes)
+ outdoortileset_tile_48_compressed (258 > 35 bytes)
+ outdoortileset_tile_49_compressed (258 > 41 bytes)
+ outdoortileset_tile_50_compressed (258 > 53 bytes)
+ outdoortileset_tile_51_compressed (258 > 44 bytes)
+ outdoortileset_tile_52_compressed (258 > 59 bytes)
+ outdoortileset_tile_53_compressed (258 > 97 bytes)
+ outdoortileset_tile_54_compressed (258 > 97 bytes)
+ outdoortileset_tile_55_compressed (258 > 17 bytes)
+ outdoortileset_tile_56_compressed (258 > 85 bytes)
+ outdoortileset_tile_57_compressed (258 > 95 bytes)
+ outdoortileset_tile_58_compressed (258 > 95 bytes)
+ outdoortileset_tile_59_compressed (258 > 17 bytes)
+ outdoortileset_tile_60_compressed (258 > 9 bytes)
+ outdoortileset_tile_61_compressed (258 > 9 bytes)
+ outdoortileset_tile_62_compressed (258 > 9 bytes)
+ outdoortileset_tile_63_compressed (258 > 9 bytes)
+ outdoortileset_tile_64_compressed (258 > 63 bytes)
+ outdoortileset_tile_65_compressed (258 > 28 bytes)
+ outdoortileset_tile_66_compressed (258 > 30 bytes)
+ outdoortileset_tile_67_compressed (258 > 67 bytes)
+ outdoortileset_tile_68_compressed (258 > 48 bytes)
+ outdoortileset_tile_69_compressed (258 > 28 bytes)
+ outdoortileset_tile_70_compressed (258 > 28 bytes)
+ outdoortileset_tile_71_compressed (258 > 28 bytes)
+ outdoortileset_tile_72_compressed (258 > 28 bytes)
+ outdoortileset_tile_73_compressed (258 > 62 bytes)
+ outdoortileset_tile_74_compressed (258 > 48 bytes)
+ outdoortileset_tile_75_compressed (258 > 34 bytes)
+ outdoortileset_tile_76_compressed (258 > 34 bytes)
+ outdoortileset_tile_77_compressed (258 > 34 bytes)
+ outdoortileset_tile_78_compressed (258 > 45 bytes)
+ outdoortileset_tile_79_compressed (258 > 105 bytes)
+ outdoortileset_tile_80_compressed (258 > 26 bytes)
+ outdoortileset_tile_81_compressed (258 > 33 bytes)
+ outdoortileset_tile_82_compressed (258 > 36 bytes)
+ outdoortileset_tile_83_compressed (258 > 28 bytes)
+ outdoortileset_tile_84_compressed (258 > 62 bytes)
+ outdoortileset_tile_85_compressed (258 > 33 bytes)
+ outdoortileset_tile_86_compressed (258 > 33 bytes)
+ outdoortileset_tile_87_compressed (258 > 33 bytes)
+ outdoortileset_tile_88_compressed (258 > 33 bytes)
+ outdoortileset_tile_89_compressed (258 > 55 bytes)
+ outdoortileset_tile_90_compressed (258 > 42 bytes)
+ outdoortileset_tile_91_compressed (258 > 26 bytes)
+ outdoortileset_tile_92_compressed (258 > 26 bytes)
+ outdoortileset_tile_93_compressed (258 > 26 bytes)
+ outdoortileset_tile_94_compressed (258 > 41 bytes)
+ outdoortileset_tile_95_compressed (258 > 85 bytes)
+ outdoortileset_tile_96_compressed (258 > 90 bytes)
+ outdoortileset_tile_97_compressed (258 > 111 bytes)
+ outdoortileset_tile_98_compressed (258 > 100 bytes)
+ outdoortileset_tile_99_compressed (258 > 91 bytes)
+ outdoortileset_tile_100_compressed (258 > 96 bytes)
+ outdoortileset_tile_101_compressed (258 > 64 bytes)
+ outdoortileset_tile_102_compressed (258 > 74 bytes)
+ outdoortileset_tile_103_compressed (258 > 64 bytes)
+ outdoortileset_tile_104_compressed (258 > 77 bytes)
+ outdoortileset_tile_105_compressed (258 > 101 bytes)
+ outdoortileset_tile_106_compressed (258 > 50 bytes)
+ outdoortileset_tile_107_compressed (258 > 25 bytes)
+ outdoortileset_tile_108_compressed (258 > 30 bytes)
+ outdoortileset_tile_109_compressed (258 > 30 bytes)
+ outdoortileset_tile_110_compressed (258 > 47 bytes)
+ outdoortileset_tile_111_compressed (258 > 9 bytes)
+ outdoortileset_tile_112_compressed (258 > 97 bytes)
+ outdoortileset_tile_113_compressed (258 > 74 bytes)
+ outdoortileset_tile_114_compressed (258 > 35 bytes)
+ outdoortileset_tile_115_compressed (258 > 82 bytes)
+ outdoortileset_tile_116_compressed (258 > 60 bytes)
+ outdoortileset_tile_117_compressed (258 > 45 bytes)
+ outdoortileset_tile_118_compressed (258 > 94 bytes)
+ outdoortileset_tile_119_compressed (258 > 36 bytes)
+ outdoortileset_tile_120_compressed (258 > 94 bytes)
+ outdoortileset_tile_121_compressed (258 > 50 bytes)
+ outdoortileset_tile_122_compressed (258 > 48 bytes)
+ outdoortileset_tile_123_compressed (258 > 74 bytes)
+ outdoortileset_tile_124_compressed (258 > 61 bytes)
+ outdoortileset_tile_125_compressed (258 > 64 bytes)
+ outdoortileset_tile_126_compressed (258 > 43 bytes)
+ outdoortileset_tile_127_compressed (258 > 9 bytes)
  indoortileset : 100.00%
+ indoortileset_tile_0_compressed (258 > 151 bytes)
+ indoortileset_tile_1_compressed (258 > 151 bytes)
+ indoortileset_tile_2_compressed (258 > 13 bytes)
+ indoortileset_tile_3_compressed (258 > 64 bytes)
+ indoortileset_tile_4_compressed (258 > 94 bytes)
+ indoortileset_tile_5_compressed (258 > 98 bytes)
+ indoortileset_tile_6_compressed (258 > 46 bytes)
+ indoortileset_tile_7_compressed (258 > 52 bytes)
+ indoortileset_tile_8_compressed (258 > 39 bytes)
+ indoortileset_tile_9_compressed (258 > 48 bytes)
+ indoortileset_tile_10_compressed (258 > 93 bytes)
+ indoortileset_tile_11_compressed (258 > 100 bytes)
+ indoortileset_tile_12_compressed (258 > 9 bytes)
+ indoortileset_tile_13_compressed (258 > 9 bytes)
+ indoortileset_tile_14_compressed (258 > 9 bytes)
+ indoortileset_tile_15_compressed (258 > 9 bytes)
+ indoortileset_tile_16_compressed (258 > 61 bytes)
+ indoortileset_tile_17_compressed (258 > 27 bytes)
+ indoortileset_tile_18_compressed (258 > 58 bytes)
+ indoortileset_tile_19_compressed (258 > 78 bytes)
+ indoortileset_tile_20_compressed (258 > 82 bytes)
+ indoortileset_tile_21_compressed (258 > 85 bytes)
+ indoortileset_tile_22_compressed (258 > 90 bytes)
+ indoortileset_tile_23_compressed (258 > 78 bytes)
+ indoortileset_tile_24_compressed (258 > 59 bytes)
+ indoortileset_tile_25_compressed (258 > 83 bytes)
+ indoortileset_tile_26_compressed (258 > 166 bytes)
+ indoortileset_tile_27_compressed (258 > 155 bytes)
+ indoortileset_tile_28_compressed (258 > 9 bytes)
+ indoortileset_tile_29_compressed (258 > 9 bytes)
+ indoortileset_tile_30_compressed (258 > 9 bytes)
+ indoortileset_tile_31_compressed (258 > 9 bytes)
+ indoortileset_tile_32_compressed (258 > 29 bytes)
+ indoortileset_tile_33_compressed (258 > 9 bytes)
+ indoortileset_tile_34_compressed (258 > 27 bytes)
+ indoortileset_tile_35_compressed (258 > 129 bytes)
+ indoortileset_tile_36_compressed (258 > 20 bytes)
+ indoortileset_tile_37_compressed (258 > 9 bytes)
+ indoortileset_tile_38_compressed (258 > 9 bytes)
+ indoortileset_tile_39_compressed (258 > 9 bytes)
+ indoortileset_tile_40_compressed (258 > 9 bytes)
+ indoortileset_tile_41_compressed (258 > 9 bytes)
+ indoortileset_tile_42_compressed (258 > 9 bytes)
+ indoortileset_tile_43_compressed (258 > 9 bytes)
+ indoortileset_tile_44_compressed (258 > 9 bytes)
+ indoortileset_tile_45_compressed (258 > 9 bytes)
+ indoortileset_tile_46_compressed (258 > 9 bytes)
+ indoortileset_tile_47_compressed (258 > 9 bytes)
+ indoortileset_tile_48_compressed (258 > 41 bytes)
+ indoortileset_tile_49_compressed (258 > 25 bytes)
+ indoortileset_tile_50_compressed (258 > 60 bytes)
+ indoortileset_tile_51_compressed (258 > 74 bytes)
+ indoortileset_tile_52_compressed (258 > 134 bytes)
+ indoortileset_tile_53_compressed (258 > 9 bytes)
+ indoortileset_tile_54_compressed (258 > 9 bytes)
+ indoortileset_tile_55_compressed (258 > 9 bytes)
+ indoortileset_tile_56_compressed (258 > 9 bytes)
+ indoortileset_tile_57_compressed (258 > 9 bytes)
+ indoortileset_tile_58_compressed (258 > 9 bytes)
+ indoortileset_tile_59_compressed (258 > 9 bytes)
+ indoortileset_tile_60_compressed (258 > 9 bytes)
+ indoortileset_tile_61_compressed (258 > 9 bytes)
+ indoortileset_tile_62_compressed (258 > 9 bytes)
+ indoortileset_tile_63_compressed (258 > 9 bytes)
+ indoortileset_tile_64_compressed (258 > 9 bytes)
+ indoortileset_tile_65_compressed (258 > 9 bytes)
+ indoortileset_tile_66_compressed (258 > 9 bytes)
+ indoortileset_tile_67_compressed (258 > 9 bytes)
+ indoortileset_tile_68_compressed (258 > 9 bytes)
+ indoortileset_tile_69_compressed (258 > 9 bytes)
+ indoortileset_tile_70_compressed (258 > 9 bytes)
+ indoortileset_tile_71_compressed (258 > 9 bytes)
+ indoortileset_tile_72_compressed (258 > 9 bytes)
+ indoortileset_tile_73_compressed (258 > 9 bytes)
+ indoortileset_tile_74_compressed (258 > 9 bytes)
+ indoortileset_tile_75_compressed (258 > 9 bytes)
+ indoortileset_tile_76_compressed (258 > 9 bytes)
+ indoortileset_tile_77_compressed (258 > 9 bytes)
+ indoortileset_tile_78_compressed (258 > 9 bytes)
+ indoortileset_tile_79_compressed (258 > 9 bytes)
+ indoortileset_tile_80_compressed (258 > 9 bytes)
+ indoortileset_tile_81_compressed (258 > 9 bytes)
+ indoortileset_tile_82_compressed (258 > 9 bytes)
+ indoortileset_tile_83_compressed (258 > 9 bytes)
+ indoortileset_tile_84_compressed (258 > 9 bytes)
+ indoortileset_tile_85_compressed (258 > 9 bytes)
+ indoortileset_tile_86_compressed (258 > 9 bytes)
+ indoortileset_tile_87_compressed (258 > 9 bytes)
+ indoortileset_tile_88_compressed (258 > 9 bytes)
+ indoortileset_tile_89_compressed (258 > 9 bytes)
+ indoortileset_tile_90_compressed (258 > 9 bytes)
+ indoortileset_tile_91_compressed (258 > 9 bytes)
+ indoortileset_tile_92_compressed (258 > 9 bytes)
+ indoortileset_tile_93_compressed (258 > 9 bytes)
+ indoortileset_tile_94_compressed (258 > 9 bytes)
+ indoortileset_tile_95_compressed (258 > 9 bytes)
+ indoortileset_tile_96_compressed (258 > 9 bytes)
+ indoortileset_tile_97_compressed (258 > 9 bytes)
+ indoortileset_tile_98_compressed (258 > 9 bytes)
+ indoortileset_tile_99_compressed (258 > 9 bytes)
+ indoortileset_tile_100_compressed (258 > 9 bytes)
+ indoortileset_tile_101_compressed (258 > 9 bytes)
+ indoortileset_tile_102_compressed (258 > 9 bytes)
+ indoortileset_tile_103_compressed (258 > 9 bytes)
+ indoortileset_tile_104_compressed (258 > 9 bytes)
+ indoortileset_tile_105_compressed (258 > 9 bytes)
+ indoortileset_tile_106_compressed (258 > 9 bytes)
+ indoortileset_tile_107_compressed (258 > 9 bytes)
+ indoortileset_tile_108_compressed (258 > 9 bytes)
+ indoortileset_tile_109_compressed (258 > 9 bytes)
+ indoortileset_tile_110_compressed (258 > 9 bytes)
+ indoortileset_tile_111_compressed (258 > 9 bytes)
+ indoortileset_tile_112_compressed (258 > 9 bytes)
+ indoortileset_tile_113_compressed (258 > 9 bytes)
+ indoortileset_tile_114_compressed (258 > 9 bytes)
+ indoortileset_tile_115_compressed (258 > 9 bytes)
+ indoortileset_tile_116_compressed (258 > 9 bytes)
+ indoortileset_tile_117_compressed (258 > 9 bytes)
+ indoortileset_tile_118_compressed (258 > 9 bytes)
+ indoortileset_tile_119_compressed (258 > 9 bytes)
+ indoortileset_tile_120_compressed (258 > 9 bytes)
+ indoortileset_tile_121_compressed (258 > 9 bytes)
+ indoortileset_tile_122_compressed (258 > 9 bytes)
+ indoortileset_tile_123_compressed (258 > 9 bytes)
+ indoortileset_tile_124_compressed (258 > 9 bytes)
+ indoortileset_tile_125_compressed (258 > 9 bytes)
+ indoortileset_tile_126_compressed (258 > 9 bytes)
+ indoortileset_tile_127_compressed (258 > 9 bytes)
  player : 100.00%
+ player_tile_0_compressed (258 > 25 bytes)
+ player_tile_1_compressed (258 > 20 bytes)
+ player_tile_2_compressed (258 > 20 bytes)
+ player_tile_3_compressed (258 > 25 bytes)
+ player_tile_4_compressed (258 > 20 bytes)
+ player_tile_5_compressed (258 > 20 bytes)
+ player_tile_6_compressed (258 > 26 bytes)
+ player_tile_7_compressed (258 > 26 bytes)
+ player_tile_8_compressed (258 > 26 bytes)
+ player_tile_9_compressed (258 > 26 bytes)
+ player_tile_10_compressed (258 > 26 bytes)
+ player_tile_11_compressed (258 > 26 bytes)
+ player_tile_12_compressed (258 > 128 bytes)
+ player_tile_13_compressed (258 > 126 bytes)
+ player_tile_14_compressed (258 > 123 bytes)
+ player_tile_15_compressed (258 > 130 bytes)
+ player_tile_16_compressed (258 > 130 bytes)
+ player_tile_17_compressed (258 > 125 bytes)
+ player_tile_18_compressed (258 > 142 bytes)
+ player_tile_19_compressed (258 > 137 bytes)
+ player_tile_20_compressed (258 > 136 bytes)
+ player_tile_21_compressed (258 > 136 bytes)
+ player_tile_22_compressed (258 > 132 bytes)
+ player_tile_23_compressed (258 > 136 bytes)
  enemy : 100.00%
+ enemy_tile_0_compressed (258 > 25 bytes)
+ enemy_tile_1_compressed (258 > 25 bytes)
+ enemy_tile_2_compressed (258 > 26 bytes)
+ enemy_tile_3_compressed (258 > 26 bytes)
+ enemy_tile_4_compressed (258 > 129 bytes)
+ enemy_tile_5_compressed (258 > 131 bytes)
+ enemy_tile_6_compressed (258 > 145 bytes)
+ enemy_tile_7_compressed (258 > 138 bytes)
  pokeball : 100.00%
-
---- menu_gfx (C) ---
-building palette with [256] available indices ...
-built palette with [8] indices.
-palette quality : 100.00%
-transparent color index : 0
-transparent color : 0xFFFF
-3:
- randomcolorsmenu : 100.00%
- menucursor : 100.00%
- movecursor : 100.00%
+ pokeball_tile_0_compressed (258 > 65 bytes)
+ pokeball_tile_1_compressed (258 > 65 bytes)
+ pokeball_tile_2_compressed (258 > 9 bytes)
 
 --- battle_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [251] indices.
-palette quality : 99.99%
+built palette with [256] indices.
+palette quality : 98.04%
 transparent color index : 0
 transparent color : 0xFFFF
-305:
- randomcolorsbattle : 78.39%
- c0 : 100.00%
- c1 : 100.00%
- c2 : 100.00%
- c3 : 100.00%
- c4 : 99.49%
- c5 : 100.00%
- c6 : 100.00%
- c7 : 100.00%
- c8 : 100.00%
- c9 : 100.00%
- c10 : 100.00%
- c11 : 100.00%
- c12 : 100.00%
- c13 : 100.00%
- c14 : 100.00%
- c15 : 100.00%
- c16 : 100.00%
- c17 : 100.00%
- c18 : 100.00%
- c19 : 100.00%
- c20 : 100.00%
- c21 : 100.00%
- c22 : 100.00%
- c23 : 100.00%
- c24 : 100.00%
- c25 : 100.00%
- c26 : 100.00%
- c27 : 100.00%
- c28 : 100.00%
- c29 : 100.00%
- c30 : 100.00%
- c31 : 100.00%
- c32 : 100.00%
- c33 : 100.00%
- c34 : 100.00%
- c35 : 100.00%
- c36 : 100.00%
- c37 : 100.00%
- c38 : 100.00%
- c39 : 100.00%
- c40 : 100.00%
- c41 : 100.00%
- c42 : 100.00%
- c43 : 100.00%
- c44 : 100.00%
- c45 : 100.00%
- c46 : 100.00%
- c47 : 100.00%
- c48 : 100.00%
- c49 : 100.00%
- c50 : 100.00%
- c51 : 100.00%
- c52 : 100.00%
- c53 : 100.00%
- c54 : 100.00%
- c55 : 100.00%
- c56 : 100.00%
- c57 : 100.00%
- c58 : 100.00%
- c59 : 100.00%
- c60 : 99.33%
- c61 : 100.00%
- c62 : 100.00%
- c63 : 100.00%
- c64 : 100.00%
- c65 : 100.00%
- c66 : 100.00%
- c67 : 99.25%
- c68 : 100.00%
- c69 : 100.00%
- c70 : 100.00%
- c71 : 100.00%
- c72 : 100.00%
- c73 : 100.00%
- c74 : 100.00%
- c75 : 100.00%
- c76 : 100.00%
- c77 : 100.00%
- c78 : 100.00%
- c79 : 100.00%
- c80 : 100.00%
- c81 : 100.00%
- c82 : 100.00%
- c83 : 100.00%
- c84 : 100.00%
- c85 : 100.00%
- c86 : 100.00%
- c87 : 100.00%
- c88 : 100.00%
- c89 : 100.00%
- c90 : 100.00%
- c91 : 100.00%
- c92 : 100.00%
- c93 : 99.89%
- c94 : 99.62%
- c95 : 100.00%
- c96 : 100.00%
- c97 : 100.00%
- c98 : 100.00%
- c99 : 100.00%
- c100 : 100.00%
- c101 : 100.00%
- c102 : 100.00%
- c103 : 100.00%
- c104 : 100.00%
- c105 : 100.00%
- c106 : 100.00%
- c107 : 100.00%
- c108 : 100.00%
- c109 : 100.00%
- c110 : 100.00%
- c111 : 100.00%
- c112 : 100.00%
- c113 : 100.00%
- c114 : 100.00%
- c115 : 100.00%
- c116 : 100.00%
- c117 : 100.00%
- c118 : 100.00%
- c119 : 100.00%
- c120 : 100.00%
- c121 : 100.00%
- c122 : 100.00%
- c123 : 100.00%
- c124 : 100.00%
- c125 : 100.00%
- c126 : 100.00%
- c127 : 100.00%
- c128 : 100.00%
- c129 : 100.00%
- c130 : 100.00%
- c131 : 100.00%
- c132 : 100.00%
- c133 : 100.00%
- c134 : 100.00%
- c135 : 100.00%
- c136 : 100.00%
- c137 : 100.00%
- c138 : 100.00%
- c139 : 100.00%
- c140 : 100.00%
- c141 : 100.00%
- c142 : 100.00%
- c143 : 100.00%
- c144 : 100.00%
- c145 : 100.00%
- c146 : 100.00%
- c147 : 100.00%
- c148 : 100.00%
- c149 : 100.00%
- c150 : 100.00%
- c151 : 100.00%
- cb0 : 100.00%
- cb1 : 100.00%
- cb2 : 100.00%
- cb3 : 100.00%
- cb4 : 99.59%
- cb5 : 100.00%
- cb6 : 100.00%
- cb7 : 100.00%
- cb8 : 100.00%
- cb9 : 100.00%
- cb10 : 100.00%
- cb11 : 100.00%
- cb12 : 100.00%
- cb13 : 100.00%
- cb14 : 100.00%
- cb15 : 100.00%
- cb16 : 100.00%
- cb17 : 100.00%
- cb18 : 100.00%
- cb19 : 100.00%
- cb20 : 100.00%
- cb21 : 100.00%
- cb22 : 100.00%
- cb23 : 100.00%
- cb24 : 100.00%
- cb25 : 100.00%
- cb26 : 100.00%
- cb27 : 100.00%
- cb28 : 100.00%
- cb29 : 100.00%
- cb30 : 100.00%
- cb31 : 100.00%
- cb32 : 100.00%
- cb33 : 100.00%
- cb34 : 100.00%
- cb35 : 100.00%
- cb36 : 100.00%
- cb37 : 100.00%
- cb38 : 100.00%
- cb39 : 100.00%
- cb40 : 100.00%
- cb41 : 100.00%
- cb42 : 100.00%
- cb43 : 100.00%
- cb44 : 100.00%
- cb45 : 100.00%
- cb46 : 100.00%
- cb47 : 100.00%
- cb48 : 100.00%
- cb49 : 100.00%
- cb50 : 100.00%
- cb51 : 100.00%
- cb52 : 100.00%
- cb53 : 100.00%
- cb54 : 100.00%
- cb55 : 100.00%
- cb56 : 100.00%
- cb57 : 100.00%
- cb58 : 100.00%
- cb59 : 100.00%
- cb60 : 99.34%
- cb61 : 100.00%
- cb62 : 100.00%
- cb63 : 100.00%
- cb64 : 100.00%
- cb65 : 100.00%
- cb66 : 100.00%
- cb67 : 99.61%
- cb68 : 100.00%
- cb69 : 100.00%
- cb70 : 100.00%
- cb71 : 100.00%
- cb72 : 100.00%
- cb73 : 100.00%
- cb74 : 100.00%
- cb75 : 100.00%
- cb76 : 100.00%
- cb77 : 100.00%
- cb78 : 100.00%
- cb79 : 100.00%
- cb80 : 100.00%
- cb81 : 100.00%
- cb82 : 100.00%
- cb83 : 100.00%
- cb84 : 100.00%
- cb85 : 100.00%
- cb86 : 100.00%
- cb87 : 100.00%
- cb88 : 100.00%
- cb89 : 100.00%
- cb90 : 100.00%
- cb91 : 100.00%
- cb92 : 100.00%
- cb93 : 99.95%
- cb94 : 99.81%
- cb95 : 100.00%
- cb96 : 100.00%
- cb97 : 100.00%
- cb98 : 100.00%
- cb99 : 100.00%
- cb100 : 100.00%
- cb101 : 100.00%
- cb102 : 100.00%
- cb103 : 100.00%
- cb104 : 100.00%
- cb105 : 100.00%
- cb106 : 100.00%
- cb107 : 100.00%
- cb108 : 100.00%
- cb109 : 100.00%
- cb110 : 100.00%
- cb111 : 100.00%
- cb112 : 100.00%
- cb113 : 100.00%
- cb114 : 100.00%
- cb115 : 100.00%
- cb116 : 100.00%
- cb117 : 100.00%
- cb118 : 100.00%
- cb119 : 100.00%
- cb120 : 100.00%
- cb121 : 100.00%
- cb122 : 100.00%
- cb123 : 100.00%
- cb124 : 100.00%
- cb125 : 100.00%
- cb126 : 100.00%
- cb127 : 100.00%
- cb128 : 100.00%
- cb129 : 100.00%
- cb130 : 100.00%
- cb131 : 100.00%
- cb132 : 100.00%
- cb133 : 100.00%
- cb134 : 100.00%
- cb135 : 100.00%
- cb136 : 100.00%
- cb137 : 100.00%
- cb138 : 100.00%
- cb139 : 100.00%
- cb140 : 100.00%
- cb141 : 100.00%
- cb142 : 100.00%
- cb143 : 100.00%
- cb144 : 100.00%
- cb145 : 100.00%
- cb146 : 100.00%
- cb147 : 100.00%
- cb148 : 100.00%
- cb149 : 100.00%
- cb150 : 100.00%
- cb151 : 100.00%
+345:
+ menucursor : 89.47%
+ menucursorsmall : 89.47%
+ menutextbox1 : 99.80% (10242 > 72 bytes)
+ menutextbox2 : 99.80% (10242 > 74 bytes)
+ battletextbox1 : 97.36% (10242 > 164 bytes)
+ battletextbox2 : 97.36% (10242 > 164 bytes)
+ battletextbox3 : 96.85% (10242 > 262 bytes)
+ type00 : 99.77% (386 > 79 bytes)
+ type01 : 78.26% (386 > 72 bytes)
+ type02 : 99.77% (386 > 76 bytes)
+ type03 : 90.65% (386 > 81 bytes)
+ type04 : 99.77% (386 > 84 bytes)
+ type05 : 99.77% (386 > 66 bytes)
+ type06 : 98.85% (386 > 83 bytes)
+ type07 : 89.61% (386 > 106 bytes)
+ type08 : 89.64% (386 > 93 bytes)
+ type09 : 99.82% (386 > 101 bytes)
+ type10 : 93.95% (386 > 94 bytes)
+ type11 : 92.26% (386 > 63 bytes)
+ type12 : 93.92% (386 > 74 bytes)
+ type13 : 92.20% (386 > 89 bytes)
+ type14 : 99.11% (386 > 89 bytes)
+ type15 : 97.97% (386 > 73 bytes)
+ type16 : 98.46% (386 > 93 bytes)
+ status1 : 66.55% (162 > 50 bytes)
+ status2 : 10.36% (162 > 44 bytes)
+ status3 : 58.82% (162 > 46 bytes)
+ status4 : 83.06% (162 > 41 bytes)
+ status5 : 32.14% (162 > 46 bytes)
+ category0 : 99.29% (450 > 52 bytes)
+ category1 : 100.00% (450 > 52 bytes)
+ category2 : 100.00% (450 > 58 bytes)
+ pokemonlist : 100.00% (14082 > 69 bytes)
+ menupokemon : 89.31% (4790 > 93 bytes)
+ bag : 93.34% (14082 > 815 bytes)
+ infoscreen1 : 99.19% (19202 > 855 bytes)
+ infoscreen2 : 98.88% (19202 > 593 bytes)
+ background : 92.47% (14082 > 1236 bytes)
+ hpbar : 99.81% (982 > 60 bytes)
+ c000 : 100.00% (3138 > 10 bytes)
+ c001 : 99.57% (3138 > 265 bytes)
+ c002 : 98.77% (3138 > 392 bytes)
+ c003 : 100.00% (3138 > 614 bytes)
+ c004 : 93.49% (3138 > 384 bytes)
+ c005 : 94.37% (3138 > 524 bytes)
+ c006 : 87.33% (3138 > 653 bytes)
+ c007 : 98.54% (3138 > 316 bytes)
+ c008 : 98.53% (3138 > 509 bytes)
+ c009 : 98.22% (3138 > 741 bytes)
+ c010 : 98.79% (3138 > 230 bytes)
+ c011 : 100.00% (3138 > 254 bytes)
+ c012 : 97.15% (3138 > 573 bytes)
+ c013 : 89.76% (3138 > 323 bytes)
+ c014 : 98.67% (3138 > 284 bytes)
+ c015 : 98.09% (3138 > 699 bytes)
+ c016 : 99.26% (3138 > 382 bytes)
+ c017 : 99.92% (3138 > 450 bytes)
+ c018 : 99.92% (3138 > 593 bytes)
+ c019 : 98.49% (3138 > 348 bytes)
+ c020 : 98.89% (3138 > 526 bytes)
+ c021 : 89.51% (3138 > 341 bytes)
+ c022 : 94.71% (3138 > 530 bytes)
+ c023 : 88.26% (3138 > 376 bytes)
+ c024 : 100.00% (3138 > 644 bytes)
+ c025 : 94.43% (3138 > 338 bytes)
+ c026 : 100.00% (3138 > 530 bytes)
+ c027 : 98.66% (3138 > 408 bytes)
+ c028 : 99.85% (3138 > 584 bytes)
+ c029 : 98.09% (3138 > 352 bytes)
+ c030 : 100.00% (3138 > 524 bytes)
+ c031 : 94.43% (3138 > 674 bytes)
+ c032 : 97.77% (3138 > 381 bytes)
+ c033 : 100.00% (3138 > 551 bytes)
+ c034 : 100.00% (3138 > 829 bytes)
+ c035 : 99.90% (3138 > 360 bytes)
+ c036 : 99.89% (3138 > 489 bytes)
+ c037 : 98.44% (3138 > 513 bytes)
+ c038 : 99.78% (3138 > 698 bytes)
+ c039 : 95.88% (3138 > 344 bytes)
+ c040 : 95.39% (3138 > 442 bytes)
+ c041 : 100.00% (3138 > 325 bytes)
+ c042 : 100.00% (3138 > 573 bytes)
+ c043 : 98.66% (3138 > 233 bytes)
+ c044 : 99.76% (3138 > 432 bytes)
+ c045 : 99.87% (3138 > 400 bytes)
+ c046 : 92.07% (3138 > 390 bytes)
+ c047 : 98.16% (3138 > 516 bytes)
+ c048 : 98.98% (3138 > 402 bytes)
+ c049 : 99.90% (3138 > 611 bytes)
+ c050 : 99.30% (3138 > 223 bytes)
+ c051 : 99.11% (3138 > 438 bytes)
+ c052 : 96.67% (3138 > 465 bytes)
+ c053 : 96.15% (3138 > 571 bytes)
+ c054 : 96.13% (3138 > 410 bytes)
+ c055 : 97.52% (3138 > 610 bytes)
+ c056 : 94.54% (3138 > 439 bytes)
+ c057 : 100.00% (3138 > 626 bytes)
+ c058 : 95.72% (3138 > 425 bytes)
+ c059 : 96.96% (3138 > 729 bytes)
+ c060 : 99.32% (3138 > 326 bytes)
+ c061 : 99.70% (3138 > 527 bytes)
+ c062 : 100.00% (3138 > 565 bytes)
+ c063 : 100.00% (3138 > 410 bytes)
+ c064 : 100.00% (3138 > 633 bytes)
+ c065 : 100.00% (3138 > 688 bytes)
+ c066 : 100.00% (3138 > 415 bytes)
+ c067 : 96.94% (3138 > 613 bytes)
+ c068 : 100.00% (3138 > 843 bytes)
+ c069 : 94.46% (3138 > 359 bytes)
+ c070 : 92.01% (3138 > 386 bytes)
+ c071 : 99.28% (3138 > 587 bytes)
+ c072 : 99.49% (3138 > 345 bytes)
+ c073 : 99.39% (3138 > 533 bytes)
+ c074 : 100.00% (3138 > 342 bytes)
+ c075 : 99.77% (3138 > 560 bytes)
+ c076 : 100.00% (3138 > 536 bytes)
+ c077 : 100.00% (3138 > 524 bytes)
+ c078 : 100.00% (3138 > 735 bytes)
+ c079 : 98.96% (3138 > 313 bytes)
+ c080 : 99.81% (3138 > 565 bytes)
+ c081 : 98.22% (3138 > 188 bytes)
+ c082 : 96.47% (3138 > 504 bytes)
+ c083 : 100.00% (3138 > 527 bytes)
+ c084 : 96.17% (3138 > 357 bytes)
+ c085 : 99.03% (3138 > 614 bytes)
+ c086 : 97.67% (3138 > 449 bytes)
+ c087 : 100.00% (3138 > 605 bytes)
+ c088 : 100.00% (3138 > 418 bytes)
+ c089 : 100.00% (3138 > 592 bytes)
+ c090 : 91.81% (3138 > 364 bytes)
+ c091 : 100.00% (3138 > 654 bytes)
+ c092 : 73.76% (3138 > 430 bytes)
+ c093 : 87.96% (3138 > 430 bytes)
+ c094 : 99.71% (3138 > 389 bytes)
+ c095 : 100.00% (3138 > 619 bytes)
+ c096 : 100.00% (3138 > 522 bytes)
+ c097 : 96.08% (3138 > 624 bytes)
+ c098 : 98.51% (3138 > 419 bytes)
+ c099 : 98.22% (3138 > 562 bytes)
+ c100 : 99.34% (3138 > 175 bytes)
+ c101 : 99.15% (3138 > 290 bytes)
+ c102 : 91.67% (3138 > 613 bytes)
+ c103 : 95.45% (3138 > 563 bytes)
+ c104 : 100.00% (3138 > 378 bytes)
+ c105 : 100.00% (3138 > 472 bytes)
+ c106 : 87.18% (3138 > 562 bytes)
+ c107 : 100.00% (3138 > 411 bytes)
+ c108 : 99.44% (3138 > 521 bytes)
+ c109 : 95.65% (3138 > 292 bytes)
+ c110 : 99.85% (3138 > 477 bytes)
+ c111 : 100.00% (3138 > 642 bytes)
+ c112 : 100.00% (3138 > 767 bytes)
+ c113 : 96.88% (3138 > 450 bytes)
+ c114 : 92.43% (3138 > 439 bytes)
+ c115 : 94.09% (3138 > 678 bytes)
+ c116 : 93.05% (3138 > 246 bytes)
+ c117 : 94.43% (3138 > 427 bytes)
+ c118 : 99.94% (3138 > 467 bytes)
+ c119 : 99.83% (3138 > 642 bytes)
+ c120 : 99.88% (3138 > 394 bytes)
+ c121 : 82.02% (3138 > 530 bytes)
+ c122 : 99.47% (3138 > 514 bytes)
+ c123 : 97.99% (3138 > 607 bytes)
+ c124 : 90.85% (3138 > 444 bytes)
+ c125 : 98.80% (3138 > 593 bytes)
+ c126 : 100.00% (3138 > 586 bytes)
+ c127 : 97.31% (3138 > 579 bytes)
+ c128 : 96.65% (3138 > 669 bytes)
+ c129 : 93.71% (3138 > 502 bytes)
+ c130 : 100.00% (3138 > 745 bytes)
+ c131 : 91.54% (3138 > 503 bytes)
+ c132 : 100.00% (3138 > 214 bytes)
+ c133 : 93.87% (3138 > 409 bytes)
+ c134 : 98.02% (3138 > 545 bytes)
+ c135 : 95.01% (3138 > 513 bytes)
+ c136 : 98.27% (3138 > 478 bytes)
+ c137 : 91.49% (3138 > 346 bytes)
+ c138 : 98.52% (3138 > 332 bytes)
+ c139 : 98.52% (3138 > 521 bytes)
+ c140 : 99.83% (3138 > 285 bytes)
+ c141 : 99.86% (3138 > 559 bytes)
+ c142 : 100.00% (3138 > 635 bytes)
+ c143 : 100.00% (3138 > 515 bytes)
+ c144 : 96.61% (3138 > 769 bytes)
+ c145 : 100.00% (3138 > 659 bytes)
+ c146 : 100.00% (3138 > 591 bytes)
+ c147 : 93.67% (3138 > 319 bytes)
+ c148 : 93.88% (3138 > 472 bytes)
+ c149 : 90.01% (3138 > 652 bytes)
+ c150 : 87.31% (3138 > 584 bytes)
+ c151 : 95.93% (3138 > 337 bytes)
+ c152 : 85.69% (3138 > 387 bytes)
+ cb000 : 100.00% (3138 > 10 bytes)
+ cb001 : 99.91% (3138 > 291 bytes)
+ cb002 : 98.31% (3138 > 369 bytes)
+ cb003 : 100.00% (3138 > 460 bytes)
+ cb004 : 92.99% (3138 > 333 bytes)
+ cb005 : 92.48% (3138 > 398 bytes)
+ cb006 : 98.14% (3138 > 382 bytes)
+ cb007 : 97.96% (3138 > 272 bytes)
+ cb008 : 98.40% (3138 > 393 bytes)
+ cb009 : 97.78% (3138 > 420 bytes)
+ cb010 : 97.26% (3138 > 326 bytes)
+ cb011 : 100.00% (3138 > 283 bytes)
+ cb012 : 96.76% (3138 > 464 bytes)
+ cb013 : 88.51% (3138 > 298 bytes)
+ cb014 : 98.13% (3138 > 303 bytes)
+ cb015 : 98.43% (3138 > 414 bytes)
+ cb016 : 98.38% (3138 > 470 bytes)
+ cb017 : 99.90% (3138 > 312 bytes)
+ cb018 : 99.90% (3138 > 336 bytes)
+ cb019 : 97.67% (3138 > 376 bytes)
+ cb020 : 98.74% (3138 > 425 bytes)
+ cb021 : 86.51% (3138 > 352 bytes)
+ cb022 : 93.89% (3138 > 272 bytes)
+ cb023 : 86.65% (3138 > 405 bytes)
+ cb024 : 100.00% (3138 > 301 bytes)
+ cb025 : 88.63% (3138 > 374 bytes)
+ cb026 : 100.00% (3138 > 364 bytes)
+ cb027 : 98.10% (3138 > 478 bytes)
+ cb028 : 99.81% (3138 > 463 bytes)
+ cb029 : 97.81% (3138 > 378 bytes)
+ cb030 : 100.00% (3138 > 444 bytes)
+ cb031 : 97.94% (3138 > 408 bytes)
+ cb032 : 97.80% (3138 > 478 bytes)
+ cb033 : 100.00% (3138 > 424 bytes)
+ cb034 : 100.00% (3138 > 563 bytes)
+ cb035 : 99.90% (3138 > 377 bytes)
+ cb036 : 99.81% (3138 > 464 bytes)
+ cb037 : 98.11% (3138 > 383 bytes)
+ cb038 : 99.70% (3138 > 484 bytes)
+ cb039 : 100.00% (3138 > 239 bytes)
+ cb040 : 100.00% (3138 > 252 bytes)
+ cb041 : 100.00% (3138 > 415 bytes)
+ cb042 : 100.00% (3138 > 203 bytes)
+ cb043 : 97.31% (3138 > 286 bytes)
+ cb044 : 99.65% (3138 > 396 bytes)
+ cb045 : 99.93% (3138 > 365 bytes)
+ cb046 : 90.60% (3138 > 338 bytes)
+ cb047 : 97.52% (3138 > 325 bytes)
+ cb048 : 99.40% (3138 > 371 bytes)
+ cb049 : 99.88% (3138 > 505 bytes)
+ cb050 : 99.32% (3138 > 201 bytes)
+ cb051 : 99.13% (3138 > 335 bytes)
+ cb052 : 95.59% (3138 > 374 bytes)
+ cb053 : 96.77% (3138 > 421 bytes)
+ cb054 : 94.69% (3138 > 383 bytes)
+ cb055 : 98.78% (3138 > 371 bytes)
+ cb056 : 93.11% (3138 > 451 bytes)
+ cb057 : 100.00% (3138 > 392 bytes)
+ cb058 : 93.86% (3138 > 404 bytes)
+ cb059 : 97.69% (3138 > 421 bytes)
+ cb060 : 98.82% (3138 > 232 bytes)
+ cb061 : 99.63% (3138 > 346 bytes)
+ cb062 : 100.00% (3138 > 401 bytes)
+ cb063 : 100.00% (3138 > 390 bytes)
+ cb064 : 100.00% (3138 > 394 bytes)
+ cb065 : 100.00% (3138 > 494 bytes)
+ cb066 : 100.00% (3138 > 386 bytes)
+ cb067 : 98.50% (3138 > 392 bytes)
+ cb068 : 100.00% (3138 > 556 bytes)
+ cb069 : 91.70% (3138 > 310 bytes)
+ cb070 : 96.24% (3138 > 359 bytes)
+ cb071 : 98.65% (3138 > 343 bytes)
+ cb072 : 99.47% (3138 > 337 bytes)
+ cb073 : 99.19% (3138 > 382 bytes)
+ cb074 : 100.00% (3138 > 419 bytes)
+ cb075 : 99.75% (3138 > 384 bytes)
+ cb076 : 100.00% (3138 > 209 bytes)
+ cb077 : 100.00% (3138 > 424 bytes)
+ cb078 : 100.00% (3138 > 424 bytes)
+ cb079 : 98.96% (3138 > 262 bytes)
+ cb080 : 99.81% (3138 > 367 bytes)
+ cb081 : 97.19% (3138 > 206 bytes)
+ cb082 : 96.44% (3138 > 471 bytes)
+ cb083 : 100.00% (3138 > 435 bytes)
+ cb084 : 95.64% (3138 > 411 bytes)
+ cb085 : 98.93% (3138 > 522 bytes)
+ cb086 : 100.00% (3138 > 330 bytes)
+ cb087 : 100.00% (3138 > 275 bytes)
+ cb088 : 100.00% (3138 > 324 bytes)
+ cb089 : 100.00% (3138 > 364 bytes)
+ cb090 : 96.05% (3138 > 434 bytes)
+ cb091 : 100.00% (3138 > 529 bytes)
+ cb092 : 79.05% (3138 > 241 bytes)
+ cb093 : 89.33% (3138 > 321 bytes)
+ cb094 : 99.86% (3138 > 337 bytes)
+ cb095 : 100.00% (3138 > 424 bytes)
+ cb096 : 100.00% (3138 > 288 bytes)
+ cb097 : 96.08% (3138 > 446 bytes)
+ cb098 : 98.22% (3138 > 466 bytes)
+ cb099 : 99.12% (3138 > 366 bytes)
+ cb100 : 98.96% (3138 > 243 bytes)
+ cb101 : 98.92% (3138 > 235 bytes)
+ cb102 : 91.23% (3138 > 376 bytes)
+ cb103 : 96.69% (3138 > 496 bytes)
+ cb104 : 100.00% (3138 > 428 bytes)
+ cb105 : 100.00% (3138 > 403 bytes)
+ cb106 : 96.42% (3138 > 326 bytes)
+ cb107 : 100.00% (3138 > 379 bytes)
+ cb108 : 99.44% (3138 > 335 bytes)
+ cb109 : 96.42% (3138 > 411 bytes)
+ cb110 : 99.84% (3138 > 369 bytes)
+ cb111 : 100.00% (3138 > 363 bytes)
+ cb112 : 100.00% (3138 > 487 bytes)
+ cb113 : 96.86% (3138 > 335 bytes)
+ cb114 : 97.15% (3138 > 241 bytes)
+ cb115 : 94.25% (3138 > 504 bytes)
+ cb116 : 89.98% (3138 > 282 bytes)
+ cb117 : 92.14% (3138 > 462 bytes)
+ cb118 : 99.83% (3138 > 448 bytes)
+ cb119 : 99.82% (3138 > 425 bytes)
+ cb120 : 99.87% (3138 > 317 bytes)
+ cb121 : 100.00% (3138 > 285 bytes)
+ cb122 : 99.47% (3138 > 305 bytes)
+ cb123 : 98.47% (3138 > 395 bytes)
+ cb124 : 90.34% (3138 > 211 bytes)
+ cb125 : 98.80% (3138 > 417 bytes)
+ cb126 : 100.00% (3138 > 438 bytes)
+ cb127 : 97.17% (3138 > 482 bytes)
+ cb128 : 97.11% (3138 > 241 bytes)
+ cb129 : 93.13% (3138 > 431 bytes)
+ cb130 : 100.00% (3138 > 495 bytes)
+ cb131 : 93.55% (3138 > 369 bytes)
+ cb132 : 100.00% (3138 > 242 bytes)
+ cb133 : 93.53% (3138 > 419 bytes)
+ cb134 : 97.92% (3138 > 340 bytes)
+ cb135 : 94.48% (3138 > 349 bytes)
+ cb136 : 98.27% (3138 > 414 bytes)
+ cb137 : 90.99% (3138 > 306 bytes)
+ cb138 : 99.32% (3138 > 408 bytes)
+ cb139 : 99.44% (3138 > 482 bytes)
+ cb140 : 99.84% (3138 > 311 bytes)
+ cb141 : 99.84% (3138 > 429 bytes)
+ cb142 : 100.00% (3138 > 347 bytes)
+ cb143 : 100.00% (3138 > 198 bytes)
+ cb144 : 97.18% (3138 > 319 bytes)
+ cb145 : 100.00% (3138 > 361 bytes)
+ cb146 : 100.00% (3138 > 398 bytes)
+ cb147 : 94.00% (3138 > 294 bytes)
+ cb148 : 87.59% (3138 > 375 bytes)
+ cb149 : 97.14% (3138 > 327 bytes)
+ cb150 : 93.70% (3138 > 413 bytes)
+ cb151 : 95.39% (3138 > 365 bytes)
+ cb152 : 91.00% (3138 > 332 bytes)
 
 exporting appvar: PKMNSD0.8xp
- c0
- c1
- c2
- c3
- c4
- c5
- c6
- c7
- c8
- c9
- c10
- c11
- c12
- c13
- c14
- c15
- c16
- c17
- c18
- c19
- c20
- c21
- c22
- c23
- c24
- c25
- c26
- c27
- c28
- c29
- battle_gfx (palette)
+ c000
+ c001
+ c002
+ c003
+ c004
+ c005
+ c006
+ c007
+ c008
+ c009
+ c010
+ c011
+ c012
+ c013
+ c014
+ c015
+ c016
+ c017
+ c018
+ c019
+ c020
+ c021
+ c022
+ c023
+ c024
+ c025
+ c026
+ c027
+ c028
+ c029
+ c030
+ c031
+ c032
+ c033
+ c034
+ c035
+ c036
+ c037
+ c038
+ c039
+ c040
+ c041
+ c042
+ c043
+ c044
+ c045
+ c046
+ c047
+ c048
+ c049
+ c050
+ c051
+ c052
+ c053
+ c054
+ c055
+ c056
+ c057
+ c058
+ c059
+ c060
+ c061
+ c062
+ c063
+ c064
+ c065
+ c066
+ c067
+ c068
+ c069
+ c070
+ c071
+ c072
+ c073
+ c074
+ c075
+ c076
+ c077
+ c078
+ c079
 exporting appvar: PKMNSD1.8xp
- c30
- c31
- c32
- c33
- c34
- c35
- c36
- c37
- c38
- c39
- c40
- c41
- c42
- c43
- c44
- c45
- c46
- c47
- c48
- c49
- c50
- c51
- c52
- c53
- c54
- c55
- c56
- battle_gfx (palette)
-exporting appvar: PKMNSD2.8xp
- c57
- c58
- c59
- c60
- c61
- c62
- c63
- c64
- c65
- c66
- c67
- c68
- c69
- c70
- c71
- c72
- c73
- c74
- c75
- c76
- c77
- c78
- c79
- c80
- c81
- c82
- c83
- battle_gfx (palette)
-exporting appvar: PKMNSD3.8xp
- c84
- c85
- c86
- c87
- c88
- c89
- c90
- c91
- c92
- c93
- c94
- c95
- c96
- c97
- c98
- c99
+ c080
+ c081
+ c082
+ c083
+ c084
+ c085
+ c086
+ c087
+ c088
+ c089
+ c090
+ c091
+ c092
+ c093
+ c094
+ c095
+ c096
+ c097
+ c098
+ c099
  c100
  c101
  c102
@@ -454,8 +771,6 @@ exporting appvar: PKMNSD3.8xp
  c106
  c107
  c108
- battle_gfx (palette)
-exporting appvar: PKMNSD4.8xp
  c109
  c110
  c111
@@ -479,8 +794,6 @@ exporting appvar: PKMNSD4.8xp
  c129
  c130
  c131
- battle_gfx (palette)
-exporting appvar: PKMNSD5.8xp
  c132
  c133
  c134
@@ -501,114 +814,109 @@ exporting appvar: PKMNSD5.8xp
  c149
  c150
  c151
- battle_gfx (palette)
-exporting appvar: PKMNSD6.8xp
- cb0
- cb1
- cb2
- cb3
- cb4
- cb5
- cb6
- cb7
- cb8
- cb9
- cb10
- cb11
- cb12
- cb13
- cb14
- cb15
- cb16
- cb17
- cb18
- cb19
- cb20
- cb21
- cb22
- cb23
- cb24
- cb25
- cb26
- cb27
- battle_gfx (palette)
-exporting appvar: PKMNSD7.8xp
- cb28
- cb29
- cb30
- cb31
- cb32
- cb33
- cb34
- cb35
- cb36
- cb37
- cb38
- cb39
- cb40
- cb41
- cb42
- cb43
- cb44
- cb45
- cb46
- cb47
- cb48
- cb49
- cb50
- cb51
- cb52
- cb53
- cb54
- cb55
- battle_gfx (palette)
-exporting appvar: PKMNSD8.8xp
- cb56
- cb57
- cb58
- cb59
- cb60
- cb61
- cb62
- cb63
- cb64
- cb65
- cb66
- cb67
- cb68
- cb69
- cb70
- cb71
- cb72
- cb73
- cb74
- cb75
- cb76
- cb77
- cb78
- cb79
- cb80
- cb81
- cb82
- cb83
- battle_gfx (palette)
-exporting appvar: PKMNSD9.8xp
- cb84
- cb85
- cb86
- cb87
- cb88
- cb89
- cb90
- cb91
- cb92
- cb93
- cb94
- cb95
- cb96
- cb97
- cb98
- cb99
+ c152
+exporting appvar: PKMNSD2.8xp
+ cb000
+ cb001
+ cb002
+ cb003
+ cb004
+ cb005
+ cb006
+ cb007
+ cb008
+ cb009
+ cb010
+ cb011
+ cb012
+ cb013
+ cb014
+ cb015
+ cb016
+ cb017
+ cb018
+ cb019
+ cb020
+ cb021
+ cb022
+ cb023
+ cb024
+ cb025
+ cb026
+ cb027
+ cb028
+ cb029
+ cb030
+ cb031
+ cb032
+ cb033
+ cb034
+ cb035
+ cb036
+ cb037
+ cb038
+ cb039
+ cb040
+ cb041
+ cb042
+ cb043
+ cb044
+ cb045
+ cb046
+ cb047
+ cb048
+ cb049
+ cb050
+ cb051
+ cb052
+ cb053
+ cb054
+ cb055
+ cb056
+ cb057
+ cb058
+ cb059
+ cb060
+ cb061
+ cb062
+ cb063
+ cb064
+ cb065
+ cb066
+ cb067
+ cb068
+ cb069
+ cb070
+ cb071
+ cb072
+ cb073
+ cb074
+ cb075
+ cb076
+ cb077
+ cb078
+ cb079
+exporting appvar: PKMNSD3.8xp
+ cb080
+ cb081
+ cb082
+ cb083
+ cb084
+ cb085
+ cb086
+ cb087
+ cb088
+ cb089
+ cb090
+ cb091
+ cb092
+ cb093
+ cb094
+ cb095
+ cb096
+ cb097
+ cb098
+ cb099
  cb100
  cb101
  cb102
@@ -621,8 +929,6 @@ exporting appvar: PKMNSD9.8xp
  cb109
  cb110
  cb111
- battle_gfx (palette)
-exporting appvar: PKMNSD10.8xp
  cb112
  cb113
  cb114
@@ -651,8 +957,6 @@ exporting appvar: PKMNSD10.8xp
  cb137
  cb138
  cb139
- battle_gfx (palette)
-exporting appvar: PKMNSD11.8xp
  cb140
  cb141
  cb142
@@ -665,15 +969,58 @@ exporting appvar: PKMNSD11.8xp
  cb149
  cb150
  cb151
- battle_gfx (palette)
-exporting appvar: PKMNSD12.8xp
+ cb152
+exporting appvar: PKMNSD4.8xp
  outdoortileset
- map_gfx (palette)
-exporting appvar: PKMNSD13.8xp
  indoortileset
+ player
+ enemy
+ pokeball
+ maptextbox1
+ maptextbox2
+ pausemenu
  map_gfx (palette)
+exporting appvar: PKMNSD5.8xp
+ menutextbox1
+ menutextbox2
+ battletextbox1
+ battletextbox2
+ battletextbox3
+ type00
+ type01
+ type02
+ type03
+ type04
+ type05
+ type06
+ type07
+ type08
+ type09
+ type10
+ type11
+ type12
+ type13
+ type14
+ type15
+ type16
+ status1
+ status2
+ status3
+ status4
+ status5
+ category0
+ category1
+ category2
+ pokemonlist
+ menupokemon
+ bag
+ infoscreen1
+ infoscreen2
+ background
+ hpbar
+ battle_gfx (palette)
 
-converted in 3 s
+converted in 20 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 

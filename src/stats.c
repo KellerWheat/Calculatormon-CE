@@ -17,30 +17,30 @@ struct pokemonStats stats_CalculateStats(struct pokemonData c) {
 struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 	uint8_t parent1id = data_pokemon[id].evolvesfrom;
 	uint8_t parent2id = data_pokemon[parent1id].evolvesfrom;
-	int moveSlot, moveIndex, statusIndex;
+	int moveSlot, moveIndex;
 	struct pokemonData newch;
 	newch.id = id;
 	newch.level = level;
 	newch.xp = xpPerLevel[data_pokemon[newch.id].xptype][newch.level];
 
-	newch.move1 = 0;
-	newch.move2 = 0;
-	newch.move3 = 0;
-	newch.move4 = 0;
+	newch.moves[0] = 0;
+	newch.moves[1] = 0;
+	newch.moves[2] = 0;
+	newch.moves[3] = 0;
 	moveSlot = 0;
 	for (moveIndex = 0; moveIndex < 10; moveIndex++) {
-		if (data_pokemon[parent2id].movelevels[moveIndex] <= newch.level && data_pokemon[parent2id].moveids[moveIndex] != 0) {
+		if (data_pokemon[parent2id].movelevels[moveIndex] <= newch.level && data_pokemon[parent2id].movelevels[moveIndex] <= data_pokemon[parent2id].evolvelevel &&  data_pokemon[parent2id].moveids[moveIndex] != 0) {
 			if (moveSlot == 0) {
-				newch.move1 = data_pokemon[parent2id].moveids[moveIndex];
+				newch.moves[0] = data_pokemon[parent2id].moveids[moveIndex];
 			}
 			if (moveSlot == 1) {
-				newch.move2 = data_pokemon[parent2id].moveids[moveIndex];
+				newch.moves[1] = data_pokemon[parent2id].moveids[moveIndex];
 			}
 			if (moveSlot == 2) {
-				newch.move3 = data_pokemon[parent2id].moveids[moveIndex];
+				newch.moves[2] = data_pokemon[parent2id].moveids[moveIndex];
 			}
 			if (moveSlot == 3) {
-				newch.move4 = data_pokemon[parent2id].moveids[moveIndex];
+				newch.moves[3] = data_pokemon[parent2id].moveids[moveIndex];
 			}
 			moveSlot++;
 			if (moveSlot == 4) {
@@ -49,18 +49,18 @@ struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 		}
 	}
 	for (moveIndex = 0; moveIndex < 10; moveIndex++) {
-		if (data_pokemon[parent1id].movelevels[moveIndex] <= newch.level && data_pokemon[parent1id].moveids[moveIndex] != 0) {
+		if (data_pokemon[parent1id].movelevels[moveIndex] <= newch.level && data_pokemon[parent1id].movelevels[moveIndex] <= data_pokemon[parent1id].evolvelevel && data_pokemon[parent1id].moveids[moveIndex] != 0) {
 			if (moveSlot == 0) {
-				newch.move1 = data_pokemon[parent1id].moveids[moveIndex];
+				newch.moves[0] = data_pokemon[parent1id].moveids[moveIndex];
 			}
 			if (moveSlot == 1) {
-				newch.move2 = data_pokemon[parent1id].moveids[moveIndex];
+				newch.moves[1] = data_pokemon[parent1id].moveids[moveIndex];
 			}
 			if (moveSlot == 2) {
-				newch.move3 = data_pokemon[parent1id].moveids[moveIndex];
+				newch.moves[2] = data_pokemon[parent1id].moveids[moveIndex];
 			}
 			if (moveSlot == 3) {
-				newch.move4 = data_pokemon[parent1id].moveids[moveIndex];
+				newch.moves[3] = data_pokemon[parent1id].moveids[moveIndex];
 			}
 			moveSlot++;
 			if (moveSlot == 4) {
@@ -71,16 +71,16 @@ struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 	for (moveIndex = 0; moveIndex < 10; moveIndex++) {
 		if (data_pokemon[id].movelevels[moveIndex] <= newch.level && data_pokemon[id].moveids[moveIndex] != 0) {
 			if (moveSlot == 0) {
-				newch.move1 = data_pokemon[id].moveids[moveIndex];
+				newch.moves[0] = data_pokemon[id].moveids[moveIndex];
 			}
 			if (moveSlot == 1) {
-				newch.move2 = data_pokemon[id].moveids[moveIndex];
+				newch.moves[1] = data_pokemon[id].moveids[moveIndex];
 			}
 			if (moveSlot == 2) {
-				newch.move3 = data_pokemon[id].moveids[moveIndex];
+				newch.moves[2] = data_pokemon[id].moveids[moveIndex];
 			}
 			if (moveSlot == 3) {
-				newch.move4 = data_pokemon[id].moveids[moveIndex];
+				newch.moves[3] = data_pokemon[id].moveids[moveIndex];
 			}
 			moveSlot++;
 			if (moveSlot == 4) {
@@ -88,10 +88,12 @@ struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 			}
 		}
 	}
+	newch.pp[0] = data_moves[newch.moves[0]].uses;
+	newch.pp[1] = data_moves[newch.moves[1]].uses;
+	newch.pp[2] = data_moves[newch.moves[2]].uses;
+	newch.pp[3] = data_moves[newch.moves[3]].uses;
 
-	for (statusIndex = 0; statusIndex < 5; statusIndex++) {
-		newch.currentstatus[statusIndex] = 0;
-	}
+	newch.currentstatus= 0;
 
 	newch.healthIV = (rand() % 16);
 	newch.attackIV = (rand() % 16);

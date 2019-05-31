@@ -8,6 +8,7 @@
 #include <string.h>
 #include <keypadc.h>
 #include <graphx.h>
+#include <compression.h>
 
 #include "map.h"
 #include "battle.h"
@@ -17,353 +18,465 @@
 #include "text.h"
 #include "savegame.h"
 #include "stats.h"
-#include "gfx/menu_gfx.h"
+#include "gfx/battle_gfx.h"
 #include "items.h"
+#include "gfx/PKMNSD0.h"
+#include "gfx/PKMNSD1.h"
+#include "gfx/PKMNSD2.h"
+#include "gfx/PKMNSD3.h"
+#include "gfx/PKMNSD5.h"
 
 void MoveMenuCursor(int max);
 
-int MainMenu(void);
-void PokemonMenu(void);
 void ItemMenu(void);
 void FastTravelMenu(void);
+
 
 /* Press enter to toggle; allows player to switch pokemon around */
 bool switchMode;
 uint8_t pokemonToSwitch;
 struct pokemonData tempcharacter;
 
-uint8_t usableItems[185];
-uint8_t usableItemCount;
 
-const uint8_t menuStatusColors[5] = { 3,4,5,6,7 };
 
 uint8_t menuState1 = 0;
 uint8_t menuState2 = 0;
 uint8_t menuCurrent = 1;
 
-void menu_Initialize(void) {
-	
-}
 void menu_Setup(void) {
-	int itemIndex;
-	gfx_SetPalette(menu_gfx_pal, sizeof_menu_gfx_pal, 0);
-	SetColors(2);
+
+	zx7_Decompress(textBoxSprite1, menutextbox1_compressed);
+	zx7_Decompress(textBoxSprite2, menutextbox2_compressed);
+
+	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+	SetColors(1);
 	gfx_SetTextFGColor(colors[1]);
-	menuState1 = 0;
-	menuState2 = 0;
-	menuCurrent = 1;
+
+
+}
+
+uint8_t menu_Menu(void) {
+	int8_t cursorState = 0;
+	
+
+	gfx_PrintStringXY("Pokemon", 215, 35);
+	gfx_PrintStringXY("Bag", 215, 50);
+	gfx_PrintStringXY("Close Menu", 215, 65);
+	gfx_PrintStringXY("Save", 215, 80);
+	gfx_PrintStringXY("Exit Game", 215, 95);
+	gfx_PrintStringXY(">", 208, 35 + 15 * cursorState);
+
+	gfx_SwapDraw();
+	gfx_SetDrawScreen();
+
+	while (!(kb_Data[6] & kb_Clear)) {
+		kb_Scan();
+		if ((kb_Data[7] & kb_Down)) {
+			cursorState += 1;
+			if (cursorState == 5) {
+				cursorState = 0;
+			}
+			gfx_FillRectangle(205, 35, 10, 70);
+			gfx_PrintStringXY(">", 208, 35 + 15 * cursorState);
+			Wait(20);
+		}
+		if ((kb_Data[7] & kb_Up)) {
+			cursorState -= 1;
+			if (cursorState == -1) {
+				cursorState = 4;
+			}
+			gfx_FillRectangle(205, 35, 10, 70);
+			gfx_PrintStringXY(">", 208, 35 + 15 * cursorState);
+			Wait(20);
+		}
+		if (kb_Data[1] & kb_2nd) {
+			gfx_SetDrawBuffer();
+			if (cursorState == 0) {
+				int chosenPokemon;
+				choosePokemon:
+				chosenPokemon = menu_PokemonMenu(true);
+				if (chosenPokemon != 0) {
+					menu_PokemonDetails(chosenPokemon - 1);
+					goto choosePokemon;
+				}
+				return 0;
+			}
+			if (cursorState == 1) {
+				menu_Items(false);
+				return 0;
+			}
+			if (cursorState == 2) {
+				return 0;
+			}
+			if (cursorState == 3) {
+				save_Save();
+				return 0;
+			}
+			else if (cursorState == 4) {
+				return 2;
+			}
+		}
+	}
+	gfx_SetDrawBuffer();
+	return 0;
+}
+
+int menu_PokemonMenu(bool pressEnter) {
+	int partyIndex, statusIndex, menuState;
+	gfx_sprite_t *backgroundSprite;
+	gfx_sprite_t *pokemonSprite;
+	int baseX[6] = { 20,175,20,175,20,175 };
+	int baseY[6] = { 20,20,70,70,120,120 };
+
+
+	menuState = 0;
+	backgroundSprite = gfx_MallocSprite(160, 88);
+	pokemonSprite = gfx_MallocSprite(133, 36);
+	zx7_Decompress(backgroundSprite, pokemonlist_compressed);
+	zx7_Decompress(pokemonSprite, menupokemon_compressed);
+	MallocIcons();
+
+
+	menu_Setup();
+
+	redraw_PokemonMenu:
+	gfx_SetDrawBuffer();
+
+	gfx_FillScreen(colors[1]);
+	text_DrawTextBox();
+	gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+	for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+		int healthRatio;
+		if (party[partyIndex].id != 0) {
+			gfx_TransparentSprite_NoClip(pokemonSprite, baseX[partyIndex], baseY[partyIndex]);
+			gfx_PrintStringXY(data_pokemon[party[partyIndex].id].name, baseX[partyIndex] + 4, baseY[partyIndex] + 4);
+			sprintf(str, "Lv%u", party[partyIndex].level);
+			gfx_PrintStringXY(str, baseX[partyIndex] + 92, baseY[partyIndex] + 4);
+
+			if (party[partyIndex].currentstatus > 0) {
+				gfx_TransparentSprite_NoClip(statusIcons[party[partyIndex].currentstatus - 1], baseX[partyIndex] + 7, baseY[partyIndex] + 14);
+			}
+			healthRatio = (party[partyIndex].currenthealth * 78) / stats_CalculateStats(party[partyIndex]).health;
+			if (healthRatio > 34) {
+				gfx_SetColor(colors[8]);
+			}
+			else if (healthRatio > 14) {
+				gfx_SetColor(colors[9]);
+			}
+			else {
+				gfx_SetColor(colors[10]);
+			}
+			gfx_FillRectangle(baseX[partyIndex] + 47, baseY[partyIndex] + 16, healthRatio, 4);
+
+			sprintf(str, "%u/%u", party[partyIndex].currenthealth, stats_CalculateStats(party[partyIndex]).health);
+			gfx_PrintStringXY(str, baseX[partyIndex] + 32, baseY[partyIndex] + 24);
+		}
+	}
+	gfx_PrintStringXY("Select a pokemon", 30, 190);
+	if (pressEnter) {
+		gfx_PrintStringXY("Press Enter to move pokemon", 30, 205);
+	}
+
+	gfx_SetDrawScreen();
+
+	gfx_Blit(gfx_buffer);
+	gfx_TransparentSprite_NoClip(menucursor, baseX[menuState] - 15, baseY[menuState] + 8);
+
+	
+
+
+	Wait(20);
+	kb_Scan();
+
+	while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+	while (!(((kb_Data[1] & kb_2nd) && party[menuState].id != 0) || (kb_Data[6] & kb_Clear))) {
+		kb_Scan();
+		if ((kb_Data[6] & kb_Enter) && pressEnter) {
+			tempcharacter = party[menuState];
+			for (partyIndex = menuState; partyIndex > 0; partyIndex--) {
+				party[partyIndex] = party[partyIndex - 1];
+			}
+			party[0] = tempcharacter;
+			goto redraw_PokemonMenu;
+		}
+		if (kb_Data[7] & kb_Down) {
+			menuState+=2;
+			if (menuState == 6 || menuState == 7) {
+				menuState -= 6;
+			}
+		}
+		else if (kb_Data[7] & kb_Up) {
+			menuState-=2;
+			if (menuState == -1 || menuState == -2) {
+				menuState += 6;
+			}
+		}
+		else if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+			if (menuState % 2 == 0) {
+				menuState += 1;
+			}
+			else {
+				menuState -= 1;
+			}
+		}
+		if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
+			gfx_Blit(gfx_buffer);
+			gfx_TransparentSprite_NoClip(menucursor, baseX[menuState] - 15, baseY[menuState] + 8);
+			Wait(20);
+		}
+	}
+	free(backgroundSprite);
+	free(pokemonSprite);
+	FreeIcons();
+	gfx_SetDrawBuffer();
+	if (kb_Data[6] & kb_Clear) {
+		return 0;
+	}
+	return menuState + 1;
+}
+void menu_PokemonDetails(int pokemonIndex) {
+	int page, menuState, tempMove, moveIndex;
+	gfx_sprite_t *backgroundSprite;
+
+	backgroundSprite = gfx_MallocSprite(160, 88);
+	
+
+	menu_Setup();
+
+	page = 1;
+	menuState = 0;
+	while (page != 0) {
+		Wait(20);
+		kb_Scan();
+		if (page == 1) {
+			zx7_Decompress(backgroundSprite, infoscreen1_compressed);
+			gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+
+
+			gfx_SetTextScale(2, 2);
+
+			sprintf(str, "%u/%u", party[pokemonIndex].currenthealth, stats_CalculateStats(party[pokemonIndex]).health);
+			gfx_PrintStringXY(str, 208, 38);
+			sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).attack);
+			gfx_PrintStringXY(str, 228, 62);
+			sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).defence);
+			gfx_PrintStringXY(str, 228, 86);
+			sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialattack);
+			gfx_PrintStringXY(str, 228, 110);
+			sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialdefence);
+			gfx_PrintStringXY(str, 228, 134);
+			sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).speed);
+			gfx_PrintStringXY(str, 228, 158);
+
+			sprintf(str, "%u", party[pokemonIndex].level);
+			gfx_PrintStringXY(str, 64, 186);
+			gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 218, 186);
+			if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
+				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 186);
+			}
+			sprintf(str, "%u/%u", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level+1]);
+			gfx_PrintStringXY(str, 64, 186);
+
+			gfx_SetTextScale(1, 1);
+
+			gfx_SwapDraw();
+			while (!((kb_Data[7] & kb_Right) || (kb_Data[6] & kb_Clear))) {
+				kb_Scan();
+			}
+		}
+		else if (page == 2) {
+			zx7_Decompress(backgroundSprite, infoscreen2_compressed);
+			gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+
+			gfx_SetTextScale(2, 2);
+
+			gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 4, 52);
+			if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
+				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 40, 52);
+			}
+
+			gfx_TransparentSprite_NoClip(menucursor, 170, 50 + 48 * menuState);
+			for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+				if (party[pokemonIndex].moves[moveIndex] > 0) {
+					gfx_PrintStringXY(data_moves[party[pokemonIndex].moves[moveIndex]].name, 188, 42 + 48 * moveIndex);
+					gfx_TransparentSprite_NoClip(typeIcons[data_moves[party[pokemonIndex].moves[moveIndex]].element - 1], 188, 64 + 48 * moveIndex);
+					if(data_moves[party[pokemonIndex].moves[moveIndex]].type == 0)
+						gfx_TransparentSprite_NoClip(categoryIcons[0], 230, 63 + 48 * moveIndex);
+					else if (data_moves[party[pokemonIndex].moves[moveIndex]].type == 1) {
+						gfx_TransparentSprite_NoClip(categoryIcons[1], 230, 63 + 48 * moveIndex);
+					}
+					else {
+						gfx_TransparentSprite_NoClip(categoryIcons[2], 230, 63 + 48 * moveIndex);
+					}
+				}
+			}
+
+			sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].power);
+			gfx_PrintStringXY(str, 62, 82);
+			sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].accuracy);
+			gfx_PrintStringXY(str, 62, 106);
+			sprintf(str, "%u/%u", party[pokemonIndex].pp[menuState], data_moves[party[pokemonIndex].moves[menuState]].uses);
+			gfx_PrintStringXY(str, 62, 130);
+
+			gfx_SetTextScale(1, 1);
+
+
+			gfx_SwapDraw();
+			while (!((kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down) || (kb_Data[6] & kb_Enter))) {
+				kb_Scan();
+			}
+		}
+		if (kb_Data[7] & kb_Right) {
+			page = 2;
+		}
+		if (kb_Data[7] & kb_Left) {
+			page = 1;
+		}
+		if (kb_Data[7] & kb_Up) {
+			if (menuState > 0) {
+				menuState--;
+			}
+		}
+		if (kb_Data[7] & kb_Down) {
+			if (menuState < 3) {
+				menuState++;
+			}
+		}
+		if (kb_Data[6] & kb_Enter) {
+			tempMove = party[pokemonIndex].moves[menuState];
+			for (moveIndex = menuState; moveIndex > 0; moveIndex--) {
+				party[pokemonIndex].moves[moveIndex] = party[pokemonIndex].moves[moveIndex - 1];
+			}
+			party[pokemonIndex].moves[0] = tempMove;
+		}
+		if (kb_Data[6] & kb_Clear) {
+			page = 0;
+		}
+	}
+	free(backgroundSprite);
+}
+bool menu_Items(bool inBattle) {
+	int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
+	gfx_sprite_t *backgroundSprite;
+
 
 	/* Generate Usable Items List */
 	usableItemCount = 0;
-	for (itemIndex = 0; itemIndex < 185; itemIndex++) {
+	usableTMCount = 0;
+	for (itemIndex = 0; itemIndex < 20; itemIndex++) {
 		if (playerItems[itemIndex] > 0) {
 			usableItems[usableItemCount] = itemIndex;
 			usableItemCount++;
 		}
 	}
-}
-int menu_Loop(void) {
-	if (menuState1 == 0) {
-		return MainMenu();
+	for (itemIndex = 0; itemIndex < 165; itemIndex++) {
+		if (playerItems[itemIndex + 20] > 0) {
+			usableTMs[usableTMCount] = itemIndex + 20;
+			usableTMCount++;
+		}
 	}
-	else if (menuState1 == 1) {
-		PokemonMenu();
-	}
-	else if (menuState1 == 2) {
-		ItemMenu();
-	}
-	else if (menuState1 == 3) {
-		FastTravelMenu();
-	}
-	return 2;
-}
+	backgroundSprite = gfx_MallocSprite(160, 88);
+	zx7_Decompress(backgroundSprite, bag_compressed);
 
-int MainMenu(void) {
-	gfx_SetTextScale(2, 2);
-	if (kb_Data[6] & kb_Clear) {
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		return 0;
-	}
-
-	MoveMenuCursor(6);
-	if (kb_Data[1] & kb_2nd) {
-		gfx_SetTextScale(1, 1);
-		menuState1 = menuCurrent;
-		menuState2 = 0;
-		menuCurrent = 1;
-		switchMode = false;
+	menu_Setup();
 
 
-		/* Items */
-		if (menuState1 == 2) {
-			menuCurrent = 0;
-		}
-		/* Check if fast travel availible */
-		if (menuState1 == 3 && badgeCount == 0) {
-			text_Display("Beat Gyms to unlock", false);
-			menuCurrent = 0;
-		}
-		/* Save */
-		if (menuState1 == 4) {
-			save_Save();
-			return 0;
-		}
-		/* Exit menu */
-		if (menuState1 == 5) {
-			return 0;
-		}
-		/* Exit game */
-		if (menuState1 == 6) {
-			return 3;
-		}
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		return 2;
-	}
+	page = 1;
+	menuState = 0;
+	cursorState = 0;
+	while (page != 0)
+	{
 
-	gfx_FillScreen(colors[0]);
-	gfx_TransparentSprite(menucursor, 20, menuCurrent * 30);
-	gfx_PrintStringXY("Pokemon", 40, 30);
-	gfx_PrintStringXY("Items", 40, 60);
-	gfx_PrintStringXY("Fast Travel", 40, 90);
-	gfx_PrintStringXY("Save", 40, 120);
-	gfx_PrintStringXY("Close Menu", 40, 150);
-	gfx_PrintStringXY("Exit Game", 40, 180);
+		gfx_FillScreen(colors[1]);
+		text_DrawTextBox();
+		gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+		gfx_TransparentSprite_NoClip(menucursorsmall, 132, 19 + 14 * cursorState);
+		
+		Wait(20);
 
-	gfx_SwapDraw();
-	return 2;
-}
-void PokemonMenu(void) {
-	if (menuState2 == 0) {
-		if (kb_Data[6] & kb_Clear) {
-			menuState1 = 0;
-			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-			return;
-		}
+		kb_Scan();
+		if (page == 1) {
+			gfx_SetTextScale(2, 2);
+			gfx_PrintStringXY("Items", 12, 19);
+			gfx_SetTextScale(1, 1);
+			for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableItemCount; itemIndex++) {
+				gfx_PrintStringXY(itemNames[usableItems[itemIndex]], 140, 21 + 14 * (itemIndex - menuState));
+				sprintf(str, "%u", playerItems[usableItems[itemIndex]]);
+				gfx_PrintStringXY(str, 274, 21 + 14 * (itemIndex - menuState));
+			}
 
-		MoveMenuCursor(6);
-		if (kb_Data[6] & kb_Enter) {
-			switchMode = !switchMode;
-			pokemonToSwitch = 100;
-			while (kb_Data[6] & kb_Enter) { kb_Scan(); }
+			gfx_SwapDraw();
+			while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+				kb_Scan();
+			}
 		}
-		if (kb_Data[1] & kb_2nd) {
-			if (switchMode) {
-				if (pokemonToSwitch == 100) {
-					pokemonToSwitch = menuCurrent - 1;
+		else if (page == 2) {
+			gfx_SetTextScale(2, 2);
+			gfx_PrintStringXY("TMs", 12, 19);
+			gfx_SetTextScale(1, 1);
+			for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableTMCount; itemIndex++) {
+				sprintf(str, "TM%u %s", usableTMs[itemIndex] - 19, data_moves[usableTMs[itemIndex] - 19].name);
+				gfx_PrintStringXY(str, 140, 21 + 14 * (itemIndex - menuState));
+			}
+			gfx_SwapDraw();
+			while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+				kb_Scan();
+			}
+		}
+		if (kb_Data[7] & kb_Up) {
+			if (menuState > 0 && cursorState <= 2) {
+				menuState--;
+			}
+			else if(menuState + cursorState > 0) {
+				cursorState--;
+			}
+		}
+		if (kb_Data[7] & kb_Down) {
+			if (page == 1) {
+				if (menuState + 10 < usableItemCount && cursorState >= 3) {
+					menuState++;
 				}
-				else {
-					tempcharacter = party[pokemonToSwitch];
-					party[pokemonToSwitch] = party[menuCurrent - 1];
-					party[menuCurrent - 1] = tempcharacter;
-					pokemonToSwitch = 100;
+				else if (menuState + cursorState < usableItemCount - 1) {
+					cursorState++;
 				}
 			}
 			else {
-				menuState2 = menuCurrent;
+				if (menuState + 10 < usableTMCount && cursorState >= 7) {
+					menuState++;
+				}
+				else if (menuState + cursorState < usableTMCount - 1) {
+					cursorState++;
+				}
 			}
-			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-			return;
 		}
-
-
-		gfx_FillScreen(colors[0]);
-		if (switchMode) {
-			gfx_TransparentSprite(movecursor, 20, menuCurrent * 30);
-		}
-		else {
-			gfx_TransparentSprite(menucursor, 20, menuCurrent * 30);
-		}
-
-		i = 0;
-		while (i < 6)
-		{
-			if (party[i].id != 0) {
-				gfx_PrintStringXY(data_pokemon[party[i].id].name, 40, (30 * i) + 30);
-
-				sprintf(str, "LV%u", party[i].level);
-				gfx_PrintStringXY(str, 40, (30 * i) + 40);
-
-				sprintf(str, "%u/%u ", party[i].currenthealth, stats_CalculateStats(party[i]).health);
-				gfx_PrintStringXY(str, 100, (30 * i) + 40);
+		if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+			if (page == 1) {
+				page = 2;
 			}
-			i++;
+			else {
+				page = 1;
+			}
+			menuState = 0;
+			cursorState = 0;
 		}
-	}
-	/* Show data on selected character */
-	else if (menuState2 > 0) {
 		if (kb_Data[6] & kb_Clear) {
-			menuState2 = 0;
-			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-			return;
+			page = 0;
 		}
-		gfx_FillScreen(colors[0]);
-		gfx_SetColor(colors[1]);
-		gfx_SetTextScale(2, 2);
-		gfx_PrintStringXY(data_pokemon[party[menuState2 - 1].id].name, 20, 20);
-		gfx_SetTextScale(1, 1);
-
-		sprintf(str, "%s %s ", elementNames[data_pokemon[party[menuState2 - 1].id].element1], elementNames[data_pokemon[party[menuState2 - 1].id].element2]);
-		gfx_PrintStringXY(str, 200, 26);
-
-		gfx_PrintStringXY("Hp", 20, 50);
-		sprintf(str, "%u/%u ", party[menuState2 - 1].currenthealth, stats_CalculateStats(party[menuState2 - 1]).health);
-		gfx_PrintStringXY(str, 70, 50);
-
-		gfx_PrintStringXY("Atk", 20, 70);
-		sprintf(str, "%u", stats_CalculateStats(party[menuState2 - 1]).attack);
-		gfx_PrintStringXY(str, 70, 70);
-
-		gfx_PrintStringXY("Def", 20, 90);
-		sprintf(str, "%u", stats_CalculateStats(party[menuState2 - 1]).defence);
-		gfx_PrintStringXY(str, 70, 90);
-
-		gfx_PrintStringXY("SpAtk", 20, 110);
-		sprintf(str, "%u", stats_CalculateStats(party[menuState2 - 1]).specialattack);
-		gfx_PrintStringXY(str, 70, 110);
-
-		gfx_PrintStringXY("SpDef", 20, 130);
-		sprintf(str, "%u", stats_CalculateStats(party[menuState2 - 1]).specialdefence);
-		gfx_PrintStringXY(str, 70, 130);
-
-		gfx_PrintStringXY("Spd", 20, 150);
-		sprintf(str, "%u", stats_CalculateStats(party[menuState2 - 1]).speed);
-		gfx_PrintStringXY(str, 70, 150);
-
-		sprintf(str, "LV%u", party[menuState2 - 1].level);
-		gfx_PrintStringXY(str, 20, 180);
-
-		sprintf(str, "%uXP", party[menuState2 - 1].xp);
-		gfx_PrintStringXY(str, 20, 200);
-
-		gfx_SetTextFGColor(colors[1]);
-		if (party[menuState2 - 1].move1 != 0) {
-			gfx_Rectangle(120, 40, 180, 45);
-			gfx_PrintStringXY(data_moves[party[menuState2 - 1].move1].name, 130, 50);
-			gfx_PrintStringXY(text_movecategories[data_moves[party[menuState2 - 1].move1].type], 130, 67);
-			sprintf(str, "%u Power", data_moves[party[menuState2 - 1].move1].power);
-			if (data_moves[party[menuState2 - 1].move1].type < 2) {
-				gfx_PrintStringXY(str, 225, 67);
+		if (kb_Data[1] & kb_2nd) {
+			int itemToUse;
+			if (page == 1) {
+				itemToUse = usableItems[menuState + cursorState];
 			}
-			gfx_PrintStringXY(elementNames[data_moves[party[menuState2 - 1].move1].element], 225, 50);
-		}
-		if (party[menuState2 - 1].move2 != 0) {
-			gfx_Rectangle(120, 90, 180, 45);
-			gfx_PrintStringXY(data_moves[party[menuState2 - 1].move2].name, 130, 100);
-			gfx_PrintStringXY(text_movecategories[data_moves[party[menuState2 - 1].move2].type], 130, 117);
-			sprintf(str, "%u Power", data_moves[party[menuState2 - 1].move2].power);
-			if (data_moves[party[menuState2 - 1].move2].type < 2) {
-				gfx_PrintStringXY(str, 225, 117);
+			else {
+				itemToUse = usableTMs[menuState + cursorState];
 			}
-			gfx_PrintStringXY(elementNames[data_moves[party[menuState2 - 1].move2].element], 225, 100);
-		}
-		if (party[menuState2 - 1].move3 != 0) {
-			gfx_Rectangle(120, 140, 180, 45);
-			gfx_PrintStringXY(data_moves[party[menuState2 - 1].move3].name, 130, 150);
-			gfx_PrintStringXY(text_movecategories[data_moves[party[menuState2 - 1].move3].type], 130, 167);
-			sprintf(str, "%u Power", data_moves[party[menuState2 - 1].move3].power);
-			if (data_moves[party[menuState2 - 1].move3].type < 2) {
-				gfx_PrintStringXY(str, 225, 167);
+			if (items_UseItem(itemToUse) && inBattle) {
+				gfx_SetDrawBuffer();
+				return true;
 			}
-			gfx_PrintStringXY(elementNames[data_moves[party[menuState2 - 1].move3].element], 225, 150);
-		}
-		if (party[menuState2 - 1].move4 != 0) {
-			gfx_Rectangle(120, 190, 180, 45);
-			gfx_PrintStringXY(data_moves[party[menuState2 - 1].move4].name, 130, 200);
-			gfx_PrintStringXY(text_movecategories[data_moves[party[menuState2 - 1].move4].type], 130, 217);
-			sprintf(str, "%u Power", data_moves[party[menuState2 - 1].move4].power);
-			if (data_moves[party[menuState2 - 1].move4].type < 2) {
-				gfx_PrintStringXY(str, 225, 217);
-			}
-			gfx_PrintStringXY(elementNames[data_moves[party[menuState2 - 1].move4].element], 225, 200);
 		}
 	}
-
-	gfx_SwapDraw();
-}
-void ItemMenu(void) {
-	if (kb_Data[6] & kb_Clear) {
-		menuState1 = 0;
-		menuCurrent = 1;
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		return;
-	}
-	gfx_FillScreen(colors[0]);
-
-	gfx_SetColor(colors[0]);
-	gfx_FillRectangle(20, 20, 280, 200);
-	gfx_SetColor(colors[1]);
-	gfx_Rectangle(20, 20, 280, 200);
-	gfx_SetColor(colors[0]);
-	gfx_PrintStringXY(">", 25, 25 + menuCurrent * 20);
-
-	/* Draw Items*/
-	for (i = 0; i < 10 && (i + menuState2) < usableItemCount; i++) {
-		items_IndexToName(str, usableItems[i + menuState2]);
-		gfx_PrintStringXY(str, 35, 25 + i * 20);
-		sprintf(str, "%u", playerItems[usableItems[i + menuState2]]);
-		gfx_PrintStringXY(str, 170, 25 + i * 20);
-	}
-	gfx_PrintStringXY(">", 25, 25 + menuCurrent * 20);
-
-	if (kb_Data[7] & kb_Up) {
-		if (menuCurrent != 0) {
-			menuCurrent--;
-			Wait(20);
-		}
-	}
-	if (kb_Data[7] & kb_Down) {
-		if (menuCurrent < 9) {
-			menuCurrent++;
-			Wait(20);
-		}
-	}
-	if (kb_Data[7] & kb_Right) {
-		menuState2 += 10;
-		Wait(20);
-	}
-	if (kb_Data[7] & kb_Left) {
-		if (menuState2 != 0) {
-			menuState2 -= 10;
-		}
-		Wait(20);
-	}
-
-	if (kb_Data[1] & kb_2nd) {
-		if (menuCurrent + menuState2 < usableItemCount) {
-			items_UseItem(usableItems[menuCurrent + menuState2]);
-		}
-		while (kb_Data[1] & kb_2nd) { kb_Scan(); }
-	}
-	gfx_SwapDraw();
-}
-void FastTravelMenu(void) {
-	if (kb_Data[6] & kb_Clear) {
-		menuState1 = 0;
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		return;
-	}
-	gfx_FillScreen(colors[0]);
-	gfx_SetTextScale(2, 2);
-	gfx_PrintStringXY("Fast Travel", 20, 20);
-	gfx_SetTextScale(1, 1);
-
-	gfx_SwapDraw();
-}
-
-/* Changes menuCurrent */
-void MoveMenuCursor(int max) {
-	if (kb_Data[7] & kb_Up) {
-		menuCurrent--;
-		if (menuCurrent < 1) {
-			menuCurrent = max;
-		}
-		Wait(20);
-	}
-	if (kb_Data[7] & kb_Down) {
-		menuCurrent++;
-		if (menuCurrent > max) {
-			menuCurrent = 1;
-		}
-		Wait(20);
-	}
+	free(backgroundSprite);
+	gfx_SetDrawBuffer();
+	return false;
 }

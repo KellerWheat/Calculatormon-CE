@@ -1,0 +1,274 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\..\SRC\GFX\PKMNSD0.C"
+	.assume ADL=1
+	SEGMENT DATA
+_PKMNSD0:
+	DW24	0
+	DW24	10
+	DW24	275
+	DW24	667
+	DW24	1281
+	DW24	1665
+	DW24	2189
+	DW24	2842
+	DW24	3158
+	DW24	3667
+	DW24	4408
+	DW24	4638
+	DW24	4892
+	DW24	5465
+	DW24	5788
+	DW24	6072
+	DW24	6771
+	DW24	7153
+	DW24	7603
+	DW24	8196
+	DW24	8544
+	DW24	9070
+	DW24	9411
+	DW24	9941
+	DW24	10317
+	DW24	10961
+	DW24	11299
+	DW24	11829
+	DW24	12237
+	DW24	12821
+	DW24	13173
+	DW24	13697
+	DW24	14371
+	DW24	14752
+	DW24	15303
+	DW24	16132
+	DW24	16492
+	DW24	16981
+	DW24	17494
+	DW24	18192
+	DW24	18536
+	DW24	18978
+	DW24	19303
+	DW24	19876
+	DW24	20109
+	DW24	20541
+	DW24	20941
+	DW24	21331
+	DW24	21847
+	DW24	22249
+	DW24	22860
+	DW24	23083
+	DW24	23521
+	DW24	23986
+	DW24	24557
+	DW24	24967
+	DW24	25577
+	DW24	26016
+	DW24	26642
+	DW24	27067
+	DW24	27796
+	DW24	28122
+	DW24	28649
+	DW24	29214
+	DW24	29624
+	DW24	30257
+	DW24	30945
+	DW24	31360
+	DW24	31973
+	DW24	32816
+	DW24	33175
+	DW24	33561
+	DW24	34148
+	DW24	34493
+	DW24	35026
+	DW24	35368
+	DW24	35928
+	DW24	36464
+	DW24	36988
+	DW24	37723
+;    1	// convpng v6.8
+;    2	#include <stdint.h>
+;    3	#include "PKMNSD0.h"
+;    4	
+;    5	#include <fileioc.h>
+;    6	uint8_t *PKMNSD0[80] = {
+	SEGMENT CODE
+;    7	 (uint8_t*)0,
+;    8	 (uint8_t*)10,
+;    9	 (uint8_t*)275,
+;   10	 (uint8_t*)667,
+;   11	 (uint8_t*)1281,
+;   12	 (uint8_t*)1665,
+;   13	 (uint8_t*)2189,
+;   14	 (uint8_t*)2842,
+;   15	 (uint8_t*)3158,
+;   16	 (uint8_t*)3667,
+;   17	 (uint8_t*)4408,
+;   18	 (uint8_t*)4638,
+;   19	 (uint8_t*)4892,
+;   20	 (uint8_t*)5465,
+;   21	 (uint8_t*)5788,
+;   22	 (uint8_t*)6072,
+;   23	 (uint8_t*)6771,
+;   24	 (uint8_t*)7153,
+;   25	 (uint8_t*)7603,
+;   26	 (uint8_t*)8196,
+;   27	 (uint8_t*)8544,
+;   28	 (uint8_t*)9070,
+;   29	 (uint8_t*)9411,
+;   30	 (uint8_t*)9941,
+;   31	 (uint8_t*)10317,
+;   32	 (uint8_t*)10961,
+;   33	 (uint8_t*)11299,
+;   34	 (uint8_t*)11829,
+;   35	 (uint8_t*)12237,
+;   36	 (uint8_t*)12821,
+;   37	 (uint8_t*)13173,
+;   38	 (uint8_t*)13697,
+;   39	 (uint8_t*)14371,
+;   40	 (uint8_t*)14752,
+;   41	 (uint8_t*)15303,
+;   42	 (uint8_t*)16132,
+;   43	 (uint8_t*)16492,
+;   44	 (uint8_t*)16981,
+;   45	 (uint8_t*)17494,
+;   46	 (uint8_t*)18192,
+;   47	 (uint8_t*)18536,
+;   48	 (uint8_t*)18978,
+;   49	 (uint8_t*)19303,
+;   50	 (uint8_t*)19876,
+;   51	 (uint8_t*)20109,
+;   52	 (uint8_t*)20541,
+;   53	 (uint8_t*)20941,
+;   54	 (uint8_t*)21331,
+;   55	 (uint8_t*)21847,
+;   56	 (uint8_t*)22249,
+;   57	 (uint8_t*)22860,
+;   58	 (uint8_t*)23083,
+;   59	 (uint8_t*)23521,
+;   60	 (uint8_t*)23986,
+;   61	 (uint8_t*)24557,
+;   62	 (uint8_t*)24967,
+;   63	 (uint8_t*)25577,
+;   64	 (uint8_t*)26016,
+;   65	 (uint8_t*)26642,
+;   66	 (uint8_t*)27067,
+;   67	 (uint8_t*)27796,
+;   68	 (uint8_t*)28122,
+;   69	 (uint8_t*)28649,
+;   70	 (uint8_t*)29214,
+;   71	 (uint8_t*)29624,
+;   72	 (uint8_t*)30257,
+;   73	 (uint8_t*)30945,
+;   74	 (uint8_t*)31360,
+;   75	 (uint8_t*)31973,
+;   76	 (uint8_t*)32816,
+;   77	 (uint8_t*)33175,
+;   78	 (uint8_t*)33561,
+;   79	 (uint8_t*)34148,
+;   80	 (uint8_t*)34493,
+;   81	 (uint8_t*)35026,
+;   82	 (uint8_t*)35368,
+;   83	 (uint8_t*)35928,
+;   84	 (uint8_t*)36464,
+;   85	 (uint8_t*)36988,
+;   86	 (uint8_t*)37723,
+;   87	};
+;   88	
+;   89	bool PKMNSD0_init(void) {
+_PKMNSD0_init:
+	LD	HL,-10
+	CALL	__frameset
+;   90	    unsigned int data, i;
+;   91	    ti_var_t appvar;
+;   92	
+;   93	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;   94	
+;   95	    appvar = ti_Open("PKMNSD0", "r");
+	LD	BC,L__0
+	PUSH	BC
+	LD	BC,L__1
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-4),A
+;   96	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD0[0];
+	LD	C,(IX+-4)
+	LD	B,0
+	PUSH	BC
+	CALL	_ti_GetDataPtr
+	POP	BC
+	LD	BC,(_PKMNSD0)
+	OR	A,A
+	SBC	HL,BC
+	LD	(IX+-7),HL
+;   97	    for (i = 0; i < PKMNSD0_num; i++) {
+	LD	BC,0
+	LD	(IX+-3),BC
+	JR	L_3
+L_1:
+;   98	        PKMNSD0[i] += data;
+	LD	HL,(IX+-3)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_PKMNSD0
+	ADD	HL,BC
+	LD	(IX+-10),HL
+	LD	HL,(HL)
+	LD	IY,(IX+-10)
+	LD	BC,(IX+-7)
+	ADD	HL,BC
+	LD	(IY),HL
+	LD	BC,(IX+-3)
+	INC	BC
+	LD	(IX+-3),BC
+;   99	    }
+L_3:
+	LD	BC,80
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	C,L_1
+;  100	
+;  101	    ti_CloseAll();
+	CALL	_ti_CloseAll
+;  102	
+;  103	    return (bool)appvar;
+	LD	A,(IX+-4)
+;  104	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _PKMNSD0_init ***************************
+;Name                         Addr/Register   Size   Type
+;_PKMNSD0                            STATIC    240   variable
+;_ti_GetDataPtr                      IMPORT  -----   function
+;_ti_Open                            IMPORT  -----   function
+;_ti_CloseAll                        IMPORT  -----   function
+;data                                  IX-7      3   variable
+;appvar                                IX-4      1   variable
+;i                                     IX-3      3   variable
+
+
+; Stack Frame Size: 16 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__0:
+	DB	"r"
+	DB	0
+L__1:
+	DB	"PKMNSD0"
+	DB	0
+	XREF _ti_GetDataPtr:ROM
+	XREF _ti_Open:ROM
+	XREF _ti_CloseAll:ROM
+	XREF __frameset:ROM
+	XDEF _PKMNSD0_init
+	XDEF _PKMNSD0
+	END

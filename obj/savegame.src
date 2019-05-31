@@ -1,0 +1,2223 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\SRC\SAVEGAME.C"
+	.assume ADL=1
+	SEGMENT DATA
+_appVarName:
+	DB	80
+	DB	75
+	DB	77
+	DB	78
+	DB	83
+	DB	86
+	DB	32
+	DB	0
+	SEGMENT TEXT
+_version:
+	DW	1
+	DB	0
+	SEGMENT DATA
+_readVersion:
+	DW	0
+	DB	0
+_newGame:
+	DB	1
+_playerX:
+	DW	464
+_playerY:
+	DW	128
+_lastPlayerX:
+	DW	0
+_lastPlayerY:
+	DW	0
+	SEGMENT BSS
+_party:
+	DS	1260
+	SEGMENT DATA
+_currentZone:
+	DW	0
+_indoors:
+	DB	0
+_currentBuilding:
+	DB	0
+_playerMoney:
+	DL	1000
+_playerItems:
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+_defeatedTrainers:
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+_defeatedTrainersIndoors:
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+_takenGifts:
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+_badgeCount:
+	DB	0
+_pokedex:
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+;    1	#include <stddef.h>
+;    2	#include <stdlib.h>
+;    3	#include <string.h>
+;    4	#include <stdio.h>
+;    5	#include <tice.h>
+;    6	#include <fileioc.h>
+;    7	
+;    8	#include "savegame.h"
+;    9	#include "data.h"
+;   10	#include "text.h"
+;   11	
+;   12	char appVarName[] = "PKMNSV ";
+;   13	const int version = 1;
+;   14	int readVersion = 0;
+;   15	
+;   16	bool newGame = true;
+;   17	uint16_t playerX = 29*16;
+;   18	uint16_t playerY = 8*16;
+;   19	uint16_t lastPlayerX = 0;
+;   20	uint16_t lastPlayerY = 0;
+;   21	struct pokemonData party[36];
+;   22	uint16_t currentZone = 0;
+;   23	bool indoors = false;
+;   24	uint8_t currentBuilding = 0;
+;   25	uint32_t playerMoney = 1000;
+;   26	uint8_t playerItems[185] = {0};
+;   27	bool defeatedTrainers[16][16] = { {0} };
+;   28	bool defeatedTrainersIndoors[16][16] = { {0} };
+;   29	bool takenGifts[256] = { 0 };
+;   30	uint8_t badgeCount = 0;
+;   31	uint8_t pokedex[151] = { 0 };
+	SEGMENT CODE
+;   32	
+;   33	
+;   34	void save_Save(void) {
+_save_Save:
+	LD	HL,-1
+	CALL	__frameset
+;   35		ti_var_t save;
+;   36	
+;   37		ti_CloseAll();
+	CALL	_ti_CloseAll
+;   38	
+;   39		save = ti_Open(appVarName, "w");
+	LD	BC,L__0
+	PUSH	BC
+	LD	BC,_appVarName
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-1),A
+;   40	
+;   41		if (save) {
+	OR	A,A
+	JR	Z,L_0
+;   42			if (ti_Write(&version, sizeof(version), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	LD	BC,_version
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   43				goto err;
+;   44			}
+;   45			if (ti_Write(&newGame, sizeof(newGame), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_newGame
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   46				goto err;
+;   47			}
+;   48			if (ti_Write(&playerX, sizeof(playerX), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_playerX
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   49				goto err;
+;   50			}
+;   51			if (ti_Write(&playerY, sizeof(playerY), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_playerY
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   52				goto err;
+;   53			}
+;   54			if (ti_Write(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_lastPlayerX
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   55				goto err;
+;   56			}
+;   57			if (ti_Write(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_lastPlayerY
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   58				goto err;
+;   59			}
+;   60			if (ti_Write(&party, sizeof(party), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,1260
+	PUSH	BC
+	LD	BC,_party
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   61				goto err;
+;   62			}
+;   63			if (ti_Write(&currentZone, sizeof(currentZone), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_currentZone
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   64				goto err;
+;   65			}
+;   66			if (ti_Write(&indoors, sizeof(indoors), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_indoors
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   67				goto err;
+;   68			}
+;   69			if (ti_Write(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_currentBuilding
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   70				goto err;
+;   71			}
+;   72			if (ti_Write(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	LD	BC,_playerMoney
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   73				goto err;
+;   74			}
+;   75			if (ti_Write(&playerItems, sizeof(playerItems), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,185
+	PUSH	BC
+	LD	BC,_playerItems
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   76				goto err;
+;   77			}
+;   78			if (ti_Write(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_defeatedTrainers
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   79				goto err;
+;   80			}
+;   81			if (ti_Write(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_defeatedTrainersIndoors
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   82				goto err;
+;   83			}
+;   84			if (ti_Write(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_takenGifts
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   85				goto err;
+;   86			}
+;   87			if (ti_Write(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_badgeCount
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   88				goto err;
+;   89			}
+;   90			if (ti_Write(&pokedex, sizeof(pokedex), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,151
+	PUSH	BC
+	LD	BC,_pokedex
+	PUSH	BC
+	CALL	_ti_Write
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_0
+;   91				goto err;
+;   92			}
+;   93		}
+;   94		else {
+;   95			goto err;
+;   96		}
+;   97		ti_SetArchiveStatus(true, save);
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_ti_SetArchiveStatus
+	POP	BC
+	POP	BC
+;   98		ti_CloseAll();
+	CALL	_ti_CloseAll
+;   99		text_Display("Your progress has been saved", true);
+	LD	BC,1
+	PUSH	BC
+	LD	BC,L__19
+	PUSH	BC
+	CALL	_text_Display
+	POP	BC
+	POP	BC
+;  100		return;
+	JR	L_37
+L_0:
+;  101	
+;  102	err:
+;  103		ti_Delete(appVarName);
+	LD	BC,_appVarName
+	PUSH	BC
+	CALL	_ti_Delete
+	POP	BC
+;  104		ti_CloseAll();
+	CALL	_ti_CloseAll
+;  105		text_Display("SAVE FAILED", false);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,L__20
+	PUSH	BC
+	CALL	_text_Display
+	POP	BC
+	POP	BC
+;  106	}
+L_37:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _save_Save ***************************
+;Name                         Addr/Register   Size   Type
+;_ti_Delete                          IMPORT  -----   function
+;_text_Display                       IMPORT  -----   function
+;_ti_SetArchiveStatus                IMPORT  -----   function
+;_pokedex                            STATIC    151   variable
+;_badgeCount                         STATIC      1   variable
+;_takenGifts                         STATIC    256   variable
+;_defeatedTrainersIndoors            STATIC    256   variable
+;_defeatedTrainers                   STATIC    256   variable
+;_playerItems                        STATIC    185   variable
+;_playerMoney                        STATIC      4   variable
+;_currentBuilding                    STATIC      1   variable
+;_indoors                            STATIC      1   variable
+;_currentZone                        STATIC      2   variable
+;_party                              STATIC   1260   variable
+;_lastPlayerY                        STATIC      2   variable
+;_lastPlayerX                        STATIC      2   variable
+;_playerY                            STATIC      2   variable
+;_playerX                            STATIC      2   variable
+;_newGame                            STATIC      1   variable
+;_version                            STATIC      3   variable
+;_ti_Write                           IMPORT  -----   function
+;_appVarName                         STATIC      8   variable
+;_ti_Open                            IMPORT  -----   function
+;_ti_CloseAll                        IMPORT  -----   function
+;save                                  IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__0:
+	DB	"w"
+	DB	0
+L__19:
+	DB	"Your progress has been saved"
+	DB	0
+L__20:
+	DB	"SAVE FAILED"
+	DB	0
+	SEGMENT CODE
+;  107	
+;  108	void save_Load(void) {
+_save_Load:
+	LD	HL,-1
+	CALL	__frameset
+;  109		ti_var_t save;
+;  110	
+;  111		ti_CloseAll();
+	CALL	_ti_CloseAll
+;  112	
+;  113		save = ti_Open(appVarName, "r");
+	LD	BC,L__22
+	PUSH	BC
+	LD	BC,_appVarName
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-1),A
+;  114	
+;  115		if (save) {
+	OR	A,A
+	JR	Z,L_38
+;  116			if (ti_Read(&readVersion, sizeof(readVersion), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	LD	BC,_readVersion
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  117				goto err;
+;  118			}
+;  119			if (version != readVersion) {
+	LD	HL,(_readVersion)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  120				goto err; /* do not load if wrong version */
+;  121			}
+;  122			if (ti_Read(&newGame, sizeof(newGame), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_newGame
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  123				goto err;
+;  124			}
+;  125			if (ti_Read(&playerX, sizeof(playerX), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_playerX
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  126				goto err;
+;  127			}
+;  128			if (ti_Read(&playerY, sizeof(playerY), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_playerY
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  129				goto err;
+;  130			}
+;  131			if (ti_Read(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_lastPlayerX
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  132				goto err;
+;  133			}
+;  134			if (ti_Read(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_lastPlayerY
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  135				goto err;
+;  136			}
+;  137			if (ti_Read(&party, sizeof(party), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,1260
+	PUSH	BC
+	LD	BC,_party
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  138				goto err;
+;  139			}
+;  140			if (ti_Read(&currentZone, sizeof(currentZone), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	BC,_currentZone
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  141				goto err;
+;  142			}
+;  143			if (ti_Read(&indoors, sizeof(indoors), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_indoors
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  144				goto err;
+;  145			}
+;  146			if (ti_Read(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_currentBuilding
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  147				goto err;
+;  148			}
+;  149			if (ti_Read(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	LD	BC,_playerMoney
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  150				goto err;
+;  151			}
+;  152			if (ti_Read(&playerItems, sizeof(playerItems), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,185
+	PUSH	BC
+	LD	BC,_playerItems
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  153				goto err;
+;  154			}
+;  155			if (ti_Read(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_defeatedTrainers
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  156				goto err;
+;  157			}
+;  158			if (ti_Read(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_defeatedTrainersIndoors
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  159				goto err;
+;  160			}
+;  161			if (ti_Read(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	LD	BC,_takenGifts
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  162				goto err;
+;  163			}
+;  164			if (ti_Read(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	LD	BC,_badgeCount
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  165				goto err;
+;  166			}
+;  167			if (ti_Read(&pokedex, sizeof(pokedex), 1, save) != 1) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,151
+	PUSH	BC
+	LD	BC,_pokedex
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	BC,1
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_38
+;  168				goto err;
+;  169			}
+;  170		}
+;  171		else {
+;  172			goto err;
+;  173		}
+;  174		ti_CloseAll();
+	CALL	_ti_CloseAll
+;  175		return;
+	JR	L_77
+L_38:
+;  176	
+;  177	err:
+;  178		ti_CloseAll();
+	CALL	_ti_CloseAll
+;  179	}
+L_77:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _save_Load ***************************
+;Name                         Addr/Register   Size   Type
+;_pokedex                            STATIC    151   variable
+;_badgeCount                         STATIC      1   variable
+;_takenGifts                         STATIC    256   variable
+;_defeatedTrainersIndoors            STATIC    256   variable
+;_defeatedTrainers                   STATIC    256   variable
+;_playerItems                        STATIC    185   variable
+;_playerMoney                        STATIC      4   variable
+;_currentBuilding                    STATIC      1   variable
+;_indoors                            STATIC      1   variable
+;_currentZone                        STATIC      2   variable
+;_party                              STATIC   1260   variable
+;_lastPlayerY                        STATIC      2   variable
+;_lastPlayerX                        STATIC      2   variable
+;_playerY                            STATIC      2   variable
+;_playerX                            STATIC      2   variable
+;_newGame                            STATIC      1   variable
+;_readVersion                        STATIC      3   variable
+;_ti_Read                            IMPORT  -----   function
+;_appVarName                         STATIC      8   variable
+;_ti_Open                            IMPORT  -----   function
+;_ti_CloseAll                        IMPORT  -----   function
+;save                                  IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__22:
+	DB	"r"
+	DB	0
+	SEGMENT CODE
+;  180	
+;  181	
+;  182	void save_SelectSave(void) {
+_save_SelectSave:
+	LD	HL,-3
+	CALL	__frameset
+;  183		int answer;
+;  184		answer = 0;
+	LD	BC,0
+	LD	(IX+-3),BC
+;  185		while (answer == 0) {
+	JR	L_78
+L_79:
+;  186			answer = text_AskQuestion2("Save Slot 1", "Save Slot 2", false);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,L__43
+	PUSH	BC
+	LD	BC,L__44
+	PUSH	BC
+	CALL	_text_AskQuestion2
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(IX+-3),HL
+;  187		}
+L_78:
+	LD	HL,(IX+-3)
+	CALL	__icmpzero
+	JR	Z,L_79
+;  188		if(answer == 1){
+	LD	BC,1
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_83
+;  189			strcpy(appVarName, "PKMNSV1");
+	LD	BC,L__47
+	PUSH	BC
+	LD	BC,_appVarName
+	PUSH	BC
+	CALL	_strcpy
+	POP	BC
+	POP	BC
+;  190		}
+L_83:
+;  191		if (answer == 2) {
+	LD	BC,2
+	LD	HL,(IX+-3)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_84
+;  192			strcpy(appVarName, "PKMNSV2");
+	LD	BC,L__49
+	PUSH	BC
+	LD	BC,_appVarName
+	PUSH	BC
+	CALL	_strcpy
+	POP	BC
+	POP	BC
+;  193		}
+L_84:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _save_SelectSave ***************************
+;Name                         Addr/Register   Size   Type
+;_appVarName                         STATIC      8   variable
+;_strcpy                             IMPORT  -----   function
+;_text_AskQuestion2                  IMPORT  -----   function
+;answer                                IX-3      3   variable
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__43:
+	DB	"Save Slot 2"
+	DB	0
+L__44:
+	DB	"Save Slot 1"
+	DB	0
+L__47:
+	DB	"PKMNSV1"
+	DB	0
+L__49:
+	DB	"PKMNSV2"
+	DB	0
+	XREF _text_AskQuestion2:ROM
+	XREF _text_Display:ROM
+	XREF _ti_Delete:ROM
+	XREF _ti_SetArchiveStatus:ROM
+	XREF _ti_Read:ROM
+	XREF _ti_Write:ROM
+	XREF _ti_Open:ROM
+	XREF _ti_CloseAll:ROM
+	XREF _strcpy:ROM
+	XREF __frameset:ROM
+	XREF __icmpzero:ROM
+	XDEF _save_SelectSave
+	XDEF _save_Load
+	XDEF _save_Save
+	XDEF _pokedex
+	XDEF _badgeCount
+	XDEF _takenGifts
+	XDEF _defeatedTrainersIndoors
+	XDEF _defeatedTrainers
+	XDEF _playerItems
+	XDEF _playerMoney
+	XDEF _currentBuilding
+	XDEF _indoors
+	XDEF _currentZone
+	XDEF _party
+	XDEF _lastPlayerY
+	XDEF _lastPlayerX
+	XDEF _playerY
+	XDEF _playerX
+	XDEF _newGame
+	XDEF _readVersion
+	XDEF _version
+	XDEF _appVarName
+	END

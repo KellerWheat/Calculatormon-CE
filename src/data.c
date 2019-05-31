@@ -1,7 +1,6 @@
 #include "data.h";
 
-/* Misc Data */
-
+/* Elemental damage multipliers */
 uint8_t elements[18][18] = {
 	{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},//None - 0
 	{2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,2,2,1},//Normal - 1

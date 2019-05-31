@@ -1,0 +1,24 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\..\SRC\GFX\RANDOMCOLORSMENU.C"
+	.assume ADL=1
+	SEGMENT DATA
+_randomcolorsmenu_data:
+	DB	7
+	DB	1
+	DB	28
+	DB	90
+	DB	87
+	DB	88
+	DB	89
+	DB	58
+	DB	86
+	XDEF _randomcolorsmenu_data
+;    1	// convpng v6.8
+;    2	#include <stdint.h>
+;    3	#include "menu_gfx.h"
+;    4	
+;    5	// 8 bpp image
+;    6	uint8_t randomcolorsmenu_data[9] = {
+	END

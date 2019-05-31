@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <tice.h>
 #include <fileioc.h>
@@ -8,32 +9,27 @@
 #include "data.h"
 #include "text.h"
 
-const char appVarName[] = "PKMNSV";
+char appVarName[] = "PKMNSV ";
 const int version = 1;
 int readVersion = 0;
 
 bool newGame = true;
-
 uint16_t playerX = 29*16;
 uint16_t playerY = 8*16;
-
 uint16_t lastPlayerX = 0;
 uint16_t lastPlayerY = 0;
-
 struct pokemonData party[36];
-
 uint16_t currentZone = 0;
 bool indoors = false;
 uint8_t currentBuilding = 0;
-
 uint32_t playerMoney = 1000;
 uint8_t playerItems[185] = {0};
-
 bool defeatedTrainers[16][16] = { {0} };
 bool defeatedTrainersIndoors[16][16] = { {0} };
 bool takenGifts[256] = { 0 };
-
 uint8_t badgeCount = 0;
+uint8_t pokedex[151] = { 0 };
+
 
 void save_Save(void) {
 	ti_var_t save;
@@ -91,12 +87,16 @@ void save_Save(void) {
 		if (ti_Write(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
 			goto err;
 		}
+		if (ti_Write(&pokedex, sizeof(pokedex), 1, save) != 1) {
+			goto err;
+		}
 	}
 	else {
 		goto err;
 	}
 	ti_SetArchiveStatus(true, save);
 	ti_CloseAll();
+	text_Display("Your progress has been saved", true);
 	return;
 
 err:
@@ -164,6 +164,9 @@ void save_Load(void) {
 		if (ti_Read(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
 			goto err;
 		}
+		if (ti_Read(&pokedex, sizeof(pokedex), 1, save) != 1) {
+			goto err;
+		}
 	}
 	else {
 		goto err;
@@ -173,4 +176,19 @@ void save_Load(void) {
 
 err:
 	ti_CloseAll();
+}
+
+
+void save_SelectSave(void) {
+	int answer;
+	answer = 0;
+	while (answer == 0) {
+		answer = text_AskQuestion2("Save Slot 1", "Save Slot 2", false);
+	}
+	if(answer == 1){
+		strcpy(appVarName, "PKMNSV1");
+	}
+	if (answer == 2) {
+		strcpy(appVarName, "PKMNSV2");
+	}
 }
