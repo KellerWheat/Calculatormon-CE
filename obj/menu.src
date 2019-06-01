@@ -1342,7 +1342,7 @@ _1temp27:
 	SEGMENT CODE
 ;  237	void menu_PokemonDetails(int pokemonIndex) {
 _menu_PokemonDetails:
-	LD	HL,-144
+	LD	HL,-156
 	CALL	__frameset
 ;  238		int page, menuState, tempMove, moveIndex;
 ;  239		gfx_sprite_t *backgroundSprite;
@@ -1358,7 +1358,7 @@ _menu_PokemonDetails:
 	POP	BC
 	POP	BC
 	POP	BC
-	LD	(IX+-30),HL
+	LD	(IX+-36),HL
 ;  242		
 ;  243	
 ;  244		menu_Setup();
@@ -1366,13 +1366,13 @@ _menu_PokemonDetails:
 ;  245	
 ;  246		page = 1;
 	LD	BC,1
-	LD	(IX+-24),BC
+	LD	(IX+-27),BC
 ;  247		menuState = 0;
 	LD	BC,0
 	LD	(IX+-9),BC
 ;  248		while (page != 0) {
-	JR	L_128
-L_129:
+	JR	L_131
+L_132:
 ;  249			Wait(20);
 	LD	BC,20
 	PUSH	BC
@@ -1382,27 +1382,28 @@ L_129:
 	CALL	_kb_Scan
 ;  251			if (page == 1) {
 	LD	BC,1
-	LD	HL,(IX+-24)
+	LD	HL,(IX+-27)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_106
-;  252				zx7_Decompress(backgroundSprite, infoscreen1_compressed);
+	JR	NZ,L_109
+;  252				gfx_sprite_t *pokemonSprite;
+;  253				zx7_Decompress(backgroundSprite, infoscreen1_compressed);
 	LD	HL,_PKMNSD5+99
 	LD	BC,(HL)
 	PUSH	BC
-	LD	BC,(IX+-30)
+	LD	BC,(IX+-36)
 	PUSH	BC
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  253				gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+;  254				gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
 	LD	BC,0
 	PUSH	BC
 	PUSH	BC
-	LD	BC,(IX+-30)
+	LD	BC,(IX+-36)
 	PUSH	BC
 	CALL	_gfx_ScaledSprite_NoClip
 	POP	BC
@@ -1410,84 +1411,152 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  254	
 ;  255	
-;  256				gfx_SetTextScale(2, 2);
+;  256	
+;  257				gfx_SetTextScale(2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  257	
-;  258				sprintf(str, "%u/%u", party[pokemonIndex].currenthealth, stats_CalculateStats(party[pokemonIndex]).health);
+;  258	
+;  259	
+;  260				
+;  261				gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
 	LD	HL,(IX+6)
 	LD	A,35
 	CALL	__imul_b
-	LD	(IX+-33),HL
+	LD	(IX+-30),HL
 	LD	BC,_party
 	ADD	HL,BC
-	LD	IY,0
-	ADD	IY,SP
 	LD	(IX+-3),HL
-	LEA	IY,IY+-36
-	LD	SP,IY
-	LD	IY,0
-	ADD	IY,SP
-	PEA	IX+-66
-	LD	DE,IY
-	LD	BC,35
-	LDIR	
-	CALL	_stats_CalculateStats
-	LD	IY,39
-	ADD	IY,SP
-	LD	SP,IY
-	LD	BC,(HL)
-	CALL	__stoiu
-	PUSH	HL
+	LD	BC,32
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
 	LD	IY,(IX+-3)
-	LD	BC,(IY+14)
-	CALL	__stoiu
-	PUSH	HL
-	LD	BC,L__56
-	PUSH	BC
-	LD	BC,_str
-	PUSH	BC
-	CALL	_sprintf
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-;  259				gfx_PrintStringXY(str, 208, 38);
-	LD	BC,38
-	PUSH	BC
-	LD	BC,208
-	PUSH	BC
-	LD	BC,_str
-	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,51
+	CALL	__imul_b
+	LD	BC,_data_pokemon
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  260				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).attack);
-	LD	HL,(IX+-3)
+;  262				pokemonSprite = gfx_MallocSprite(56, 56);
+	LD	BC,_malloc
+	PUSH	BC
+	LD	BC,56
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_AllocSprite
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(IX+-39),HL
+;  263				if (pokemonIndex < 80) {
+	LD	HL,(IX+6)
+	LD	BC,80
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L_82
+;  264					zx7_Decompress(pokemonSprite, PKMNSD0[party[pokemonIndex].id]);
+	LD	BC,(IX+-3)
+	LD	(IX+-57),BC
+	LD	IY,(IX+-3)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_PKMNSD0
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	LD	BC,(IX+-39)
+	PUSH	BC
+	CALL	_zx7_Decompress
+	POP	BC
+	POP	BC
+;  265				}
+;  266				else {
+	JR	L_83
+L_82:
+;  267					zx7_Decompress(pokemonSprite, PKMNSD1[party[pokemonIndex].id - 80]);
+	LD	BC,(IX+-3)
+	LD	(IX+-57),BC
+	LD	IY,(IX+-3)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	IY,HL
+	LEA	HL,IY+-80
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_PKMNSD1
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	LD	BC,(IX+-39)
+	PUSH	BC
+	CALL	_zx7_Decompress
+	POP	BC
+	POP	BC
+;  268				}
+L_83:
+;  269				gfx_ScaledTransparentSprite_NoClip(pokemonSprite, 26, 52, 2, 2);
+	LD	BC,2
+	PUSH	BC
+	PUSH	BC
+	LD	BC,52
+	PUSH	BC
+	LD	BC,26
+	PUSH	BC
+	LD	BC,(IX+-39)
+	PUSH	BC
+	CALL	_gfx_ScaledTransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  270				free(pokemonSprite);
+	LD	BC,(IX+-39)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;  271	
+;  272				sprintf(str, "%u/%u", party[pokemonIndex].currenthealth, stats_CalculateStats(party[pokemonIndex]).health);
+	LD	BC,(IX+-57)
 	LD	IY,0
 	ADD	IY,SP
+	LD	(IX+-21),BC
+	LD	HL,(IX+-3)
 	LEA	IY,IY+-36
 	LD	SP,IY
 	LD	IY,0
 	ADD	IY,SP
+	PEA	IX+-75
 	LD	DE,IY
-	PEA	IX+-78
 	LD	BC,35
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
 	ADD	IY,SP
 	LD	SP,IY
-	INC	HL
-	INC	HL
 	LD	BC,(HL)
+	CALL	__stoiu
+	PUSH	HL
+	LD	IY,(IX+-21)
+	LD	BC,(IY+14)
 	CALL	__stoiu
 	PUSH	HL
 	LD	BC,L__57
@@ -1498,10 +1567,11 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  261				gfx_PrintStringXY(str, 228, 62);
-	LD	BC,62
+	POP	BC
+;  273				gfx_PrintStringXY(str, 208, 38);
+	LD	BC,38
 	PUSH	BC
-	LD	BC,228
+	LD	BC,208
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -1509,7 +1579,7 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  262				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).defence);
+;  274				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).attack);
 	LD	HL,(IX+-3)
 	LD	IY,0
 	ADD	IY,SP
@@ -1518,15 +1588,15 @@ L_129:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-90
+	PEA	IX+-87
 	LD	BC,35
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
 	ADD	IY,SP
 	LD	SP,IY
-	LD	IY,HL
-	LEA	HL,IY+4
+	INC	HL
+	INC	HL
 	LD	BC,(HL)
 	CALL	__stoiu
 	PUSH	HL
@@ -1538,8 +1608,8 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  263				gfx_PrintStringXY(str, 228, 86);
-	LD	BC,86
+;  275				gfx_PrintStringXY(str, 228, 62);
+	LD	BC,62
 	PUSH	BC
 	LD	BC,228
 	PUSH	BC
@@ -1549,7 +1619,7 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  264				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialattack);
+;  276				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).defence);
 	LD	HL,(IX+-3)
 	LD	IY,0
 	ADD	IY,SP
@@ -1558,7 +1628,7 @@ L_129:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-102
+	PEA	IX+-99
 	LD	BC,35
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -1566,7 +1636,7 @@ L_129:
 	ADD	IY,SP
 	LD	SP,IY
 	LD	IY,HL
-	LEA	HL,IY+6
+	LEA	HL,IY+4
 	LD	BC,(HL)
 	CALL	__stoiu
 	PUSH	HL
@@ -1578,8 +1648,8 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  265				gfx_PrintStringXY(str, 228, 110);
-	LD	BC,110
+;  277				gfx_PrintStringXY(str, 228, 86);
+	LD	BC,86
 	PUSH	BC
 	LD	BC,228
 	PUSH	BC
@@ -1589,7 +1659,7 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  266				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialdefence);
+;  278				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialattack);
 	LD	HL,(IX+-3)
 	LD	IY,0
 	ADD	IY,SP
@@ -1598,7 +1668,7 @@ L_129:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-114
+	PEA	IX+-111
 	LD	BC,35
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -1606,7 +1676,7 @@ L_129:
 	ADD	IY,SP
 	LD	SP,IY
 	LD	IY,HL
-	LEA	HL,IY+8
+	LEA	HL,IY+6
 	LD	BC,(HL)
 	CALL	__stoiu
 	PUSH	HL
@@ -1618,8 +1688,8 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  267				gfx_PrintStringXY(str, 228, 134);
-	LD	BC,134
+;  279				gfx_PrintStringXY(str, 228, 110);
+	LD	BC,110
 	PUSH	BC
 	LD	BC,228
 	PUSH	BC
@@ -1629,7 +1699,7 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  268				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).speed);
+;  280				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).specialdefence);
 	LD	HL,(IX+-3)
 	LD	IY,0
 	ADD	IY,SP
@@ -1638,7 +1708,7 @@ L_129:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-126
+	PEA	IX+-123
 	LD	BC,35
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -1646,7 +1716,7 @@ L_129:
 	ADD	IY,SP
 	LD	SP,IY
 	LD	IY,HL
-	LEA	HL,IY+10
+	LEA	HL,IY+8
 	LD	BC,(HL)
 	CALL	__stoiu
 	PUSH	HL
@@ -1658,7 +1728,65 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  269				gfx_PrintStringXY(str, 228, 158);
+;  281				gfx_PrintStringXY(str, 228, 134);
+	LD	BC,134
+	PUSH	BC
+	LD	BC,228
+	PUSH	BC
+	LD	BC,_str
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  282				sprintf(str, "%u", stats_CalculateStats(party[pokemonIndex]).speed);
+	LD	HL,(IX+-3)
+	LD	IY,0
+	ADD	IY,SP
+	LEA	IY,IY+-36
+	LD	SP,IY
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-22),HL
+	LD	(IY+-25),IX	; unspill
+	LD	HL,(IY+-22)
+	POP	IY
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LD	BC,35
+	LDIR	
+	LD	BC,-135
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	HL,(IY+-25)
+	POP	IY
+	ADD	HL,BC
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-25),HL	; unspill
+	LD	HL,(IY+-25)
+	POP	IY
+	LD	BC,HL
+	PUSH	BC
+	CALL	_stats_CalculateStats
+	LD	IY,39
+	ADD	IY,SP
+	LD	SP,IY
+	LD	IY,HL
+	LEA	HL,IY+10
+	LD	BC,(HL)
+	CALL	__stoiu
+	PUSH	HL
+	LD	BC,L__62
+	PUSH	BC
+	LD	BC,_str
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
+;  283				gfx_PrintStringXY(str, 228, 158);
 	LD	BC,158
 	PUSH	BC
 	LD	BC,228
@@ -1669,14 +1797,14 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  270	
-;  271				sprintf(str, "%u", party[pokemonIndex].level);
-	LD	IY,(IX+-3)
+;  284	
+;  285				sprintf(str, "%u", party[pokemonIndex].level);
+	LD	IY,(IX+-21)
 	LD	A,(IY+9)
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	BC,L__62
+	LD	BC,L__63
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -1684,7 +1812,7 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  272				gfx_PrintStringXY(str, 64, 186);
+;  286				gfx_PrintStringXY(str, 64, 186);
 	LD	BC,186
 	PUSH	BC
 	LD	BC,64
@@ -1695,13 +1823,13 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  273				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 218, 186);
+;  287				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 218, 186);
 	LD	BC,_data_pokemon
 	LD	DE,186
 	PUSH	DE
 	LD	DE,218
 	PUSH	DE
-	LD	IY,(IX+-3)
+	LD	IY,(IX+-21)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -1724,8 +1852,8 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  274				if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
-	LD	IY,(IX+-3)
+;  288				if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
+	LD	IY,(IX+-21)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -1736,13 +1864,13 @@ L_129:
 	LD	IY,HL
 	LD	A,(IY+17)
 	OR	A,A
-	JR	Z,L_82
-;  275					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 186);
+	JR	Z,L_85
+;  289					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 186);
 	LD	DE,186
 	PUSH	DE
 	LD	DE,254
 	PUSH	DE
-	LD	IY,(IX+-3)
+	LD	IY,(IX+-21)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -1765,15 +1893,15 @@ L_129:
 	POP	BC
 	POP	BC
 	POP	BC
-;  276				}
-L_82:
-;  277				sprintf(str, "%u/%u", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level+1]);
+;  290				}
+L_85:
+;  291				sprintf(str, "%u/%u", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level+1]);
 	LD	BC,_party
-	LD	HL,(IX+-33)
+	LD	HL,(IX+-30)
 	ADD	HL,BC
 	LEA	IY,IX+-128
-	LD	(IY+-1),HL
-	LD	IY,(IY+-1)
+	LD	(IY+-10),HL
+	LD	IY,(IY+-10)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -1790,7 +1918,7 @@ L_82:
 	LEA	IY,IX+-128
 	LD	BC,_xpPerLevel
 	ADD	HL,BC
-	LD	IY,(IY+-1)
+	LD	IY,(IY+-10)
 	LD	A,(IY+9)
 	LD	DE,HL
 	UEXT	HL
@@ -1809,13 +1937,13 @@ L_82:
 	PUSH	HL
 	PUSH	BC
 	LEA	IY,IX+-128
-	LD	IY,(IY+-1)
+	LD	IY,(IY+-10)
 	LD	BC,(IY+10)
 	LD	A,(IY+13)
 	LD	L,A
 	PUSH	HL
 	PUSH	BC
-	LD	BC,L__64
+	LD	BC,L__65
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -1826,8 +1954,8 @@ L_82:
 	POP	BC
 	POP	BC
 	POP	BC
-;  278				gfx_PrintStringXY(str, 64, 186);
-	LD	BC,186
+;  292				gfx_PrintStringXY(str, 64, 210);
+	LD	BC,210
 	PUSH	BC
 	LD	BC,64
 	PUSH	BC
@@ -1837,56 +1965,56 @@ L_82:
 	POP	BC
 	POP	BC
 	POP	BC
-;  279	
-;  280				gfx_SetTextScale(1, 1);
+;  293	
+;  294				gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  281	
-;  282				gfx_SwapDraw();
+;  295	
+;  296				gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  283				while (!((kb_Data[7] & kb_Right) || (kb_Data[6] & kb_Clear))) {
-	JR	L_84
-L_85:
-;  284					kb_Scan();
+;  297				while (!((kb_Data[7] & kb_Right) || (kb_Data[6] & kb_Clear))) {
+	JR	L_87
+L_88:
+;  298					kb_Scan();
 	CALL	_kb_Scan
-;  285				}
-L_84:
+;  299				}
+L_87:
 	LD	A,(16056350)
 	AND	A,4
-	JR	NZ,L_108
+	JR	NZ,L_111
 	LD	A,(16056348)
 	AND	A,64
-	JR	NZ,L_108
-	JR	L_85
-;  286			}
-;  287			else if (page == 2) {
-L_106:
+	JR	NZ,L_111
+	JR	L_88
+;  300			}
+;  301			else if (page == 2) {
+L_109:
 	LD	BC,2
-	LD	HL,(IX+-24)
+	LD	HL,(IX+-27)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_108
-;  288				zx7_Decompress(backgroundSprite, infoscreen2_compressed);
+	JR	NZ,L_111
+;  302				zx7_Decompress(backgroundSprite, infoscreen2_compressed);
 	LD	HL,_PKMNSD5+102
 	LD	BC,(HL)
 	PUSH	BC
-	LD	BC,(IX+-30)
+	LD	BC,(IX+-36)
 	PUSH	BC
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  289				gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+;  303				gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
 	LD	BC,0
 	PUSH	BC
 	PUSH	BC
-	LD	BC,(IX+-30)
+	LD	BC,(IX+-36)
 	PUSH	BC
 	CALL	_gfx_ScaledSprite_NoClip
 	POP	BC
@@ -1894,26 +2022,45 @@ L_106:
 	POP	BC
 	POP	BC
 	POP	BC
-;  290	
-;  291				gfx_SetTextScale(2, 2);
+;  304	
+;  305				gfx_SetTextScale(2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  292	
-;  293				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 4, 52);
+;  306	
+;  307				gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
 	LD	HL,(IX+6)
 	LD	A,35
 	CALL	__imul_b
 	LD	(IX+-15),HL
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-48),HL
+	LD	(IX+-54),HL
 	LD	HL,(IX+-15)
 	ADD	HL,BC
 	LD	(IX+-18),HL
+	LD	BC,32
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	LD	IY,(IX+-18)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,51
+	CALL	__imul_b
+	LD	BC,_data_pokemon
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  308				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 4, 52);
 	LD	BC,_data_pokemon
 	LD	DE,52
 	PUSH	DE
@@ -1942,11 +2089,11 @@ L_106:
 	POP	BC
 	POP	BC
 	POP	BC
-;  294				if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
+;  309				if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
 	LD	BC,(IX+-18)
-	LD	(IX+-36),BC
+	LD	(IX+-42),BC
 	LD	BC,(IX+-18)
-	LD	(IX+-21),BC
+	LD	(IX+-24),BC
 	LD	IY,(IX+-18)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -1958,12 +2105,12 @@ L_106:
 	LD	IY,HL
 	LD	A,(IY+17)
 	OR	A,A
-	JR	Z,L_87
-;  295					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 40, 52);
+	JR	Z,L_90
+;  310					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 40, 52);
 	LD	BC,(IX+-18)
-	LD	(IX+-36),BC
+	LD	(IX+-42),BC
 	LD	BC,(IX+-18)
-	LD	(IX+-21),BC
+	LD	(IX+-24),BC
 	LD	BC,_data_pokemon
 	LD	DE,52
 	PUSH	DE
@@ -1992,10 +2139,10 @@ L_106:
 	POP	BC
 	POP	BC
 	POP	BC
-;  296				}
-L_87:
-;  297	
-;  298				gfx_TransparentSprite_NoClip(menucursor, 170, 50 + 48 * menuState);
+;  311				}
+L_90:
+;  312	
+;  313				gfx_TransparentSprite_NoClip(menucursor, 170, 50 + 48 * menuState);
 	LD	B,(IX+-9)
 	LD	C,48
 	MLT	BC
@@ -2012,19 +2159,19 @@ L_87:
 	POP	BC
 	POP	BC
 	POP	BC
-;  299				for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+;  314				for (moveIndex = 0; moveIndex < 4; moveIndex++) {
 	LD	BC,0
 	LD	(IX+-6),BC
-	JR	L_96
-L_94:
-;  300					if (party[pokemonIndex].moves[moveIndex] > 0) {
-	LD	BC,(IX+-36)
-	LD	(IX+-21),BC
-	LD	IY,(IX+-21)
+	JR	L_99
+L_97:
+;  315					if (party[pokemonIndex].moves[moveIndex] > 0) {
+	LD	BC,(IX+-42)
+	LD	(IX+-24),BC
+	LD	IY,(IX+-24)
 	LEA	HL,IY+1
 	LD	BC,(IX+-6)
 	ADD	HL,BC
-	LD	(IX+-39),HL
+	LD	(IX+-45),HL
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2033,9 +2180,9 @@ L_94:
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_95
-;  301						gfx_PrintStringXY(data_moves[party[pokemonIndex].moves[moveIndex]].name, 188, 42 + 48 * moveIndex);
-	LD	HL,(IX+-39)
+	JP	P,L_98
+;  316						gfx_PrintStringXY(data_moves[party[pokemonIndex].moves[moveIndex]].name, 188, 42 + 48 * moveIndex);
+	LD	HL,(IX+-45)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2043,7 +2190,7 @@ L_94:
 	CALL	__imul_b
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	(IX+-51),HL
+	LD	(IX+-60),HL
 	LD	HL,(IX+-6)
 	LD	A,48
 	CALL	__imul_b
@@ -2052,13 +2199,13 @@ L_94:
 	PUSH	BC
 	LD	BC,188
 	PUSH	BC
-	LD	IY,(IX+-51)
+	LD	IY,(IX+-60)
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  302						gfx_TransparentSprite_NoClip(typeIcons[data_moves[party[pokemonIndex].moves[moveIndex]].element - 1], 188, 64 + 48 * moveIndex);
+;  317						gfx_TransparentSprite_NoClip(typeIcons[data_moves[party[pokemonIndex].moves[moveIndex]].element - 1], 188, 64 + 48 * moveIndex);
 	LD	B,(IX+-6)
 	LD	C,48
 	MLT	BC
@@ -2069,7 +2216,7 @@ L_94:
 	PUSH	BC
 	LD	BC,188
 	PUSH	BC
-	LD	IY,(IX+-51)
+	LD	IY,(IX+-60)
 	LD	A,(IY+14)
 	UEXT	HL
 	LD	L,A
@@ -2085,12 +2232,12 @@ L_94:
 	POP	BC
 	POP	BC
 	POP	BC
-;  303						if(data_moves[party[pokemonIndex].moves[moveIndex]].type == 0)
-	LD	BC,(IX+-48)
+;  318						if(data_moves[party[pokemonIndex].moves[moveIndex]].type == 0)
+	LD	BC,(IX+-54)
 	LD	(IX+-12),BC
-	LD	(IX+-36),BC
+	LD	(IX+-42),BC
 	LD	BC,(IX+-12)
-	LD	(IX+-21),BC
+	LD	(IX+-24),BC
 	LD	IY,(IX+-12)
 	LEA	HL,IY+1
 	LD	BC,(IX+-6)
@@ -2105,8 +2252,8 @@ L_94:
 	LD	IY,HL
 	LD	A,(IY+15)
 	OR	A,A
-	JR	NZ,L_92
-;  304							gfx_TransparentSprite_NoClip(categoryIcons[0], 230, 63 + 48 * moveIndex);
+	JR	NZ,L_95
+;  319							gfx_TransparentSprite_NoClip(categoryIcons[0], 230, 63 + 48 * moveIndex);
 	LD	B,(IX+-6)
 	LD	C,48
 	MLT	BC
@@ -2123,16 +2270,16 @@ L_94:
 	POP	BC
 	POP	BC
 	POP	BC
-;  305						else if (data_moves[party[pokemonIndex].moves[moveIndex]].type == 1) {
-	JR	L_95
-L_92:
+;  320						else if (data_moves[party[pokemonIndex].moves[moveIndex]].type == 1) {
+	JR	L_98
+L_95:
 	LD	BC,(IX+-12)
 	LD	(IX+-12),BC
-	LD	(IX+-48),BC
+	LD	(IX+-54),BC
 	LD	BC,(IX+-12)
-	LD	(IX+-36),BC
+	LD	(IX+-42),BC
 	LD	BC,(IX+-12)
-	LD	(IX+-21),BC
+	LD	(IX+-24),BC
 	LD	IY,(IX+-12)
 	LEA	HL,IY+1
 	LD	BC,(IX+-6)
@@ -2147,8 +2294,8 @@ L_92:
 	LD	IY,HL
 	LD	A,(IY+15)
 	CP	A,1
-	JR	NZ,L_90
-;  306							gfx_TransparentSprite_NoClip(categoryIcons[1], 230, 63 + 48 * moveIndex);
+	JR	NZ,L_93
+;  321							gfx_TransparentSprite_NoClip(categoryIcons[1], 230, 63 + 48 * moveIndex);
 	LD	B,(IX+-6)
 	LD	C,48
 	MLT	BC
@@ -2166,11 +2313,11 @@ L_92:
 	POP	BC
 	POP	BC
 	POP	BC
-;  307						}
-;  308						else {
-	JR	L_95
-L_90:
-;  309							gfx_TransparentSprite_NoClip(categoryIcons[2], 230, 63 + 48 * moveIndex);
+;  322						}
+;  323						else {
+	JR	L_98
+L_93:
+;  324							gfx_TransparentSprite_NoClip(categoryIcons[2], 230, 63 + 48 * moveIndex);
 	LD	B,(IX+-6)
 	LD	C,48
 	MLT	BC
@@ -2188,26 +2335,26 @@ L_90:
 	POP	BC
 	POP	BC
 	POP	BC
-;  310						}
-;  311					}
-;  312				}
-L_95:
+;  325						}
+;  326					}
+;  327				}
+L_98:
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-L_96:
+L_99:
 	LD	BC,4
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
-	JP	M,L_94
-;  313	
-;  314				sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].power);
-	LD	IY,(IX+-21)
+	JP	M,L_97
+;  328	
+;  329				sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].power);
+	LD	IY,(IX+-24)
 	LEA	HL,IY+1
 	LD	BC,(IX+-9)
 	ADD	HL,BC
-	LD	(IX+-42),HL
+	LD	(IX+-48),HL
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2220,7 +2367,7 @@ L_96:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	BC,L__73
+	LD	BC,L__74
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2228,7 +2375,7 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  315				gfx_PrintStringXY(str, 62, 82);
+;  330				gfx_PrintStringXY(str, 62, 82);
 	LD	BC,82
 	PUSH	BC
 	LD	BC,62
@@ -2239,8 +2386,8 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  316				sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].accuracy);
-	LD	HL,(IX+-42)
+;  331				sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].accuracy);
+	LD	HL,(IX+-48)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2253,7 +2400,7 @@ L_96:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	BC,L__74
+	LD	BC,L__75
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2261,7 +2408,7 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  317				gfx_PrintStringXY(str, 62, 106);
+;  332				gfx_PrintStringXY(str, 62, 106);
 	LD	BC,106
 	PUSH	BC
 	LD	BC,62
@@ -2272,13 +2419,13 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  318				sprintf(str, "%u/%u", party[pokemonIndex].pp[menuState], data_moves[party[pokemonIndex].moves[menuState]].uses);
+;  333				sprintf(str, "%u/%u", party[pokemonIndex].pp[menuState], data_moves[party[pokemonIndex].moves[menuState]].uses);
 	LD	HL,(IX+-15)
 	LD	BC,_party
 	ADD	HL,BC
 	LEA	IY,IX+-128
-	LD	(IY+-4),HL
-	LD	IY,(IY+-4)
+	LD	(IY+-13),HL
+	LD	IY,(IY+-13)
 	LD	BC,(IX+-9)
 	LEA	HL,IY+1
 	ADD	HL,BC
@@ -2295,7 +2442,7 @@ L_96:
 	LD	L,A
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	IY,(IY+-4)
+	LD	IY,(IY+-13)
 	LD	BC,(IX+-9)
 	LEA	HL,IY+5
 	ADD	HL,BC
@@ -2303,7 +2450,7 @@ L_96:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	BC,L__75
+	LD	BC,L__76
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2312,7 +2459,7 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  319				gfx_PrintStringXY(str, 62, 130);
+;  334				gfx_PrintStringXY(str, 62, 130);
 	LD	BC,130
 	PUSH	BC
 	LD	BC,62
@@ -2323,106 +2470,106 @@ L_96:
 	POP	BC
 	POP	BC
 	POP	BC
-;  320	
-;  321				gfx_SetTextScale(1, 1);
+;  335	
+;  336				gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  322	
-;  323	
-;  324				gfx_SwapDraw();
+;  337	
+;  338	
+;  339				gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  325				while (!((kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down) || (kb_Data[6] & kb_Enter))) {
-	JR	L_102
-L_103:
-;  326					kb_Scan();
+;  340				while (!((kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down) || (kb_Data[6] & kb_Enter))) {
+	JR	L_105
+L_106:
+;  341					kb_Scan();
 	CALL	_kb_Scan
-;  327				}
-L_102:
+;  342				}
+L_105:
 	LD	A,(16056350)
 	AND	A,2
-	JR	NZ,L_108
+	JR	NZ,L_111
 	LD	A,(16056348)
 	AND	A,64
-	JR	NZ,L_108
+	JR	NZ,L_111
 	LD	A,(16056350)
 	AND	A,8
-	JR	NZ,L_108
+	JR	NZ,L_111
 	LD	A,(16056350)
 	AND	A,1
-	JR	NZ,L_108
+	JR	NZ,L_111
 	LD	A,(16056348)
 	AND	A,1
-	JR	Z,L_103
-;  328			}
-L_108:
-;  329			if (kb_Data[7] & kb_Right) {
+	JR	Z,L_106
+;  343			}
+L_111:
+;  344			if (kb_Data[7] & kb_Right) {
 	LD	A,(16056350)
 	AND	A,4
-	JR	Z,L_110
-;  330				page = 2;
+	JR	Z,L_113
+;  345				page = 2;
 	LD	BC,2
-	LD	(IX+-24),BC
-;  331			}
-L_110:
-;  332			if (kb_Data[7] & kb_Left) {
+	LD	(IX+-27),BC
+;  346			}
+L_113:
+;  347			if (kb_Data[7] & kb_Left) {
 	LD	A,(16056350)
 	AND	A,2
-	JR	Z,L_114
-;  333				page = 1;
+	JR	Z,L_117
+;  348				page = 1;
 	LD	BC,1
-	LD	(IX+-24),BC
-;  334			}
-L_114:
-;  335			if (kb_Data[7] & kb_Up) {
+	LD	(IX+-27),BC
+;  349			}
+L_117:
+;  350			if (kb_Data[7] & kb_Up) {
 	LD	A,(16056350)
 	AND	A,8
-	JR	Z,L_118
-;  336				if (menuState > 0) {
+	JR	Z,L_121
+;  351				if (menuState > 0) {
 	LD	BC,(IX+-9)
 	OR	A,A
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_118
-;  337					menuState--;
+	JP	P,L_121
+;  352					menuState--;
 	LD	BC,(IX+-9)
 	DEC	BC
 	LD	(IX+-9),BC
-;  338				}
-;  339			}
-L_118:
-;  340			if (kb_Data[7] & kb_Down) {
+;  353				}
+;  354			}
+L_121:
+;  355			if (kb_Data[7] & kb_Down) {
 	LD	A,(16056350)
 	AND	A,1
-	JR	Z,L_125
-;  341				if (menuState < 3) {
+	JR	Z,L_128
+;  356				if (menuState < 3) {
 	LD	BC,3
 	LD	HL,(IX+-9)
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_125
-;  342					menuState++;
+	JP	P,L_128
+;  357					menuState++;
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
-;  343				}
-;  344			}
-L_125:
-;  345			if (kb_Data[6] & kb_Enter) {
+;  358				}
+;  359			}
+L_128:
+;  360			if (kb_Data[6] & kb_Enter) {
 	LD	A,(16056348)
 	AND	A,1
-	JR	Z,L_127
-;  346				tempMove = party[pokemonIndex].moves[menuState];
+	JR	Z,L_130
+;  361				tempMove = party[pokemonIndex].moves[menuState];
 	LD	HL,(IX+6)
 	LD	A,35
 	CALL	__imul_b
-	LD	(IX+-27),HL
-	LD	(IX+-45),HL
-	LD	HL,(IX+-27)
+	LD	(IX+-33),HL
+	LD	(IX+-51),HL
+	LD	HL,(IX+-33)
 	LD	BC,_party
 	ADD	HL,BC
 	LD	IY,HL
@@ -2432,92 +2579,92 @@ L_125:
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
-	LD	(IX+-54),HL
-;  347				for (moveIndex = menuState; moveIndex > 0; moveIndex--) {
+	LD	(IX+-63),HL
+;  362				for (moveIndex = menuState; moveIndex > 0; moveIndex--) {
 	LD	BC,(IX+-9)
 	LD	(IX+-6),BC
-	JR	L_122
-L_120:
-;  348					party[pokemonIndex].moves[moveIndex] = party[pokemonIndex].moves[moveIndex - 1];
-	LD	BC,(IX+-27)
-	LD	(IX+-45),BC
-	LD	HL,(IX+-27)
+	JR	L_125
+L_123:
+;  363					party[pokemonIndex].moves[moveIndex] = party[pokemonIndex].moves[moveIndex - 1];
+	LD	BC,(IX+-33)
+	LD	(IX+-51),BC
+	LD	HL,(IX+-33)
 	LD	BC,_party
 	ADD	HL,BC
 	LEA	IY,IX+-128
-	LD	(IY+-10),HL
-	LD	IY,(IY+-10)
+	LD	(IY+-19),HL
+	LD	IY,(IY+-19)
 	LEA	BC,IY+1
 	LEA	IY,IX+-128
-	LD	(IY+-7),BC
+	LD	(IY+-16),BC
 	LD	BC,(IX+-6)
 	DEC	BC
 	LD	DE,IX
-	LD	HL,-135
+	LD	HL,-144
 	ADD	HL,DE
 	LD	HL,(HL)
 	LD	DE,BC
 	ADD	HL,DE
 	LD	DE,IX
-	LD	IY,-135
+	LD	IY,-144
 	ADD	IY,DE
 	PUSH	IY
 	LEA	IY,IX+-128	; spill
-	LD	(IY+-13),HL
-	LD	(IY+-16),HL	; unspill
-	LD	HL,(IY+-13)
+	LD	(IY+-22),HL
+	LD	(IY+-28),HL	; unspill
+	LD	HL,(IY+-22)
 	POP	IY
 	LD	HL,(IY)
 	LD	DE,(IX+-6)
 	ADD	HL,DE
 	PUSH	IY
 	LEA	IY,IX+-128	; spill
-	LD	(IY+-13),HL
-	LD	HL,(IY+-16)
+	LD	(IY+-22),HL
+	LD	HL,(IY+-28)
 	POP	IY
 	LD	A,(HL)
 	PUSH	IY
 	LEA	IY,IX+-128	; unspill
-	LD	HL,(IY+-13)
+	LD	HL,(IY+-22)
 	POP	IY
 	LD	(HL),A
 	LD	(IX+-6),BC
-;  349				}
-L_122:
+;  364				}
+L_125:
 	LD	BC,(IX+-6)
 	OR	A,A
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	M,L_120
-;  350				party[pokemonIndex].moves[0] = tempMove;
-	LD	A,(IX+-54)
-	LD	HL,(IX+-45)
+	JP	M,L_123
+;  365				party[pokemonIndex].moves[0] = tempMove;
+	LD	A,(IX+-63)
+	LD	HL,(IX+-51)
 	LD	BC,_party
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+1),A
-;  351			}
-L_127:
-;  352			if (kb_Data[6] & kb_Clear) {
+;  366			}
+L_130:
+;  367			if (kb_Data[6] & kb_Clear) {
 	LD	A,(16056348)
 	AND	A,64
-	JR	Z,L_128
-;  353				page = 0;
+	JR	Z,L_131
+;  368				page = 0;
 	LD	BC,0
-	LD	(IX+-24),BC
-;  354			}
-;  355		}
-L_128:
-	LD	HL,(IX+-24)
+	LD	(IX+-27),BC
+;  369			}
+;  370		}
+L_131:
+	LD	HL,(IX+-27)
 	CALL	__icmpzero
-	JR	NZ,L_129
-;  356		free(backgroundSprite);
-	LD	BC,(IX+-30)
+	JR	NZ,L_132
+;  371		free(backgroundSprite);
+	LD	BC,(IX+-36)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  357	}
+;  372	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2525,19 +2672,22 @@ L_128:
 
 ;**************************** _menu_PokemonDetails ***************************
 ;Name                         Addr/Register   Size   Type
-;_free                               IMPORT  -----   function
 ;_categoryIcons                      IMPORT      9   variable
 ;_data_moves                         IMPORT  unknown variable
 ;_menucursor_data                    IMPORT    262   variable
 ;_gfx_SwapDraw                       IMPORT  -----   function
 ;_xpPerLevel                         IMPORT   1616   variable
-;_data_pokemon                       IMPORT  unknown variable
 ;_typeIcons                          IMPORT     51   variable
 ;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
-;_gfx_PrintStringXY                  IMPORT  -----   function
 ;_str                                IMPORT    100   variable
 ;_stats_CalculateStats               IMPORT  -----   function
 ;_sprintf                            IMPORT  -----   function
+;_free                               IMPORT  -----   function
+;_gfx_ScaledTransparentSprite_NoClip      IMPORT  -----   function
+;_PKMNSD1                            IMPORT    219   variable
+;_PKMNSD0                            IMPORT    240   variable
+;_data_pokemon                       IMPORT  unknown variable
+;_gfx_PrintStringXY                  IMPORT  -----   function
 ;_party                              IMPORT   1260   variable
 ;_gfx_SetTextScale                   IMPORT  -----   function
 ;_gfx_ScaledSprite_NoClip            IMPORT  -----   function
@@ -2548,37 +2698,37 @@ L_128:
 ;_menu_Setup                         IMPORT  -----   function
 ;_malloc                             IMPORT  -----   function
 ;_gfx_AllocSprite                    IMPORT  -----   function
-;tempMove                             IX-54      3   variable
-;G_35                                 IX-51      3   variable
-;G_36                                 IX-48      3   variable
-;G_43                                 IX-45      3   variable
-;G_40                                 IX-42      3   variable
-;G_33                                 IX-39      3   variable
-;G_31                                 IX-36      3   variable
-;G_25                                 IX-33      3   variable
-;backgroundSprite                     IX-30      3   variable
-;G_42                                 IX-27      3   variable
-;page                                 IX-24      3   variable
-;G_39                                 IX-21      3   variable
-;G_27                                 IX-18      3   variable
-;G_41                                 IX-15      3   variable
-;G_30                                 IX-12      3   variable
+;tempMove                             IX-63      3   variable
+;G_43                                 IX-60      3   variable
+;G_17                                 IX-57      3   variable
+;G_44                                 IX-54      3   variable
+;G_51                                 IX-51      3   variable
+;G_48                                 IX-48      3   variable
+;G_41                                 IX-45      3   variable
+;G_39                                 IX-42      3   variable
+;pokemonSprite                        IX-39      3   variable
+;backgroundSprite                     IX-36      3   variable
+;G_50                                 IX-33      3   variable
+;G_31                                 IX-30      3   variable
+;page                                 IX-27      3   variable
+;G_47                                 IX-24      3   variable
+;G_24                                 IX-21      3   variable
+;G_33                                 IX-18      3   variable
+;G_49                                 IX-15      3   variable
+;G_38                                 IX-12      3   variable
 ;menuState                             IX-9      3   variable
 ;moveIndex                             IX-6      3   variable
-;G_12                                  IX-3      3   variable
+;G_16                                  IX-3      3   variable
 ;pokemonIndex                          IX+6      3   parameter
 
 
-; Stack Frame Size: 153 (bytes)
-;       Spill Code: -5 (instruction)
+; Stack Frame Size: 165 (bytes)
+;       Spill Code: -8 (instruction)
 
 
 	SEGMENT STRSECT
-L__56:
-	DB	"%u/%u"
-	DB	0
 L__57:
-	DB	"%u"
+	DB	"%u/%u"
 	DB	0
 L__58:
 	DB	"%u"
@@ -2595,38 +2745,41 @@ L__61:
 L__62:
 	DB	"%u"
 	DB	0
-L__64:
-	DB	"%u/%u"
-	DB	0
-L__73:
+L__63:
 	DB	"%u"
+	DB	0
+L__65:
+	DB	"%u/%u"
 	DB	0
 L__74:
 	DB	"%u"
 	DB	0
 L__75:
+	DB	"%u"
+	DB	0
+L__76:
 	DB	"%u/%u"
 	DB	0
 	SEGMENT CODE
-;  358	bool menu_Items(bool inBattle) {
+;  373	bool menu_Items(bool inBattle) {
 _menu_Items:
 	LD	HL,-588
 	CALL	__frameset
-;  359		int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
-;  360		gfx_sprite_t *backgroundSprite;
-;  361	
-;  362	
-;  363		/* Generate Usable Items List */
-;  364		usableItemCount = 0;
+;  374		int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
+;  375		gfx_sprite_t *backgroundSprite;
+;  376	
+;  377	
+;  378		/* Generate Usable Items List */
+;  379		usableItemCount = 0;
 	LD	BC,0
 	LD	(IX+-15),BC
-;  365		usableTMCount = 0;
+;  380		usableTMCount = 0;
 	LD	(IX+-18),BC
-;  366		for (itemIndex = 0; itemIndex < 20; itemIndex++) {
+;  381		for (itemIndex = 0; itemIndex < 20; itemIndex++) {
 	LD	(IX+-3),BC
-	JR	L_137
-L_135:
-;  367			if (playerItems[itemIndex] > 0) {
+	JR	L_140
+L_138:
+;  382			if (playerItems[itemIndex] > 0) {
 	LD	BC,_playerItems
 	LD	HL,(IX+-3)
 	ADD	HL,BC
@@ -2638,8 +2791,8 @@ L_135:
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_136
-;  368				usableItems[usableItemCount] = itemIndex;
+	JP	P,L_139
+;  383				usableItems[usableItemCount] = itemIndex;
 	LD	HL,(IX+-15)
 	LD	BC,(IX+-3)
 	LD	DE,HL
@@ -2649,29 +2802,29 @@ L_135:
 	LEA	HL,IX+-87
 	ADD	HL,DE
 	LD	(HL),BC
-;  369				usableItemCount++;
+;  384				usableItemCount++;
 	LD	BC,(IX+-15)
 	INC	BC
 	LD	(IX+-15),BC
-;  370			}
-;  371		}
-L_136:
+;  385			}
+;  386		}
+L_139:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-L_137:
+L_140:
 	LD	BC,20
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_135
-;  372		for (itemIndex = 0; itemIndex < 165; itemIndex++) {
+	JP	M,L_138
+;  387		for (itemIndex = 0; itemIndex < 165; itemIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_143
-L_141:
-;  373			if (playerItems[itemIndex + 20] > 0) {
+	JR	L_146
+L_144:
+;  388			if (playerItems[itemIndex + 20] > 0) {
 	LD	IY,(IX+-3)
 	LEA	IY,IY+20
 	LD	(IX+-27),IY
@@ -2687,8 +2840,8 @@ L_141:
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_142
-;  374				usableTMs[usableTMCount] = itemIndex + 20;
+	JP	P,L_145
+;  389				usableTMs[usableTMCount] = itemIndex + 20;
 	LD	HL,(IX+-18)
 	LD	BC,HL
 	ADD	HL,HL
@@ -2731,24 +2884,24 @@ L_141:
 	POP	BC
 	ADD	HL,BC
 	LD	(HL),DE
-;  375				usableTMCount++;
+;  390				usableTMCount++;
 	LD	BC,(IX+-18)
 	INC	BC
 	LD	(IX+-18),BC
-;  376			}
-;  377		}
-L_142:
+;  391			}
+;  392		}
+L_145:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-L_143:
+L_146:
 	LD	BC,165
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_141
-;  378		backgroundSprite = gfx_MallocSprite(160, 88);
+	JP	M,L_144
+;  393		backgroundSprite = gfx_MallocSprite(160, 88);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,88
@@ -2759,7 +2912,7 @@ L_143:
 	POP	BC
 	POP	BC
 	POP	BC
-;  379		zx7_Decompress(backgroundSprite, bag_compressed);
+;  394		zx7_Decompress(backgroundSprite, bag_compressed);
 	LD	IY,_PKMNSD5
 	LD	(IX+-21),HL
 	LD	BC,(IY+96)
@@ -2769,25 +2922,25 @@ L_143:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  380	
-;  381		menu_Setup();
+;  395	
+;  396		menu_Setup();
 	CALL	_menu_Setup
-;  382	
-;  383	
-;  384		page = 1;
+;  397	
+;  398	
+;  399		page = 1;
 	LD	BC,1
 	LD	(IX+-12),BC
-;  385		menuState = 0;
+;  400		menuState = 0;
 	LD	BC,0
 	LD	(IX+-6),BC
-;  386		cursorState = 0;
+;  401		cursorState = 0;
 	LD	(IX+-9),BC
-;  387		while (page != 0)
-	JR	L_214
-L_215:
-;  388		{
-;  389	
-;  390			gfx_FillScreen(colors[1]);
+;  402		while (page != 0)
+	JR	L_217
+L_218:
+;  403		{
+;  404	
+;  405			gfx_FillScreen(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -2795,9 +2948,9 @@ L_215:
 	PUSH	BC
 	CALL	_gfx_FillScreen
 	POP	BC
-;  391			text_DrawTextBox();
+;  406			text_DrawTextBox();
 	CALL	_text_DrawTextBox
-;  392			gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+;  407			gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
@@ -2812,7 +2965,7 @@ L_215:
 	POP	BC
 	POP	BC
 	POP	BC
-;  393			gfx_TransparentSprite_NoClip(menucursorsmall, 132, 19 + 14 * cursorState);
+;  408			gfx_TransparentSprite_NoClip(menucursorsmall, 132, 19 + 14 * cursorState);
 	LD	B,(IX+-9)
 	LD	C,14
 	MLT	BC
@@ -2829,52 +2982,52 @@ L_215:
 	POP	BC
 	POP	BC
 	POP	BC
-;  394			
-;  395			Wait(20);
+;  409			
+;  410			Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  396	
-;  397			kb_Scan();
+;  411	
+;  412			kb_Scan();
 	CALL	_kb_Scan
-;  398			if (page == 1) {
+;  413			if (page == 1) {
 	LD	BC,1
 	LD	HL,(IX+-12)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_174
-;  399				gfx_SetTextScale(2, 2);
+	JR	NZ,L_177
+;  414				gfx_SetTextScale(2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  400				gfx_PrintStringXY("Items", 12, 19);
+;  415				gfx_PrintStringXY("Items", 12, 19);
 	LD	BC,19
 	PUSH	BC
 	LD	BC,12
 	PUSH	BC
-	LD	BC,L__97
+	LD	BC,L__98
 	PUSH	BC
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  401				gfx_SetTextScale(1, 1);
+;  416				gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  402				for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableItemCount; itemIndex++) {
+;  417				for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableItemCount; itemIndex++) {
 	LD	BC,(IX+-6)
 	LD	(IX+-3),BC
-	JR	L_150
-L_148:
-;  403					gfx_PrintStringXY(itemNames[usableItems[itemIndex]], 140, 21 + 14 * (itemIndex - menuState));
+	JR	L_153
+L_151:
+;  418					gfx_PrintStringXY(itemNames[usableItems[itemIndex]], 140, 21 + 14 * (itemIndex - menuState));
 	LD	BC,(IX+-6)
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -2905,7 +3058,7 @@ L_148:
 	POP	BC
 	POP	BC
 	POP	BC
-;  404					sprintf(str, "%u", playerItems[usableItems[itemIndex]]);
+;  419					sprintf(str, "%u", playerItems[usableItems[itemIndex]]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -2920,7 +3073,7 @@ L_148:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	BC,L__98
+	LD	BC,L__99
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2928,7 +3081,7 @@ L_148:
 	POP	BC
 	POP	BC
 	POP	BC
-;  405					gfx_PrintStringXY(str, 274, 21 + 14 * (itemIndex - menuState));
+;  420					gfx_PrintStringXY(str, 274, 21 + 14 * (itemIndex - menuState));
 	LD	BC,(IX+-6)
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -2949,89 +3102,89 @@ L_148:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  406				}
-L_150:
+;  421				}
+L_153:
 	LD	IY,(IX+-6)
 	LEA	BC,IY+10
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_151
+	JP	P,L_154
 	LD	BC,(IX+-15)
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_148
-L_151:
-;  407	
-;  408				gfx_SwapDraw();
+	JP	M,L_151
+L_154:
+;  422	
+;  423				gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  409				while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
-	JR	L_157
-L_158:
-;  410					kb_Scan();
+;  424				while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+	JR	L_160
+L_161:
+;  425					kb_Scan();
 	CALL	_kb_Scan
-;  411				}
-L_157:
+;  426				}
+L_160:
 	LD	A,(16056350)
 	AND	A,4
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,2
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056348)
 	AND	A,64
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056338)
 	AND	A,32
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,8
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,1
-	JR	NZ,L_182
-	JR	L_158
-;  412			}
-;  413			else if (page == 2) {
-L_174:
+	JR	NZ,L_185
+	JR	L_161
+;  427			}
+;  428			else if (page == 2) {
+L_177:
 	LD	BC,2
 	LD	HL,(IX+-12)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_182
-;  414				gfx_SetTextScale(2, 2);
+	JR	NZ,L_185
+;  429				gfx_SetTextScale(2, 2);
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  415				gfx_PrintStringXY("TMs", 12, 19);
+;  430				gfx_PrintStringXY("TMs", 12, 19);
 	LD	BC,19
 	PUSH	BC
 	LD	BC,12
 	PUSH	BC
-	LD	BC,L__108
+	LD	BC,L__109
 	PUSH	BC
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  416				gfx_SetTextScale(1, 1);
+;  431				gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  417				for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableTMCount; itemIndex++) {
+;  432				for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableTMCount; itemIndex++) {
 	LD	BC,(IX+-6)
 	LD	(IX+-3),BC
-	JR	L_163
-L_161:
-;  418					sprintf(str, "TM%u %s", usableTMs[itemIndex] - 19, data_moves[usableTMs[itemIndex] - 19].name);
+	JR	L_166
+L_164:
+;  433					sprintf(str, "TM%u %s", usableTMs[itemIndex] - 19, data_moves[usableTMs[itemIndex] - 19].name);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -3052,7 +3205,7 @@ L_161:
 	PEA	IY+0
 	LD	BC,DE
 	PUSH	BC
-	LD	BC,L__109
+	LD	BC,L__110
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -3061,7 +3214,7 @@ L_161:
 	POP	BC
 	POP	BC
 	POP	BC
-;  419					gfx_PrintStringXY(str, 140, 21 + 14 * (itemIndex - menuState));
+;  434					gfx_PrintStringXY(str, 140, 21 + 14 * (itemIndex - menuState));
 	LD	BC,(IX+-6)
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -3082,75 +3235,75 @@ L_161:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  420				}
-L_163:
+;  435				}
+L_166:
 	LD	IY,(IX+-6)
 	LEA	BC,IY+10
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_164
+	JP	P,L_167
 	LD	BC,(IX+-18)
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_161
-L_164:
-;  421				gfx_SwapDraw();
+	JP	M,L_164
+L_167:
+;  436				gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  422				while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
-	JR	L_170
-L_171:
-;  423					kb_Scan();
+;  437				while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+	JR	L_173
+L_174:
+;  438					kb_Scan();
 	CALL	_kb_Scan
-;  424				}
-L_170:
+;  439				}
+L_173:
 	LD	A,(16056350)
 	AND	A,4
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,2
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056348)
 	AND	A,64
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056338)
 	AND	A,32
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,8
-	JR	NZ,L_182
+	JR	NZ,L_185
 	LD	A,(16056350)
 	AND	A,1
-	JR	Z,L_171
-;  425			}
-L_182:
-;  426			if (kb_Data[7] & kb_Up) {
+	JR	Z,L_174
+;  440			}
+L_185:
+;  441			if (kb_Data[7] & kb_Up) {
 	LD	A,(16056350)
 	AND	A,8
-	JR	Z,L_198
-;  427				if (menuState > 0 && cursorState <= 2) {
+	JR	Z,L_201
+;  442				if (menuState > 0 && cursorState <= 2) {
 	LD	BC,(IX+-6)
 	OR	A,A
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_180
+	JP	P,L_183
 	LD	BC,(IX+-9)
 	LD	HL,2
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_180
-;  428					menuState--;
+	JP	M,L_183
+;  443					menuState--;
 	LD	BC,(IX+-6)
 	DEC	BC
 	LD	(IX+-6),BC
-;  429				}
-;  430				else if(menuState + cursorState > 0) {
-	JR	L_198
-L_180:
+;  444				}
+;  445				else if(menuState + cursorState > 0) {
+	JR	L_201
+L_183:
 	LD	BC,(IX+-9)
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3160,45 +3313,45 @@ L_180:
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_198
-;  431					cursorState--;
+	JP	P,L_201
+;  446					cursorState--;
 	LD	BC,(IX+-9)
 	DEC	BC
 	LD	(IX+-9),BC
-;  432				}
-;  433			}
-L_198:
-;  434			if (kb_Data[7] & kb_Down) {
+;  447				}
+;  448			}
+L_201:
+;  449			if (kb_Data[7] & kb_Down) {
 	LD	A,(16056350)
 	AND	A,1
-	JR	Z,L_204
-;  435				if (page == 1) {
+	JR	Z,L_207
+;  450				if (page == 1) {
 	LD	BC,1
 	LD	HL,(IX+-12)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_196
-;  436					if (menuState + 10 < usableItemCount && cursorState >= 3) {
+	JR	NZ,L_199
+;  451					if (menuState + 10 < usableItemCount && cursorState >= 3) {
 	LD	IY,(IX+-6)
 	LEA	HL,IY+10
 	LD	BC,(IX+-15)
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_188
+	JP	P,L_191
 	LD	BC,3
 	LD	HL,(IX+-9)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_188
-;  437						menuState++;
+	JP	M,L_191
+;  452						menuState++;
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  438					}
-;  439					else if (menuState + cursorState < usableItemCount - 1) {
-	JR	L_204
-L_188:
+;  453					}
+;  454					else if (menuState + cursorState < usableItemCount - 1) {
+	JR	L_207
+L_191:
 	LD	BC,(IX+-9)
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3207,38 +3360,38 @@ L_188:
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_204
-;  440						cursorState++;
+	JP	P,L_207
+;  455						cursorState++;
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
-;  441					}
-;  442				}
-;  443				else {
-	JR	L_204
-L_196:
-;  444					if (menuState + 10 < usableTMCount && cursorState >= 7) {
+;  456					}
+;  457				}
+;  458				else {
+	JR	L_207
+L_199:
+;  459					if (menuState + 10 < usableTMCount && cursorState >= 7) {
 	LD	IY,(IX+-6)
 	LEA	HL,IY+10
 	LD	BC,(IX+-18)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_194
+	JP	P,L_197
 	LD	BC,7
 	LD	HL,(IX+-9)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_194
-;  445						menuState++;
+	JP	M,L_197
+;  460						menuState++;
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  446					}
-;  447					else if (menuState + cursorState < usableTMCount - 1) {
-	JR	L_204
-L_194:
+;  461					}
+;  462					else if (menuState + cursorState < usableTMCount - 1) {
+	JR	L_207
+L_197:
 	LD	BC,(IX+-9)
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3247,68 +3400,68 @@ L_194:
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_204
-;  448						cursorState++;
+	JP	P,L_207
+;  463						cursorState++;
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
-;  449					}
-;  450				}
-;  451			}
-L_204:
-;  452			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+;  464					}
+;  465				}
+;  466			}
+L_207:
+;  467			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
 	LD	A,(16056350)
 	AND	A,4
-	JR	NZ,L_203
+	JR	NZ,L_206
 	LD	A,(16056350)
 	AND	A,2
-	JR	Z,L_206
-L_203:
-;  453				if (page == 1) {
+	JR	Z,L_209
+L_206:
+;  468				if (page == 1) {
 	LD	BC,1
 	LD	HL,(IX+-12)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_201
-;  454					page = 2;
+	JR	NZ,L_204
+;  469					page = 2;
 	LD	BC,2
 	LD	(IX+-12),BC
-;  455				}
-;  456				else {
-	JR	L_202
-L_201:
-;  457					page = 1;
+;  470				}
+;  471				else {
+	JR	L_205
+L_204:
+;  472					page = 1;
 	LD	(IX+-12),BC
-;  458				}
-L_202:
-;  459				menuState = 0;
+;  473				}
+L_205:
+;  474				menuState = 0;
 	LD	BC,0
 	LD	(IX+-6),BC
-;  460				cursorState = 0;
+;  475				cursorState = 0;
 	LD	(IX+-9),BC
-;  461			}
-L_206:
-;  462			if (kb_Data[6] & kb_Clear) {
+;  476			}
+L_209:
+;  477			if (kb_Data[6] & kb_Clear) {
 	LD	A,(16056348)
 	AND	A,64
-	JR	Z,L_213
-;  463				page = 0;
+	JR	Z,L_216
+;  478				page = 0;
 	LD	BC,0
 	LD	(IX+-12),BC
-;  464			}
-L_213:
-;  465			if (kb_Data[1] & kb_2nd) {
+;  479			}
+L_216:
+;  480			if (kb_Data[1] & kb_2nd) {
 	LD	A,(16056338)
 	AND	A,32
-	JR	Z,L_214
-;  466				int itemToUse;
-;  467				if (page == 1) {
+	JR	Z,L_217
+;  481				int itemToUse;
+;  482				if (page == 1) {
 	LD	BC,1
 	LD	HL,(IX+-12)
 	OR	A,A
 	SBC	HL,BC
-	JR	NZ,L_208
-;  468					itemToUse = usableItems[menuState + cursorState];
+	JR	NZ,L_211
+;  483					itemToUse = usableItems[menuState + cursorState];
 	LD	BC,(IX+-9)
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3320,11 +3473,11 @@ L_213:
 	ADD	HL,BC
 	LD	BC,(HL)
 	LD	(IX+-24),BC
-;  469				}
-;  470				else {
-	JR	L_211
-L_208:
-;  471					itemToUse = usableTMs[menuState + cursorState];
+;  484				}
+;  485				else {
+	JR	L_214
+L_211:
+;  486					itemToUse = usableTMs[menuState + cursorState];
 	LD	BC,(IX+-9)
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3338,47 +3491,47 @@ L_208:
 	ADD	HL,DE
 	LD	BC,(HL)
 	LD	(IX+-24),BC
-;  472				}
-L_211:
-;  473				if (items_UseItem(itemToUse) && inBattle) {
+;  487				}
+L_214:
+;  488				if (items_UseItem(itemToUse) && inBattle) {
 	LD	C,(IX+-24)
 	LD	B,0
 	PUSH	BC
 	CALL	_items_UseItem
 	POP	BC
 	OR	A,A
-	JR	Z,L_214
+	JR	Z,L_217
 	LD	A,(IX+6)
 	OR	A,A
-	JR	Z,L_214
-;  474					gfx_SetDrawBuffer();
+	JR	Z,L_217
+;  489					gfx_SetDrawBuffer();
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;  475					return true;
+;  490					return true;
 	LD	A,1
-	JR	L_217
-;  476				}
-;  477			}
-;  478		}
-L_214:
+	JR	L_220
+;  491				}
+;  492			}
+;  493		}
+L_217:
 	LD	HL,(IX+-12)
 	CALL	__icmpzero
-	JR	NZ,L_215
-;  479		free(backgroundSprite);
+	JR	NZ,L_218
+;  494		free(backgroundSprite);
 	LD	BC,(IX+-21)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  480		gfx_SetDrawBuffer();
+;  495		gfx_SetDrawBuffer();
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;  481		return false;
+;  496		return false;
 	XOR	A,A
-L_217:
+L_220:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3412,7 +3565,7 @@ L_217:
 ;_playerItems                        IMPORT    185   variable
 ;usableTMs                           IX-582    495   variable
 ;usableItems                          IX-87     60   variable
-;G_44                                 IX-27      3   variable
+;G_52                                 IX-27      3   variable
 ;itemToUse                            IX-24      3   variable
 ;backgroundSprite                     IX-21      3   variable
 ;usableTMCount                        IX-18      3   variable
@@ -3425,23 +3578,25 @@ L_217:
 
 
 ; Stack Frame Size: 597 (bytes)
-;       Spill Code: -5 (instruction)
+;       Spill Code: -8 (instruction)
 
 
 	SEGMENT STRSECT
-L__97:
+L__98:
 	DB	"Items"
 	DB	0
-L__98:
+L__99:
 	DB	"%u"
 	DB	0
-L__108:
+L__109:
 	DB	"TMs"
 	DB	0
-L__109:
+L__110:
 	DB	"TM%u %s"
 	DB	0
 	XREF _PKMNSD5:ROM
+	XREF _PKMNSD1:ROM
+	XREF _PKMNSD0:ROM
 	XREF _itemNames:ROM
 	XREF _items_UseItem:ROM
 	XREF _stats_CalculateStats:ROM
@@ -3466,6 +3621,7 @@ L__109:
 	XREF _menucursorsmall_data:ROM
 	XREF _menucursor_data:ROM
 	XREF _zx7_Decompress:ROM
+	XREF _gfx_ScaledTransparentSprite_NoClip:ROM
 	XREF _gfx_ScaledSprite_NoClip:ROM
 	XREF _gfx_TransparentSprite_NoClip:ROM
 	XREF _gfx_SetTextFGColor:ROM
