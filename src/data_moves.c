@@ -131,7 +131,7 @@ struct move data_moves[] = {
 	{"Harden",1,2,1,100,30,1,0},// 57 - Raises user's Defense.
 	{"Haze",6,12,0,100,30,0,0},// 58 - Resets all stat changes.
 	{"Headbutt",1,0,70,100,15,18,10},// 59 - May cause flinching.
-	{"High Jump Kick",7,0,130,90,10,25,0},// 60 - If it misses, the user loses half their HP.
+	{"High JumpKick",7,0,130,90,10,25,0},// 60 - If it misses, the user loses half their HP.
 	{"Horn Attack",1,0,65,100,25,0,0},// 61 -  
 	{"Horn Drill",1,15,0,100,5,0,0},// 62 - One-Hit-KO, if it hits.
 	{"Hydro Pump",3,1,110,80,5,0,0},// 63 -  
@@ -140,7 +140,7 @@ struct move data_moves[] = {
 	{"Hypnosis",11,4,0,60,20,10,0},// 66 - Puts opponent to sleep.
 	{"Ice Beam",6,1,90,100,10,11,10},// 67 - May freeze opponent.
 	{"Ice Punch",6,0,75,100,15,11,10},// 68 - May freeze opponent.
-	{"Jump Kick",7,0,100,95,10,25,0},// 69 - If it misses, the user loses half their HP.
+	{"JumpKick",7,0,100,95,10,25,0},// 69 - If it misses, the user loses half their HP.
 	{"Karate Chop",7,0,50,100,25,24,0},// 70 - High critical hit ratio.
 	{"Kinesis",11,3,1,80,15,5,0},// 71 - Lowers opponent's Accuracy.
 	{"Leech Life",12,0,80,100,10,21,0},// 72 - User recovers half the HP inflicted on opponent.

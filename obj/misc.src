@@ -41,16 +41,16 @@ _colorSets:
 	DB	189
 	DB	5
 	DB	255
-	DB	206
+	DB	245
+	DB	216
+	DB	45
 	DB	217
-	DB	42
-	DB	218
 	DB	0
-	DB	134
-	DB	68
-	DB	169
-	DB	146
-	DB	102
+	DB	131
+	DB	71
+	DB	164
+	DB	143
+	DB	103
 	DB	0
 _colorValues:
 	DB	255
@@ -133,7 +133,7 @@ _categoryIcons:
 ;   32	
 ;   33	uint8_t colorSets[2][COLORCOUNT] = {
 ;   34		{8,2,204,102,231,147,13,17,55,230,40,230,189,},
-;   35		{5,255,206,217,42,218,0,134,68,169,146,102,0,},
+;   35		{5,255,245,216,45,217,0,131,71,164,143,103,0,},
 ;   36	};
 ;   37	
 ;   38	uint8_t colorValues[COLORCOUNT][3] = {
@@ -274,17 +274,45 @@ L_7:
 ;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
 ;   78	void FindColors(void) {
 _FindColors:
-;   79		return;
+;   79		//return;
 ;   80		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	HL,_PKMNSD4+24
+	LD	BC,426
+	PUSH	BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   81		FindBestColors();
+	CALL	_FindBestColors
 ;   82		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	HL,_PKMNSD5+111
+	LD	BC,512
+	PUSH	BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   83		FindBestColors();
+	CALL	_FindBestColors
 ;   84	}
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
+;_PKMNSD5                            IMPORT    114   variable
+;_FindBestColors                     IMPORT  -----   function
+;_PKMNSD4                            IMPORT     27   variable
+;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
@@ -963,9 +991,11 @@ L_56:
 
 
 	XREF _PKMNSD5:ROM
+	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
+	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM

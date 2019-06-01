@@ -1838,11 +1838,11 @@ _data_moves:
 	DB	117
 	DB	109
 	DB	112
-	DB	32
 	DB	75
 	DB	105
 	DB	99
 	DB	107
+	DB	0
 	DB	7
 	DB	0
 	DB	130
@@ -2022,11 +2022,11 @@ _data_moves:
 	DB	117
 	DB	109
 	DB	112
-	DB	32
 	DB	75
 	DB	105
 	DB	99
 	DB	107
+	DB	0
 	DB	0
 	DB	0
 	DB	0
