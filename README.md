@@ -5,7 +5,7 @@ The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from g
 
 Controls: 2nd is A, clear is B, enter opens the menu
 
-Put every file in the download folder on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs about 125 kb of RAM to run, so make sure you archive as many other programs as possible.
+Put every .8xv or .8xp file on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs a lot of RAM to run (I have not calculated the exact value), so make sure you archive as many other programs as possible.
 
 
 The tools folder includes some python scripts I made to help generate game data (move list, maps, and pokemon stats)
