@@ -39,19 +39,19 @@ _colorSets:
 	DB	40
 	DB	230
 	DB	49
-	DB	9
-	DB	7
-	DB	166
-	DB	220
-	DB	38
-	DB	47
-	DB	168
-	DB	21
-	DB	68
-	DB	190
-	DB	141
-	DB	99
-	DB	9
+	DB	8
+	DB	255
+	DB	142
+	DB	226
+	DB	40
+	DB	227
+	DB	162
+	DB	123
+	DB	64
+	DB	165
+	DB	133
+	DB	92
+	DB	8
 _colorValues:
 	DB	247
 	DB	251
@@ -133,7 +133,7 @@ _categoryIcons:
 ;   32	
 ;   33	uint8_t colorSets[2][COLORCOUNT] = {
 ;   34		{49,2,204,102,231,147,13,17,55,230,40,230,49,},
-;   35		{9,7,166,220,38,47,168,21,68,190,141,99,9,},
+;   35		{8,255,142,226,40,227,162,123,64,165,133,92,8,},
 ;   36	};
 ;   37	
 ;   38	uint8_t colorValues[COLORCOUNT][3] = {

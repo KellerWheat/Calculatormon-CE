@@ -509,7 +509,7 @@ void redrawcharacters(void) {
 
 	gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 	gfx_ScaledTransparentSprite_NoClip(playerSprite, 20, 64, 2, 2);
-	gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 34, 2, 2);
+	gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 8, 2, 2);
 
 	/* Display Information about player and enemy */
 	

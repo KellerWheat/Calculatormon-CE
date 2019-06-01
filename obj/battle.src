@@ -3097,11 +3097,11 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  512		gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 34, 2, 2);
+;  512		gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 8, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
-	LD	BC,34
+	LD	BC,8
 	PUSH	BC
 	LD	BC,190
 	PUSH	BC
