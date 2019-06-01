@@ -50,7 +50,7 @@ void menu_Setup(void) {
 
 	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	SetColors(1);
-	gfx_SetTextFGColor(colors[1]);
+	gfx_SetTextFGColor(255);
 
 
 }

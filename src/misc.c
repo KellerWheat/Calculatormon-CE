@@ -26,17 +26,17 @@ uint16_t e;
 
 #define COLORCOUNT 13
 
-/* 0:white, 1:black, 2:poison, 3:burn, 4:paralysis, 5:sleep, 6:frozen, 7:exp, 8:high health, 9:mid health, 10:low health, 11:xpbartext, 12:textboxbackground*/
+/* 0:white, 1:black, 2:poison, 3:burn, 4:paralysis, 5:sleep, 6:frozen, 7:exp, 8:high health, 9:mid health, 10:low health, 11:xpbartext, 12:transparent*/
 uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{49,2,204,102,231,147,13,17,55,230,40,230,49,},
-	{8,255,142,226,40,227,162,123,64,165,133,92,8,},
+	{8,2,204,102,231,147,13,17,55,230,40,230,189,},
+	{5,255,206,217,42,218,0,134,68,169,146,102,0,},
 };
 
 uint8_t colorValues[COLORCOUNT][3] = {
-	{247,251,247},//0
+	{255,255,255},//0
 	{0,0,0},//1
 	{127,0,127},//2
 	{255,0,0},//3
@@ -48,7 +48,7 @@ uint8_t colorValues[COLORCOUNT][3] = {
 	{248,224,56},//9
 	{248,88,56},//10
 	{248,224,0},//11
-	{247,251,247},//12 (NOt uses)
+	{0,200,200},//12
 };
 
 gfx_sprite_t *typeIcons[17];
@@ -63,13 +63,15 @@ void Wait(uint16_t amount) {
 	}
 }
 
-/* Changes the colors list to one for the current palette */
+/* Changes the colors list to one for the current palette and sets transparent text color */
 void SetColors(uint8_t gameState) {
 	int colorIndex;
 	for (colorIndex = 0; colorIndex < sizeof(colors); colorIndex++) {
 		colors[colorIndex] = colorSets[gameState][colorIndex];
 		
 	}
+	gfx_SetTextTransparentColor(colors[12]);
+	gfx_SetTextBGColor(colors[12]);
 }
 
 /* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
