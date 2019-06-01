@@ -1,7 +1,7 @@
 # Calculatormon-CE
 A pokemon game for the ti-84 plus ce
 
-The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from gen 2 and the map sprites are from firered and leafgreen
+The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from crystal and the map sprites are from firered and leafgreen
 
 Controls: 2nd is A, clear is B, enter opens the menu
 
