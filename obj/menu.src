@@ -9,7 +9,7 @@ _switchMode:
 _pokemonToSwitch:
 	DS	1
 _tempcharacter:
-	DS	35
+	DS	34
 	SEGMENT DATA
 _menuState1:
 	DB	0
@@ -581,7 +581,7 @@ L_38:
 ;  149			int healthRatio;
 ;  150			if (party[partyIndex].id != 0) {
 	LD	HL,(IX+-6)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-12),HL
 	LD	BC,_party
@@ -688,7 +688,7 @@ L_38:
 	LD	(IX+-25),BC
 	LD	IY,(IX+-9)
 	XOR	A,A
-	CP	A,(IY+16)
+	CP	A,(IY+15)
 	JR	NC,L_31
 ;  157					gfx_TransparentSprite_NoClip(statusIcons[party[partyIndex].currentstatus - 1], baseX[partyIndex] + 7, baseY[partyIndex] + 14);
 	LD	HL,(IX+-6)
@@ -712,7 +712,7 @@ L_38:
 	LEA	BC,IY+7
 	PUSH	BC
 	LD	IY,(IX+-9)
-	LD	A,(IY+16)
+	LD	A,(IY+15)
 	UEXT	HL
 	LD	L,A
 	DEC	HL
@@ -735,7 +735,7 @@ L_31:
 	ADD	HL,BC
 	LD	(IX+-64),HL
 	LD	IY,(IX+-64)
-	LD	BC,(IY+14)
+	LD	BC,(IY+13)
 	CALL	__stoiu
 	LD	A,78
 	CALL	__imul_b
@@ -749,7 +749,7 @@ L_31:
 	ADD	IY,SP
 	PEA	IX+-76
 	LD	DE,IY
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -841,7 +841,7 @@ L_36:
 	ADD	IY,SP
 	LD	DE,IY
 	PEA	IX+-88
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -851,7 +851,7 @@ L_36:
 	CALL	__stoiu
 	PUSH	HL
 	LD	IY,(IX+-25)
-	LD	BC,(IY+14)
+	LD	BC,(IY+13)
 	CALL	__stoiu
 	PUSH	HL
 	LD	BC,L__27
@@ -1001,12 +1001,12 @@ L_75:
 	JR	Z,L_68
 ;  195				tempcharacter = party[menuState];
 	LD	HL,(IX+-3)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
 	LD	DE,_tempcharacter
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 ;  196				for (partyIndex = menuState; partyIndex > 0; partyIndex--) {
 	LD	BC,(IX+-3)
@@ -1019,19 +1019,19 @@ L_51:
 	DEC	HL
 	LD	(IX+-94),HL	; spill
 	LD	BC,HL
-	LD	HL,35
+	LD	HL,34
 	CALL	__imulu
 	LD	BC,_party
 	ADD	HL,BC
 	LD	BC,HL
 	LD	HL,(IX+-6)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	DE,_party
 	ADD	HL,DE
 	LD	DE,HL
 	LD	HL,BC
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	LD	HL,(IX+-94)	; unspill
 	LD	(IX+-6),HL
@@ -1046,7 +1046,7 @@ L_53:
 ;  199				party[0] = tempcharacter;
 	LD	DE,_party
 	LD	HL,_tempcharacter
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 ;  200				goto redraw_PokemonMenu;
 	JR	L_28
@@ -1195,7 +1195,7 @@ L_74:
 	AND	A,32
 	JR	Z,L_48
 	LD	HL,(IX+-3)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
@@ -1249,7 +1249,7 @@ L_80:
 ;Name                         Addr/Register   Size   Type
 ;_FreeIcons                          IMPORT  -----   function
 ;_free                               IMPORT  -----   function
-;_tempcharacter                      STATIC     35   variable
+;_tempcharacter                      STATIC     34   variable
 ;_kb_Scan                            IMPORT  -----   function
 ;_Wait                               IMPORT  -----   function
 ;_menucursor_data                    IMPORT    262   variable
@@ -1263,7 +1263,7 @@ L_80:
 ;_data_pokemon                       IMPORT  unknown variable
 ;_gfx_PrintStringXY                  IMPORT  -----   function
 ;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
-;_party                              IMPORT   1260   variable
+;_party                              IMPORT   1224   variable
 ;_gfx_ScaledSprite_NoClip            IMPORT  -----   function
 ;_text_DrawTextBox                   IMPORT  -----   function
 ;_colors                             IMPORT  unknown variable
@@ -1421,7 +1421,7 @@ L_132:
 ;  260				
 ;  261				gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
 	LD	HL,(IX+6)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-30),HL
 	LD	BC,_party
@@ -1542,7 +1542,7 @@ L_83:
 	ADD	IY,SP
 	PEA	IX+-75
 	LD	DE,IY
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -1552,7 +1552,7 @@ L_83:
 	CALL	__stoiu
 	PUSH	HL
 	LD	IY,(IX+-21)
-	LD	BC,(IY+14)
+	LD	BC,(IY+13)
 	CALL	__stoiu
 	PUSH	HL
 	LD	BC,L__57
@@ -1585,7 +1585,7 @@ L_83:
 	ADD	IY,SP
 	LD	DE,IY
 	PEA	IX+-87
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -1625,7 +1625,7 @@ L_83:
 	ADD	IY,SP
 	LD	DE,IY
 	PEA	IX+-99
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -1665,7 +1665,7 @@ L_83:
 	ADD	IY,SP
 	LD	DE,IY
 	PEA	IX+-111
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -1705,7 +1705,7 @@ L_83:
 	ADD	IY,SP
 	LD	DE,IY
 	PEA	IX+-123
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
@@ -1750,7 +1750,7 @@ L_83:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 	LD	BC,-135
 	PUSH	IY
@@ -1819,9 +1819,9 @@ L_83:
 	POP	BC
 	POP	BC
 	POP	BC
-;  287				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 218, 188);
+;  287				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 218, 187);
 	LD	BC,_data_pokemon
-	LD	DE,188
+	LD	DE,187
 	PUSH	DE
 	LD	DE,218
 	PUSH	DE
@@ -1861,8 +1861,8 @@ L_83:
 	LD	A,(IY+17)
 	OR	A,A
 	JR	Z,L_85
-;  289					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 188);
-	LD	DE,188
+;  289					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 187);
+	LD	DE,187
 	PUSH	DE
 	LD	DE,254
 	PUSH	DE
@@ -1891,7 +1891,7 @@ L_83:
 	POP	BC
 ;  290				}
 L_85:
-;  291				sprintf(str, "%u/%u", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level+1]);
+;  291				sprintf(str, "%i/%i", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level + 1]);
 	LD	BC,_party
 	LD	HL,(IX+-30)
 	ADD	HL,BC
@@ -1909,43 +1909,32 @@ L_85:
 	LD	A,(IY+49)
 	UEXT	HL
 	LD	L,A
-	LD	BC,404
+	LD	BC,303
 	CALL	__imulu
 	LEA	IY,IX+-128
 	LD	BC,_xpPerLevel
 	ADD	HL,BC
 	LD	IY,(IY+-10)
 	LD	A,(IY+9)
-	LD	DE,HL
+	LD	BC,HL
 	UEXT	HL
 	LD	L,A
-	LD	BC,HL
-	INC	BC
-	LD	HL,BC
-	ADD	HL,HL
+	INC	HL
+	LD	DE,HL
 	ADD	HL,HL
 	ADD	HL,DE
-	LD	IY,HL
-	LD	BC,(IY)
-	LD	A,(IY+3)
-	LD	H,0
-	LD	L,A
-	PUSH	HL
+	ADD	HL,BC
+	LD	BC,(HL)
 	PUSH	BC
 	LEA	IY,IX+-128
 	LD	IY,(IY+-10)
 	LD	BC,(IY+10)
-	LD	A,(IY+13)
-	LD	L,A
-	PUSH	HL
 	PUSH	BC
 	LD	BC,L__65
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
 	CALL	_sprintf
-	POP	BC
-	POP	BC
 	POP	BC
 	POP	BC
 	POP	BC
@@ -2029,7 +2018,7 @@ L_109:
 ;  306	
 ;  307				gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
 	LD	HL,(IX+6)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-15),HL
 	LD	BC,_party
@@ -2056,9 +2045,9 @@ L_109:
 	POP	BC
 	POP	BC
 	POP	BC
-;  308				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 164, 32);
+;  308				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 164, 30);
 	LD	BC,_data_pokemon
-	LD	DE,32
+	LD	DE,30
 	PUSH	DE
 	LD	DE,164
 	PUSH	DE
@@ -2102,13 +2091,13 @@ L_109:
 	LD	A,(IY+17)
 	OR	A,A
 	JR	Z,L_90
-;  310					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 200, 32);
+;  310					gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 200, 30);
 	LD	BC,(IX+-18)
 	LD	(IX+-42),BC
 	LD	BC,(IX+-18)
 	LD	(IX+-24),BC
 	LD	BC,_data_pokemon
-	LD	DE,32
+	LD	DE,30
 	PUSH	DE
 	LD	DE,200
 	PUSH	DE
@@ -2561,7 +2550,7 @@ L_128:
 	JR	Z,L_130
 ;  361				tempMove = party[pokemonIndex].moves[menuState];
 	LD	HL,(IX+6)
-	LD	A,35
+	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-33),HL
 	LD	(IX+-51),HL
@@ -2675,7 +2664,7 @@ L_131:
 ;_data_moves                         IMPORT  unknown variable
 ;_menucursor_data                    IMPORT    262   variable
 ;_gfx_SwapDraw                       IMPORT  -----   function
-;_xpPerLevel                         IMPORT   1616   variable
+;_xpPerLevel                         IMPORT   1212   variable
 ;_typeIcons                          IMPORT     51   variable
 ;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
 ;_str                                IMPORT    100   variable
@@ -2687,7 +2676,7 @@ L_131:
 ;_PKMNSD0                            IMPORT    240   variable
 ;_data_pokemon                       IMPORT  unknown variable
 ;_gfx_PrintStringXY                  IMPORT  -----   function
-;_party                              IMPORT   1260   variable
+;_party                              IMPORT   1224   variable
 ;_gfx_SetTextScale                   IMPORT  -----   function
 ;_gfx_ScaledSprite_NoClip            IMPORT  -----   function
 ;_PKMNSD5                            IMPORT    114   variable
@@ -2748,7 +2737,7 @@ L__63:
 	DB	"%u"
 	DB	0
 L__65:
-	DB	"%u/%u"
+	DB	"%i/%i"
 	DB	0
 L__74:
 	DB	"%u"

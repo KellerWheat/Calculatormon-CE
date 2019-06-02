@@ -14,7 +14,7 @@ struct pokemonData {
 	uint8_t moves[4];
 	uint8_t pp[4];
 	uint8_t level;
-	uint32_t xp;
+	int xp;
 
 	uint16_t currenthealth;
 	uint8_t currentstatus;
@@ -97,7 +97,7 @@ extern struct pokemonType data_pokemon[];
 extern struct move data_moves[];
 extern uint8_t elements[18][18];
 extern char elementNames[18][16];
-extern const uint32_t xpPerLevel[4][101];
+extern int xpPerLevel[4][101];
 
 extern char data_trainerText[][32];
 extern char data_npcText[][32];

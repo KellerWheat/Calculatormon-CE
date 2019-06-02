@@ -36,7 +36,7 @@ uint8_t colorSets[2][COLORCOUNT] = {
 };
 
 uint8_t colorValues[COLORCOUNT][3] = {
-	{255,255,255},//0
+	{247,247,247},//0
 	{0,0,0},//1
 	{127,0,127},//2
 	{255,0,0},//3
@@ -44,7 +44,7 @@ uint8_t colorValues[COLORCOUNT][3] = {
 	{128,128,128},//5
 	{0,255,255},//6
 	{64,200,248},//7
-	{112,248,168},//8
+	{62,255,90},//8
 	{248,224,56},//9
 	{248,88,56},//10
 	{248,224,0},//11
@@ -76,7 +76,7 @@ void SetColors(uint8_t gameState) {
 
 /* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
 void FindColors(void) {
-	//return;
+	return;
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	FindBestColors();
 	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);

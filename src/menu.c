@@ -288,7 +288,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 			if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
 				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 254, 187);
 			}
-			sprintf(str, "%u/%u", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level+1]);
+			sprintf(str, "%i/%i", party[pokemonIndex].xp, xpPerLevel[data_pokemon[party[pokemonIndex].id].xptype][party[pokemonIndex].level + 1]);
 			gfx_PrintStringXY(str, 64, 210);
 
 			gfx_SetTextScale(1, 1);

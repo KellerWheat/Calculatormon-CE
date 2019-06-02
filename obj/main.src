@@ -1,791 +1,11 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"..\SRC\MAIN.C"
 	.assume ADL=1
-.DEBUG "C"
-	SEGMENT CODE
-.BEGREC "NONAME0",9
-.DEFINE "sign"
-.VALUE 0
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "mant"
-.VALUE 2
-.CLASS 8
-.DIM 7
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME0"
-.BEGREC "NONAME1",18
-.DEFINE "real"
-.VALUE 0
-.CLASS 8
-.TAG "NONAME0"
-.TYPE 8
-.ENDEF
-.DEFINE "imag"
-.VALUE 9
-.CLASS 8
-.TAG "NONAME0"
-.TYPE 8
-.ENDEF
-.ENDREC "NONAME1"
-.BEGREC "NONAME2",11
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME0"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME2"
-.BEGREC "NONAME3",20
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME1"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME3"
-.BEGREC "NONAME4",11
-.DEFINE "cols"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "rows"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME0"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME4"
-.BEGREC "NONAME5",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME5"
-.BEGREC "NONAME6",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME6"
-.BEGREC "NONAME7",3
-.DEFINE "size"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME7"
-.BEGREC "fmt_type",19
-.DEFINE "status"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "flags"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "size"
-.VALUE 2
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "chr"
-.VALUE 3
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "type"
-.VALUE 4
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "field_width"
-.VALUE 5
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "precision"
-.VALUE 6
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "set_begin"
-.VALUE 7
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "set_end"
-.VALUE 10
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "pad_whole"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_pre_fract"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_post_fract"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_at"
-.VALUE 16
-.CLASS 8
-.TYPE 34
-.ENDEF
-.ENDREC "fmt_type"
-.BEGREC "flt_info",12
-.DEFINE "flags"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "digits"
-.VALUE 2
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.ENDREC "flt_info"
-.BEGREC "NONAME8",6
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "rem"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME8"
-.BEGREC "NONAME9",8
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 5
-.ENDEF
-.DEFINE "rem"
-.VALUE 4
-.CLASS 8
-.TYPE 5
-.ENDEF
-.ENDREC "NONAME9"
-.BEGREC "header",6
-.DEFINE "s"
-.VALUE 0
-.CLASS 11
-.TAG "NONAME10"
-.TYPE 8
-.ENDEF
-.DEFINE "x"
-.VALUE 0
-.CLASS 11
-.TYPE 2
-.ENDEF
-.ENDREC "header"
-.BEGREC "NONAME10",6
-.DEFINE "ptr"
-.VALUE 0
-.CLASS 8
-.TAG "header"
-.TYPE 40
-.ENDEF
-.DEFINE "size"
-.VALUE 3
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME10"
-.BEGREC "__stdio_file",1
-.DEFINE "slot"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "__stdio_file"
-.BEGREC "NONAME11",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME11"
-.BEGREC "NONAME12",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME12"
-.BEGREC "NONAME13",6
-.DEFINE "x"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "y"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME13"
-.BEGREC "NONAME14",12
-.DEFINE "xmin"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymin"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "xmax"
-.VALUE 6
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymax"
-.VALUE 9
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME14"
-.BEGREC "NONAME15",18
-.DEFINE "map"
-.VALUE 0
-.CLASS 8
-.TYPE 44
-.ENDEF
-.DEFINE "tiles"
-.VALUE 3
-.CLASS 8
-.TAG "NONAME11"
-.TYPE 296
-.ENDEF
-.DEFINE "tile_height"
-.VALUE 6
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "tile_width"
-.VALUE 7
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_height"
-.VALUE 8
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_width"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_width"
-.VALUE 10
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_height"
-.VALUE 11
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 12
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "width"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "y_loc"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "x_loc"
-.VALUE 15
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME15"
-.BEGREC "pokemonData",35
-.DEFINE "id"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "moves"
-.VALUE 1
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "pp"
-.VALUE 5
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "level"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xp"
-.VALUE 10
-.CLASS 8
-.TYPE 15
-.ENDEF
-.DEFINE "currenthealth"
-.VALUE 14
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "currentstatus"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthIV"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "attackIV"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "defenceIV"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialattackIV"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialdefenceIV"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "speedIV"
-.VALUE 22
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthEV"
-.VALUE 23
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attackEV"
-.VALUE 25
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defenceEV"
-.VALUE 27
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattackEV"
-.VALUE 29
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefenceEV"
-.VALUE 31
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speedEV"
-.VALUE 33
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonData"
-.BEGREC "pokemonType",51
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 16
-.TYPE 98
-.ENDEF
-.DEFINE "element1"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "element2"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basehealth"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "baseattack"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basedefence"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialattack"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialdefence"
-.VALUE 22
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespeed"
-.VALUE 23
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "movelevels"
-.VALUE 24
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "moveids"
-.VALUE 34
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "evolvelevel"
-.VALUE 44
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolveid"
-.VALUE 45
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolvesfrom"
-.VALUE 46
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xpdrop"
-.VALUE 47
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "xptype"
-.VALUE 49
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "catchrate"
-.VALUE 50
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "pokemonType"
-.BEGREC "pokemonStats",12
-.DEFINE "health"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attack"
-.VALUE 2
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defence"
-.VALUE 4
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattack"
-.VALUE 6
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefence"
-.VALUE 8
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speed"
-.VALUE 10
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonStats"
-.BEGREC "move",21
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 14
-.TYPE 98
-.ENDEF
-.DEFINE "element"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "power"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "accuracy"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "uses"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statustype"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statuschance"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "move"
-.BEGREC "zoneData",640
-.DEFINE "spawnids"
-.VALUE 0
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnminlevels"
-.VALUE 80
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnmaxlevels"
-.VALUE 160
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "exitzone"
-.VALUE 240
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exitx"
-.VALUE 256
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exity"
-.VALUE 272
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorzones"
-.VALUE 288
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorx"
-.VALUE 304
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doory"
-.VALUE 320
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc1"
-.VALUE 336
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc2"
-.VALUE 352
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerspawnids"
-.VALUE 368
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerspawnlevels"
-.VALUE 464
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerx"
-.VALUE 560
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainery"
-.VALUE 576
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerdir"
-.VALUE 592
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "data_trainerText"
-.VALUE 608
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerreward"
-.VALUE 624
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.ENDREC "zoneData"
 	SEGMENT DATA
 _gameState:
 	DB	0
-.DEFINE "gameState"
-.ALIAS "_gameState"
-.CLASS 69
-.VALUE _gameState
-.TYPE 12
-.ENDEF
 ;    1	/*
 ;    2	 *--------------------------------------
 ;    3	 * Program Name: Pokemon
@@ -834,73 +54,24 @@ _gameState:
 ;   45	
 ;   46	void main(void) {
 _main:
-.DEFINE "_main"
-
-.VALUE _main
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "main",46,"_main"
-
-.LINE 46
-
-.DEFINE "starter"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "seed"
-
-.CLASS 65
-
-.VALUE -4
-
-.TYPE 14
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	LEA	HL,IX+-74
-	LD	SP,HL
+	LD	HL,-72
+	CALL	__frameset
 ;   47		int colorIndex;
 ;   48		/* Seed RNG */
 ;   49		unsigned seed = rtc_Time();
-.LINE 49
-
 	LD	BC,(15925316)
 	LD	(IX+-4),BC
 ;   50	
 ;   51		/* Setup gfx */
 ;   52		dbg_ClearConsole();
-.LINE 52
-
-	LD	A,1
-	LD	(16580608),A
 ;   53		gfx_Begin();
-.LINE 53
-
 	CALL	_gfx_Begin
 ;   54		gfx_SetDrawBuffer();
-.LINE 54
-
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;   55		gfx_SetMonospaceFont(8);
-.LINE 55
-
 	LD	BC,8
 	PUSH	BC
 	CALL	_gfx_SetMonospaceFont
@@ -909,16 +80,12 @@ _main:
 ;   57		/* Game */
 ;   58	
 ;   59		srand(seed);
-.LINE 59
-
 	LD	BC,(IX+-4)
 	PUSH	BC
 	CALL	_srand
 	POP	BC
 ;   60	
 ;   61		textBoxSprite1 = gfx_MallocSprite(160, 64);
-.LINE 61
-
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,64
@@ -929,16 +96,14 @@ _main:
 	POP	BC
 	POP	BC
 	POP	BC
-	LD	(_textBoxSprite1),HL
 ;   62		textBoxSprite2 = gfx_MallocSprite(160, 64);
-.LINE 62
-
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,64
 	PUSH	BC
 	LD	BC,160
 	PUSH	BC
+	LD	(_textBoxSprite1),HL
 	CALL	_gfx_AllocSprite
 	POP	BC
 	POP	BC
@@ -946,57 +111,37 @@ _main:
 	LD	(_textBoxSprite2),HL
 ;   63	
 ;   64		map_Initialize();
-.LINE 64
-
 	CALL	_map_Initialize
 ;   65		battle_Initialize();
-.LINE 65
-
 	CALL	_battle_Initialize
 ;   66	
 ;   67		FindColors();
-.LINE 67
-
 	CALL	_FindColors
 ;   68	
 ;   69		map_Setup();
-.LINE 69
-
 	CALL	_map_Setup
 ;   70	
 ;   71		if (newGame) {
-.LINE 71
-
 	LD	A,(_newGame)
 	OR	A,A
 	JR	Z,L_12
 ;   72			uint8_t starter = 0;
-.LINE 72
-
 	LD	(IX+-1),0
 ;   73			newGame = false;
-.LINE 73
-
-	XOR	A,A
-	LD	(_newGame),A
 ;   74			text_Display("Choose Starter", false);
-.LINE 74
-
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__1
 	PUSH	BC
+	XOR	A,A
+	LD	(_newGame),A
 	CALL	_text_Display
 	POP	BC
 	POP	BC
 ;   75			while (starter == 0) {
-.LINE 75
-
 	JR	L_0
 L_1:
 ;   76				starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
-.LINE 76
-
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__2
@@ -1016,41 +161,31 @@ L_1:
 	LD	(IX+-1),L
 ;   77			}
 L_0:
-.LINE 77
-
 	LD	A,(IX+-1)
 	OR	A,A
 	JR	Z,L_1
 ;   78			if (starter == 4) {
-.LINE 78
-
 	LD	A,(IX+-1)
 	CP	A,4
 	JR	NZ,L_3
 ;   79				party[0] = stats_NewCharacter(152, 100);
-.LINE 79
-
 	LD	BC,100
 	PUSH	BC
 	LD	BC,152
 	PUSH	BC
-	PEA	IX+-39
+	PEA	IX+-38
 	CALL	_stats_NewCharacter
 	POP	BC
 	POP	BC
 	POP	BC
 	LD	DE,_party
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 ;   80			}
 ;   81			else {
-.LINE 81
-
 	JR	L_10
 L_3:
 ;   82				party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
-.LINE 82
-
 	LD	BC,5
 	PUSH	BC
 	LD	B,(IX+-1)
@@ -1060,35 +195,27 @@ L_3:
 	INC	C
 	LD	B,0
 	PUSH	BC
-	PEA	IX+-74
+	PEA	IX+-72
 	CALL	_stats_NewCharacter
 	POP	BC
 	POP	BC
 	POP	BC
 	LD	DE,_party
-	LD	BC,35
+	LD	BC,34
 	LDIR	
 ;   83			}
 L_10:
-.LINE 83
-
 ;   84			for (starter = 0; starter < 185; starter++) {
-.LINE 84
-
 	LD	(IX+-1),0
 	JR	L_9
 L_7:
 ;   85				if (rand() % 2) {
-.LINE 85
-
 	CALL	_rand
 	LD	BC,2
 	CALL	__irems
 	CALL	__icmpzero
 	JR	Z,L_8
 ;   86					playerItems[starter] = 1;
-.LINE 86
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -1098,8 +225,6 @@ L_7:
 ;   87				}
 ;   88			}
 L_8:
-.LINE 88
-
 	INC	(IX+-1)
 L_9:
 	LD	A,(IX+-1)
@@ -1107,102 +232,64 @@ L_9:
 	JR	C,L_7
 ;   89		}
 L_12:
-.LINE 89
-
 ;   90		map_LoadPokeballs();
-.LINE 90
-
 	CALL	_map_LoadPokeballs
 ;   91		do {
 L_18:
-.LINE 91
-
 ;   92			kb_Scan();
-.LINE 92
-
 	CALL	_kb_Scan
 ;   93			if (gameState == 0) {
-.LINE 93
-
 	LD	A,(_gameState)
 	OR	A,A
 	JR	NZ,L_17
 ;   94				gameState = map_Loop();
-.LINE 94
-
 	CALL	_map_Loop
 	LD	A,L
-	LD	(_gameState),A
 ;   95				if (gameState == 1) {
-.LINE 95
-
 	CP	A,1
+	LD	(_gameState),A
 	JR	NZ,L_19
 ;   96					map_End();
-.LINE 96
-
 	CALL	_map_End
 ;   97					battle_Setup();
-.LINE 97
-
 	CALL	_battle_Setup
 ;   98				}
 ;   99			}
 ;  100			else if (gameState == 1) {
-.LINE 100
-
 	JR	L_19
 L_17:
 	LD	A,(_gameState)
 	CP	A,1
 	JR	NZ,L_19
 ;  101				gameState = battle_Loop();
-.LINE 101
-
 	CALL	_battle_Loop
 	LD	A,L
 	LD	(_gameState),A
 ;  102				if (gameState == 0) {
-.LINE 102
-
 	OR	A,A
 	JR	NZ,L_19
 ;  103					battle_End();
-.LINE 103
-
 	CALL	_battle_End
 ;  104					map_Setup();
-.LINE 104
-
 	CALL	_map_Setup
 ;  105				}
 ;  106			}
 ;  107		} while (gameState < 2);
 L_19:
-.LINE 107
-
 	LD	A,(_gameState)
 	CP	A,2
 	JR	C,L_18
 ;  108	
 ;  109		map_End();
-.LINE 109
-
 	CALL	_map_End
 ;  110		battle_End();
-.LINE 110
-
 	CALL	_battle_End
 ;  111		free(textBoxSprite1);
-.LINE 111
-
 	LD	BC,(_textBoxSprite1)
 	PUSH	BC
 	CALL	_free
 	POP	BC
 ;  112		free(textBoxSprite2);
-.LINE 112
-
 	LD	BC,(_textBoxSprite2)
 	PUSH	BC
 	CALL	_free
@@ -1210,11 +297,7 @@ L_19:
 ;  113	
 ;  114	
 ;  115		gfx_End();
-.LINE 115
-
 	CALL	_gfx_End
-.LINE 116
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1234,7 +317,7 @@ L_19:
 ;_map_LoadPokeballs                  IMPORT  -----   function
 ;_playerItems                        IMPORT    185   variable
 ;_rand                               IMPORT  -----   function
-;_party                              IMPORT   1260   variable
+;_party                              IMPORT   1224   variable
 ;_stats_NewCharacter                 IMPORT  -----   function
 ;_text_AskQuestion4                  IMPORT  -----   function
 ;_text_Display                       IMPORT  -----   function
@@ -1255,11 +338,10 @@ L_19:
 ;starter                               IX-1      1   variable
 
 
-; Stack Frame Size: 80 (bytes)
+; Stack Frame Size: 78 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "main",116,"_main"
 	SEGMENT STRSECT
 L__1:
 	DB	"Choose Starter"
@@ -1305,6 +387,7 @@ L__5:
 	XREF _free:ROM
 	XREF _malloc:ROM
 	XREF __irems:ROM
+	XREF __frameset:ROM
 	XREF __icmpzero:ROM
 	XDEF _main
 	XDEF _gameState

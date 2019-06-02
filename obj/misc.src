@@ -53,9 +53,9 @@ _colorSets:
 	DB	103
 	DB	0
 _colorValues:
-	DB	255
-	DB	255
-	DB	255
+	DB	247
+	DB	247
+	DB	247
 	DB	0
 	DB	0
 	DB	0
@@ -77,9 +77,9 @@ _colorValues:
 	DB	64
 	DB	200
 	DB	248
-	DB	112
-	DB	248
-	DB	168
+	DB	62
+	DB	255
+	DB	90
 	DB	248
 	DB	224
 	DB	56
@@ -137,7 +137,7 @@ _categoryIcons:
 ;   36	};
 ;   37	
 ;   38	uint8_t colorValues[COLORCOUNT][3] = {
-;   39		{255,255,255},//0
+;   39		{247,247,247},//0
 ;   40		{0,0,0},//1
 ;   41		{127,0,127},//2
 ;   42		{255,0,0},//3
@@ -145,7 +145,7 @@ _categoryIcons:
 ;   44		{128,128,128},//5
 ;   45		{0,255,255},//6
 ;   46		{64,200,248},//7
-;   47		{112,248,168},//8
+;   47		{62,255,90},//8
 ;   48		{248,224,56},//9
 ;   49		{248,88,56},//10
 ;   50		{248,224,0},//11
@@ -274,45 +274,17 @@ L_7:
 ;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
 ;   78	void FindColors(void) {
 _FindColors:
-;   79		//return;
+;   79		return;
 ;   80		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD4+24
-	LD	BC,426
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
 ;   81		FindBestColors();
-	CALL	_FindBestColors
 ;   82		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD5+111
-	LD	BC,512
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
 ;   83		FindBestColors();
-	CALL	_FindBestColors
 ;   84	}
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD5                            IMPORT    114   variable
-;_FindBestColors                     IMPORT  -----   function
-;_PKMNSD4                            IMPORT     27   variable
-;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
@@ -991,11 +963,9 @@ L_56:
 
 
 	XREF _PKMNSD5:ROM
-	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
-	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM

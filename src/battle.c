@@ -204,6 +204,7 @@ int battle_Loop(void) {
 		}
 		else {
 			attack(true, chosenmove[true]);
+			
 			attackturn = 2;
 		}
 	}
@@ -298,10 +299,11 @@ bool playerturn() {
 		selectedMove = selectMove();
 		battleMenuState1 = 0;
 		/* Checks if the move can be used */
-		if (selectedMove == 0 || party[currentplayer].pp[selectedMove] == 0 || disabledmove[true] == selectedMove + 1) {
+		if (selectedMove == 0 || party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
 			return false;
 		}
-		chosenmove[true] = party[currentplayer].moves[selectedMove];
+		chosenmove[true] = party[currentplayer].moves[selectedMove - 1];
+		party[currentplayer].pp[selectedMove - 1]--;
 	}
 	/* Items */
 	else if (battleMenuState1 == 2) {
@@ -402,9 +404,9 @@ int selectMove(void) {
 	gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
 	gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
 
-	if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
-		gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
-		sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
+	if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+		gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+		sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 		gfx_PrintStringXY(str, 271, 209);
 	}
 	
@@ -431,11 +433,11 @@ int selectMove(void) {
 			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 
 			gfx_FillRectangle(263, 185, 48, 46);
-			if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
-				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
+			if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+				sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+				gfx_PrintStringXY(str, 271, 209);
 			}
-			//sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
-			gfx_PrintStringXY(str, 271, 209);
 
 			Wait(20);
 		}
@@ -451,11 +453,11 @@ int selectMove(void) {
 			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 
 			gfx_FillRectangle(263, 185, 48, 46);
-			if (party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1] != 0) {
-				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].element - 1], 271, 193);
+			if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+				sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+				gfx_PrintStringXY(str, 271, 209);
 			}
-			//sprintf(str, "%u/%u", party[currentplayer].pp[(tv1 + 1 + 2 * (tv2)) - 1], data_moves[party[currentplayer].moves[(tv1 + 1 + 2 * (tv2)) - 1]].uses);
-			gfx_PrintStringXY(str, 271, 209);
 
 			Wait(20);
 		}
@@ -611,6 +613,7 @@ void attack(bool player, uint8_t move) {
 		userelement2 = data_pokemon[party[currentplayer].id].element2;
 		nonuserelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
 		nonuserelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
+
 	}
 	else {
 		strcpy(username, enemyname);
