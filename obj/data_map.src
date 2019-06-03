@@ -1,8 +1,572 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"..\SRC\DATA_MAP.C"
 	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "pokemonData",34
+.DEFINE "id"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "moves"
+.VALUE 1
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "pp"
+.VALUE 5
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "level"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xp"
+.VALUE 10
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "currenthealth"
+.VALUE 13
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "currentstatus"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthIV"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "attackIV"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "defenceIV"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialattackIV"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialdefenceIV"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "speedIV"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthEV"
+.VALUE 22
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attackEV"
+.VALUE 24
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defenceEV"
+.VALUE 26
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattackEV"
+.VALUE 28
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefenceEV"
+.VALUE 30
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speedEV"
+.VALUE 32
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonData"
+.BEGREC "pokemonType",51
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 16
+.TYPE 98
+.ENDEF
+.DEFINE "element1"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "element2"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basehealth"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "baseattack"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basedefence"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialattack"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialdefence"
+.VALUE 22
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespeed"
+.VALUE 23
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movelevels"
+.VALUE 24
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "moveids"
+.VALUE 34
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "evolvelevel"
+.VALUE 44
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolveid"
+.VALUE 45
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolvesfrom"
+.VALUE 46
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xpdrop"
+.VALUE 47
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "xptype"
+.VALUE 49
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "catchrate"
+.VALUE 50
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "pokemonType"
+.BEGREC "pokemonStats",12
+.DEFINE "health"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attack"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defence"
+.VALUE 4
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattack"
+.VALUE 6
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefence"
+.VALUE 8
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speed"
+.VALUE 10
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonStats"
+.BEGREC "move",21
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 14
+.TYPE 98
+.ENDEF
+.DEFINE "element"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "power"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "accuracy"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "uses"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statustype"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statuschance"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "move"
+.BEGREC "zoneData",640
+.DEFINE "spawnids"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnminlevels"
+.VALUE 80
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnmaxlevels"
+.VALUE 160
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "exitzone"
+.VALUE 240
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exitx"
+.VALUE 256
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exity"
+.VALUE 272
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorzones"
+.VALUE 288
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorx"
+.VALUE 304
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doory"
+.VALUE 320
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc1"
+.VALUE 336
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc2"
+.VALUE 352
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerspawnids"
+.VALUE 368
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerspawnlevels"
+.VALUE 464
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerx"
+.VALUE 560
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainery"
+.VALUE 576
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerdir"
+.VALUE 592
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "data_trainerText"
+.VALUE 608
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerreward"
+.VALUE 624
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.ENDREC "zoneData"
 	SEGMENT DATA
 _data_trainerText:
 	DB	70
@@ -1029,6 +1593,14 @@ _data_trainerText:
 	DB	0
 	DB	0
 	DB	0
+.DEFINE "data_trainerText"
+.ALIAS "_data_trainerText"
+.CLASS 69
+.VALUE _data_trainerText
+.DIM 32
+.DIM 32
+.TYPE 866
+.ENDEF
 _data_npcText:
 	DB	72
 	DB	101
@@ -2054,6 +2626,14 @@ _data_npcText:
 	DB	0
 	DB	0
 	DB	0
+.DEFINE "data_npcText"
+.ALIAS "_data_npcText"
+.CLASS 69
+.VALUE _data_npcText
+.DIM 32
+.DIM 32
+.TYPE 866
+.ENDEF
 _data_npcReward:
 	DB	0
 	DB	0
@@ -2087,6 +2667,13 @@ _data_npcReward:
 	DB	0
 	DB	0
 	DB	0
+.DEFINE "data_npcReward"
+.ALIAS "_data_npcReward"
+.CLASS 69
+.VALUE _data_npcReward
+.DIM 32
+.TYPE 108
+.ENDEF
 	XDEF _data_npcReward
 	XDEF _data_npcText
 	XDEF _data_trainerText

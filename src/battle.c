@@ -630,12 +630,15 @@ void attack(bool player, uint8_t move) {
 		sprintf(str, "%s flinched", username);
 		text_Display(str, true);
 	}
+	if (data_moves[move].type == 16) {
+		sprintf(str, "%s used %s", username, data_moves[move].name);
+		text_Display(str, true);
+		move = 1 + (rand() % 165);
+	}
 	sprintf(str, "%s used %s", username, data_moves[move].name);
 	text_Display(str, true);
 
-	if (data_moves[move].type == 16) {
-		move = 1 + (rand() % 165);
-	}
+	
 	if (data_moves[move].type == 17) {
 		move = lastmove[!player];
 	}

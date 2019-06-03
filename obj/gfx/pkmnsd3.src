@@ -1,83 +1,352 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"..\..\SRC\GFX\PKMNSD3.C"
 	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "__stdio_file",1
+.DEFINE "slot"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "__stdio_file"
+.BEGREC "NONAME3",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME4"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "NONAME10",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME10"
 	SEGMENT DATA
 _PKMNSD3:
 	DW24	0
-	DW24	367
-	DW24	573
-	DW24	1044
-	DW24	1479
-	DW24	1890
-	DW24	2412
-	DW24	2742
-	DW24	3017
-	DW24	3341
-	DW24	3705
-	DW24	4139
-	DW24	4668
-	DW24	4909
-	DW24	5230
-	DW24	5567
-	DW24	5991
-	DW24	6279
-	DW24	6725
-	DW24	7191
-	DW24	7557
-	DW24	7800
-	DW24	8035
-	DW24	8411
-	DW24	8907
-	DW24	9335
-	DW24	9738
-	DW24	10064
-	DW24	10443
-	DW24	10778
-	DW24	11189
-	DW24	11558
-	DW24	11921
-	DW24	12408
-	DW24	12743
-	DW24	12984
-	DW24	13488
-	DW24	13770
-	DW24	14232
-	DW24	14680
-	DW24	15105
-	DW24	15422
-	DW24	15707
-	DW24	16012
-	DW24	16407
-	DW24	16618
-	DW24	17035
-	DW24	17473
-	DW24	17955
-	DW24	18196
-	DW24	18628
-	DW24	19123
-	DW24	19492
-	DW24	19734
-	DW24	20153
-	DW24	20493
-	DW24	20842
-	DW24	21256
-	DW24	21562
-	DW24	21970
-	DW24	22452
-	DW24	22763
-	DW24	23192
-	DW24	23539
-	DW24	23737
-	DW24	24056
-	DW24	24417
-	DW24	24815
-	DW24	25109
-	DW24	25484
-	DW24	25811
-	DW24	26224
-	DW24	26589
+	DW24	373
+	DW24	586
+	DW24	1084
+	DW24	1534
+	DW24	1951
+	DW24	2482
+	DW24	2822
+	DW24	3102
+	DW24	3433
+	DW24	3801
+	DW24	4243
+	DW24	4778
+	DW24	5038
+	DW24	5364
+	DW24	5706
+	DW24	6137
+	DW24	6431
+	DW24	6889
+	DW24	7363
+	DW24	7734
+	DW24	7982
+	DW24	8223
+	DW24	8604
+	DW24	9116
+	DW24	9551
+	DW24	9967
+	DW24	10299
+	DW24	10684
+	DW24	11024
+	DW24	11457
+	DW24	11836
+	DW24	12205
+	DW24	12704
+	DW24	13044
+	DW24	13296
+	DW24	13807
+	DW24	14095
+	DW24	14566
+	DW24	15028
+	DW24	15462
+	DW24	15784
+	DW24	16074
+	DW24	16389
+	DW24	16797
+	DW24	17020
+	DW24	17439
+	DW24	17887
+	DW24	18378
+	DW24	18622
+	DW24	19068
+	DW24	19578
+	DW24	19966
+	DW24	20213
+	DW24	20641
+	DW24	20985
+	DW24	21352
+	DW24	21787
+	DW24	22096
+	DW24	22511
+	DW24	23004
+	DW24	23321
+	DW24	23756
+	DW24	24108
+	DW24	24309
+	DW24	24637
+	DW24	25007
+	DW24	25410
+	DW24	25713
+	DW24	26094
+	DW24	26429
+	DW24	26855
+	DW24	27227
+.DEFINE "PKMNSD3"
+.ALIAS "_PKMNSD3"
+.CLASS 69
+.VALUE _PKMNSD3
+.DIM 73
+.TYPE 364
+.ENDEF
 ;    1	// convpng v6.8
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD3.h"
@@ -86,91 +355,144 @@ _PKMNSD3:
 ;    6	uint8_t *PKMNSD3[73] = {
 	SEGMENT CODE
 ;    7	 (uint8_t*)0,
-;    8	 (uint8_t*)367,
-;    9	 (uint8_t*)573,
-;   10	 (uint8_t*)1044,
-;   11	 (uint8_t*)1479,
-;   12	 (uint8_t*)1890,
-;   13	 (uint8_t*)2412,
-;   14	 (uint8_t*)2742,
-;   15	 (uint8_t*)3017,
-;   16	 (uint8_t*)3341,
-;   17	 (uint8_t*)3705,
-;   18	 (uint8_t*)4139,
-;   19	 (uint8_t*)4668,
-;   20	 (uint8_t*)4909,
-;   21	 (uint8_t*)5230,
-;   22	 (uint8_t*)5567,
-;   23	 (uint8_t*)5991,
-;   24	 (uint8_t*)6279,
-;   25	 (uint8_t*)6725,
-;   26	 (uint8_t*)7191,
-;   27	 (uint8_t*)7557,
-;   28	 (uint8_t*)7800,
-;   29	 (uint8_t*)8035,
-;   30	 (uint8_t*)8411,
-;   31	 (uint8_t*)8907,
-;   32	 (uint8_t*)9335,
-;   33	 (uint8_t*)9738,
-;   34	 (uint8_t*)10064,
-;   35	 (uint8_t*)10443,
-;   36	 (uint8_t*)10778,
-;   37	 (uint8_t*)11189,
-;   38	 (uint8_t*)11558,
-;   39	 (uint8_t*)11921,
-;   40	 (uint8_t*)12408,
-;   41	 (uint8_t*)12743,
-;   42	 (uint8_t*)12984,
-;   43	 (uint8_t*)13488,
-;   44	 (uint8_t*)13770,
-;   45	 (uint8_t*)14232,
-;   46	 (uint8_t*)14680,
-;   47	 (uint8_t*)15105,
-;   48	 (uint8_t*)15422,
-;   49	 (uint8_t*)15707,
-;   50	 (uint8_t*)16012,
-;   51	 (uint8_t*)16407,
-;   52	 (uint8_t*)16618,
-;   53	 (uint8_t*)17035,
-;   54	 (uint8_t*)17473,
-;   55	 (uint8_t*)17955,
-;   56	 (uint8_t*)18196,
-;   57	 (uint8_t*)18628,
-;   58	 (uint8_t*)19123,
-;   59	 (uint8_t*)19492,
-;   60	 (uint8_t*)19734,
-;   61	 (uint8_t*)20153,
-;   62	 (uint8_t*)20493,
-;   63	 (uint8_t*)20842,
-;   64	 (uint8_t*)21256,
-;   65	 (uint8_t*)21562,
-;   66	 (uint8_t*)21970,
-;   67	 (uint8_t*)22452,
-;   68	 (uint8_t*)22763,
-;   69	 (uint8_t*)23192,
-;   70	 (uint8_t*)23539,
-;   71	 (uint8_t*)23737,
-;   72	 (uint8_t*)24056,
-;   73	 (uint8_t*)24417,
-;   74	 (uint8_t*)24815,
-;   75	 (uint8_t*)25109,
-;   76	 (uint8_t*)25484,
-;   77	 (uint8_t*)25811,
-;   78	 (uint8_t*)26224,
-;   79	 (uint8_t*)26589,
+;    8	 (uint8_t*)373,
+;    9	 (uint8_t*)586,
+;   10	 (uint8_t*)1084,
+;   11	 (uint8_t*)1534,
+;   12	 (uint8_t*)1951,
+;   13	 (uint8_t*)2482,
+;   14	 (uint8_t*)2822,
+;   15	 (uint8_t*)3102,
+;   16	 (uint8_t*)3433,
+;   17	 (uint8_t*)3801,
+;   18	 (uint8_t*)4243,
+;   19	 (uint8_t*)4778,
+;   20	 (uint8_t*)5038,
+;   21	 (uint8_t*)5364,
+;   22	 (uint8_t*)5706,
+;   23	 (uint8_t*)6137,
+;   24	 (uint8_t*)6431,
+;   25	 (uint8_t*)6889,
+;   26	 (uint8_t*)7363,
+;   27	 (uint8_t*)7734,
+;   28	 (uint8_t*)7982,
+;   29	 (uint8_t*)8223,
+;   30	 (uint8_t*)8604,
+;   31	 (uint8_t*)9116,
+;   32	 (uint8_t*)9551,
+;   33	 (uint8_t*)9967,
+;   34	 (uint8_t*)10299,
+;   35	 (uint8_t*)10684,
+;   36	 (uint8_t*)11024,
+;   37	 (uint8_t*)11457,
+;   38	 (uint8_t*)11836,
+;   39	 (uint8_t*)12205,
+;   40	 (uint8_t*)12704,
+;   41	 (uint8_t*)13044,
+;   42	 (uint8_t*)13296,
+;   43	 (uint8_t*)13807,
+;   44	 (uint8_t*)14095,
+;   45	 (uint8_t*)14566,
+;   46	 (uint8_t*)15028,
+;   47	 (uint8_t*)15462,
+;   48	 (uint8_t*)15784,
+;   49	 (uint8_t*)16074,
+;   50	 (uint8_t*)16389,
+;   51	 (uint8_t*)16797,
+;   52	 (uint8_t*)17020,
+;   53	 (uint8_t*)17439,
+;   54	 (uint8_t*)17887,
+;   55	 (uint8_t*)18378,
+;   56	 (uint8_t*)18622,
+;   57	 (uint8_t*)19068,
+;   58	 (uint8_t*)19578,
+;   59	 (uint8_t*)19966,
+;   60	 (uint8_t*)20213,
+;   61	 (uint8_t*)20641,
+;   62	 (uint8_t*)20985,
+;   63	 (uint8_t*)21352,
+;   64	 (uint8_t*)21787,
+;   65	 (uint8_t*)22096,
+;   66	 (uint8_t*)22511,
+;   67	 (uint8_t*)23004,
+;   68	 (uint8_t*)23321,
+;   69	 (uint8_t*)23756,
+;   70	 (uint8_t*)24108,
+;   71	 (uint8_t*)24309,
+;   72	 (uint8_t*)24637,
+;   73	 (uint8_t*)25007,
+;   74	 (uint8_t*)25410,
+;   75	 (uint8_t*)25713,
+;   76	 (uint8_t*)26094,
+;   77	 (uint8_t*)26429,
+;   78	 (uint8_t*)26855,
+;   79	 (uint8_t*)27227,
 ;   80	};
 ;   81	
 ;   82	bool PKMNSD3_init(void) {
 _PKMNSD3_init:
-	LD	HL,-10
-	CALL	__frameset
+.DEFINE "_PKMNSD3_init"
+
+.VALUE _PKMNSD3_init
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "PKMNSD3_init",82,"_PKMNSD3_init"
+
+.LINE 82
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "appvar"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE -7
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
 ;   83	    unsigned int data, i;
 ;   84	    ti_var_t appvar;
 ;   85	
 ;   86	    ti_CloseAll();
+.LINE 86
+
 	CALL	_ti_CloseAll
 ;   87	
 ;   88	    appvar = ti_Open("PKMNSD3", "r");
+.LINE 88
+
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -180,6 +502,8 @@ _PKMNSD3_init:
 	POP	BC
 	LD	(IX+-4),A
 ;   89	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD3[0];
+.LINE 89
+
 	LD	C,(IX+-4)
 	LD	B,0
 	PUSH	BC
@@ -190,11 +514,15 @@ _PKMNSD3_init:
 	SBC	HL,BC
 	LD	(IX+-7),HL
 ;   90	    for (i = 0; i < PKMNSD3_num; i++) {
+.LINE 90
+
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
 ;   91	        PKMNSD3[i] += data;
+.LINE 91
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -202,9 +530,9 @@ L_1:
 	LD	BC,_PKMNSD3
 	ADD	HL,BC
 	LD	(IX+-10),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-10)
 	LD	BC,(IX+-7)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -212,6 +540,8 @@ L_1:
 	LD	(IX+-3),BC
 ;   92	    }
 L_3:
+.LINE 92
+
 	LD	BC,73
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -219,11 +549,17 @@ L_3:
 	JR	C,L_1
 ;   93	
 ;   94	    ti_CloseAll();
+.LINE 94
+
 	CALL	_ti_CloseAll
 ;   95	
 ;   96	    return (bool)appvar;
+.LINE 96
+
 	LD	A,(IX+-4)
 ;   97	}
+.LINE 97
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -244,6 +580,7 @@ L_3:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "PKMNSD3_init",97,"_PKMNSD3_init"
 	SEGMENT STRSECT
 L__0:
 	DB	"r"
@@ -254,7 +591,6 @@ L__1:
 	XREF _ti_GetDataPtr:ROM
 	XREF _ti_Open:ROM
 	XREF _ti_CloseAll:ROM
-	XREF __frameset:ROM
 	XDEF _PKMNSD3_init
 	XDEF _PKMNSD3
 	END

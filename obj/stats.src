@@ -1,9 +1,572 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"..\SRC\STATS.C"
 	.assume ADL=1
+.DEBUG "C"
 	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "pokemonData",34
+.DEFINE "id"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "moves"
+.VALUE 1
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "pp"
+.VALUE 5
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "level"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xp"
+.VALUE 10
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "currenthealth"
+.VALUE 13
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "currentstatus"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthIV"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "attackIV"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "defenceIV"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialattackIV"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialdefenceIV"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "speedIV"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthEV"
+.VALUE 22
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attackEV"
+.VALUE 24
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defenceEV"
+.VALUE 26
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattackEV"
+.VALUE 28
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefenceEV"
+.VALUE 30
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speedEV"
+.VALUE 32
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonData"
+.BEGREC "pokemonType",51
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 16
+.TYPE 98
+.ENDEF
+.DEFINE "element1"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "element2"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basehealth"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "baseattack"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basedefence"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialattack"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialdefence"
+.VALUE 22
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespeed"
+.VALUE 23
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movelevels"
+.VALUE 24
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "moveids"
+.VALUE 34
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "evolvelevel"
+.VALUE 44
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolveid"
+.VALUE 45
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolvesfrom"
+.VALUE 46
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xpdrop"
+.VALUE 47
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "xptype"
+.VALUE 49
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "catchrate"
+.VALUE 50
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "pokemonType"
+.BEGREC "pokemonStats",12
+.DEFINE "health"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attack"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defence"
+.VALUE 4
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattack"
+.VALUE 6
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefence"
+.VALUE 8
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speed"
+.VALUE 10
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonStats"
+.BEGREC "move",21
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 14
+.TYPE 98
+.ENDEF
+.DEFINE "element"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "power"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "accuracy"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "uses"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statustype"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statuschance"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "move"
+.BEGREC "zoneData",640
+.DEFINE "spawnids"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnminlevels"
+.VALUE 80
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnmaxlevels"
+.VALUE 160
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "exitzone"
+.VALUE 240
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exitx"
+.VALUE 256
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exity"
+.VALUE 272
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorzones"
+.VALUE 288
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorx"
+.VALUE 304
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doory"
+.VALUE 320
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc1"
+.VALUE 336
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc2"
+.VALUE 352
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerspawnids"
+.VALUE 368
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerspawnlevels"
+.VALUE 464
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerx"
+.VALUE 560
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainery"
+.VALUE 576
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerdir"
+.VALUE 592
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "data_trainerText"
+.VALUE 608
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerreward"
+.VALUE 624
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.ENDREC "zoneData"
 ;    1	#include <math.h>
 ;    2	
 ;    3	#include "stats.h"
@@ -12,10 +575,55 @@
 ;    6	
 ;    7	struct pokemonStats stats_CalculateStats(struct pokemonData c) {
 _stats_CalculateStats:
-	LD	HL,-57
-	CALL	__frameset
+.DEFINE "_stats_CalculateStats"
+
+.VALUE _stats_CalculateStats
+
+.CLASS 2
+
+.TAG "pokemonStats"
+
+.TYPE 72
+
+.ENDEF
+
+.BEGFUNC "stats_CalculateStats",7,"_stats_CalculateStats"
+
+.LINE 7
+
+.DEFINE "c"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "pokemonData"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "newstats"
+
+.CLASS 65
+
+.VALUE -12
+
+.TAG "pokemonStats"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-57
+	LD	SP,HL
 ;    8		struct pokemonStats newstats;
 ;    9		newstats.health = ((((data_pokemon[c.id].basehealth + c.healthIV) * 2 + (isqrt(c.healthEV) / 4))*c.level) / 100) + c.level + 10;
+.LINE 9
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -44,14 +652,14 @@ _stats_CalculateStats:
 	PUSH	BC
 	PUSH	HL
 	CALL	_isqrt
+	POP	BC
+	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	POP	IY
-	POP	IY
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-15)
 	LD	E,(IX+-16)
+	LD	HL,(IX+-15)
 	CALL	__ladd
 	LD	(IX+-26),HL
 	UEXT	HL
@@ -75,6 +683,8 @@ _stats_CalculateStats:
 	LD	(IX+-12),L
 	LD	(IX+-11),H
 ;   10		newstats.attack = ((((data_pokemon[c.id].baseattack + c.attackIV) * 2 + (isqrt(c.attackEV) / 4))*c.level) / 100) + 5;
+.LINE 10
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -103,14 +713,14 @@ _stats_CalculateStats:
 	PUSH	BC
 	PUSH	HL
 	CALL	_isqrt
+	POP	BC
+	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	POP	IY
-	POP	IY
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-19)
 	LD	E,(IX+-20)
+	LD	HL,(IX+-19)
 	CALL	__ladd
 	LD	(IX+-33),HL
 	UEXT	HL
@@ -127,6 +737,8 @@ _stats_CalculateStats:
 	LD	(IX+-10),L
 	LD	(IX+-9),H
 ;   11		newstats.defence = ((((data_pokemon[c.id].basedefence + c.defenceIV) * 2 + (isqrt(c.defenceEV) / 4))*c.level) / 100) + 5;
+.LINE 11
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -155,14 +767,14 @@ _stats_CalculateStats:
 	PUSH	BC
 	PUSH	HL
 	CALL	_isqrt
+	POP	BC
+	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	POP	IY
-	POP	IY
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-29)
 	LD	E,(IX+-30)
+	LD	HL,(IX+-29)
 	CALL	__ladd
 	LD	(IX+-40),HL
 	UEXT	HL
@@ -179,6 +791,8 @@ _stats_CalculateStats:
 	LD	(IX+-8),L
 	LD	(IX+-7),H
 ;   12		newstats.specialattack = ((((data_pokemon[c.id].basespecialattack + c.specialattackIV) * 2 + (isqrt(c.specialattackEV) / 4))*c.level) / 100) + 5;
+.LINE 12
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -207,14 +821,14 @@ _stats_CalculateStats:
 	PUSH	BC
 	PUSH	HL
 	CALL	_isqrt
+	POP	BC
+	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	POP	IY
-	POP	IY
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-36)
 	LD	E,(IX+-37)
+	LD	HL,(IX+-36)
 	CALL	__ladd
 	LD	(IX+-47),HL
 	UEXT	HL
@@ -231,6 +845,8 @@ _stats_CalculateStats:
 	LD	(IX+-6),L
 	LD	(IX+-5),H
 ;   13		newstats.specialdefence = ((((data_pokemon[c.id].basespecialdefence + c.specialdefenceIV) * 2 + (isqrt(c.specialdefenceEV) / 4))*c.level) / 100) + 5;
+.LINE 13
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -259,14 +875,14 @@ _stats_CalculateStats:
 	PUSH	BC
 	PUSH	HL
 	CALL	_isqrt
+	POP	BC
+	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	POP	IY
-	POP	IY
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-43)
 	LD	E,(IX+-44)
+	LD	HL,(IX+-43)
 	CALL	__ladd
 	LD	(IX+-54),HL
 	UEXT	HL
@@ -283,6 +899,8 @@ _stats_CalculateStats:
 	LD	(IX+-4),L
 	LD	(IX+-3),H
 ;   14		newstats.speed = ((((data_pokemon[c.id].basespeed + c.speedIV) * 2 + (isqrt(c.speedEV) / 4))*c.level) / 100) + 5;
+.LINE 14
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -313,12 +931,12 @@ _stats_CalculateStats:
 	CALL	_isqrt
 	POP	BC
 	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-50)
 	LD	E,(IX+-51)
+	LD	HL,(IX+-50)
 	CALL	__ladd
 	LD	(IX+-57),HL
 	UEXT	HL
@@ -335,6 +953,8 @@ _stats_CalculateStats:
 	LD	(IX+-2),L
 	LD	(IX+-1),H
 ;   15		return newstats;
+.LINE 15
+
 	LEA	HL,IX+6	; spill
 	LD	DE,(HL)
 	LEA	HL,IX+-12
@@ -342,6 +962,8 @@ _stats_CalculateStats:
 	LDIR	
 	LD	HL,(IX+6)	; spill
 ;   16	}
+.LINE 16
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -359,11 +981,106 @@ _stats_CalculateStats:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "stats_CalculateStats",16,"_stats_CalculateStats"
 ;   17	struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 _stats_NewCharacter:
-	LD	HL,-127
-	CALL	__frameset
+.DEFINE "_stats_NewCharacter"
+
+.VALUE _stats_NewCharacter
+
+.CLASS 2
+
+.TAG "pokemonData"
+
+.TYPE 72
+
+.ENDEF
+
+.BEGFUNC "stats_NewCharacter",17,"_stats_NewCharacter"
+
+.LINE 17
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "level"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "moveSlot"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "moveIndex"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "newch"
+
+.CLASS 65
+
+.VALUE -43
+
+.TAG "pokemonData"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "parent1id"
+
+.CLASS 65
+
+.VALUE -71
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "parent2id"
+
+.CLASS 65
+
+.VALUE -78
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-130
+	ADD	HL,SP
+	LD	SP,HL
 ;   18		uint8_t parent1id = data_pokemon[id].evolvesfrom;
+.LINE 18
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -375,6 +1092,8 @@ _stats_NewCharacter:
 	LD	A,(IY+46)
 	LD	(IX+-71),A
 ;   19		uint8_t parent2id = data_pokemon[parent1id].evolvesfrom;
+.LINE 19
+
 	UEXT	HL
 	LD	L,A
 	LD	A,51
@@ -386,12 +1105,18 @@ _stats_NewCharacter:
 ;   20		int moveSlot, moveIndex;
 ;   21		struct pokemonData newch;
 ;   22		newch.id = id;
+.LINE 22
+
 	LD	A,(IX+9)
 	LD	(IX+-43),A
 ;   23		newch.level = level;
+.LINE 23
+
 	LD	A,(IX+12)
 	LD	(IX+-34),A
 ;   24		newch.xp = xpPerLevel[data_pokemon[newch.id].xptype][newch.level];
+.LINE 24
+
 	LD	A,(IX+-43)
 	UEXT	HL
 	LD	L,A
@@ -418,28 +1143,42 @@ _stats_NewCharacter:
 	LD	(IX+-33),BC
 ;   25	
 ;   26		newch.moves[0] = 0;
+.LINE 26
+
 	LEA	BC,IX+-42
 	LD	(IX+-3),BC
 	LD	(IX+-42),0
 ;   27		newch.moves[1] = 0;
+.LINE 27
+
 	LD	HL,BC
 	INC	HL
 	LD	(HL),0
 ;   28		newch.moves[2] = 0;
+.LINE 28
+
 	LD	IY,(IX+-3)
 	LEA	HL,IY+2
 	LD	(HL),0
 ;   29		newch.moves[3] = 0;
+.LINE 29
+
 	LEA	HL,IY+3
 	LD	(HL),0
 ;   30		moveSlot = 0;
+.LINE 30
+
 	LD	BC,0
 	LD	(IX+-6),BC
 ;   31		for (moveIndex = 0; moveIndex < 10; moveIndex++) {
+.LINE 31
+
 	LD	(IX+-9),BC
 	JR	L_17
 L_15:
 ;   32			if (data_pokemon[parent2id].movelevels[moveIndex] <= newch.level && data_pokemon[parent2id].movelevels[moveIndex] <= data_pokemon[parent2id].evolvelevel &&  data_pokemon[parent2id].moveids[moveIndex] != 0) {
+.LINE 32
+
 	LD	A,(IX+-78)
 	UEXT	HL
 	LD	L,A
@@ -447,11 +1186,12 @@ L_15:
 	CALL	__imul_b
 	LD	(IX+-74),HL
 	LD	BC,_data_pokemon
+	LD	HL,(IX+-74)
 	ADD	HL,BC
 	LD	(IX+-96),HL
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-96)
 	LEA	HL,IY+24
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	A,(IX+-34)
 	CP	A,(HL)
@@ -460,16 +1200,16 @@ L_15:
 	LD	HL,(IX+-74)
 	ADD	HL,BC
 	LD	(IX+-99),HL
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-99)
 	LEA	HL,IY+24
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	A,(IY+44)
 	CP	A,(HL)
 	JR	C,L_16
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-96)
 	LEA	HL,IY+34
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	(IX+-46),HL
 	LD	(IX+-90),HL
@@ -480,10 +1220,14 @@ L_15:
 	OR	A,A
 	JR	Z,L_16
 ;   33				if (moveSlot == 0) {
+.LINE 33
+
 	LD	HL,(IX+-6)
 	CALL	__icmpzero
 	JR	NZ,L_6
 ;   34					newch.moves[0] = data_pokemon[parent2id].moveids[moveIndex];
+.LINE 34
+
 	LD	BC,(IX+-46)
 	LD	(IX+-90),BC
 	LD	BC,(IX+-46)
@@ -495,13 +1239,19 @@ L_15:
 	LD	(IX+-42),A
 ;   35				}
 L_6:
+.LINE 35
+
 ;   36				if (moveSlot == 1) {
+.LINE 36
+
 	LD	BC,1
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_8
 ;   37					newch.moves[1] = data_pokemon[parent2id].moveids[moveIndex];
+.LINE 37
+
 	LD	BC,(IX+-90)
 	LD	(IX+-70),BC
 	LD	(IX+-61),BC
@@ -512,13 +1262,19 @@ L_6:
 	LD	(HL),A
 ;   38				}
 L_8:
+.LINE 38
+
 ;   39				if (moveSlot == 2) {
+.LINE 39
+
 	LD	BC,2
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_10
 ;   40					newch.moves[2] = data_pokemon[parent2id].moveids[moveIndex];
+.LINE 40
+
 	LD	BC,(IX+-70)
 	LD	(IX+-61),BC
 	LD	HL,BC
@@ -527,36 +1283,52 @@ L_8:
 	LD	(IY+2),A
 ;   41				}
 L_10:
+.LINE 41
+
 ;   42				if (moveSlot == 3) {
+.LINE 42
+
 	LD	BC,3
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_12
 ;   43					newch.moves[3] = data_pokemon[parent2id].moveids[moveIndex];
+.LINE 43
+
 	LD	HL,(IX+-61)
+	LEA	IY,IX+-42
 	LD	A,(HL)
-	LEA	HL,IX+-39
-	LD	(HL),A
+	LD	(IY+3),A
 ;   44				}
 L_12:
+.LINE 44
+
 ;   45				moveSlot++;
+.LINE 45
+
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
 ;   46				if (moveSlot == 4) {
-	LD	HL,BC
-	OR	A,A
+.LINE 46
+
 	LD	BC,4
+	LD	HL,(IX+-6)
+	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_16
 ;   47					moveSlot = 0;
+.LINE 47
+
 	LD	BC,0
 	LD	(IX+-6),BC
 ;   48				}
 ;   49			}
 ;   50		}
 L_16:
+.LINE 50
+
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
@@ -567,11 +1339,15 @@ L_17:
 	SBC	HL,BC
 	JP	M,L_15
 ;   51		for (moveIndex = 0; moveIndex < 10; moveIndex++) {
+.LINE 51
+
 	LD	BC,0
 	LD	(IX+-9),BC
 	JR	L_34
 L_32:
 ;   52			if (data_pokemon[parent1id].movelevels[moveIndex] <= newch.level && data_pokemon[parent1id].movelevels[moveIndex] <= data_pokemon[parent1id].evolvelevel && data_pokemon[parent1id].moveids[moveIndex] != 0) {
+.LINE 52
+
 	LD	A,(IX+-71)
 	UEXT	HL
 	LD	L,A
@@ -579,11 +1355,12 @@ L_32:
 	CALL	__imul_b
 	LD	(IX+-77),HL
 	LD	BC,_data_pokemon
+	LD	HL,(IX+-77)
 	ADD	HL,BC
 	LD	(IX+-84),HL
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-84)
 	LEA	HL,IY+24
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	A,(IX+-34)
 	CP	A,(HL)
@@ -592,16 +1369,16 @@ L_32:
 	LD	HL,(IX+-77)
 	ADD	HL,BC
 	LD	(IX+-102),HL
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-102)
 	LEA	HL,IY+24
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	A,(IY+44)
 	CP	A,(HL)
 	JR	C,L_33
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-84)
 	LEA	HL,IY+34
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	(IX+-49),HL
 	LD	(IX+-81),HL
@@ -612,10 +1389,14 @@ L_32:
 	OR	A,A
 	JR	Z,L_33
 ;   53				if (moveSlot == 0) {
+.LINE 53
+
 	LD	HL,(IX+-6)
 	CALL	__icmpzero
 	JR	NZ,L_23
 ;   54					newch.moves[0] = data_pokemon[parent1id].moveids[moveIndex];
+.LINE 54
+
 	LD	BC,(IX+-49)
 	LD	(IX+-81),BC
 	LD	BC,(IX+-49)
@@ -627,13 +1408,19 @@ L_32:
 	LD	(IX+-42),A
 ;   55				}
 L_23:
+.LINE 55
+
 ;   56				if (moveSlot == 1) {
+.LINE 56
+
 	LD	BC,1
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_25
 ;   57					newch.moves[1] = data_pokemon[parent1id].moveids[moveIndex];
+.LINE 57
+
 	LD	BC,(IX+-81)
 	LD	(IX+-67),BC
 	LD	(IX+-64),BC
@@ -644,13 +1431,19 @@ L_23:
 	LD	(HL),A
 ;   58				}
 L_25:
+.LINE 58
+
 ;   59				if (moveSlot == 2) {
+.LINE 59
+
 	LD	BC,2
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_27
 ;   60					newch.moves[2] = data_pokemon[parent1id].moveids[moveIndex];
+.LINE 60
+
 	LD	BC,(IX+-67)
 	LD	(IX+-64),BC
 	LD	HL,BC
@@ -659,36 +1452,52 @@ L_25:
 	LD	(IY+2),A
 ;   61				}
 L_27:
+.LINE 61
+
 ;   62				if (moveSlot == 3) {
+.LINE 62
+
 	LD	BC,3
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_29
 ;   63					newch.moves[3] = data_pokemon[parent1id].moveids[moveIndex];
+.LINE 63
+
 	LD	HL,(IX+-64)
+	LEA	IY,IX+-42
 	LD	A,(HL)
-	LEA	HL,IX+-39
-	LD	(HL),A
+	LD	(IY+3),A
 ;   64				}
 L_29:
+.LINE 64
+
 ;   65				moveSlot++;
+.LINE 65
+
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
 ;   66				if (moveSlot == 4) {
-	LD	HL,BC
-	OR	A,A
+.LINE 66
+
 	LD	BC,4
+	LD	HL,(IX+-6)
+	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_33
 ;   67					moveSlot = 0;
+.LINE 67
+
 	LD	BC,0
 	LD	(IX+-6),BC
 ;   68				}
 ;   69			}
 ;   70		}
 L_33:
+.LINE 70
+
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
@@ -699,11 +1508,15 @@ L_34:
 	SBC	HL,BC
 	JP	M,L_32
 ;   71		for (moveIndex = 0; moveIndex < 10; moveIndex++) {
+.LINE 71
+
 	LD	BC,0
 	LD	(IX+-9),BC
 	JR	L_51
 L_49:
 ;   72			if (data_pokemon[id].movelevels[moveIndex] <= newch.level && data_pokemon[id].moveids[moveIndex] != 0) {
+.LINE 72
+
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -712,16 +1525,16 @@ L_49:
 	LD	BC,_data_pokemon
 	ADD	HL,BC
 	LD	(IX+-87),HL
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-87)
 	LEA	HL,IY+24
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	A,(IX+-34)
 	CP	A,(HL)
 	JR	C,L_50
+	LD	BC,(IX+-9)
 	LD	IY,(IX+-87)
 	LEA	HL,IY+34
-	LD	BC,(IX+-9)
 	ADD	HL,BC
 	LD	(IX+-52),HL
 	LD	(IX+-93),HL
@@ -732,10 +1545,14 @@ L_49:
 	OR	A,A
 	JR	Z,L_50
 ;   73				if (moveSlot == 0) {
+.LINE 73
+
 	LD	HL,(IX+-6)
 	CALL	__icmpzero
 	JR	NZ,L_40
 ;   74					newch.moves[0] = data_pokemon[id].moveids[moveIndex];
+.LINE 74
+
 	LD	BC,(IX+-52)
 	LD	(IX+-93),BC
 	LD	BC,(IX+-52)
@@ -747,13 +1564,19 @@ L_49:
 	LD	(IX+-42),A
 ;   75				}
 L_40:
+.LINE 75
+
 ;   76				if (moveSlot == 1) {
+.LINE 76
+
 	LD	BC,1
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_42
 ;   77					newch.moves[1] = data_pokemon[id].moveids[moveIndex];
+.LINE 77
+
 	LD	BC,(IX+-93)
 	LD	(IX+-58),BC
 	LD	(IX+-55),BC
@@ -764,13 +1587,19 @@ L_40:
 	LD	(HL),A
 ;   78				}
 L_42:
+.LINE 78
+
 ;   79				if (moveSlot == 2) {
+.LINE 79
+
 	LD	BC,2
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_44
 ;   80					newch.moves[2] = data_pokemon[id].moveids[moveIndex];
+.LINE 80
+
 	LD	BC,(IX+-58)
 	LD	(IX+-55),BC
 	LD	HL,BC
@@ -779,36 +1608,52 @@ L_42:
 	LD	(IY+2),A
 ;   81				}
 L_44:
+.LINE 81
+
 ;   82				if (moveSlot == 3) {
+.LINE 82
+
 	LD	BC,3
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_46
 ;   83					newch.moves[3] = data_pokemon[id].moveids[moveIndex];
+.LINE 83
+
 	LD	HL,(IX+-55)
+	LEA	IY,IX+-42
 	LD	A,(HL)
-	LEA	HL,IX+-39
-	LD	(HL),A
+	LD	(IY+3),A
 ;   84				}
 L_46:
+.LINE 84
+
 ;   85				moveSlot++;
+.LINE 85
+
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
 ;   86				if (moveSlot == 4) {
-	LD	HL,BC
-	OR	A,A
+.LINE 86
+
 	LD	BC,4
+	LD	HL,(IX+-6)
+	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_50
 ;   87					moveSlot = 0;
+.LINE 87
+
 	LD	BC,0
 	LD	(IX+-6),BC
 ;   88				}
 ;   89			}
 ;   90		}
 L_50:
+.LINE 90
+
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
@@ -819,6 +1664,8 @@ L_51:
 	SBC	HL,BC
 	JP	M,L_49
 ;   91		newch.pp[0] = data_moves[newch.moves[0]].uses;
+.LINE 91
+
 	LEA	BC,IX+-42
 	LD	(IX+-108),BC
 	LEA	BC,IX+-38
@@ -834,6 +1681,8 @@ L_51:
 	LD	A,(IY+18)
 	LD	(IX+-38),A
 ;   92		newch.pp[1] = data_moves[newch.moves[1]].uses;
+.LINE 92
+
 	LD	HL,(IX+-108)
 	INC	HL
 	LD	A,(HL)
@@ -842,12 +1691,17 @@ L_51:
 	LD	A,21
 	CALL	__imul_b
 	ADD	HL,BC
+	LD	IY,(IX+-105)
+	LD	(IX+-114),IY	; spill
+	INC	IY
+	LD	(IX+-114),IY	; spill
 	LD	IY,HL
-	LD	HL,(IX+-105)
-	INC	HL
 	LD	A,(IY+18)
-	LD	(HL),A
+	LD	IY,(IX+-114)	; unspill
+	LD	(IY),A
 ;   93		newch.pp[2] = data_moves[newch.moves[2]].uses;
+.LINE 93
+
 	LD	IY,(IX+-108)
 	LEA	HL,IY+2
 	LD	A,(HL)
@@ -855,85 +1709,127 @@ L_51:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	IY,(IX+-105)
 	ADD	HL,BC
-	LD	(IX+-121),IY	; spill
+	LD	IY,(IX+-105)
+	LD	(IX+-111),IY	; spill
 	LEA	IY,IY+2
-	LD	(IX+-124),IY	; spill
+	LD	(IX+-127),IY	; spill
 	LD	IY,HL
 	LD	A,(IY+18)
-	LD	IY,(IX+-124)	; unspill
+	LD	IY,(IX+-127)	; unspill
 	LD	(IY),A
 ;   94		newch.pp[3] = data_moves[newch.moves[3]].uses;
+.LINE 94
+
 	LD	IY,(IX+-108)
 	LEA	HL,IY+3
-	LD	IY,(IX+-105)
-	LEA	IY,IY+3
-	LD	(IX+-127),IY	; spill
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
 	ADD	HL,BC
+	LD	IY,(IX+-105)
+	LD	(IX+-111),IY	; spill
+	PUSH	BC
+	PUSH	HL
+	LEA	HL,IY+3	; unspill
+	LD	BC,-130	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
 	LD	IY,HL
 	LD	A,(IY+18)
-	LD	IY,(IX+-127)	; unspill
+	PUSH	BC
+	LD	BC,-130	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	IY,HL
+	POP	HL
+	POP	BC
 	LD	(IY),A
 ;   95	
 ;   96		newch.currentstatus= 0;
+.LINE 96
+
 	LD	(IX+-28),0
 ;   97	
 ;   98		newch.healthIV = (rand() % 16);
+.LINE 98
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-27),L
 ;   99		newch.attackIV = (rand() % 16);
+.LINE 99
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-26),L
 ;  100		newch.defenceIV = (rand() % 16);
+.LINE 100
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-25),L
 ;  101		newch.specialattackIV = (rand() % 16);
+.LINE 101
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-24),L
 ;  102		newch.specialdefenceIV = (rand() % 16);
+.LINE 102
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-23),L
 ;  103		newch.speedIV = (rand() % 16);
+.LINE 103
+
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
 	LD	(IX+-22),L
 ;  104		newch.healthEV = 0;
+.LINE 104
+
 	LD	(IX+-21),0
 	LD	(IX+-20),0
 ;  105		newch.attackEV = 0;
+.LINE 105
+
 	LD	(IX+-19),0
 	LD	(IX+-18),0
 ;  106		newch.defenceEV = 0;
+.LINE 106
+
 	LD	(IX+-17),0
 	LD	(IX+-16),0
 ;  107		newch.specialattackEV = 0;
+.LINE 107
+
 	LD	(IX+-15),0
 	LD	(IX+-14),0
 ;  108		newch.specialdefenceEV = 0;
+.LINE 108
+
 	LD	(IX+-13),0
 	LD	(IX+-12),0
 ;  109		newch.speedEV = 0;
+.LINE 109
+
 	LD	(IX+-11),0
 	LD	(IX+-10),0
 ;  110	
 ;  111		newch.currenthealth = ((((data_pokemon[newch.id].basehealth + newch.healthIV) * 2 + (isqrt(newch.healthEV) / 4))*newch.level) / 100) + newch.level + 10;
+.LINE 111
+
 	LD	A,(IX+-43)
 	UEXT	HL
 	LD	L,A
@@ -953,8 +1849,8 @@ L_51:
 	ADD	HL,HL
 	LD	BC,HL
 	CALL	__itol
-	LD	(IX+-112),A
-	LD	(IX+-111),BC
+	LD	(IX+-118),A
+	LD	(IX+-117),BC
 	LD	BC,(IX+-21)
 	CALL	__stoiu
 	LD	C,0
@@ -964,29 +1860,29 @@ L_51:
 	CALL	_isqrt
 	POP	BC
 	POP	BC
+	LD	A,E
 	LD	BC,HL
 	LD	L,2
-	LD	A,E
 	CALL	__lshru
-	LD	HL,(IX+-111)
-	LD	E,(IX+-112)
+	LD	E,(IX+-118)
+	LD	HL,(IX+-117)
 	CALL	__ladd
-	LD	(IX+-118),HL
+	LD	(IX+-124),HL
 	UEXT	HL
 	LD	L,(IX+-34)
 	LD	BC,HL
 	LD	A,H
-	LD	HL,(IX+-118)
+	LD	HL,(IX+-124)
 	CALL	__lmulu
 	LD	BC,100
 	XOR	A,A
 	CALL	__ldivu
-	LD	(IX+-115),HL
+	LD	(IX+-121),HL
 	UEXT	HL
 	LD	L,(IX+-34)
 	LD	BC,HL
 	LD	A,H
-	LD	HL,(IX+-115)
+	LD	HL,(IX+-121)
 	CALL	__ladd
 	LD	A,10
 	CALL	__ladd_b
@@ -994,6 +1890,8 @@ L_51:
 	LD	(IX+-29),H
 ;  112	
 ;  113		return newch;
+.LINE 113
+
 	LEA	HL,IX+6	; spill
 	LD	DE,(HL)
 	LEA	HL,IX+-43
@@ -1001,6 +1899,8 @@ L_51:
 	LDIR	
 	LD	HL,(IX+6)	; spill
 ;  114	}
+.LINE 114
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1039,37 +1939,103 @@ L_51:
 ;id                                    IX+9      1   parameter
 
 
-; Stack Frame Size: 142 (bytes)
-;       Spill Code: -1 (instruction)
+; Stack Frame Size: 145 (bytes)
+;       Spill Code: -3 (instruction)
 
 
+.ENDFUNC "stats_NewCharacter",114,"_stats_NewCharacter"
 ;  115	
 ;  116	/* NOTE: I have no idea how this works */
 ;  117	unsigned long isqrt(unsigned long x)
 ;  118	{
 _isqrt:
-	LD	HL,-16
-	CALL	__frameset
+.DEFINE "_isqrt"
+
+.VALUE _isqrt
+
+.CLASS 2
+
+.TYPE 79
+
+.ENDEF
+
+.BEGFUNC "isqrt",118,"_isqrt"
+
+.LINE 118
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "one"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "res"
+
+.CLASS 65
+
+.VALUE -8
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "op"
+
+.CLASS 65
+
+.VALUE -12
+
+.TYPE 15
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-16
+	LD	SP,HL
 ;  119		
 ;  120		register unsigned long op, res, one;
 ;  121	
 ;  122		op = x;
+.LINE 122
+
 	LD	BC,(IX+6)
 	LD	A,(IX+9)
 	LD	(IX+-12),BC
 	LD	(IX+-9),A
 ;  123		res = 0;
+.LINE 123
+
 	LD	BC,0
-	LD	(IX+-8),BC
 	XOR	A,A
+	LD	(IX+-8),BC
 	LD	(IX+-5),A
 ;  124	
 ;  125		/* "one" starts at the highest power of four <= than the argument. */
 ;  126		one = 1 << 30;  /* second-to-top bit set */
-	LD	(IX+-4),BC
+.LINE 126
+
 	XOR	A,A
+	LD	(IX+-4),BC
 	LD	(IX+-1),A
 ;  127		while (one > op) one >>= 2;
+.LINE 127
+
 	JR	L_55
 L_56:
 	LD	BC,(IX+-4)
@@ -1087,9 +2053,13 @@ L_55:
 	JR	C,L_56
 ;  128	
 ;  129		while (one != 0) {
+.LINE 129
+
 	JR	L_59
 L_60:
 ;  130			if (op >= res + one) {
+.LINE 130
+
 	LD	HL,(IX+-4)
 	LD	E,(IX+-1)
 	LD	BC,(IX+-8)
@@ -1104,6 +2074,8 @@ L_60:
 	CALL	__lcmpu
 	JR	C,L_58
 ;  131				op -= res + one;
+.LINE 131
+
 	LD	HL,(IX+-12)
 	LD	E,(IX+-9)
 	LD	BC,(IX+-16)
@@ -1112,6 +2084,8 @@ L_60:
 	LD	(IX+-12),HL
 	LD	(IX+-9),E
 ;  132				res += one << 1;  // <-- faster than 2 * one  
+.LINE 132
+
 	LD	BC,(IX+-4)
 	LD	A,(IX+-1)
 	LD	L,1
@@ -1125,7 +2099,11 @@ L_60:
 	LD	(IX+-5),E
 ;  133			}
 L_58:
+.LINE 133
+
 ;  134			res >>= 1;
+.LINE 134
+
 	LD	BC,(IX+-8)
 	LD	A,(IX+-5)
 	LD	L,1
@@ -1133,6 +2111,8 @@ L_58:
 	LD	(IX+-8),BC
 	LD	(IX+-5),A
 ;  135			one >>= 2;
+.LINE 135
+
 	LD	BC,(IX+-4)
 	LD	A,(IX+-1)
 	LD	L,2
@@ -1141,13 +2121,19 @@ L_58:
 	LD	(IX+-1),A
 ;  136		}
 L_59:
+.LINE 136
+
 	LD	HL,(IX+-4)
 	LD	E,(IX+-1)
 	CALL	__lcmpzero
 	JR	NZ,L_60
 ;  137		return res;
+.LINE 137
+
 	LD	HL,(IX+-8)
 	LD	E,(IX+-5)
+.LINE 138
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1163,9 +2149,10 @@ L_59:
 
 
 ; Stack Frame Size: 28 (bytes)
-;       Spill Code: -1 (instruction)
+;       Spill Code: -3 (instruction)
 
 
+.ENDFUNC "isqrt",138,"_isqrt"
 	XREF _xpPerLevel:ROM
 	XREF _data_moves:ROM
 	XREF _data_pokemon:ROM
@@ -1181,7 +2168,8 @@ L_59:
 	XREF __lshru:ROM
 	XREF __stoiu:ROM
 	XREF __itol:ROM
-	XREF __frameset:ROM
+	XREF __ildix:ROM
+	XREF __istix:ROM
 	XREF __icmpzero:ROM
 	XREF __lcmpzero:ROM
 	XREF __imul_b:ROM

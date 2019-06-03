@@ -1,15 +1,808 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"..\SRC\MISC.C"
 	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME4"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "NONAME10",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME10"
+.BEGREC "__stdio_file",1
+.DEFINE "slot"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "__stdio_file"
+.BEGREC "NONAME11",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME11"
+.BEGREC "NONAME12",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME12"
+.BEGREC "NONAME13",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME13"
+.BEGREC "NONAME14",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME14"
+.BEGREC "NONAME15",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME11"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME15"
+.BEGREC "pokemonData",34
+.DEFINE "id"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "moves"
+.VALUE 1
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "pp"
+.VALUE 5
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "level"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xp"
+.VALUE 10
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "currenthealth"
+.VALUE 13
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "currentstatus"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthIV"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "attackIV"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "defenceIV"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialattackIV"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "specialdefenceIV"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "speedIV"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "healthEV"
+.VALUE 22
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attackEV"
+.VALUE 24
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defenceEV"
+.VALUE 26
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattackEV"
+.VALUE 28
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefenceEV"
+.VALUE 30
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speedEV"
+.VALUE 32
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonData"
+.BEGREC "pokemonType",51
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 16
+.TYPE 98
+.ENDEF
+.DEFINE "element1"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "element2"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basehealth"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "baseattack"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basedefence"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialattack"
+.VALUE 21
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespecialdefence"
+.VALUE 22
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "basespeed"
+.VALUE 23
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movelevels"
+.VALUE 24
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "moveids"
+.VALUE 34
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.DEFINE "evolvelevel"
+.VALUE 44
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolveid"
+.VALUE 45
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "evolvesfrom"
+.VALUE 46
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "xpdrop"
+.VALUE 47
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "xptype"
+.VALUE 49
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "catchrate"
+.VALUE 50
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "pokemonType"
+.BEGREC "pokemonStats",12
+.DEFINE "health"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attack"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "defence"
+.VALUE 4
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialattack"
+.VALUE 6
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "specialdefence"
+.VALUE 8
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "speed"
+.VALUE 10
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "pokemonStats"
+.BEGREC "move",21
+.DEFINE "name"
+.VALUE 0
+.CLASS 8
+.DIM 14
+.TYPE 98
+.ENDEF
+.DEFINE "element"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "power"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "accuracy"
+.VALUE 17
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "uses"
+.VALUE 18
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statustype"
+.VALUE 19
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "statuschance"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "move"
+.BEGREC "zoneData",640
+.DEFINE "spawnids"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnminlevels"
+.VALUE 80
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "spawnmaxlevels"
+.VALUE 160
+.CLASS 8
+.DIM 5
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "exitzone"
+.VALUE 240
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exitx"
+.VALUE 256
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "exity"
+.VALUE 272
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorzones"
+.VALUE 288
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doorx"
+.VALUE 304
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doory"
+.VALUE 320
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc1"
+.VALUE 336
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "doornpc2"
+.VALUE 352
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerspawnids"
+.VALUE 368
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerspawnlevels"
+.VALUE 464
+.CLASS 8
+.DIM 6
+.DIM 16
+.TYPE 876
+.ENDEF
+.DEFINE "trainerx"
+.VALUE 560
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainery"
+.VALUE 576
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerdir"
+.VALUE 592
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "data_trainerText"
+.VALUE 608
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "trainerreward"
+.VALUE 624
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.ENDREC "zoneData"
 	SEGMENT BSS
 _str:
 	DS	100
+.DEFINE "str"
+.ALIAS "_str"
+.CLASS 83
+.VALUE _str
+.DIM 100
+.TYPE 98
+.ENDEF
 _i:
 	DS	2*1
+.DEFINE "i"
+.ALIAS "_i"
+.CLASS 83
+.VALUE _i
+.TYPE 13
+.ENDEF
 _e:
 	DS	2*1
+.DEFINE "e"
+.ALIAS "_e"
+.CLASS 83
+.VALUE _e
+.TYPE 13
+.ENDEF
 	SEGMENT DATA
 _colors:
 	DB	0
@@ -25,6 +818,13 @@ _colors:
 	DB	0
 	DB	0
 	DB	0
+.DEFINE "colors"
+.ALIAS "_colors"
+.CLASS 69
+.VALUE _colors
+.DIM 13
+.TYPE 108
+.ENDEF
 _colorSets:
 	DB	8
 	DB	2
@@ -52,6 +852,14 @@ _colorSets:
 	DB	143
 	DB	103
 	DB	0
+.DEFINE "colorSets"
+.ALIAS "_colorSets"
+.CLASS 69
+.VALUE _colorSets
+.DIM 2
+.DIM 13
+.TYPE 876
+.ENDEF
 _colorValues:
 	DB	247
 	DB	247
@@ -92,13 +900,45 @@ _colorValues:
 	DB	0
 	DB	200
 	DB	200
+.DEFINE "colorValues"
+.ALIAS "_colorValues"
+.CLASS 69
+.VALUE _colorValues
+.DIM 13
+.DIM 3
+.TYPE 876
+.ENDEF
 	SEGMENT BSS
 _typeIcons:
 	DS	51
+.DEFINE "typeIcons"
+.ALIAS "_typeIcons"
+.CLASS 83
+.VALUE _typeIcons
+.DIM 17
+.TAG "NONAME11"
+.TYPE 360
+.ENDEF
 _statusIcons:
 	DS	15
+.DEFINE "statusIcons"
+.ALIAS "_statusIcons"
+.CLASS 83
+.VALUE _statusIcons
+.DIM 5
+.TAG "NONAME11"
+.TYPE 360
+.ENDEF
 _categoryIcons:
 	DS	9
+.DEFINE "categoryIcons"
+.ALIAS "_categoryIcons"
+.CLASS 83
+.VALUE _categoryIcons
+.DIM 3
+.TAG "NONAME11"
+.TYPE 360
+.ENDEF
 ;    1	#include <stdint.h>
 ;    2	#include <stdio.h>
 ;    3	#include <stdlib.h>
@@ -160,24 +1000,58 @@ _categoryIcons:
 ;   58	/* Wait 10ms times amount */
 ;   59	void Wait(uint16_t amount) {
 _Wait:
-	CALL	__frameset0
+.DEFINE "_Wait"
+
+.VALUE _Wait
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "Wait",59,"_Wait"
+
+.LINE 59
+
+.DEFINE "amount"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
 ;   60		while (amount--)
+.LINE 60
+
 	JR	L_1
 L_2:
 ;   61		{
 ;   62			boot_WaitShort();
+.LINE 62
+
 	CALL	_boot_WaitShort
 ;   63		}
 L_1:
+.LINE 63
+
+	LD	BC,(IX+6)
 	LD	IY,(IX+6)
 	LEA	HL,IY+-1
-	LD	BC,(IX+6)
 	LD	(IX+6),L
 	LD	(IX+7),H
 	LD	HL,BC
 	CALL	__scmpzero
 	JR	NZ,L_2
 ;   64	}
+.LINE 64
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -193,19 +1067,61 @@ L_1:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "Wait",64,"_Wait"
 ;   65	
 ;   66	/* Changes the colors list to one for the current palette and sets transparent text color */
 ;   67	void SetColors(uint8_t gameState) {
 _SetColors:
-	LD	HL,-6
-	CALL	__frameset
+.DEFINE "_SetColors"
+
+.VALUE _SetColors
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "SetColors",67,"_SetColors"
+
+.LINE 67
+
+.DEFINE "gameState"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "colorIndex"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
 ;   68		int colorIndex;
 ;   69		for (colorIndex = 0; colorIndex < sizeof(colors); colorIndex++) {
+.LINE 69
+
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_7
 L_5:
 ;   70			colors[colorIndex] = colorSets[gameState][colorIndex];
+.LINE 70
+
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -216,8 +1132,8 @@ L_5:
 	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
-	LD	HL,(IX+-3)
 	LD	BC,_colors
+	LD	HL,(IX+-3)
 	ADD	HL,BC
 	LD	A,(IY)
 	LD	(HL),A
@@ -227,12 +1143,16 @@ L_5:
 ;   71			
 ;   72		}
 L_7:
+.LINE 72
+
 	LD	BC,13
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_5
 ;   73		gfx_SetTextTransparentColor(colors[12]);
+.LINE 73
+
 	LD	IY,_colors
 	LEA	IY,IY+12
 	LD	(IX+-6),IY
@@ -243,6 +1163,8 @@ L_7:
 	CALL	_gfx_SetTextTransparentColor
 	POP	BC
 ;   74		gfx_SetTextBGColor(colors[12]);
+.LINE 74
+
 	LD	HL,(IX+-6)
 	LD	C,(HL)
 	LD	B,0
@@ -250,6 +1172,8 @@ L_7:
 	CALL	_gfx_SetTextBGColor
 	POP	BC
 ;   75	}
+.LINE 75
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -270,104 +1194,182 @@ L_7:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "SetColors",75,"_SetColors"
 ;   76	
 ;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
 ;   78	void FindColors(void) {
 _FindColors:
-;   79		return;
+.DEFINE "_FindColors"
+
+.VALUE _FindColors
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "FindColors",78,"_FindColors"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   79		//return;
 ;   80		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+.LINE 80
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,426
+	PUSH	BC
+	LD	HL,_PKMNSD4+24
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   81		FindBestColors();
+.LINE 81
+
+	CALL	_FindBestColors
 ;   82		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+.LINE 82
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,512
+	PUSH	BC
+	LD	HL,_PKMNSD5+111
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   83		FindBestColors();
+.LINE 83
+
+	CALL	_FindBestColors
 ;   84	}
+.LINE 84
+
+	LD	SP,IX
+	POP	IX
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
+;_PKMNSD5                            IMPORT    114   variable
+;_FindBestColors                     IMPORT  -----   function
+;_PKMNSD4                            IMPORT     27   variable
+;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "FindColors",84,"_FindColors"
 ;   85	void FindBestColors(void) {
 _FindBestColors:
-	LD	HL,-15
-	CALL	__frameset
+.DEFINE "_FindBestColors"
+
+.VALUE _FindBestColors
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "FindBestColors",85,"_FindBestColors"
+
+.LINE 85
+
+.DEFINE "paletteIndex"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "colorIndex"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "lowestDifference"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "bestColor"
+
+.CLASS 65
+
+.VALUE -12
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-18
+	LD	SP,HL
 ;   86		int paletteIndex, colorIndex, lowestDifference, bestColor;
 ;   87		dbg_sprintf(dbgout, "\n\t{");
+.LINE 87
+
+	LD	BC,L__5
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
 ;   88		for (colorIndex = 0; colorIndex < COLORCOUNT; colorIndex++) {
+.LINE 88
+
 	LD	BC,0
 	LD	(IX+-6),BC
-	JR	L_22
-L_20:
+	JR	L_20
+L_18:
 ;   89			lowestDifference = 10000;
+.LINE 89
+
 	LD	BC,10000
 	LD	(IX+-9),BC
 ;   90			bestColor = 0;
-;   91			for (paletteIndex = 0; paletteIndex < 256; paletteIndex++) {
+.LINE 90
+
 	LD	BC,0
+	LD	(IX+-12),BC
+;   91			for (paletteIndex = 0; paletteIndex < 256; paletteIndex++) {
+.LINE 91
+
 	LD	(IX+-3),BC
-	JR	L_17
-L_15:
+	JR	L_16
+L_14:
 ;   92				if (ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]) < lowestDifference) {
-	LD	HL,(IX+-6)
-	LD	BC,HL
-	ADD	HL,HL
-	ADD	HL,BC
-	LD	BC,_colorValues
-	ADD	HL,BC
-	LD	(IX+-12),HL
-	LD	HL,(IX+-3)
-	ADD	HL,HL
-	LD	BC,14877184
-	ADD	HL,BC
-	LD	BC,(HL)
-	PUSH	BC
-	LD	HL,(IX+-12)
-	INC	HL
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	A,3
-	CALL	__ishrs_b
-	ADD	HL,HL
-	ADD	HL,HL
-	ADD	HL,HL
-	ADD	HL,HL
-	ADD	HL,HL
-	LD	IY,(IX+-12)
-	LD	A,(IY)
-	LD	DE,HL
-	UEXT	HL
-	LD	L,A
-	LD	A,3
-	CALL	__ishrs_b
-	LD	A,10
-	CALL	__sshl_b
-	LD	BC,HL
-	LD	HL,DE
-	CALL	__sor
-	LD	DE,HL
-	LD	A,(IY+2)
-	UEXT	HL
-	LD	L,A
-	LD	A,3
-	CALL	__ishrs_b
-	LD	BC,HL
-	LD	HL,DE
-	CALL	__sor
-	PUSH	HL
-	CALL	_ColorDifference
-	POP	BC
-	POP	BC
-	LD	BC,(IX+-9)
-	OR	A,A
-	SBC	HL,BC
-	CALL	__setflag
-	JP	P,L_16
-;   93					lowestDifference = ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]);
+.LINE 92
+
 	LD	HL,(IX+-6)
 	LD	BC,HL
 	ADD	HL,HL
@@ -393,9 +1395,9 @@ L_15:
 	ADD	HL,HL
 	ADD	HL,HL
 	ADD	HL,HL
-	LD	IY,(IX+-15)
-	LD	A,(IY)
 	LD	DE,HL
+	LD	HL,(IX+-15)
+	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	A,3
@@ -406,7 +1408,69 @@ L_15:
 	LD	HL,DE
 	CALL	__sor
 	LD	DE,HL
-	LD	A,(IY+2)
+	LD	IY,(IX+-15)
+	LEA	HL,IY+2
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	A,3
+	CALL	__ishrs_b
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__sor
+	PUSH	HL
+	CALL	_ColorDifference
+	POP	BC
+	POP	BC
+	LD	BC,(IX+-9)
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_15
+;   93					lowestDifference = ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]);
+.LINE 93
+
+	LD	HL,(IX+-6)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_colorValues
+	ADD	HL,BC
+	LD	(IX+-18),HL
+	LD	HL,(IX+-3)
+	ADD	HL,HL
+	LD	BC,14877184
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	LD	HL,(IX+-18)
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	A,3
+	CALL	__ishrs_b
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+-18)
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	A,3
+	CALL	__ishrs_b
+	LD	A,10
+	CALL	__sshl_b
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__sor
+	LD	DE,HL
+	LD	IY,(IX+-18)
+	LEA	HL,IY+2
+	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	A,3
@@ -420,36 +1484,67 @@ L_15:
 	POP	BC
 	LD	(IX+-9),HL
 ;   94					bestColor = paletteIndex;
+.LINE 94
+
+	LD	BC,(IX+-3)
+	LD	(IX+-12),BC
 ;   95					//dbg_sprintf(dbgout, "\nNew Best Color: %d / %u / %u,%u,%u", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
 ;   96					//dbg_sprintf(dbgout, "\nDifference: %u", ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]));
 ;   97				}
 ;   98			}
-L_16:
+L_15:
+.LINE 98
+
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-L_17:
+L_16:
 	LD	BC,256
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_15
+	JP	M,L_14
+;   99			//dbg_sprintf(dbgout, "\nFinal Best Color: %d / %u / %u,%u,%u\n\n\n", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
+;  100			dbg_sprintf(dbgout, "%d,", bestColor);
+.LINE 100
+
+	LD	BC,(IX+-12)
+	PUSH	BC
+	LD	BC,L__8
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;   99			//dbg_sprintf(dbgout, "\nFinal Best Color: %d / %u / %u,%u,%u\n\n\n", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
-;  100			dbg_sprintf(dbgout, "%d,", bestColor);
 ;  101		}
-L_22:
+L_20:
+.LINE 101
+
 	LD	BC,13
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_20
+	JP	M,L_18
 ;  102		dbg_sprintf(dbgout, "},");
+.LINE 102
+
+	LD	BC,L__10
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
 ;  103	}
+.LINE 103
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -459,130 +1554,184 @@ L_22:
 ;Name                         Addr/Register   Size   Type
 ;_ColorDifference                    IMPORT  -----   function
 ;_colorValues                        STATIC     39   variable
+;_sprintf                            IMPORT  -----   function
+;bestColor                            IX-12      3   variable
 ;lowestDifference                      IX-9      3   variable
 ;colorIndex                            IX-6      3   variable
 ;paletteIndex                          IX-3      3   variable
 
 
-; Stack Frame Size: 21 (bytes)
+; Stack Frame Size: 24 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "FindBestColors",103,"_FindBestColors"
+	SEGMENT STRSECT
+L__5:
+	DB	10,9
+	DB	"{"
+	DB	0
+L__8:
+	DB	"%d,"
+	DB	0
+L__10:
+	DB	"},"
+	DB	0
+	SEGMENT CODE
 ;  104	
 ;  105	int ColorDifference(uint16_t color1, uint16_t color2) {
 _ColorDifference:
-	LD	HL,-19
-	CALL	__frameset
+.DEFINE "_ColorDifference"
+
+.VALUE _ColorDifference
+
+.CLASS 2
+
+.TYPE 68
+
+.ENDEF
+
+.BEGFUNC "ColorDifference",105,"_ColorDifference"
+
+.LINE 105
+
+.DEFINE "color1"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "color2"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
 ;  106		return(abs(((int)(color_1555ToRGB(color1)[0])) - ((int)(color_1555ToRGB(color2)[0]))) + abs(((int)(color_1555ToRGB(color1)[1])) - ((int)(color_1555ToRGB(color2)[1]))) + abs(((int)(color_1555ToRGB(color1)[2])) - ((int)(color_1555ToRGB(color2)[2]))));
+.LINE 106
+
 	LD	BC,(IX+6)
 	PUSH	BC
 	CALL	_color_1555ToRGB
 	POP	BC
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
 	LD	BC,(IX+9)
 	PUSH	BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
+	CALL	_color_1555ToRGB
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	BC,HL
-	LD	(IX+-15),BC
-	CALL	_color_1555ToRGB
-	LD	BC,(IX+-15)
-	POP	DE
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	DE,HL
-	LD	HL,BC
+	LD	HL,DE
 	OR	A,A
-	SBC	HL,DE
+	SBC	HL,BC
 	PUSH	HL
 	CALL	_abs
 	POP	BC
+	LD	DE,HL
 	LD	BC,(IX+6)
 	PUSH	BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
+	CALL	_color_1555ToRGB
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	(IX+-3),HL
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
+	CALL	_color_1555ToRGB
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
 	LD	BC,HL
-	LD	(IX+-15),BC
-	CALL	_color_1555ToRGB
-	LD	BC,(IX+-15)
-	POP	DE
-	LD	DE,(IX+9)
-	PUSH	DE
-	INC	HL
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	DE,HL
-	LD	(IX+-15),BC
-	LD	(IX+-18),DE
-	LD	(IX+-19),D
-	CALL	_color_1555ToRGB
-	LD	BC,(IX+-15)
-	LD	DE,(IX+-18)
-	LD	D,(IX+-19)
-	POP	IY
-	INC	HL
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	(IX+-3),BC	; spill
-	LD	(IX+-6),HL	; spill
-	LD	BC,(IX+-3)	; unspill
-	LD	HL,DE
+	LD	HL,(IX+-3)
 	OR	A,A
-	LD	(IX+-3),BC	; spill
-	LD	BC,(IX+-6)	; unspill
 	SBC	HL,BC
-	LD	BC,(IX+-3)	; unspill
 	PUSH	HL
-	LD	(IX+-15),BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
 	CALL	_abs
-	LD	BC,(IX+-15)
-	POP	DE
-	LD	DE,(IX+6)
-	PUSH	DE
-	ADD	HL,BC
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	ADD	HL,DE
+	LD	DE,HL
+	LD	BC,(IX+6)
+	PUSH	BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
+	CALL	_color_1555ToRGB
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	(IX+-6),HL
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
+	CALL	_color_1555ToRGB
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
 	LD	BC,HL
-	LD	(IX+-15),BC
-	CALL	_color_1555ToRGB
-	LD	BC,(IX+-15)
-	POP	DE
-	LD	DE,(IX+9)
-	PUSH	DE
-	INC	HL
-	INC	HL
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	DE,HL
-	LD	(IX+-15),BC
-	LD	(IX+-18),DE
-	LD	(IX+-19),D
-	CALL	_color_1555ToRGB
-	LD	BC,(IX+-15)
-	LD	DE,(IX+-18)
-	LD	D,(IX+-19)
-	POP	IY
-	INC	HL
-	INC	HL
-	LD	A,(HL)
-	UEXT	HL
-	LD	L,A
-	LD	(IX+-9),BC	; spill
-	LD	(IX+-12),HL	; spill
-	LD	BC,(IX+-9)	; unspill
-	LD	HL,DE
+	LD	HL,(IX+-6)
 	OR	A,A
-	LD	(IX+-9),BC	; spill
-	LD	BC,(IX+-12)	; unspill
 	SBC	HL,BC
-	LD	BC,(IX+-9)	; unspill
 	PUSH	HL
-	LD	(IX+-15),BC
+	LD	(IX+-9),DE
+	LD	(IX+-10),D
 	CALL	_abs
-	LD	BC,(IX+-15)
-	POP	DE
-	ADD	HL,BC
+	LD	DE,(IX+-9)
+	LD	D,(IX+-10)
+	POP	BC
+	ADD	HL,DE
 ;  107	}
+.LINE 107
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -596,19 +1745,60 @@ _ColorDifference:
 ;color1                                IX+6      2   parameter
 
 
-; Stack Frame Size: 31 (bytes)
+; Stack Frame Size: 22 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "ColorDifference",107,"_ColorDifference"
 ;  108	
 ;  109	
 ;  110	uint8_t * color_1555ToRGB(uint16_t input) {
 _color_1555ToRGB:
-	LD	HL,-3
-	CALL	__frameset
+.DEFINE "_color_1555ToRGB"
+
+.VALUE _color_1555ToRGB
+
+.CLASS 2
+
+.TYPE 332
+
+.ENDEF
+
+.BEGFUNC "color_1555ToRGB",110,"_color_1555ToRGB"
+
+.LINE 110
+
+.DEFINE "input"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "output"
+
+.CLASS 65
+
+.VALUE -3
+
+.DIM 3
+
+.TYPE 108
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
 ;  111		uint8_t output[3];
 ;  112	
 ;  113		output[0] = (uint8_t)(((input & 0xFC00) >> 10) << 3);
+.LINE 113
+
 	LD	HL,(IX+6)
 	LD	A,10
 	CALL	__sshru_b
@@ -621,6 +1811,8 @@ _color_1555ToRGB:
 	ADD	A,A
 	LD	(IX+-3),A
 ;  114		output[1] = (uint8_t)(((input & 0x03E0) >> 5) << 3);
+.LINE 114
+
 	LD	HL,(IX+6)
 	LD	A,5
 	CALL	__sshru_b
@@ -635,17 +1827,23 @@ _color_1555ToRGB:
 	INC	HL
 	LD	(HL),A
 ;  115		output[2] = (uint8_t)((input & 0x001F) << 3);
+.LINE 115
+
 	LD	A,(IX+6)
-;  116	
-;  117		return output;
-	LEA	HL,IX+-3
-	LEA	IY,IX+-3
 	AND	A,31
 	ADD	A,A
 	ADD	A,A
 	ADD	A,A
-	LD	(IY+2),A
+	LEA	HL,IX+-1
+	LD	(HL),A
+;  116	
+;  117		return output;
+.LINE 117
+
+	LEA	HL,IX+-3
 ;  118	}
+.LINE 118
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -661,19 +1859,50 @@ _color_1555ToRGB:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "color_1555ToRGB",118,"_color_1555ToRGB"
 ;  119	
 ;  120	
 ;  121	void MallocIcons(void) {
 _MallocIcons:
-	LD	HL,-3
-	CALL	__frameset
+.DEFINE "_MallocIcons"
+
+.VALUE _MallocIcons
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "MallocIcons",121,"_MallocIcons"
+
+.LINE 121
+
+.DEFINE "iconIndex"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
 ;  122		int iconIndex;
 ;  123		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
+.LINE 123
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_32
-L_30:
+	JR	L_28
+L_26:
 ;  124			typeIcons[iconIndex] = gfx_MallocSprite(32, 12);
+.LINE 124
+
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,12
@@ -693,6 +1922,8 @@ L_30:
 	ADD	HL,DE
 	LD	(HL),BC
 ;  125			zx7_Decompress(typeIcons[iconIndex], PKMNSD5[5 + iconIndex]);
+.LINE 125
+
 	LD	IY,(IX+-3)
 	LEA	HL,IY+5
 	LD	BC,HL
@@ -717,19 +1948,25 @@ L_30:
 	INC	BC
 	LD	(IX+-3),BC
 ;  126		}
-L_32:
+L_28:
+.LINE 126
+
 	LD	BC,17
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_30
+	JP	M,L_26
 ;  127		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
+.LINE 127
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_36
-L_34:
+	JR	L_32
+L_30:
 ;  128			statusIcons[iconIndex] = gfx_MallocSprite(20, 8);
+.LINE 128
+
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,8
@@ -749,6 +1986,8 @@ L_34:
 	ADD	HL,DE
 	LD	(HL),BC
 ;  129			zx7_Decompress(statusIcons[iconIndex], PKMNSD5[22 + iconIndex]);
+.LINE 129
+
 	LD	IY,(IX+-3)
 	LEA	HL,IY+22
 	LD	BC,HL
@@ -773,19 +2012,25 @@ L_34:
 	INC	BC
 	LD	(IX+-3),BC
 ;  130		}
-L_36:
+L_32:
+.LINE 130
+
 	LD	BC,5
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_34
+	JP	M,L_30
 ;  131		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
+.LINE 131
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_41
-L_39:
+	JR	L_37
+L_35:
 ;  132			categoryIcons[iconIndex] = gfx_MallocSprite(32, 14);
+.LINE 132
+
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,14
@@ -805,6 +2050,8 @@ L_39:
 	ADD	HL,DE
 	LD	(HL),BC
 ;  133			zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[27 + iconIndex]);
+.LINE 133
+
 	LD	IY,(IX+-3)
 	LEA	HL,IY+27
 	LD	BC,HL
@@ -829,14 +2076,18 @@ L_39:
 	INC	BC
 	LD	(IX+-3),BC
 ;  134		}
-L_41:
+L_37:
+.LINE 134
+
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_39
+	JP	M,L_35
 ;  135	}
+.LINE 135
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -858,17 +2109,48 @@ L_41:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "MallocIcons",135,"_MallocIcons"
 ;  136	void FreeIcons(void) {
 _FreeIcons:
-	LD	HL,-3
-	CALL	__frameset
+.DEFINE "_FreeIcons"
+
+.VALUE _FreeIcons
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "FreeIcons",136,"_FreeIcons"
+
+.LINE 136
+
+.DEFINE "iconIndex"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
 ;  137		int iconIndex;
 ;  138		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
+.LINE 138
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_47
-L_45:
+	JR	L_43
+L_41:
 ;  139			free(typeIcons[iconIndex]);
+.LINE 139
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -883,19 +2165,25 @@ L_45:
 	INC	BC
 	LD	(IX+-3),BC
 ;  140		}
-L_47:
+L_43:
+.LINE 140
+
 	LD	BC,17
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_45
+	JP	M,L_41
 ;  141		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
+.LINE 141
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_51
-L_49:
+	JR	L_47
+L_45:
 ;  142			free(statusIcons[iconIndex]);
+.LINE 142
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -910,19 +2198,25 @@ L_49:
 	INC	BC
 	LD	(IX+-3),BC
 ;  143		}
-L_51:
+L_47:
+.LINE 143
+
 	LD	BC,5
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_49
+	JP	M,L_45
 ;  144		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
+.LINE 144
+
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_56
-L_54:
+	JR	L_52
+L_50:
 ;  145			free(categoryIcons[iconIndex]);
+.LINE 145
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -937,13 +2231,17 @@ L_54:
 	INC	BC
 	LD	(IX+-3),BC
 ;  146		}
-L_56:
+L_52:
+.LINE 146
+
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_54
+	JP	M,L_50
+.LINE 147
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -962,19 +2260,21 @@ L_56:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "FreeIcons",147,"_FreeIcons"
 	XREF _PKMNSD5:ROM
+	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
+	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
+	XREF _sprintf:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM
 	XREF _free:ROM
 	XREF _malloc:ROM
 	XREF __sor:ROM
 	XREF __stoiu:ROM
-	XREF __frameset0:ROM
-	XREF __frameset:ROM
 	XREF __setflag:ROM
 	XREF __scmpzero:ROM
 	XREF __imul_b:ROM

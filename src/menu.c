@@ -305,9 +305,9 @@ void menu_PokemonDetails(int pokemonIndex) {
 			gfx_SetTextScale(2, 2);
 
 			gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
-			gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 164, 30);
+			gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element1 - 1], 164, 34);
 			if (data_pokemon[party[pokemonIndex].id].element2 != 0) {
-				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 200, 30);
+				gfx_TransparentSprite_NoClip(typeIcons[data_pokemon[party[pokemonIndex].id].element2 - 1], 200, 34);
 			}
 
 			gfx_TransparentSprite_NoClip(menucursor, 8, 56 + 24 * menuState);
@@ -327,6 +327,9 @@ void menu_PokemonDetails(int pokemonIndex) {
 			}
 
 			sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].power);
+			if (data_moves[party[pokemonIndex].moves[menuState]].power < 5) {
+				sprintf(str, "-");
+			}
 			gfx_PrintStringXY(str, 66, 168);
 			sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].accuracy);
 			gfx_PrintStringXY(str, 66, 194);
