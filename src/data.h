@@ -96,7 +96,6 @@ struct zoneData {
 extern struct pokemonType data_pokemon[];
 extern struct move data_moves[];
 extern uint8_t elements[18][18];
-extern char elementNames[18][16];
 extern int xpPerLevel[4][101];
 
 extern char data_trainerText[][32];

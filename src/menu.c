@@ -102,7 +102,13 @@ uint8_t menu_Menu(void) {
 				return 0;
 			}
 			if (cursorState == 1) {
-				menu_Items(false);
+				int chosenItem;
+				chooseItem:
+				chosenItem = menu_Items(false);
+				if (chosenItem != -1) {
+					items_UseItem(chosenItem);
+					goto chooseItem;
+				}
 				return 0;
 			}
 			if (cursorState == 2) {
@@ -130,7 +136,7 @@ int menu_PokemonMenu(bool pressEnter) {
 
 
 	menuState = 0;
-	backgroundSprite = gfx_MallocSprite(160, 88);
+	backgroundSprite = gfx_MallocSprite(160, 120);
 	pokemonSprite = gfx_MallocSprite(133, 36);
 	zx7_Decompress(backgroundSprite, pokemonlist_compressed);
 	zx7_Decompress(pokemonSprite, menupokemon_compressed);
@@ -238,7 +244,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 	int page, menuState, tempMove, moveIndex;
 	gfx_sprite_t *backgroundSprite;
 
-	backgroundSprite = gfx_MallocSprite(160, 88);
+	backgroundSprite = gfx_MallocSprite(160, 120);
 	
 
 	menu_Setup();
@@ -360,7 +366,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 				menuState++;
 			}
 		}
-		if (kb_Data[6] & kb_Enter) {
+		if ((kb_Data[6] & kb_Enter) && page == 2) {
 			tempMove = party[pokemonIndex].moves[menuState];
 			for (moveIndex = menuState; moveIndex > 0; moveIndex--) {
 				party[pokemonIndex].moves[moveIndex] = party[pokemonIndex].moves[moveIndex - 1];
@@ -374,7 +380,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 	}
 	free(backgroundSprite);
 }
-bool menu_Items(bool inBattle) {
+int menu_Items(bool inBattle) {
 	int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
 	gfx_sprite_t *backgroundSprite;
 
@@ -411,7 +417,7 @@ bool menu_Items(bool inBattle) {
 		gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 		gfx_TransparentSprite_NoClip(menucursorsmall, 132, 19 + 14 * cursorState);
 		
-		Wait(20);
+		Wait(15);
 
 		kb_Scan();
 		if (page == 1) {
@@ -468,7 +474,7 @@ bool menu_Items(bool inBattle) {
 				}
 			}
 		}
-		if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+		if (((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) && !inBattle) {
 			if (page == 1) {
 				page = 2;
 			}
@@ -489,13 +495,12 @@ bool menu_Items(bool inBattle) {
 			else {
 				itemToUse = usableTMs[menuState + cursorState];
 			}
-			if (items_UseItem(itemToUse) && inBattle) {
-				gfx_SetDrawBuffer();
-				return true;
-			}
+			free(backgroundSprite);
+			gfx_SetDrawBuffer();
+			return itemToUse;
 		}
 	}
 	free(backgroundSprite);
 	gfx_SetDrawBuffer();
-	return false;
+	return -1;
 }

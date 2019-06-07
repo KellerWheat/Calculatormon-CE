@@ -93,7 +93,7 @@ struct pokemonData stats_NewCharacter(uint8_t id, uint8_t level) {
 	newch.pp[2] = data_moves[newch.moves[2]].uses;
 	newch.pp[3] = data_moves[newch.moves[3]].uses;
 
-	newch.currentstatus= 0;
+	newch.currentstatus = 0;
 
 	newch.healthIV = (rand() % 16);
 	newch.attackIV = (rand() % 16);

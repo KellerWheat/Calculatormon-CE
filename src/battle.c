@@ -42,9 +42,8 @@ void applystatus(bool player);
 void resetstatus(bool player);
 void takedamage(bool player, int amount);
 void heal(bool player, int amount);
-
-void addxp(void);
 bool capture(uint8_t ball);
+void addxp(void);
 
 
 const int statmodvalues[] = { 25,29,33,40,50,67,100,150,200,250,300,350,400 };
@@ -110,7 +109,6 @@ void battle_Setup(void) {
 			pokemonIndex = 6;
 		}
 	}
-	
 	SetupBattleGfx();
 
 	battleMenuState1 = 0;
@@ -121,9 +119,6 @@ void battle_Setup(void) {
 	stats[1] = stats_CalculateStats(party[0]);
 	currentenemy = 0;
 	attackturn = 0;
-
-	playerSprite = gfx_MallocSprite(56, 56);
-	enemySprite = gfx_MallocSprite(56, 56);
 
 	resetstatus(true);
 	resetstatus(false);
@@ -137,6 +132,22 @@ void SetupBattleGfx(void) {
 	zx7_Decompress(backgroundSprite, background_compressed);
 	hpBarSprite = gfx_MallocSprite(98, 10);
 	zx7_Decompress(hpBarSprite, hpbar_compressed);
+	playerSprite = gfx_MallocSprite(56, 56);
+	enemySprite = gfx_MallocSprite(56, 56);
+
+	if (party[currentplayer].id < 80) {
+		zx7_Decompress(playerSprite, PKMNSD2[party[currentplayer].id]);
+	}
+	else {
+		zx7_Decompress(playerSprite, PKMNSD3[party[currentplayer].id - 80]);
+	}
+	if (enemyparty[currentenemy].id < 80) {
+		zx7_Decompress(enemySprite, PKMNSD0[enemyparty[currentenemy].id]);
+	}
+	else {
+		zx7_Decompress(enemySprite, PKMNSD1[enemyparty[currentenemy].id - 80]);
+	}
+
 
 	MallocIcons();
 
@@ -268,13 +279,16 @@ bool playerturn() {
 			battleMenuState1 = 2;
 			return false;
 		case 3:
-			i = text_AskQuestion6(data_pokemon[party[0].id].name, data_pokemon[party[1].id].name, data_pokemon[party[2].id].name, data_pokemon[party[3].id].name, data_pokemon[party[4].id].name, data_pokemon[party[5].id].name);
+			battle_End();
+			i = menu_PokemonMenu(false);
+			SetupBattleGfx();
 			if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
 				currentplayer = i - 1;
 				resetstatus(true);
 				redrawcharacters();
 				return true;
 			}
+			redrawcharacters();
 			return false;
 		case 4:
 			if (!wild) {
@@ -307,79 +321,36 @@ bool playerturn() {
 	}
 	/* Items */
 	else if (battleMenuState1 == 2) {
-		battleMenuCurrent = 0;
-		battleMenuState2 = 0;
-	
-	redrawitems:
-		gfx_SetDrawScreen();
-		gfx_SetColor(colors[0]);
-		gfx_FillRectangle(20, 20, 280, 200);
-		gfx_SetColor(colors[1]);
-		gfx_Rectangle(20, 20, 280, 200);
-		gfx_SetColor(colors[0]);
-
-		gfx_PrintStringXY(">", 25, 25 + 20 * (battleMenuCurrent));
-		for (i = 0; i < 10 && i + battleMenuState2 < 16; i++) {
-			gfx_PrintStringXY(itemNames[i + battleMenuState2], 35, 25 + i * 20);
-			sprintf(str, "%u", playerItems[i + battleMenuState2]);
-			gfx_PrintStringXY(str, 150, 25 + i * 20);
-		}
-		Wait(20);
-
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		kb_Scan();
-		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-			kb_Scan();
-			if ((kb_Data[7] & kb_Down) && battleMenuCurrent + battleMenuState2 < 15) {
-				battleMenuCurrent++;
-				if (battleMenuCurrent == 5 && battleMenuState2 < 5) {
-					battleMenuState2++;
-					battleMenuCurrent--;
-				}
-				goto redrawitems;
-			}
-			if ((kb_Data[7] & kb_Up) && battleMenuCurrent != 0) {
-				battleMenuCurrent--;
-				if (battleMenuCurrent == 4 && battleMenuState2 > 0) {
-					battleMenuState2--;
-					battleMenuCurrent++;
-				}
-				goto redrawitems;
-			}
-		}
-		gfx_SetDrawBuffer();
-		redrawcharacters();
-		if (kb_Data[6] & kb_Clear) {
-			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-			battleMenuState1 = 0;
-			return false;
-		}
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-
-		if (playerItems[battleMenuCurrent] == 0) {
-			battleMenuCurrent = 0;
-			return false;
-		}
+		int chosenItem;
 		battleMenuState1 = 0;
-		if (battleMenuCurrent < 4) {
-			sprintf(str, "Used a %s", itemNames[battleMenuCurrent]);
+		battle_End();
+		chosenItem = menu_Items(true);
+		SetupBattleGfx();
+		if (chosenItem == -1) {
+			return false;
+		}
+		if (chosenItem < 4) {
+			redrawcharacters();
+			sprintf(str, "Used a %s", itemNames[chosenItem]);
 			text_Display(str, true);
-			playerItems[battleMenuCurrent]--;
-			if (capture(battleMenuCurrent + 1)) {
+			playerItems[chosenItem]--;
+			chosenmove[true] = 0;
+			if (capture(chosenItem + 1)) {
 				map_WinFight(wild, enemyparty[0].level * 40);
 				run = true;
 				return true;
 			}
-			else {
-				chosenmove[true] = 0;
-			}
 		}
 		else {
-			if (items_UseItem(battleMenuCurrent)) {
-				redrawcharacters();
+			battle_End();
+			if (items_UseItem(chosenItem)) {
 				chosenmove[true] = 0;
+				SetupBattleGfx();
+				redrawcharacters();
 			}
 			else {
+				SetupBattleGfx();
+				redrawcharacters();
 				return false;
 			}
 		}
@@ -529,7 +500,8 @@ void redrawcharacters(void) {
 	}
 	gfx_FillRectangle(58, 42, healthRatio, 6);
 	if (enemyparty[currentenemy].currentstatus > 0) {
-		gfx_TransparentSprite_NoClip(statusSprites[enemyparty[currentenemy].currentstatus-1], 18, 41);
+		
+		gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus-1], 18, 41);
 	}
 
 	gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
@@ -558,7 +530,7 @@ void redrawcharacters(void) {
 		gfx_FillRectangle(210, 168, CalculateXpPercent(), 4);
 	}
 	if (party[currentplayer].currentstatus > 0) {
-		gfx_TransparentSprite_NoClip(statusSprites[party[currentplayer].currentstatus - 1], 182, 141);
+		gfx_TransparentSprite_NoClip(statusIcons[party[currentplayer].currentstatus - 1], 182, 141);
 	}
 
 	gfx_SetColor(colors[0]);
