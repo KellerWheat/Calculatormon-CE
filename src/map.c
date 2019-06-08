@@ -52,13 +52,8 @@ void LoadMap(void);
 
 const int battlechance = 10; /* Chance for enemy to spawn out of 100 */
 
-const uint8_t playertilemap[] = {
-	0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
-};
-const uint8_t enemytilemap[] = {
-	0,1,2,3,4,5,6,7
-};
-uint8_t pokeballtilemap[] = {
+
+uint8_t pokeballdata[] = {
 	0,0,0,0,0,0
 };
 
@@ -74,14 +69,11 @@ uint8_t moveDir = 3;
 uint8_t playerState = 0;
 
 gfx_tilemap_t tilemap;
-gfx_tilemap_t playermap;
-gfx_tilemap_t enemymap;
-gfx_tilemap_t pokeballmap;
 
 gfx_sprite_t *mapTiles[128];
-gfx_sprite_t *playerTiles[24];
-gfx_sprite_t *enemyTiles[8];
-gfx_sprite_t *pokeballTiles[3];
+gfx_sprite_t *playerSprites[12];
+gfx_sprite_t *enemySprites[4];
+gfx_sprite_t *pokeballSprites[3];
 gfx_sprite_t *pauseMenuSprite;
 
 uint8_t currentTileMap[1920];
@@ -123,48 +115,6 @@ void map_Initialize(void) {
 	tilemap.y_loc = 8;
 	tilemap.x_loc = -8;
 
-	/* Initialize player tilemap */
-	playermap.map = playertilemap;
-	playermap.tiles = playerTiles;
-	playermap.type_width = gfx_tile_16_pixel;
-	playermap.type_height = gfx_tile_16_pixel;
-	playermap.tile_height = 16;
-	playermap.tile_width = 16;
-	playermap.draw_height = 2;
-	playermap.draw_width = 1;
-	playermap.height = 2;
-	playermap.width = 12;
-	playermap.y_loc = 0;
-	playermap.x_loc = 0;
-
-	/* Initialize tilemap for other trainers */
-	enemymap.map = enemytilemap;
-	enemymap.tiles = enemyTiles;
-	enemymap.type_width = gfx_tile_16_pixel;
-	enemymap.type_height = gfx_tile_16_pixel;
-	enemymap.tile_height = 16;
-	enemymap.tile_width = 16;
-	enemymap.draw_height = 2;
-	enemymap.draw_width = 1;
-	enemymap.height = 2;
-	enemymap.width = 4;
-	enemymap.y_loc = 0;
-	enemymap.x_loc = 0;
-
-	/* Initialize Pokeball Tilemap (shows which pokemon have fainted)*/
-	pokeballmap.map = pokeballtilemap;
-	pokeballmap.tiles = pokeballTiles;
-	pokeballmap.type_width = gfx_tile_16_pixel;
-	pokeballmap.type_height = gfx_tile_16_pixel;
-	pokeballmap.tile_height = 16;
-	pokeballmap.tile_width = 16;
-	pokeballmap.draw_height = 1;
-	pokeballmap.draw_width = 6;
-	pokeballmap.height = 1;
-	pokeballmap.width = 3;
-	pokeballmap.y_loc = 0;
-	pokeballmap.x_loc = 0;
-
 	if (indoors) {
 		tilemap.width = 21;
 		tilemap.height = 15;
@@ -192,17 +142,17 @@ void map_SetupGfx(void) {
 			zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
 		}
 	}
-	for (tileIndex = 0; tileIndex < 24; tileIndex++) {
-		playerTiles[tileIndex] = gfx_MallocSprite(16, 16);
-		zx7_Decompress(playerTiles[tileIndex], player_tiles_compressed[tileIndex]);
+	for (tileIndex = 0; tileIndex < 12; tileIndex++) {
+		playerSprites[tileIndex] = gfx_MallocSprite(16, 20);
+		zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
-		enemyTiles[tileIndex] = gfx_MallocSprite(16, 16);
-		zx7_Decompress(enemyTiles[tileIndex], enemy_tiles_compressed[tileIndex]);
+	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+		enemySprites[tileIndex] = gfx_MallocSprite(16, 20);
+		zx7_Decompress(enemySprites[tileIndex], PKMNSD4[12 + tileIndex]);
 	}
 	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
-		pokeballTiles[tileIndex] = gfx_MallocSprite(16, 16);
-		zx7_Decompress(pokeballTiles[tileIndex], pokeball_tiles_compressed[tileIndex]);
+		pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
+		zx7_Decompress(pokeballSprites[tileIndex], pokeball_tiles_compressed[tileIndex]);
 	}
 	pauseMenuSprite = gfx_MallocSprite(112, 96);
 	zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
@@ -356,15 +306,14 @@ void map_End(void) {
 	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 		free(mapTiles[tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 24; tileIndex++) {
-		free(playerTiles[tileIndex]);
+	for (tileIndex = 0; tileIndex < 12; tileIndex++) {
+		free(playerSprites[tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
-		free(enemyTiles[tileIndex]);
-
+	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+		free(enemySprites[tileIndex]);
 	}
 	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
-		free(pokeballTiles[tileIndex]);
+		free(pokeballSprites[tileIndex]);
 	}
 	free(pauseMenuSprite);
 }
@@ -374,21 +323,18 @@ void map_Draw(void) {
 	if (indoors) {
 		screenX = 0;
 		screenY = 0;
+
 		gfx_Tilemap(&tilemap, screenX, screenY);
 
-		playermap.x_loc = (playerX - 8);
-		playermap.y_loc = (playerY - 8);
-		gfx_TransparentTilemap(&playermap, 16 * (moveDir * 3 + playerState - 3), 0);
+		gfx_TransparentSprite_NoClip(playerSprites[moveDir * 3 + playerState - 3], playerX - 8, playerY + 4);
 	}
 	else {
 		screenX = Clamp(playerX - 160, 0, MAX_X);
 		screenY = Clamp(playerY - 112, 0, MAX_Y);
 
 		gfx_Tilemap(&tilemap, screenX, screenY);
-
-		playermap.x_loc = (playerX - screenX - 8);
-		playermap.y_loc = (playerY - screenY - 8);
-		gfx_TransparentTilemap(&playermap, 16 * (moveDir * 3 + playerState - 3), 0);
+		
+		gfx_TransparentSprite_NoClip(playerSprites[moveDir * 3 + playerState - 3], playerX - screenX - 8, playerY - screenY + 4);
 	}
 	DrawEnemies();
 	map_DrawInformationBar();
@@ -570,14 +516,14 @@ void map_LoadPokeballs(void) {
 	/* Generate pokemon info To Display At Top of Screen */
 	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 		if (party[pokemonIndex].id == 0) {
-			pokeballtilemap[pokemonIndex] = 2;
+			pokeballdata[pokemonIndex] = 2;
 		}
 		else {
 			if (party[pokemonIndex].currenthealth > 0) {
-				pokeballtilemap[pokemonIndex] = 0;
+				pokeballdata[pokemonIndex] = 0;
 			}
 			else {
-				pokeballtilemap[pokemonIndex] = 1;
+				pokeballdata[pokemonIndex] = 1;
 			}
 		}
 	}
@@ -635,26 +581,22 @@ uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
 }
 
 void DrawEnemies(void) {
-	uint32_t xloc = 0;
-	uint32_t yloc = 0;
+	int xloc = 0;
+	int yloc = 0;
 	for (i = 0; i < 16; i++) {
 		if (indoors){
 			if (currentZoneData.trainerdir[i] != 0) {
-				xloc = currentZoneData.trainerx[i] * 16 - 8;
-				yloc = currentZoneData.trainery[i] * 16 - 8;
-				enemymap.x_loc = (xloc);
-				enemymap.y_loc = (yloc);
-				gfx_TransparentTilemap(&enemymap, 16 * (currentZoneData.trainerdir[i] - 1), 0);
+				xloc = currentZoneData.trainerx[i] * 16;
+				yloc = currentZoneData.trainery[i] * 16;
+				gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
 			}
 		}
 		else {
 			if (currentZoneData.trainerdir[i] != 0) {
-				xloc = currentZoneData.trainerx[i] * 16 - screenX - 8;
-				yloc = currentZoneData.trainery[i] * 16 - screenY - 8;
-				if (xloc < 336 && yloc < 240 && xloc > 0 && yloc > 0) {
-				enemymap.x_loc = (xloc);
-				enemymap.y_loc = (yloc);
-				gfx_TransparentTilemap(&enemymap, 16 * (currentZoneData.trainerdir[i] - 1), 0);
+				xloc = currentZoneData.trainerx[i] * 16 - screenX;
+				yloc = currentZoneData.trainery[i] * 16 - screenY;
+				if (xloc < 336 && yloc < 240 && xloc >= 0 && yloc >= 0) {
+					gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
 				}
 			}
 		}
@@ -663,9 +605,12 @@ void DrawEnemies(void) {
 }
 
 void map_DrawInformationBar(void) {
+	int pokemonIndex;
 	gfx_SetColor(colors[0]);
 	gfx_FillRectangle(0, 0, 320, 16);
-	gfx_TransparentTilemap(&pokeballmap,0,0);
+	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
+		gfx_TransparentSprite_NoClip(pokeballSprites[pokeballdata[pokemonIndex]], 16 * pokemonIndex, 0);
+	}
 	sprintf(str, "%u$", playerMoney);
 	gfx_PrintStringXY(str, 100, 5);
 }

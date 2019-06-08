@@ -6,10 +6,35 @@
 
 #include <stdbool.h>
 
-#define PKMNSD4_num 9
+#define PKMNSD4_num 23
 
-extern uint8_t *PKMNSD4[9];
-#define outdoortileset_compressed ((gfx_sprite_t*)PKMNSD4[0])
+extern uint8_t *PKMNSD4[23];
+#define player00_compressed ((gfx_sprite_t*)PKMNSD4[0])
+#define player01_compressed ((gfx_sprite_t*)PKMNSD4[1])
+#define player02_compressed ((gfx_sprite_t*)PKMNSD4[2])
+#define player03_compressed ((gfx_sprite_t*)PKMNSD4[3])
+#define player04_compressed ((gfx_sprite_t*)PKMNSD4[4])
+#define player05_compressed ((gfx_sprite_t*)PKMNSD4[5])
+#define player06_compressed ((gfx_sprite_t*)PKMNSD4[6])
+#define player07_compressed ((gfx_sprite_t*)PKMNSD4[7])
+#define player08_compressed ((gfx_sprite_t*)PKMNSD4[8])
+#define player09_compressed ((gfx_sprite_t*)PKMNSD4[9])
+#define player10_compressed ((gfx_sprite_t*)PKMNSD4[10])
+#define player11_compressed ((gfx_sprite_t*)PKMNSD4[11])
+#define enemy00_compressed ((gfx_sprite_t*)PKMNSD4[12])
+#define enemy01_compressed ((gfx_sprite_t*)PKMNSD4[13])
+#define enemy02_compressed ((gfx_sprite_t*)PKMNSD4[14])
+#define enemy03_compressed ((gfx_sprite_t*)PKMNSD4[15])
+#define maptextbox1_compressed ((gfx_sprite_t*)PKMNSD4[16])
+#define maptextbox2_compressed ((gfx_sprite_t*)PKMNSD4[17])
+#define pausemenu_compressed ((gfx_sprite_t*)PKMNSD4[18])
+#define pokeball_compressed ((gfx_sprite_t*)PKMNSD4[19])
+#define pokeball_tiles_num 3
+extern uint8_t *pokeball_tiles_compressed[3];
+#define pokeball_tile_0_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[0])
+#define pokeball_tile_1_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[1])
+#define pokeball_tile_2_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[2])
+#define outdoortileset_compressed ((gfx_sprite_t*)PKMNSD4[20])
 #define outdoortileset_tiles_num 128
 extern uint8_t *outdoortileset_tiles_compressed[128];
 #define outdoortileset_tile_0_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[0])
@@ -140,7 +165,7 @@ extern uint8_t *outdoortileset_tiles_compressed[128];
 #define outdoortileset_tile_125_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[125])
 #define outdoortileset_tile_126_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[126])
 #define outdoortileset_tile_127_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[127])
-#define indoortileset_compressed ((gfx_sprite_t*)PKMNSD4[1])
+#define indoortileset_compressed ((gfx_sprite_t*)PKMNSD4[21])
 #define indoortileset_tiles_num 128
 extern uint8_t *indoortileset_tiles_compressed[128];
 #define indoortileset_tile_0_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[0])
@@ -271,55 +296,8 @@ extern uint8_t *indoortileset_tiles_compressed[128];
 #define indoortileset_tile_125_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[125])
 #define indoortileset_tile_126_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[126])
 #define indoortileset_tile_127_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[127])
-#define player_compressed ((gfx_sprite_t*)PKMNSD4[2])
-#define player_tiles_num 24
-extern uint8_t *player_tiles_compressed[24];
-#define player_tile_0_compressed ((gfx_sprite_t*)player_tiles_compressed[0])
-#define player_tile_1_compressed ((gfx_sprite_t*)player_tiles_compressed[1])
-#define player_tile_2_compressed ((gfx_sprite_t*)player_tiles_compressed[2])
-#define player_tile_3_compressed ((gfx_sprite_t*)player_tiles_compressed[3])
-#define player_tile_4_compressed ((gfx_sprite_t*)player_tiles_compressed[4])
-#define player_tile_5_compressed ((gfx_sprite_t*)player_tiles_compressed[5])
-#define player_tile_6_compressed ((gfx_sprite_t*)player_tiles_compressed[6])
-#define player_tile_7_compressed ((gfx_sprite_t*)player_tiles_compressed[7])
-#define player_tile_8_compressed ((gfx_sprite_t*)player_tiles_compressed[8])
-#define player_tile_9_compressed ((gfx_sprite_t*)player_tiles_compressed[9])
-#define player_tile_10_compressed ((gfx_sprite_t*)player_tiles_compressed[10])
-#define player_tile_11_compressed ((gfx_sprite_t*)player_tiles_compressed[11])
-#define player_tile_12_compressed ((gfx_sprite_t*)player_tiles_compressed[12])
-#define player_tile_13_compressed ((gfx_sprite_t*)player_tiles_compressed[13])
-#define player_tile_14_compressed ((gfx_sprite_t*)player_tiles_compressed[14])
-#define player_tile_15_compressed ((gfx_sprite_t*)player_tiles_compressed[15])
-#define player_tile_16_compressed ((gfx_sprite_t*)player_tiles_compressed[16])
-#define player_tile_17_compressed ((gfx_sprite_t*)player_tiles_compressed[17])
-#define player_tile_18_compressed ((gfx_sprite_t*)player_tiles_compressed[18])
-#define player_tile_19_compressed ((gfx_sprite_t*)player_tiles_compressed[19])
-#define player_tile_20_compressed ((gfx_sprite_t*)player_tiles_compressed[20])
-#define player_tile_21_compressed ((gfx_sprite_t*)player_tiles_compressed[21])
-#define player_tile_22_compressed ((gfx_sprite_t*)player_tiles_compressed[22])
-#define player_tile_23_compressed ((gfx_sprite_t*)player_tiles_compressed[23])
-#define enemy_compressed ((gfx_sprite_t*)PKMNSD4[3])
-#define enemy_tiles_num 8
-extern uint8_t *enemy_tiles_compressed[8];
-#define enemy_tile_0_compressed ((gfx_sprite_t*)enemy_tiles_compressed[0])
-#define enemy_tile_1_compressed ((gfx_sprite_t*)enemy_tiles_compressed[1])
-#define enemy_tile_2_compressed ((gfx_sprite_t*)enemy_tiles_compressed[2])
-#define enemy_tile_3_compressed ((gfx_sprite_t*)enemy_tiles_compressed[3])
-#define enemy_tile_4_compressed ((gfx_sprite_t*)enemy_tiles_compressed[4])
-#define enemy_tile_5_compressed ((gfx_sprite_t*)enemy_tiles_compressed[5])
-#define enemy_tile_6_compressed ((gfx_sprite_t*)enemy_tiles_compressed[6])
-#define enemy_tile_7_compressed ((gfx_sprite_t*)enemy_tiles_compressed[7])
-#define pokeball_compressed ((gfx_sprite_t*)PKMNSD4[4])
-#define pokeball_tiles_num 3
-extern uint8_t *pokeball_tiles_compressed[3];
-#define pokeball_tile_0_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[0])
-#define pokeball_tile_1_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[1])
-#define pokeball_tile_2_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[2])
-#define maptextbox1_compressed ((gfx_sprite_t*)PKMNSD4[5])
-#define maptextbox2_compressed ((gfx_sprite_t*)PKMNSD4[6])
-#define pausemenu_compressed ((gfx_sprite_t*)PKMNSD4[7])
 #define sizeof_map_gfx_pal 426
-#define map_gfx_pal ((uint16_t*)PKMNSD4[8])
+#define map_gfx_pal ((uint16_t*)PKMNSD4[22])
 bool PKMNSD4_init(void);
 
 #endif

@@ -3,16 +3,30 @@
 #include "PKMNSD4.h"
 
 #include <fileioc.h>
-uint8_t *PKMNSD4[9] = {
+uint8_t *PKMNSD4[23] = {
  (uint8_t*)0,
- (uint8_t*)6988,
- (uint8_t*)10353,
- (uint8_t*)12220,
- (uint8_t*)12865,
- (uint8_t*)13004,
- (uint8_t*)13184,
- (uint8_t*)13363,
- (uint8_t*)13429,
+ (uint8_t*)138,
+ (uint8_t*)269,
+ (uint8_t*)397,
+ (uint8_t*)537,
+ (uint8_t*)672,
+ (uint8_t*)802,
+ (uint8_t*)955,
+ (uint8_t*)1104,
+ (uint8_t*)1251,
+ (uint8_t*)1399,
+ (uint8_t*)1542,
+ (uint8_t*)1688,
+ (uint8_t*)1828,
+ (uint8_t*)1970,
+ (uint8_t*)2126,
+ (uint8_t*)2275,
+ (uint8_t*)2455,
+ (uint8_t*)2634,
+ (uint8_t*)2700,
+ (uint8_t*)2839,
+ (uint8_t*)9827,
+ (uint8_t*)13192,
 };
 
 bool PKMNSD4_init(void) {
@@ -29,29 +43,19 @@ bool PKMNSD4_init(void) {
 
     ti_CloseAll();
 
-    data = (unsigned int)PKMNSD4[0] - (unsigned int)outdoortileset_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[19] - (unsigned int)pokeball_tiles_compressed[0];
+    for (i = 0; i < pokeball_tiles_num; i++) {
+        pokeball_tiles_compressed[i] += data;
+    }
+
+    data = (unsigned int)PKMNSD4[20] - (unsigned int)outdoortileset_tiles_compressed[0];
     for (i = 0; i < outdoortileset_tiles_num; i++) {
         outdoortileset_tiles_compressed[i] += data;
     }
 
-    data = (unsigned int)PKMNSD4[1] - (unsigned int)indoortileset_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[21] - (unsigned int)indoortileset_tiles_compressed[0];
     for (i = 0; i < indoortileset_tiles_num; i++) {
         indoortileset_tiles_compressed[i] += data;
-    }
-
-    data = (unsigned int)PKMNSD4[2] - (unsigned int)player_tiles_compressed[0];
-    for (i = 0; i < player_tiles_num; i++) {
-        player_tiles_compressed[i] += data;
-    }
-
-    data = (unsigned int)PKMNSD4[3] - (unsigned int)enemy_tiles_compressed[0];
-    for (i = 0; i < enemy_tiles_num; i++) {
-        enemy_tiles_compressed[i] += data;
-    }
-
-    data = (unsigned int)PKMNSD4[4] - (unsigned int)pokeball_tiles_compressed[0];
-    for (i = 0; i < pokeball_tiles_num; i++) {
-        pokeball_tiles_compressed[i] += data;
     }
 
     return (bool)appvar;

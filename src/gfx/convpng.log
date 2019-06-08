@@ -6,10 +6,26 @@ built palette with [213] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0x8318
-8:
+22:
  maptextbox1 : 100.00% (10242 > 180 bytes)
  maptextbox2 : 100.00% (10242 > 179 bytes)
  pausemenu : 100.00% (10754 > 66 bytes)
+ player00 : 100.00% (322 > 138 bytes)
+ player01 : 100.00% (322 > 131 bytes)
+ player02 : 100.00% (322 > 128 bytes)
+ player03 : 100.00% (322 > 140 bytes)
+ player04 : 100.00% (322 > 135 bytes)
+ player05 : 100.00% (322 > 130 bytes)
+ player06 : 100.00% (322 > 153 bytes)
+ player07 : 100.00% (322 > 149 bytes)
+ player08 : 100.00% (322 > 147 bytes)
+ player09 : 100.00% (322 > 148 bytes)
+ player10 : 100.00% (322 > 143 bytes)
+ player11 : 100.00% (322 > 146 bytes)
+ enemy00 : 100.00% (322 > 140 bytes)
+ enemy01 : 100.00% (322 > 142 bytes)
+ enemy02 : 100.00% (322 > 156 bytes)
+ enemy03 : 100.00% (322 > 149 bytes)
  outdoortileset : 100.00%
  outdoortileset_tile_0_compressed (258 > 19 bytes)
  outdoortileset_tile_1_compressed (258 > 32 bytes)
@@ -268,40 +284,6 @@ transparent color : 0x8318
  indoortileset_tile_125_compressed (258 > 9 bytes)
  indoortileset_tile_126_compressed (258 > 9 bytes)
  indoortileset_tile_127_compressed (258 > 9 bytes)
- player : 100.00%
- player_tile_0_compressed (258 > 25 bytes)
- player_tile_1_compressed (258 > 20 bytes)
- player_tile_2_compressed (258 > 20 bytes)
- player_tile_3_compressed (258 > 25 bytes)
- player_tile_4_compressed (258 > 20 bytes)
- player_tile_5_compressed (258 > 20 bytes)
- player_tile_6_compressed (258 > 26 bytes)
- player_tile_7_compressed (258 > 26 bytes)
- player_tile_8_compressed (258 > 26 bytes)
- player_tile_9_compressed (258 > 26 bytes)
- player_tile_10_compressed (258 > 26 bytes)
- player_tile_11_compressed (258 > 26 bytes)
- player_tile_12_compressed (258 > 128 bytes)
- player_tile_13_compressed (258 > 126 bytes)
- player_tile_14_compressed (258 > 123 bytes)
- player_tile_15_compressed (258 > 130 bytes)
- player_tile_16_compressed (258 > 130 bytes)
- player_tile_17_compressed (258 > 125 bytes)
- player_tile_18_compressed (258 > 142 bytes)
- player_tile_19_compressed (258 > 137 bytes)
- player_tile_20_compressed (258 > 136 bytes)
- player_tile_21_compressed (258 > 136 bytes)
- player_tile_22_compressed (258 > 132 bytes)
- player_tile_23_compressed (258 > 136 bytes)
- enemy : 100.00%
- enemy_tile_0_compressed (258 > 25 bytes)
- enemy_tile_1_compressed (258 > 25 bytes)
- enemy_tile_2_compressed (258 > 26 bytes)
- enemy_tile_3_compressed (258 > 26 bytes)
- enemy_tile_4_compressed (258 > 129 bytes)
- enemy_tile_5_compressed (258 > 131 bytes)
- enemy_tile_6_compressed (258 > 145 bytes)
- enemy_tile_7_compressed (258 > 138 bytes)
  pokeball : 100.00%
  pokeball_tile_0_compressed (258 > 65 bytes)
  pokeball_tile_1_compressed (258 > 65 bytes)
@@ -971,14 +953,28 @@ exporting appvar: PKMNSD3.8xp
  cb151
  cb152
 exporting appvar: PKMNSD4.8xp
- outdoortileset
- indoortileset
- player
- enemy
- pokeball
+ player00
+ player01
+ player02
+ player03
+ player04
+ player05
+ player06
+ player07
+ player08
+ player09
+ player10
+ player11
+ enemy00
+ enemy01
+ enemy02
+ enemy03
  maptextbox1
  maptextbox2
  pausemenu
+ pokeball
+ outdoortileset
+ indoortileset
  map_gfx (palette)
 exporting appvar: PKMNSD5.8xp
  menutextbox1
@@ -1020,7 +1016,7 @@ exporting appvar: PKMNSD5.8xp
  hpbar
  battle_gfx (palette)
 
-converted in 9 s
+converted in 10 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 
