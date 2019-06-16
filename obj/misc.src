@@ -26,19 +26,19 @@ _colors:
 	DB	0
 	DB	0
 _colorSets:
-	DB	7
-	DB	2
-	DB	204
-	DB	102
+	DB	8
+	DB	5
+	DB	214
+	DB	112
 	DB	231
-	DB	147
-	DB	13
-	DB	17
-	DB	113
+	DB	154
+	DB	16
+	DB	20
+	DB	121
 	DB	230
-	DB	40
+	DB	29
 	DB	230
-	DB	189
+	DB	199
 	DB	8
 	DB	255
 	DB	247
@@ -132,7 +132,7 @@ _categoryIcons:
 ;   31	
 ;   32	
 ;   33	uint8_t colorSets[2][COLORCOUNT] = {
-;   34		{7,2,204,102,231,147,13,17,113,230,40,230,189,},
+;   34		{8,5,214,112,231,154,16,20,121,230,29,230,199,},
 ;   35		{8,255,247,216,38,48,0,129,37,163,138,102,0,},
 ;   36	};
 ;   37	
@@ -271,20 +271,48 @@ L_7:
 
 
 ;   76	
-;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug menu */
+;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
 ;   78	void FindColors(void) {
 _FindColors:
-;   79		return;
+;   79		//return;
 ;   80		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	HL,_PKMNSD4+90
+	LD	BC,446
+	PUSH	BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   81		FindBestColors();
+	CALL	_FindBestColors
 ;   82		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	HL,_PKMNSD5+111
+	LD	BC,512
+	PUSH	BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
 ;   83		FindBestColors();
+	CALL	_FindBestColors
 ;   84	}
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
+;_PKMNSD5                            IMPORT    114   variable
+;_FindBestColors                     IMPORT  -----   function
+;_PKMNSD4                            IMPORT     93   variable
+;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
@@ -963,9 +991,11 @@ L_56:
 
 
 	XREF _PKMNSD5:ROM
+	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
+	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM

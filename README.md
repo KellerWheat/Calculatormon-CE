@@ -1,4 +1,4 @@
-# Calculatormon-CE
+﻿# Calculatormon-CE
 A pokemon game for the ti-84 plus ce
 
 The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from crystal and the map sprites are from firered and leafgreen. Menu sprites are based off of firered and leafgreen but I had to modify them because of a different screen size.
@@ -21,7 +21,7 @@ Sprite Resources I used:
 
 Hero & Heroine - Ripped by Previous
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/)
+www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/
 
 Overworld NPCs - Submitted by ebuddy and Silentninja (it doesn't say who ripped it but it was probably them)
 

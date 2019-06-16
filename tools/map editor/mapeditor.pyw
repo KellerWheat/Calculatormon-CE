@@ -194,6 +194,7 @@ def ExportFile():
     output0.astype('B').tofile('PKMNMD0.bin')
     print(output0.astype('B'))
     output1.astype('B').tofile('PKMNMD1.bin')
+    os.startfile("convertmaps.bat")
     
         
 
@@ -248,7 +249,7 @@ ChangeMap()
 #Display Map
 #-----------
 
-TypeNames = [' ','BE','N','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','N','N','N','N','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','B0','B1','B2','B3','B4','B5','B6','B7','B8','B9','BA','BB','BC','BD','BE','BF',]
+TypeNames = [' ','BE','C','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','N','N','N','N','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','B0','B1','B2','B3','B4','B5','B6','B7','B8','B9','BA','BB','BC','BD','BE','BF',]
 
 SetupTileMap()
 
@@ -319,8 +320,8 @@ def draw():
 
 
 ModeList = ["Tiles","Ground Types","Grass","Exit","Trainer View","Door","Trainer","Need Badges"]
-TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","NPC1 (indoors)","NPC2 (indoors)"]
-TypeNumbers = [0,1,64,65,66,67,68,69]
+TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","NPC1 (indoors)","NPC2 (indoors)","Coast"]
+TypeNumbers = [0,1,64,65,66,67,68,69,2]
 def CalculateNumberToPaint():
     global editMode, numberToPaint, paintWidth, paintHeight
     Frame_ChangeNumber.grid_forget()

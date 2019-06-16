@@ -9,6 +9,7 @@
 #include <keypadc.h>
 #include <graphx.h>
 #include <compression.h>
+#include <debug.h>
 
 #include "map.h"
 #include "battle.h"
@@ -44,6 +45,12 @@ uint8_t menuState2 = 0;
 uint8_t menuCurrent = 1;
 
 void menu_Setup(void) {
+
+	dbg_SetWatchpoint(&party[0].id, 1);
+	dbg_SetWatchpoint(&party[0].moves[0], 1);
+	dbg_SetWatchpoint(&party[0].moves[1], 1);
+	dbg_SetWatchpoint(&party[0].moves[2], 1);
+	dbg_SetWatchpoint(&party[0].moves[3], 1);
 
 	zx7_Decompress(textBoxSprite1, menutextbox1_compressed);
 	zx7_Decompress(textBoxSprite2, menutextbox2_compressed);
@@ -346,7 +353,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 
 
 			gfx_SwapDraw();
-			while (!((kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down) || (kb_Data[6] & kb_Enter))) {
+			while (!((kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down) || (kb_Data[6] & kb_Enter) || (kb_Data[6] & kb_Sub) || (kb_Data[6] & kb_Add))) {
 				kb_Scan();
 			}
 		}
@@ -364,6 +371,14 @@ void menu_PokemonDetails(int pokemonIndex) {
 		if (kb_Data[7] & kb_Down) {
 			if (menuState < 3) {
 				menuState++;
+			}
+		}
+		if ((kb_Data[6] & kb_Sub) || (kb_Data[6] & kb_Add) && page == 2) {
+			if (kb_Data[6] & kb_Add) {
+				party[pokemonIndex].moves[menuState]++;
+			}
+			else {
+				party[pokemonIndex].moves[menuState]--;
 			}
 		}
 		if ((kb_Data[6] & kb_Enter) && page == 2) {

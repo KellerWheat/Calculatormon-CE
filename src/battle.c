@@ -80,12 +80,18 @@ uint8_t mistturns[2];
 bool flinch[2];
 bool highcritratio[2];
 bool rage[2];
+bool transformed[2];
+bool converted[2];
+struct pokemonData originalpokemon[2];
+uint16_t bidedamage[2];
+uint16_t substitutehealth[2];
 
 uint8_t disabledmove[2];
 uint8_t disabledturns[2];
 uint8_t lastmove[2];
 uint8_t attackturns[2];
 bool air[2];
+uint16_t payday;
 bool run;
 
 uint8_t battleMenuState1 = 0;
@@ -115,6 +121,7 @@ void battle_Setup(void) {
 	battleMenuState2 = 0;
 	battleMenuCurrent = 1;
 
+	
 	stats[0] = stats_CalculateStats(enemyparty[0]);
 	stats[1] = stats_CalculateStats(party[0]);
 	currentenemy = 0;
@@ -122,6 +129,7 @@ void battle_Setup(void) {
 
 	resetstatus(true);
 	resetstatus(false);
+	payday = 0;
 
 	run = false;
 }
@@ -168,6 +176,13 @@ int battle_Loop(void) {
 		text_Display(str, false);
 		attackturn = 0;
 
+		if (transformed[true]) {
+			party[currentplayer] = originalpokemon[true];
+		}
+		if (converted[true]) {
+			data_pokemon[party[currentplayer].id].element1 = 1;
+		}
+
 		i = 0;
 		while (i < 6) {
 			if (party[i].currenthealth != 0 && party[i].id != 0) {
@@ -187,6 +202,13 @@ int battle_Loop(void) {
 		addxp();
 		attackturn = 0;
 
+		if (transformed[false]) {
+			enemyparty[currentenemy] = originalpokemon[false];
+		}
+		if (converted[false]) {
+			data_pokemon[enemyparty[currentenemy].id].element1 = 1;
+		}
+
 		i = 0;
 		while (i < 6) {
 			if (enemyparty[i].currenthealth != 0 && enemyparty[i].id != 0) {
@@ -197,7 +219,7 @@ int battle_Loop(void) {
 			i++;
 		}
 
-		
+		playerMoney += payday;
 		map_WinFight(wild, enemyparty[0].level * 40);
 		return 0;
 	}
@@ -209,7 +231,7 @@ int battle_Loop(void) {
 			return 0;
 		}
 		/* Paralysis gets a speed reduction */
-		if ((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) {
+		if ((((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) || data_moves[chosenmove[false]].statustype == 31) && data_moves[chosenmove[true]].statustype != 31) {
 			attack(false, chosenmove[false]);
 			attackturn = 1;
 		}
@@ -261,7 +283,7 @@ void battle_SpawnTrainer(uint8_t ids[6][16], uint8_t levels[6][16], uint8_t trai
 }
 
 bool playerturn() {
-	if (attackturns[true] > 0 && party[currentplayer].pp[lastmove[true]] > 0) {
+	if (attackturns[true] > 0) {
 		chosenmove[true] = lastmove[true];
 		return true;
 	}
@@ -607,11 +629,12 @@ void attack(bool player, uint8_t move) {
 		text_Display(str, true);
 		move = 1 + (rand() % 165);
 	}
-	sprintf(str, "%s used %s", username, data_moves[move].name);
-	text_Display(str, true);
+
 
 	
 	if (data_moves[move].type == 17) {
+		sprintf(str, "%s used %s", username, data_moves[move].name);
+		text_Display(str, true);
 		move = lastmove[!player];
 	}
 	lastmove[player] = move;
@@ -627,9 +650,11 @@ void attack(bool player, uint8_t move) {
 		}
 		attackturns[player]--;
 	}
-	if (data_moves[move].statustype == 33) {
+	if (data_moves[move].statustype == 33 || data_moves[move].statustype == 36 || data_moves[move].statustype == 37 || data_moves[move].statustype == 38) {
 		if (attackturns[player] == 0) {
 			attackturns[player] = 1;
+			sprintf(str, "%s is building up power", username, data_moves[move].name);
+			text_Display(str, true);
 			return;
 		}
 		else if (attackturns[player] == 1) {
@@ -647,7 +672,20 @@ void attack(bool player, uint8_t move) {
 			air[player] = false;
 		}
 	}
-	
+	if (data_moves[move].type == 20 && attackturns[player] != 1) {
+		if (attackturns[player] == 0) {
+			bidedamage[player] = 0;
+			attackturns[player] = 2;
+			sprintf(str, "%s used Bide", username);
+			text_Display(str, true);
+		}
+		else {
+			attackturns[player]--;
+		}
+		sprintf(str, "%s is storing energy", username);
+		text_Display(str, true);
+		return;
+	}
 
 	/* Exit if character's status prevents movement */
 	if ((*currentStatusPointer[player] == 3) && (rand() % 4 == 1)) {
@@ -705,6 +743,10 @@ void attack(bool player, uint8_t move) {
 		hitcount = 1;
 	}
 
+	sprintf(str, "%s used %s", username, data_moves[move].name);
+	text_Display(str, true);
+
+
 startattack:
 	if (data_moves[move].type < 2 || data_moves[move].type == 19) {
 		if (data_moves[move].type == 0) {
@@ -725,7 +767,7 @@ startattack:
 		}
 
 		/* Critical Hit */
-		if (data_moves[move].statustype == 24 || highcritratio[player]) {
+		if (data_moves[move].statustype == 24 || highcritratio[player] || data_moves[move].statustype == 36) {
 			if (player) {
 				if (data_pokemon[party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
 					damage *= (2 * userlevel + 5) / (userlevel + 5);
@@ -848,6 +890,35 @@ startattack:
 			text_Display("It Missed", true);
 		}
 	}
+	else if (data_moves[move].type == 18) {
+		if (player) {
+			originalpokemon[player] = party[currentplayer];
+			party[currentplayer] = enemyparty[currentenemy];
+		}
+		else {
+			originalpokemon[player] = enemyparty[currentenemy];
+			enemyparty[currentenemy] = party[currentplayer];
+		}
+	}
+	else if (data_moves[move].type == 20) {
+		takedamage(!player, bidedamage[player] * 2);
+		attackturns[player] = 0;
+	}
+	else if (data_moves[move].type == 21) {
+		if (player) {
+			data_pokemon[party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
+		}
+		else {
+			data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[party[currentplayer].id].element1;
+		}
+		converted[player] = true;
+	}
+	else if (data_moves[move].type == 22) {
+		takedamage(player, stats[player].health / 4);
+		substitutehealth[player] += stats[player].health / 4;
+		sprintf(str, "%s created a substitute to take damage", username);
+		text_Display(str, true);
+	}
 	/* Apply Stat or Status Effects */
 	if (data_moves[move].type == 4 || (rand() % 100) < data_moves[move].statuschance) {
 		if (data_moves[move].statustype == 30) {
@@ -858,11 +929,13 @@ startattack:
 		}
 		if (data_moves[move].statustype < 7) {
 			if (mistturns[!player] || statmods[!player][data_moves[move].statustype] == 0) {
-				text_Display("It Failed", true);
+				if (data_moves[move].type == 4) {
+					text_Display("It Failed", true);
+				}
 			}
 			else {
 				statmods[!player][data_moves[move].statustype] --;
-				sprintf(str, "%s's %s fell", true, nonusername, text_status2[data_moves[move].statustype]);
+				sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
 				text_Display(str, true);
 			}
 		}
@@ -941,7 +1014,7 @@ startattack:
 		if (data_moves[move].statustype == 17) {
 			mistturns[player] = 5;
 		}
-		if (data_moves[move].statustype == 18) {
+		if (data_moves[move].statustype == 18 || data_moves[move].statustype == 38) {
 			flinch[!player] = true;
 		}
 		if (data_moves[move].statustype == 27) {
@@ -953,6 +1026,9 @@ startattack:
 		}
 		if (data_moves[move].statustype == 29) {
 			rage[player] = true;
+		}
+		if (data_moves[move].statustype == 35 && player) {
+			payday += party[currentplayer].level*2;
 		}
 	}
 
@@ -1035,6 +1111,9 @@ void resetstatus(bool player) {
 	attackturns[player] = 0;
 	air[player] = false;
 	chosenmove[player] = 0;
+	transformed[player] = false;
+	converted[player] = false;
+	substitutehealth[player] = 0;
 
 	if (player) {
 		uint8_t pokemonID;
@@ -1068,20 +1147,33 @@ void resetstatus(bool player) {
 }
 
 void takedamage(bool player, int amount) {
-	if (player) {
-		if (party[currentplayer].currenthealth <= amount) {
-			party[currentplayer].currenthealth = 0;
+	bidedamage[player] += amount;
+	if (substitutehealth[player] > 0) {
+		text_Display("The substitute blocked the damage", true);
+		if (substitutehealth[player] <= amount) {
+			substitutehealth[player] = 0;
+			text_Display("The substitute was destroyed", true);
 		}
 		else {
-			party[currentplayer].currenthealth -= amount;
+			substitutehealth[player] -= amount;
 		}
 	}
 	else {
-		if (enemyparty[currentenemy].currenthealth <= amount) {
-			enemyparty[currentenemy].currenthealth = 0;
+		if (player) {
+			if (party[currentplayer].currenthealth <= amount) {
+				party[currentplayer].currenthealth = 0;
+			}
+			else {
+				party[currentplayer].currenthealth -= amount;
+			}
 		}
 		else {
-			enemyparty[currentenemy].currenthealth -= amount;
+			if (enemyparty[currentenemy].currenthealth <= amount) {
+				enemyparty[currentenemy].currenthealth = 0;
+			}
+			else {
+				enemyparty[currentenemy].currenthealth -= amount;
+			}
 		}
 	}
 	redrawcharacters();

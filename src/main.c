@@ -3,7 +3,7 @@
  * Program Name: Pokemon
  * Author: FBDAJH
  * License: MIT License
- * Description: Pokemon (pokemon and mechanics are mostly from gen 1)
+ * Description: Pokemon
  *--------------------------------------
 */
 
@@ -76,7 +76,7 @@ void main(void) {
 			starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
 		}
 		if (starter == 4) {
-			party[0] = stats_NewCharacter(152, 100);
+			party[0] = stats_NewCharacter(137, 5);
 		}
 		else {
 			party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
@@ -87,6 +87,7 @@ void main(void) {
 			}
 		}
 	}
+
 	map_LoadPokeballs();
 	do {
 		kb_Scan();

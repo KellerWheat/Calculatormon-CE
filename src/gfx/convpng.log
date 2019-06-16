@@ -2,11 +2,11 @@ opened convpng.ini
 
 --- map_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [213] indices.
+built palette with [223] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0x8318
-22:
+30:
  maptextbox1 : 100.00% (10242 > 180 bytes)
  maptextbox2 : 100.00% (10242 > 179 bytes)
  pausemenu : 100.00% (10754 > 66 bytes)
@@ -22,6 +22,14 @@ transparent color : 0x8318
  player09 : 100.00% (322 > 148 bytes)
  player10 : 100.00% (322 > 143 bytes)
  player11 : 100.00% (322 > 146 bytes)
+ player12 : 100.00% (574 > 195 bytes)
+ player13 : 100.00% (574 > 195 bytes)
+ player14 : 100.00% (574 > 196 bytes)
+ player15 : 100.00% (574 > 199 bytes)
+ player16 : 100.00% (522 > 191 bytes)
+ player17 : 100.00% (574 > 194 bytes)
+ player18 : 100.00% (522 > 190 bytes)
+ player19 : 100.00% (574 > 194 bytes)
  enemy00 : 100.00% (322 > 140 bytes)
  enemy01 : 100.00% (322 > 142 bytes)
  enemy02 : 100.00% (322 > 156 bytes)
@@ -35,13 +43,13 @@ transparent color : 0x8318
  outdoortileset_tile_5_compressed (258 > 110 bytes)
  outdoortileset_tile_6_compressed (258 > 115 bytes)
  outdoortileset_tile_7_compressed (258 > 73 bytes)
- outdoortileset_tile_8_compressed (258 > 82 bytes)
+ outdoortileset_tile_8_compressed (258 > 84 bytes)
  outdoortileset_tile_9_compressed (258 > 95 bytes)
  outdoortileset_tile_10_compressed (258 > 98 bytes)
  outdoortileset_tile_11_compressed (258 > 96 bytes)
- outdoortileset_tile_12_compressed (258 > 9 bytes)
- outdoortileset_tile_13_compressed (258 > 9 bytes)
- outdoortileset_tile_14_compressed (258 > 9 bytes)
+ outdoortileset_tile_12_compressed (258 > 103 bytes)
+ outdoortileset_tile_13_compressed (258 > 71 bytes)
+ outdoortileset_tile_14_compressed (258 > 105 bytes)
  outdoortileset_tile_15_compressed (258 > 9 bytes)
  outdoortileset_tile_16_compressed (258 > 20 bytes)
  outdoortileset_tile_17_compressed (258 > 30 bytes)
@@ -50,14 +58,14 @@ transparent color : 0x8318
  outdoortileset_tile_20_compressed (258 > 52 bytes)
  outdoortileset_tile_21_compressed (258 > 65 bytes)
  outdoortileset_tile_22_compressed (258 > 65 bytes)
- outdoortileset_tile_23_compressed (258 > 58 bytes)
- outdoortileset_tile_24_compressed (258 > 88 bytes)
+ outdoortileset_tile_23_compressed (258 > 60 bytes)
+ outdoortileset_tile_24_compressed (258 > 90 bytes)
  outdoortileset_tile_25_compressed (258 > 108 bytes)
  outdoortileset_tile_26_compressed (258 > 111 bytes)
  outdoortileset_tile_27_compressed (258 > 94 bytes)
- outdoortileset_tile_28_compressed (258 > 9 bytes)
- outdoortileset_tile_29_compressed (258 > 9 bytes)
- outdoortileset_tile_30_compressed (258 > 9 bytes)
+ outdoortileset_tile_28_compressed (258 > 93 bytes)
+ outdoortileset_tile_29_compressed (258 > 39 bytes)
+ outdoortileset_tile_30_compressed (258 > 98 bytes)
  outdoortileset_tile_31_compressed (258 > 9 bytes)
  outdoortileset_tile_32_compressed (258 > 44 bytes)
  outdoortileset_tile_33_compressed (258 > 40 bytes)
@@ -66,14 +74,14 @@ transparent color : 0x8318
  outdoortileset_tile_36_compressed (258 > 45 bytes)
  outdoortileset_tile_37_compressed (258 > 126 bytes)
  outdoortileset_tile_38_compressed (258 > 122 bytes)
- outdoortileset_tile_39_compressed (258 > 73 bytes)
+ outdoortileset_tile_39_compressed (258 > 75 bytes)
  outdoortileset_tile_40_compressed (258 > 93 bytes)
- outdoortileset_tile_41_compressed (258 > 94 bytes)
- outdoortileset_tile_42_compressed (258 > 95 bytes)
+ outdoortileset_tile_41_compressed (258 > 95 bytes)
+ outdoortileset_tile_42_compressed (258 > 96 bytes)
  outdoortileset_tile_43_compressed (258 > 81 bytes)
- outdoortileset_tile_44_compressed (258 > 9 bytes)
- outdoortileset_tile_45_compressed (258 > 9 bytes)
- outdoortileset_tile_46_compressed (258 > 9 bytes)
+ outdoortileset_tile_44_compressed (258 > 96 bytes)
+ outdoortileset_tile_45_compressed (258 > 53 bytes)
+ outdoortileset_tile_46_compressed (258 > 101 bytes)
  outdoortileset_tile_47_compressed (258 > 9 bytes)
  outdoortileset_tile_48_compressed (258 > 35 bytes)
  outdoortileset_tile_49_compressed (258 > 41 bytes)
@@ -84,12 +92,12 @@ transparent color : 0x8318
  outdoortileset_tile_54_compressed (258 > 97 bytes)
  outdoortileset_tile_55_compressed (258 > 17 bytes)
  outdoortileset_tile_56_compressed (258 > 85 bytes)
- outdoortileset_tile_57_compressed (258 > 95 bytes)
- outdoortileset_tile_58_compressed (258 > 95 bytes)
+ outdoortileset_tile_57_compressed (258 > 96 bytes)
+ outdoortileset_tile_58_compressed (258 > 96 bytes)
  outdoortileset_tile_59_compressed (258 > 17 bytes)
- outdoortileset_tile_60_compressed (258 > 9 bytes)
- outdoortileset_tile_61_compressed (258 > 9 bytes)
- outdoortileset_tile_62_compressed (258 > 9 bytes)
+ outdoortileset_tile_60_compressed (258 > 98 bytes)
+ outdoortileset_tile_61_compressed (258 > 97 bytes)
+ outdoortileset_tile_62_compressed (258 > 96 bytes)
  outdoortileset_tile_63_compressed (258 > 9 bytes)
  outdoortileset_tile_64_compressed (258 > 63 bytes)
  outdoortileset_tile_65_compressed (258 > 28 bytes)
@@ -106,7 +114,7 @@ transparent color : 0x8318
  outdoortileset_tile_76_compressed (258 > 34 bytes)
  outdoortileset_tile_77_compressed (258 > 34 bytes)
  outdoortileset_tile_78_compressed (258 > 45 bytes)
- outdoortileset_tile_79_compressed (258 > 105 bytes)
+ outdoortileset_tile_79_compressed (258 > 9 bytes)
  outdoortileset_tile_80_compressed (258 > 26 bytes)
  outdoortileset_tile_81_compressed (258 > 33 bytes)
  outdoortileset_tile_82_compressed (258 > 36 bytes)
@@ -122,7 +130,7 @@ transparent color : 0x8318
  outdoortileset_tile_92_compressed (258 > 26 bytes)
  outdoortileset_tile_93_compressed (258 > 26 bytes)
  outdoortileset_tile_94_compressed (258 > 41 bytes)
- outdoortileset_tile_95_compressed (258 > 85 bytes)
+ outdoortileset_tile_95_compressed (258 > 9 bytes)
  outdoortileset_tile_96_compressed (258 > 90 bytes)
  outdoortileset_tile_97_compressed (258 > 111 bytes)
  outdoortileset_tile_98_compressed (258 > 100 bytes)
@@ -965,6 +973,14 @@ exporting appvar: PKMNSD4.8xp
  player09
  player10
  player11
+ player12
+ player13
+ player14
+ player15
+ player16
+ player17
+ player18
+ player19
  enemy00
  enemy01
  enemy02

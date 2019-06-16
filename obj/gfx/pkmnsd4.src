@@ -18,22 +18,30 @@ _PKMNSD4:
 	DW24	1399
 	DW24	1542
 	DW24	1688
-	DW24	1828
-	DW24	1970
-	DW24	2126
-	DW24	2275
-	DW24	2455
-	DW24	2634
-	DW24	2700
-	DW24	2839
-	DW24	9827
-	DW24	13192
+	DW24	1883
+	DW24	2078
+	DW24	2274
+	DW24	2473
+	DW24	2664
+	DW24	2858
+	DW24	3048
+	DW24	3242
+	DW24	3382
+	DW24	3524
+	DW24	3680
+	DW24	3829
+	DW24	4009
+	DW24	4188
+	DW24	4254
+	DW24	4393
+	DW24	12163
+	DW24	15528
 ;    1	// convpng v6.8
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD4.h"
 ;    4	
 ;    5	#include <fileioc.h>
-;    6	uint8_t *PKMNSD4[23] = {
+;    6	uint8_t *PKMNSD4[31] = {
 	SEGMENT CODE
 ;    7	 (uint8_t*)0,
 ;    8	 (uint8_t*)138,
@@ -48,29 +56,37 @@ _PKMNSD4:
 ;   17	 (uint8_t*)1399,
 ;   18	 (uint8_t*)1542,
 ;   19	 (uint8_t*)1688,
-;   20	 (uint8_t*)1828,
-;   21	 (uint8_t*)1970,
-;   22	 (uint8_t*)2126,
-;   23	 (uint8_t*)2275,
-;   24	 (uint8_t*)2455,
-;   25	 (uint8_t*)2634,
-;   26	 (uint8_t*)2700,
-;   27	 (uint8_t*)2839,
-;   28	 (uint8_t*)9827,
-;   29	 (uint8_t*)13192,
-;   30	};
-;   31	
-;   32	bool PKMNSD4_init(void) {
+;   20	 (uint8_t*)1883,
+;   21	 (uint8_t*)2078,
+;   22	 (uint8_t*)2274,
+;   23	 (uint8_t*)2473,
+;   24	 (uint8_t*)2664,
+;   25	 (uint8_t*)2858,
+;   26	 (uint8_t*)3048,
+;   27	 (uint8_t*)3242,
+;   28	 (uint8_t*)3382,
+;   29	 (uint8_t*)3524,
+;   30	 (uint8_t*)3680,
+;   31	 (uint8_t*)3829,
+;   32	 (uint8_t*)4009,
+;   33	 (uint8_t*)4188,
+;   34	 (uint8_t*)4254,
+;   35	 (uint8_t*)4393,
+;   36	 (uint8_t*)12163,
+;   37	 (uint8_t*)15528,
+;   38	};
+;   39	
+;   40	bool PKMNSD4_init(void) {
 _PKMNSD4_init:
 	LD	HL,-19
 	CALL	__frameset
-;   33	    unsigned int data, i;
-;   34	    ti_var_t appvar;
-;   35	
-;   36	    ti_CloseAll();
+;   41	    unsigned int data, i;
+;   42	    ti_var_t appvar;
+;   43	
+;   44	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   37	
-;   38	    appvar = ti_Open("PKMNSD4", "r");
+;   45	
+;   46	    appvar = ti_Open("PKMNSD4", "r");
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -79,7 +95,7 @@ _PKMNSD4_init:
 	POP	BC
 	POP	BC
 	LD	(IX+-7),A
-;   39	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD4[0];
+;   47	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD4[0];
 	LD	C,(IX+-7)
 	LD	B,0
 	PUSH	BC
@@ -89,12 +105,12 @@ _PKMNSD4_init:
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-6),HL
-;   40	    for (i = 0; i < PKMNSD4_num; i++) {
+;   48	    for (i = 0; i < PKMNSD4_num; i++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
-;   41	        PKMNSD4[i] += data;
+;   49	        PKMNSD4[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -110,22 +126,22 @@ L_1:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   42	    }
+;   50	    }
 L_3:
-	LD	BC,23
+	LD	BC,31
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_1
-;   43	
-;   44	    ti_CloseAll();
+;   51	
+;   52	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   45	
-;   46	    data = (unsigned int)PKMNSD4[19] - (unsigned int)pokeball_tiles_compressed[0];
+;   53	
+;   54	    data = (unsigned int)PKMNSD4[27] - (unsigned int)pokeball_tiles_compressed[0];
 	LD	BC,(_pokeball_tiles_compressed)
-;   47	    for (i = 0; i < pokeball_tiles_num; i++) {
+;   55	    for (i = 0; i < pokeball_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+57
+	LD	HL,_PKMNSD4+81
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -133,7 +149,7 @@ L_3:
 	LD	(IX+-3),DE
 	JR	L_8
 L_6:
-;   48	        pokeball_tiles_compressed[i] += data;
+;   56	        pokeball_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -149,19 +165,19 @@ L_6:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   49	    }
+;   57	    }
 L_8:
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_6
-;   50	
-;   51	    data = (unsigned int)PKMNSD4[20] - (unsigned int)outdoortileset_tiles_compressed[0];
+;   58	
+;   59	    data = (unsigned int)PKMNSD4[28] - (unsigned int)outdoortileset_tiles_compressed[0];
 	LD	BC,(_outdoortileset_tiles_compressed)
-;   52	    for (i = 0; i < outdoortileset_tiles_num; i++) {
+;   60	    for (i = 0; i < outdoortileset_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+60
+	LD	HL,_PKMNSD4+84
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -169,7 +185,7 @@ L_8:
 	LD	(IX+-3),DE
 	JR	L_13
 L_11:
-;   53	        outdoortileset_tiles_compressed[i] += data;
+;   61	        outdoortileset_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -185,19 +201,19 @@ L_11:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   54	    }
+;   62	    }
 L_13:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_11
-;   55	
-;   56	    data = (unsigned int)PKMNSD4[21] - (unsigned int)indoortileset_tiles_compressed[0];
+;   63	
+;   64	    data = (unsigned int)PKMNSD4[29] - (unsigned int)indoortileset_tiles_compressed[0];
 	LD	BC,(_indoortileset_tiles_compressed)
-;   57	    for (i = 0; i < indoortileset_tiles_num; i++) {
+;   65	    for (i = 0; i < indoortileset_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+63
+	LD	HL,_PKMNSD4+87
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -205,7 +221,7 @@ L_13:
 	LD	(IX+-3),DE
 	JR	L_18
 L_16:
-;   58	        indoortileset_tiles_compressed[i] += data;
+;   66	        indoortileset_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -221,17 +237,17 @@ L_16:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   59	    }
+;   67	    }
 L_18:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_16
-;   60	
-;   61	    return (bool)appvar;
+;   68	
+;   69	    return (bool)appvar;
 	LD	A,(IX+-7)
-;   62	}
+;   70	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -242,7 +258,7 @@ L_18:
 ;_indoortileset_tiles_compressed      IMPORT    384   variable
 ;_outdoortileset_tiles_compressed      IMPORT    384   variable
 ;_pokeball_tiles_compressed          IMPORT      9   variable
-;_PKMNSD4                            STATIC     69   variable
+;_PKMNSD4                            STATIC     93   variable
 ;_ti_GetDataPtr                      IMPORT  -----   function
 ;_ti_Open                            IMPORT  -----   function
 ;_ti_CloseAll                        IMPORT  -----   function

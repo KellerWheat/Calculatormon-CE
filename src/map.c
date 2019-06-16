@@ -62,6 +62,7 @@ int32_t screenY = 0;
 
 uint8_t tx; /* x tile */
 uint8_t ty; /* y tile */
+bool surfing;
 
 uint8_t nextTile;
 uint8_t moveState = 0;
@@ -71,7 +72,7 @@ uint8_t playerState = 0;
 gfx_tilemap_t tilemap;
 
 gfx_sprite_t *mapTiles[128];
-gfx_sprite_t *playerSprites[12];
+gfx_sprite_t *playerSprites[20];
 gfx_sprite_t *enemySprites[4];
 gfx_sprite_t *pokeballSprites[3];
 gfx_sprite_t *pauseMenuSprite;
@@ -146,9 +147,13 @@ void map_SetupGfx(void) {
 		playerSprites[tileIndex] = gfx_MallocSprite(16, 20);
 		zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
 	}
+	for (tileIndex = 12; tileIndex < 20; tileIndex++) {
+		playerSprites[tileIndex] = gfx_MallocSprite(22, 26);
+		zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
+	}
 	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
 		enemySprites[tileIndex] = gfx_MallocSprite(16, 20);
-		zx7_Decompress(enemySprites[tileIndex], PKMNSD4[12 + tileIndex]);
+		zx7_Decompress(enemySprites[tileIndex], PKMNSD4[20 + tileIndex]);
 	}
 	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
 		pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
@@ -183,6 +188,23 @@ int map_Loop(void) {
 	/* If player presses 2nd */
 	if ((kb_Data[1] & kb_2nd)) {
 		nextTile = GetNextTile(tx, ty, tilemap.width);
+		if (nextTile >= 0x10 && nextTile < 0x20 && (GetTypeMapData(tx, ty, tilemap.width) == 2)) {
+			if (moveDir == 1) {
+				playerX += 16;
+			}
+			if (moveDir == 2) {
+				playerX -= 16;
+			}
+			if (moveDir == 3) {
+				playerY += 16;
+			}
+			if (moveDir == 4) {
+				playerY -= 16;
+			}
+			surfing = true;
+			tx = playerX / 16;
+			ty = playerY / 16;
+		}
 		if (nextTile == 0x41) {
 			HealParty();
 		}
@@ -206,6 +228,10 @@ int map_Loop(void) {
 				return 1;
 			}
 		}
+		while ((kb_Data[1] & kb_2nd))
+		{
+			kb_Scan();
+		}
 	}
 	/* If moving */
 	if (moveState > 0) {
@@ -223,18 +249,27 @@ int map_Loop(void) {
 		if (moveDir == 4) {
 			playerY -= 2;
 		}
-
-		if (moveState > 5) {
-			playerState = 1;
+		if (surfing) {
+			if (moveState > 3) {
+				playerState = 1;
+			}
+			else {
+				playerState = 0;
+			}
 		}
-		else if (moveState > 3) {
-			playerState = 0;
-		}
-		else if (moveState > 1) {
-			playerState = 2;
-		}
-		else if (moveState > 0) {
-			playerState = 0;
+		else {
+			if (moveState > 5) {
+				playerState = 1;
+			}
+			else if (moveState > 3) {
+				playerState = 0;
+			}
+			else if (moveState > 1) {
+				playerState = 2;
+			}
+			else if (moveState > 0) {
+				playerState = 0;
+			}
 		}
 
 		if (moveState == 0) {
@@ -253,6 +288,9 @@ int map_Loop(void) {
 			}
 			else if (nextTile == 0x01) {
 				ExitBuilding();
+			}
+			else if (nextTile == 0x02) {
+				surfing = false;
 			}
 			else if (nextTile >= 0x20 && nextTile < 0x30) {
 				ExitZone(nextTile - 32);
@@ -281,13 +319,13 @@ int map_Loop(void) {
 			moveDir = 4;
 		}
 		if (kb_Data[7]) {
-			if (GetNextTile(tx, ty, tilemap.width) < 64) {
+			if (GetNextTile(tx, ty, tilemap.width) < 64 && !((GetTypeMapData(tx, ty, tilemap.width) == 2) && (GetNextTile(tx, ty, tilemap.width) >= 0x10) && (GetNextTile(tx, ty, tilemap.width) <= 0x20))) {
 				moveState = 8;
 			}
 			if (GetNextTile(tx, ty, tilemap.width) >= 112 && GetNextTile(tx, ty, tilemap.width) < 120) {
 				if (GetNextTile(tx, ty, tilemap.width) - 111 > badgeCount) {
 					sprintf(str, "You need %u badges to pass", (GetNextTile(tx, ty, tilemap.width) - 111));
-					text_Display(str, true);
+					text_Display("This route is closed. Come back later.", true);
 				}
 				else {
 					moveState = 8;
@@ -306,7 +344,7 @@ void map_End(void) {
 	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 		free(mapTiles[tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 12; tileIndex++) {
+	for (tileIndex = 0; tileIndex < 20; tileIndex++) {
 		free(playerSprites[tileIndex]);
 	}
 	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
@@ -334,19 +372,22 @@ void map_Draw(void) {
 
 		gfx_Tilemap(&tilemap, screenX, screenY);
 		
-		gfx_TransparentSprite_NoClip(playerSprites[moveDir * 3 + playerState - 3], playerX - screenX - 8, playerY - screenY + 4);
+		gfx_TransparentSprite_NoClip(playerSprites[(12*surfing) + (moveDir - 1) * (3 - surfing) + playerState], playerX - screenX - 8, playerY - screenY + 4);
 	}
 	DrawEnemies();
 	map_DrawInformationBar();
 }
 
 void HealParty(void) {
-	int pokemonIndex;
+	int pokemonIndex, moveIndex;
 	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 		party[pokemonIndex].currenthealth = stats_CalculateStats(party[pokemonIndex]).health;
 		party[pokemonIndex].currentstatus = 0;
+		for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+			party[pokemonIndex].pp[moveIndex] = data_moves[party[pokemonIndex].moves[moveIndex]].uses;
+		}
 	}
-	text_Display("Your party has been healed", true);
+	text_Display("Your party has been healed", false);
 	map_LoadPokeballs();
 }
 void OpenBox(void) {
@@ -616,11 +657,14 @@ void map_DrawInformationBar(void) {
 }
 
 void map_LoseFight(void) {
-	int tileIndex, partyIndex;
+	int tileIndex, partyIndex, moveIndex;
 	text_Display("All your pokemon have fainted", false);
 	for (partyIndex = 0; partyIndex < 6; partyIndex++) {
 		party[partyIndex].currenthealth = stats_CalculateStats(party[partyIndex]).health;
 		party[partyIndex].currentstatus = 0;
+		for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+			party[partyIndex].pp[moveIndex] = data_moves[party[partyIndex].moves[moveIndex]].uses;
+		}
 	}
 	playerX = 5*16;
 	playerY = 7*16;

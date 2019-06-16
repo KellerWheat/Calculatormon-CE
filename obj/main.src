@@ -11,7 +11,7 @@ _gameState:
 ;    3	 * Program Name: Pokemon
 ;    4	 * Author: FBDAJH
 ;    5	 * License: MIT License
-;    6	 * Description: Pokemon (pokemon and mechanics are mostly from gen 1)
+;    6	 * Description: Pokemon
 ;    7	 *--------------------------------------
 ;    8	*/
 ;    9	
@@ -168,10 +168,10 @@ L_0:
 	LD	A,(IX+-1)
 	CP	A,4
 	JR	NZ,L_3
-;   79				party[0] = stats_NewCharacter(152, 100);
-	LD	BC,100
+;   79				party[0] = stats_NewCharacter(137, 5);
+	LD	BC,5
 	PUSH	BC
-	LD	BC,152
+	LD	BC,137
 	PUSH	BC
 	PEA	IX+-38
 	CALL	_stats_NewCharacter
@@ -232,71 +232,72 @@ L_9:
 	JR	C,L_7
 ;   89		}
 L_12:
-;   90		map_LoadPokeballs();
+;   90	
+;   91		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;   91		do {
+;   92		do {
 L_18:
-;   92			kb_Scan();
+;   93			kb_Scan();
 	CALL	_kb_Scan
-;   93			if (gameState == 0) {
+;   94			if (gameState == 0) {
 	LD	A,(_gameState)
 	OR	A,A
 	JR	NZ,L_17
-;   94				gameState = map_Loop();
+;   95				gameState = map_Loop();
 	CALL	_map_Loop
 	LD	A,L
-;   95				if (gameState == 1) {
+;   96				if (gameState == 1) {
 	CP	A,1
 	LD	(_gameState),A
 	JR	NZ,L_19
-;   96					map_End();
+;   97					map_End();
 	CALL	_map_End
-;   97					battle_Setup();
+;   98					battle_Setup();
 	CALL	_battle_Setup
-;   98				}
-;   99			}
-;  100			else if (gameState == 1) {
+;   99				}
+;  100			}
+;  101			else if (gameState == 1) {
 	JR	L_19
 L_17:
 	LD	A,(_gameState)
 	CP	A,1
 	JR	NZ,L_19
-;  101				gameState = battle_Loop();
+;  102				gameState = battle_Loop();
 	CALL	_battle_Loop
 	LD	A,L
 	LD	(_gameState),A
-;  102				if (gameState == 0) {
+;  103				if (gameState == 0) {
 	OR	A,A
 	JR	NZ,L_19
-;  103					battle_End();
+;  104					battle_End();
 	CALL	_battle_End
-;  104					map_Setup();
+;  105					map_Setup();
 	CALL	_map_Setup
-;  105				}
-;  106			}
-;  107		} while (gameState < 2);
+;  106				}
+;  107			}
+;  108		} while (gameState < 2);
 L_19:
 	LD	A,(_gameState)
 	CP	A,2
 	JR	C,L_18
-;  108	
-;  109		map_End();
+;  109	
+;  110		map_End();
 	CALL	_map_End
-;  110		battle_End();
+;  111		battle_End();
 	CALL	_battle_End
-;  111		free(textBoxSprite1);
+;  112		free(textBoxSprite1);
 	LD	BC,(_textBoxSprite1)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  112		free(textBoxSprite2);
+;  113		free(textBoxSprite2);
 	LD	BC,(_textBoxSprite2)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  113	
 ;  114	
-;  115		gfx_End();
+;  115	
+;  116		gfx_End();
 	CALL	_gfx_End
 	LD	SP,IX
 	POP	IX

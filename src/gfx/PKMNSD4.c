@@ -3,7 +3,7 @@
 #include "PKMNSD4.h"
 
 #include <fileioc.h>
-uint8_t *PKMNSD4[23] = {
+uint8_t *PKMNSD4[31] = {
  (uint8_t*)0,
  (uint8_t*)138,
  (uint8_t*)269,
@@ -17,16 +17,24 @@ uint8_t *PKMNSD4[23] = {
  (uint8_t*)1399,
  (uint8_t*)1542,
  (uint8_t*)1688,
- (uint8_t*)1828,
- (uint8_t*)1970,
- (uint8_t*)2126,
- (uint8_t*)2275,
- (uint8_t*)2455,
- (uint8_t*)2634,
- (uint8_t*)2700,
- (uint8_t*)2839,
- (uint8_t*)9827,
- (uint8_t*)13192,
+ (uint8_t*)1883,
+ (uint8_t*)2078,
+ (uint8_t*)2274,
+ (uint8_t*)2473,
+ (uint8_t*)2664,
+ (uint8_t*)2858,
+ (uint8_t*)3048,
+ (uint8_t*)3242,
+ (uint8_t*)3382,
+ (uint8_t*)3524,
+ (uint8_t*)3680,
+ (uint8_t*)3829,
+ (uint8_t*)4009,
+ (uint8_t*)4188,
+ (uint8_t*)4254,
+ (uint8_t*)4393,
+ (uint8_t*)12163,
+ (uint8_t*)15528,
 };
 
 bool PKMNSD4_init(void) {
@@ -43,17 +51,17 @@ bool PKMNSD4_init(void) {
 
     ti_CloseAll();
 
-    data = (unsigned int)PKMNSD4[19] - (unsigned int)pokeball_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[27] - (unsigned int)pokeball_tiles_compressed[0];
     for (i = 0; i < pokeball_tiles_num; i++) {
         pokeball_tiles_compressed[i] += data;
     }
 
-    data = (unsigned int)PKMNSD4[20] - (unsigned int)outdoortileset_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[28] - (unsigned int)outdoortileset_tiles_compressed[0];
     for (i = 0; i < outdoortileset_tiles_num; i++) {
         outdoortileset_tiles_compressed[i] += data;
     }
 
-    data = (unsigned int)PKMNSD4[21] - (unsigned int)indoortileset_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[29] - (unsigned int)indoortileset_tiles_compressed[0];
     for (i = 0; i < indoortileset_tiles_num; i++) {
         indoortileset_tiles_compressed[i] += data;
     }
