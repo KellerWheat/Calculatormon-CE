@@ -51,6 +51,10 @@ Pokémon Menu - Ripped by Redzagoon
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3854/
 
+PC Interface - Ripped by fabnt
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3861/
+
 Tileset 0 - Ripped by Hoeloe
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
