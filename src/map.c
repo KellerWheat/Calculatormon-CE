@@ -62,6 +62,7 @@ int32_t screenY = 0;
 
 uint8_t tx; /* x tile */
 uint8_t ty; /* y tile */
+bool running;
 bool surfing;
 
 uint8_t nextTile;
@@ -109,8 +110,8 @@ void map_Initialize(void) {
 	tilemap.type_height = gfx_tile_16_pixel;
 	tilemap.tile_height = 16;
 	tilemap.tile_width = 16;
-	tilemap.draw_height = 15;
-	tilemap.draw_width = 21;
+	tilemap.draw_height = 16;
+	tilemap.draw_width = 22;
 	tilemap.height = OUTDOORHEIGHT;
 	tilemap.width = OUTDOORWIDTH;
 	tilemap.y_loc = 8;
@@ -318,7 +319,11 @@ int map_Loop(void) {
 		else if (kb_Data[7] & kb_Up) {
 			moveDir = 4;
 		}
+		
 		if (kb_Data[7]) {
+			if (kb_Data[2] & kb_Alpha) {
+				running = true;
+			}
 			if (GetNextTile(tx, ty, tilemap.width) < 64 && !((GetTypeMapData(tx, ty, tilemap.width) == 2) && (GetNextTile(tx, ty, tilemap.width) >= 0x10) && (GetNextTile(tx, ty, tilemap.width) <= 0x20))) {
 				moveState = 8;
 			}
@@ -331,6 +336,9 @@ int map_Loop(void) {
 					moveState = 8;
 				}
 			}
+		}
+		else {
+			running = false;
 		}
 	}
 
@@ -391,7 +399,13 @@ void HealParty(void) {
 	map_LoadPokeballs();
 }
 void OpenBox(void) {
-	uint8_t boxMode;
+	map_End();
+
+	menu_Box();
+
+	map_SetupGfx();
+	map_LoadPokeballs();
+	/*uint8_t boxMode;
 	boxMode = text_AskQuestion2("Box", "Delete Save", false);
 	if (boxMode == 2) {
 		text_Display("Are You Sure?", false);
@@ -462,8 +476,8 @@ void OpenBox(void) {
 				goto redrawbox;
 			}
 		}
-	}
-	map_LoadPokeballs();
+	}*/
+	/*map_LoadPokeballs();*/
 }
 void TalkToNpc1(void) {
 	text_Display(data_npcText[npc1], false);

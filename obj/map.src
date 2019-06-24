@@ -24,6 +24,8 @@ _tx:
 	DS	1
 _ty:
 	DS	1
+_running:
+	DS	1
 _surfing:
 	DS	1
 _nextTile:
@@ -159,42 +161,43 @@ _str1:
 ;   62	
 ;   63	uint8_t tx; /* x tile */
 ;   64	uint8_t ty; /* y tile */
-;   65	bool surfing;
-;   66	
-;   67	uint8_t nextTile;
-;   68	uint8_t moveState = 0;
-;   69	uint8_t moveDir = 3;
-;   70	uint8_t playerState = 0;
-;   71	
-;   72	gfx_tilemap_t tilemap;
-;   73	
-;   74	gfx_sprite_t *mapTiles[128];
-;   75	gfx_sprite_t *playerSprites[20];
-;   76	gfx_sprite_t *enemySprites[4];
-;   77	gfx_sprite_t *pokeballSprites[3];
-;   78	gfx_sprite_t *pauseMenuSprite;
-;   79	
-;   80	uint8_t currentTileMap[1920];
-;   81	uint8_t currentTypeMap[1920];
-;   82	struct zoneData currentZoneData;
-;   83	/* zoneData is in header file because battle.c needs it*/
-;   84	
-;   85	uint8_t npc1;
-;   86	uint8_t npc2;
-;   87	
-;   88	uint8_t currentTrainer = 0; /* 0-15 */
-;   89	struct pokemonData tempcharacter2;
-;   90	const struct pokemonData clearcharacter2 = {0};
-;   91	
-;   92	char str1[20];
+;   65	bool running;
+;   66	bool surfing;
+;   67	
+;   68	uint8_t nextTile;
+;   69	uint8_t moveState = 0;
+;   70	uint8_t moveDir = 3;
+;   71	uint8_t playerState = 0;
+;   72	
+;   73	gfx_tilemap_t tilemap;
+;   74	
+;   75	gfx_sprite_t *mapTiles[128];
+;   76	gfx_sprite_t *playerSprites[20];
+;   77	gfx_sprite_t *enemySprites[4];
+;   78	gfx_sprite_t *pokeballSprites[3];
+;   79	gfx_sprite_t *pauseMenuSprite;
+;   80	
+;   81	uint8_t currentTileMap[1920];
+;   82	uint8_t currentTypeMap[1920];
+;   83	struct zoneData currentZoneData;
+;   84	/* zoneData is in header file because battle.c needs it*/
+;   85	
+;   86	uint8_t npc1;
+;   87	uint8_t npc2;
+;   88	
+;   89	uint8_t currentTrainer = 0; /* 0-15 */
+;   90	struct pokemonData tempcharacter2;
+;   91	const struct pokemonData clearcharacter2 = {0};
+;   92	
+;   93	char str1[20];
 	SEGMENT CODE
-;   93	
-;   94	void map_Initialize(void) {
+;   94	
+;   95	void map_Initialize(void) {
 _map_Initialize:
-;   95		PKMNSD4_init();
+;   96		PKMNSD4_init();
 	CALL	_PKMNSD4_init
-;   96	
-;   97		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+;   97	
+;   98		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
 	LD	HL,_PKMNSD4+90
@@ -206,12 +209,12 @@ _map_Initialize:
 	POP	BC
 	POP	BC
 	POP	BC
-;   98		SetColors(0);
+;   99		SetColors(0);
 	LD	BC,0
 	PUSH	BC
 	CALL	_SetColors
 	POP	BC
-;   99		gfx_SetTextFGColor(colors[1]);
+;  100		gfx_SetTextFGColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -219,7 +222,7 @@ _map_Initialize:
 	PUSH	BC
 	CALL	_gfx_SetTextFGColor
 	POP	BC
-;  100		zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
+;  101		zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
 	LD	HL,_PKMNSD4+72
 	LD	BC,(HL)
 	PUSH	BC
@@ -228,7 +231,7 @@ _map_Initialize:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  101		zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
+;  102		zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
 	LD	HL,_PKMNSD4+75
 	LD	BC,(HL)
 	PUSH	BC
@@ -237,77 +240,76 @@ _map_Initialize:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  102		save_SelectSave();
+;  103		save_SelectSave();
 	CALL	_save_SelectSave
-;  103		save_Load();
+;  104		save_Load();
 	CALL	_save_Load
-;  104	
-;  105		/* Initialize the tilemap */
-;  106		tilemap.map = currentTileMap;
+;  105	
+;  106		/* Initialize the tilemap */
+;  107		tilemap.map = currentTileMap;
 	LD	BC,_currentTileMap
 	LD	(_tilemap),BC
-;  107		tilemap.tiles = mapTiles;
+;  108		tilemap.tiles = mapTiles;
 	LD	BC,_mapTiles
 	LD	(_tilemap+3),BC
-;  108		tilemap.type_width = gfx_tile_16_pixel;
+;  109		tilemap.type_width = gfx_tile_16_pixel;
 	LD	A,4
 	LD	(_tilemap+10),A
-;  109		tilemap.type_height = gfx_tile_16_pixel;
+;  110		tilemap.type_height = gfx_tile_16_pixel;
 	LD	(_tilemap+11),A
-;  110		tilemap.tile_height = 16;
+;  111		tilemap.tile_height = 16;
 	LD	A,16
 	LD	(_tilemap+6),A
-;  111		tilemap.tile_width = 16;
+;  112		tilemap.tile_width = 16;
 	LD	(_tilemap+7),A
-;  112		tilemap.draw_height = 15;
-	LD	A,15
+;  113		tilemap.draw_height = 16;
 	LD	(_tilemap+8),A
-;  113		tilemap.draw_width = 21;
-	LD	A,21
+;  114		tilemap.draw_width = 22;
+	LD	A,22
 	LD	(_tilemap+9),A
-;  114		tilemap.height = OUTDOORHEIGHT;
+;  115		tilemap.height = OUTDOORHEIGHT;
 	LD	A,40
 	LD	(_tilemap+12),A
-;  115		tilemap.width = OUTDOORWIDTH;
+;  116		tilemap.width = OUTDOORWIDTH;
 	LD	A,48
 	LD	(_tilemap+13),A
-;  116		tilemap.y_loc = 8;
+;  117		tilemap.y_loc = 8;
 	LD	A,8
 	LD	(_tilemap+14),A
-;  117		tilemap.x_loc = -8;
+;  118		tilemap.x_loc = -8;
 	LD	BC,16777208
 	LD	(_tilemap+15),BC
-;  118	
-;  119		if (indoors) {
+;  119	
+;  120		if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
 	JR	Z,L_1
-;  120			tilemap.width = 21;
+;  121			tilemap.width = 21;
 	LD	A,21
 	LD	(_tilemap+13),A
-;  121			tilemap.height = 15;
+;  122			tilemap.height = 15;
 	LD	A,15
 	LD	(_tilemap+12),A
-;  122		}
+;  123		}
 L_1:
-;  123	
-;  124		tx = playerX / 16;
+;  124	
+;  125		tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  125		ty = playerY / 16;
+;  126		ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  126		LoadMap();
+;  127		LoadMap();
 	CALL	_LoadMap
-;  127	}
+;  128	}
 	RET	
 
 
@@ -339,26 +341,26 @@ L_1:
 ;       Spill Code: 0 (instruction)
 
 
-;  128	void map_Setup(void) {
+;  129	void map_Setup(void) {
 _map_Setup:
-;  129		map_SetupGfx();
+;  130		map_SetupGfx();
 	CALL	_map_SetupGfx
-;  130	
-;  131		tx = playerX / 16;
+;  131	
+;  132		tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  132		ty = playerY / 16;
+;  133		ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  133	}
+;  134	}
 	RET	
 
 
@@ -375,18 +377,18 @@ _map_Setup:
 ;       Spill Code: 0 (instruction)
 
 
-;  134	
-;  135	void map_SetupGfx(void) {
+;  135	
+;  136	void map_SetupGfx(void) {
 _map_SetupGfx:
 	LD	HL,-6
 	CALL	__frameset
-;  136		int tileIndex = 0;
-;  137		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+;  137		int tileIndex = 0;
+;  138		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_9
 L_7:
-;  138			mapTiles[tileIndex] = gfx_MallocSprite(16, 16);
+;  139			mapTiles[tileIndex] = gfx_MallocSprite(16, 16);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -406,11 +408,11 @@ L_7:
 	LD	DE,_mapTiles
 	ADD	HL,DE
 	LD	(HL),BC
-;  139			if (indoors) {
+;  140			if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
 	JR	Z,L_6
-;  140				zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
+;  141				zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
 	LD	BC,_indoortileset_tiles_compressed
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -424,11 +426,11 @@ L_7:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  141			}
-;  142			else {
+;  142			}
+;  143			else {
 	JR	L_8
 L_6:
-;  143				zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
+;  144				zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
 	LD	BC,_outdoortileset_tiles_compressed
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -442,8 +444,8 @@ L_6:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  144			}
-;  145		}
+;  145			}
+;  146		}
 L_8:
 	LD	BC,(IX+-3)
 	INC	BC
@@ -454,12 +456,12 @@ L_9:
 	OR	A,A
 	SBC	HL,BC
 	JP	M,L_7
-;  146		for (tileIndex = 0; tileIndex < 12; tileIndex++) {
+;  147		for (tileIndex = 0; tileIndex < 12; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_13
 L_11:
-;  147			playerSprites[tileIndex] = gfx_MallocSprite(16, 20);
+;  148			playerSprites[tileIndex] = gfx_MallocSprite(16, 20);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,20
@@ -478,7 +480,7 @@ L_11:
 	LD	DE,_playerSprites
 	ADD	HL,DE
 	LD	(HL),BC
-;  148			zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
+;  149			zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -500,7 +502,7 @@ L_11:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  149		}
+;  150		}
 L_13:
 	LD	BC,12
 	LD	HL,(IX+-3)
@@ -508,11 +510,11 @@ L_13:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_11
-;  150		for (tileIndex = 12; tileIndex < 20; tileIndex++) {
+;  151		for (tileIndex = 12; tileIndex < 20; tileIndex++) {
 	LD	(IX+-3),BC
 	JR	L_18
 L_16:
-;  151			playerSprites[tileIndex] = gfx_MallocSprite(22, 26);
+;  152			playerSprites[tileIndex] = gfx_MallocSprite(22, 26);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,26
@@ -531,7 +533,7 @@ L_16:
 	LD	DE,_playerSprites
 	ADD	HL,DE
 	LD	(HL),BC
-;  152			zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
+;  153			zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -553,7 +555,7 @@ L_16:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  153		}
+;  154		}
 L_18:
 	LD	BC,20
 	LD	HL,(IX+-3)
@@ -561,12 +563,12 @@ L_18:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_16
-;  154		for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+;  155		for (tileIndex = 0; tileIndex < 4; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_23
 L_21:
-;  155			enemySprites[tileIndex] = gfx_MallocSprite(16, 20);
+;  156			enemySprites[tileIndex] = gfx_MallocSprite(16, 20);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,20
@@ -585,7 +587,7 @@ L_21:
 	LD	DE,_enemySprites
 	ADD	HL,DE
 	LD	(HL),BC
-;  156			zx7_Decompress(enemySprites[tileIndex], PKMNSD4[20 + tileIndex]);
+;  157			zx7_Decompress(enemySprites[tileIndex], PKMNSD4[20 + tileIndex]);
 	LD	IY,(IX+-3)
 	LEA	HL,IY+20
 	LD	BC,HL
@@ -609,7 +611,7 @@ L_21:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  157		}
+;  158		}
 L_23:
 	LD	BC,4
 	LD	HL,(IX+-3)
@@ -617,12 +619,12 @@ L_23:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_21
-;  158		for (tileIndex = 0; tileIndex < 3; tileIndex++) {
+;  159		for (tileIndex = 0; tileIndex < 3; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_28
 L_26:
-;  159			pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
+;  160			pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,16
@@ -640,7 +642,7 @@ L_26:
 	LD	DE,_pokeballSprites
 	ADD	HL,DE
 	LD	(HL),BC
-;  160			zx7_Decompress(pokeballSprites[tileIndex], pokeball_tiles_compressed[tileIndex]);
+;  161			zx7_Decompress(pokeballSprites[tileIndex], pokeball_tiles_compressed[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -662,7 +664,7 @@ L_26:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  161		}
+;  162		}
 L_28:
 	LD	BC,3
 	LD	HL,(IX+-3)
@@ -670,7 +672,7 @@ L_28:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_26
-;  162		pauseMenuSprite = gfx_MallocSprite(112, 96);
+;  163		pauseMenuSprite = gfx_MallocSprite(112, 96);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,96
@@ -681,7 +683,7 @@ L_28:
 	POP	BC
 	POP	BC
 	POP	BC
-;  163		zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
+;  164		zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
 	LD	IY,_PKMNSD4
 	LD	(_pauseMenuSprite),HL
 	LD	BC,(IY+78)
@@ -691,7 +693,7 @@ L_28:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  164		zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
+;  165		zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
 	LD	HL,_PKMNSD4+72
 	LD	BC,(HL)
 	PUSH	BC
@@ -700,7 +702,7 @@ L_28:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  165		zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
+;  166		zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
 	LD	HL,_PKMNSD4+75
 	LD	BC,(HL)
 	PUSH	BC
@@ -709,7 +711,7 @@ L_28:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  166		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+;  167		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
 	LD	HL,_PKMNSD4+90
@@ -721,19 +723,19 @@ L_28:
 	POP	BC
 	POP	BC
 	POP	BC
-;  167		SetColors(0);
+;  168		SetColors(0);
 	LD	BC,0
 	PUSH	BC
 	CALL	_SetColors
 	POP	BC
-;  168		gfx_SetTextScale(1, 1);
+;  169		gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  169		gfx_SetTextFGColor(colors[1]);
+;  170		gfx_SetTextFGColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -741,9 +743,9 @@ L_28:
 	PUSH	BC
 	CALL	_gfx_SetTextFGColor
 	POP	BC
-;  170		map_LoadPokeballs();
+;  171		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;  171	}
+;  172	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -780,28 +782,28 @@ L_28:
 ;       Spill Code: 0 (instruction)
 
 
-;  172	
-;  173	int map_Loop(void) {
+;  173	
+;  174	int map_Loop(void) {
 _map_Loop:
 	LD	HL,-25
 	CALL	__frameset
-;  174		/* Open Menu */
-;  175		if (kb_Data[6] & kb_Enter) {
+;  175		/* Open Menu */
+;  176		if (kb_Data[6] & kb_Enter) {
 	LD	A,(16056348)
 	AND	A,1
 	JR	Z,L_69
-;  176			int menuReturn;
-;  177			Wait(20);
+;  177			int menuReturn;
+;  178			Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  178			gfx_Blit(gfx_screen);
+;  179			gfx_Blit(gfx_screen);
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
-;  179			gfx_Sprite(pauseMenuSprite, 195, 25);
+;  180			gfx_Sprite(pauseMenuSprite, 195, 25);
 	LD	BC,25
 	PUSH	BC
 	LD	BC,195
@@ -812,19 +814,19 @@ _map_Loop:
 	POP	BC
 	POP	BC
 	POP	BC
-;  180			map_End();
+;  181			map_End();
 	CALL	_map_End
-;  181	
-;  182			menuReturn = menu_Menu();
+;  182	
+;  183			menuReturn = menu_Menu();
 	CALL	_menu_Menu
 	UEXT	HL
 	LD	L,A
 	LD	(IX+-4),HL
-;  183			map_SetupGfx();
+;  184			map_SetupGfx();
 	CALL	_map_SetupGfx
-;  184			map_LoadPokeballs();
+;  185			map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;  185			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+;  186			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
 	JR	L_33
 L_34:
 	CALL	_kb_Scan
@@ -835,17 +837,17 @@ L_33:
 	LD	A,(16056348)
 	AND	A,64
 	JR	NZ,L_34
-;  186			return menuReturn;
+;  187			return menuReturn;
 	LD	HL,(IX+-4)
-	JR	L_128
-;  187		}
+	JR	L_131
+;  188		}
 L_69:
-;  188		/* If player presses 2nd */
-;  189		if ((kb_Data[1] & kb_2nd)) {
+;  189		/* If player presses 2nd */
+;  190		if ((kb_Data[1] & kb_2nd)) {
 	LD	A,(16056338)
 	AND	A,32
-	JR	Z,L_126
-;  190			nextTile = GetNextTile(tx, ty, tilemap.width);
+	JR	Z,L_129
+;  191			nextTile = GetNextTile(tx, ty, tilemap.width);
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -861,7 +863,7 @@ L_69:
 	POP	BC
 	POP	BC
 	POP	BC
-;  191			if (nextTile >= 0x10 && nextTile < 0x20 && (GetTypeMapData(tx, ty, tilemap.width) == 2)) {
+;  192			if (nextTile >= 0x10 && nextTile < 0x20 && (GetTypeMapData(tx, ty, tilemap.width) == 2)) {
 	CP	A,16
 	LD	(_nextTile),A
 	JR	C,L_64
@@ -889,121 +891,121 @@ L_69:
 	LD	BC,2
 	SBC	HL,BC
 	JR	NZ,L_64
-;  192				if (moveDir == 1) {
+;  193				if (moveDir == 1) {
 	LD	A,(_moveDir)
 	CP	A,1
 	JR	NZ,L_41
-;  193					playerX += 16;
+;  194					playerX += 16;
 	LD	IY,(_playerX)
 	LEA	BC,IY+16
 	LD	HL,_playerX
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  194				}
+;  195				}
 L_41:
-;  195				if (moveDir == 2) {
+;  196				if (moveDir == 2) {
 	LD	A,(_moveDir)
 	CP	A,2
 	JR	NZ,L_43
-;  196					playerX -= 16;
+;  197					playerX -= 16;
 	LD	IY,(_playerX)
 	LEA	BC,IY+-16
 	LD	HL,_playerX
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  197				}
+;  198				}
 L_43:
-;  198				if (moveDir == 3) {
+;  199				if (moveDir == 3) {
 	LD	A,(_moveDir)
 	CP	A,3
 	JR	NZ,L_45
-;  199					playerY += 16;
+;  200					playerY += 16;
 	LD	IY,(_playerY)
 	LEA	BC,IY+16
 	LD	HL,_playerY
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  200				}
+;  201				}
 L_45:
-;  201				if (moveDir == 4) {
+;  202				if (moveDir == 4) {
 	LD	A,(_moveDir)
 	CP	A,4
 	JR	NZ,L_46
-;  202					playerY -= 16;
+;  203					playerY -= 16;
 	LD	IY,(_playerY)
 	LEA	BC,IY+-16
 	LD	HL,_playerY
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  203				}
+;  204				}
 L_46:
-;  204				surfing = true;
+;  205				surfing = true;
 	LD	A,1
 	LD	(_surfing),A
-;  205				tx = playerX / 16;
+;  206				tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  206				ty = playerY / 16;
+;  207				ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  207			}
+;  208			}
 L_64:
-;  208			if (nextTile == 0x41) {
+;  209			if (nextTile == 0x41) {
 	LD	A,(_nextTile)
 	CP	A,65
 	JR	NZ,L_63
-;  209				HealParty();
+;  210				HealParty();
 	CALL	_HealParty
-;  210			}
-;  211			else if (nextTile == 0x42) {
+;  211			}
+;  212			else if (nextTile == 0x42) {
 	JR	L_65
 L_63:
 	LD	A,(_nextTile)
 	CP	A,66
 	JR	NZ,L_61
-;  212				items_ItemShop();
+;  213				items_ItemShop();
 	CALL	_items_ItemShop
-;  213			}
-;  214			else if (nextTile == 0x43) {
+;  214			}
+;  215			else if (nextTile == 0x43) {
 	JR	L_65
 L_61:
 	LD	A,(_nextTile)
 	CP	A,67
 	JR	NZ,L_59
-;  215				OpenBox();
+;  216				OpenBox();
 	CALL	_OpenBox
-;  216			}
-;  217			else if (nextTile == 0x44) {
+;  217			}
+;  218			else if (nextTile == 0x44) {
 	JR	L_65
 L_59:
 	LD	A,(_nextTile)
 	CP	A,68
 	JR	NZ,L_57
-;  218				TalkToNpc1();
+;  219				TalkToNpc1();
 	CALL	_TalkToNpc1
-;  219			}
-;  220			else if (nextTile == 0x45) {
+;  220			}
+;  221			else if (nextTile == 0x45) {
 	JR	L_65
 L_57:
 	LD	A,(_nextTile)
 	CP	A,69
 	JR	NZ,L_55
-;  221				TalkToNpc2();
+;  222				TalkToNpc2();
 	CALL	_TalkToNpc2
-;  222			}
-;  223			else if (nextTile >= 0x50 && nextTile < 0x60) {
+;  223			}
+;  224			else if (nextTile >= 0x50 && nextTile < 0x60) {
 	JR	L_65
 L_55:
 	LD	A,(_nextTile)
@@ -1012,7 +1014,7 @@ L_55:
 	LD	A,(_nextTile)
 	CP	A,96
 	JR	NC,L_53
-;  224				EnterDoor(nextTile - 80);
+;  225				EnterDoor(nextTile - 80);
 	LD	A,(_nextTile)
 	SUB	A,80
 	LD	C,A
@@ -1020,8 +1022,8 @@ L_55:
 	PUSH	BC
 	CALL	_EnterDoor
 	POP	BC
-;  225			}
-;  226			else if (nextTile >= 0x60 && nextTile < 0x70) {
+;  226			}
+;  227			else if (nextTile >= 0x60 && nextTile < 0x70) {
 	JR	L_65
 L_53:
 	LD	A,(_nextTile)
@@ -1030,7 +1032,7 @@ L_53:
 	LD	A,(_nextTile)
 	CP	A,112
 	JR	NC,L_65
-;  227				if (FightTrainer(nextTile - 96)) {
+;  228				if (FightTrainer(nextTile - 96)) {
 	LD	A,(_nextTile)
 	SUB	A,96
 	LD	C,A
@@ -1040,39 +1042,39 @@ L_53:
 	POP	BC
 	OR	A,A
 	JR	Z,L_65
-;  228					return 1;
+;  229					return 1;
 	LD	HL,1
-	JR	L_128
-;  229				}
-;  230			}
-;  231			while ((kb_Data[1] & kb_2nd))
+	JR	L_131
+;  230				}
+;  231			}
+;  232			while ((kb_Data[1] & kb_2nd))
 L_66:
-;  232			{
-;  233				kb_Scan();
+;  233			{
+;  234				kb_Scan();
 	CALL	_kb_Scan
-;  234			}
+;  235			}
 L_65:
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_66
-;  235		}
-L_126:
-;  236		/* If moving */
-;  237		if (moveState > 0) {
+;  236		}
+L_129:
+;  237		/* If moving */
+;  238		if (moveState > 0) {
 	XOR	A,A
 	LD	HL,_moveState
 	CP	A,(HL)
-	JR	NC,L_125
-;  238			moveState--;
+	JR	NC,L_128
+;  239			moveState--;
 	LD	A,(_moveState)
 	DEC	A
 	LD	(_moveState),A
-;  239			//Wait(1);
-;  240			if (moveDir == 1) {
+;  240			//Wait(1);
+;  241			if (moveDir == 1) {
 	LD	A,(_moveDir)
 	CP	A,1
 	JR	NZ,L_73
-;  241				playerX += 2;
+;  242				playerX += 2;
 	LD	BC,(_playerX)
 	INC	BC
 	INC	BC
@@ -1080,26 +1082,26 @@ L_126:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  242			}
+;  243			}
 L_73:
-;  243			if (moveDir == 2) {
+;  244			if (moveDir == 2) {
 	LD	A,(_moveDir)
 	CP	A,2
 	JR	NZ,L_75
-;  244				playerX -= 2;
+;  245				playerX -= 2;
 	LD	IY,(_playerX)
 	LEA	BC,IY+-2
 	LD	HL,_playerX
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  245			}
+;  246			}
 L_75:
-;  246			if (moveDir == 3) {
+;  247			if (moveDir == 3) {
 	LD	A,(_moveDir)
 	CP	A,3
 	JR	NZ,L_77
-;  247				playerY += 2;
+;  248				playerY += 2;
 	LD	BC,(_playerY)
 	INC	BC
 	INC	BC
@@ -1107,107 +1109,107 @@ L_75:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  248			}
+;  249			}
 L_77:
-;  249			if (moveDir == 4) {
+;  250			if (moveDir == 4) {
 	LD	A,(_moveDir)
 	CP	A,4
 	JR	NZ,L_89
-;  250				playerY -= 2;
+;  251				playerY -= 2;
 	LD	IY,(_playerY)
 	LEA	BC,IY+-2
 	LD	HL,_playerY
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  251			}
+;  252			}
 L_89:
-;  252			if (surfing) {
+;  253			if (surfing) {
 	LD	A,(_surfing)
 	OR	A,A
 	JR	Z,L_88
-;  253				if (moveState > 3) {
+;  254				if (moveState > 3) {
 	LD	A,3
 	LD	HL,_moveState
 	CP	A,(HL)
 	JR	NC,L_79
-;  254					playerState = 1;
+;  255					playerState = 1;
 	LD	A,1
 	LD	(_playerState),A
-;  255				}
-;  256				else {
+;  256				}
+;  257				else {
 	JR	L_105
 L_79:
-;  257					playerState = 0;
+;  258					playerState = 0;
 	XOR	A,A
 	LD	(_playerState),A
-;  258				}
-;  259			}
-;  260			else {
+;  259				}
+;  260			}
+;  261			else {
 	JR	L_105
 L_88:
-;  261				if (moveState > 5) {
+;  262				if (moveState > 5) {
 	LD	A,5
 	LD	HL,_moveState
 	CP	A,(HL)
 	JR	NC,L_86
-;  262					playerState = 1;
+;  263					playerState = 1;
 	LD	A,1
 	LD	(_playerState),A
-;  263				}
-;  264				else if (moveState > 3) {
+;  264				}
+;  265				else if (moveState > 3) {
 	JR	L_105
 L_86:
 	LD	A,3
 	CP	A,(HL)
 	JR	NC,L_84
-;  265					playerState = 0;
+;  266					playerState = 0;
 	XOR	A,A
 	LD	(_playerState),A
-;  266				}
-;  267				else if (moveState > 1) {
+;  267				}
+;  268				else if (moveState > 1) {
 	JR	L_105
 L_84:
 	LD	A,1
 	CP	A,(HL)
 	JR	NC,L_82
-;  268					playerState = 2;
+;  269					playerState = 2;
 	LD	A,2
 	LD	(_playerState),A
-;  269				}
-;  270				else if (moveState > 0) {
+;  270				}
+;  271				else if (moveState > 0) {
 	JR	L_105
 L_82:
 	XOR	A,A
 	CP	A,(HL)
 	JR	NC,L_105
-;  271					playerState = 0;
+;  272					playerState = 0;
 	XOR	A,A
 	LD	(_playerState),A
-;  272				}
-;  273			}
+;  273				}
+;  274			}
 L_105:
-;  274	
-;  275			if (moveState == 0) {
+;  275	
+;  276			if (moveState == 0) {
 	LD	A,(_moveState)
 	OR	A,A
-	JR	NZ,L_127
-;  276				/* Arrive At Tile*/
-;  277				tx = playerX / 16;
+	JR	NZ,L_130
+;  277				/* Arrive At Tile*/
+;  278				tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  278				ty = playerY / 16;
+;  279				ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  279				nextTile = GetTypeMapData(tx, ty, tilemap.width);
+;  280				nextTile = GetTypeMapData(tx, ty, tilemap.width);
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1223,15 +1225,15 @@ L_105:
 	POP	BC
 	POP	BC
 	POP	BC
-;  280				if (nextTile >= 0x10 && nextTile < 0x20) {
+;  281				if (nextTile >= 0x10 && nextTile < 0x20) {
 	CP	A,16
 	LD	(_nextTile),A
 	JR	C,L_103
 	LD	A,(_nextTile)
 	CP	A,32
 	JR	NC,L_103
-;  281					/* Grass */
-;  282					if ((rand() % 100) <= battlechance) {
+;  282					/* Grass */
+;  283					if ((rand() % 100) <= battlechance) {
 	CALL	_rand
 	LD	BC,100
 	CALL	__irems
@@ -1239,14 +1241,14 @@ L_105:
 	LD	HL,10
 	OR	A,A
 	SBC	HL,BC
-	JP	M,L_127
-;  283						uint8_t wildSpawn;
-;  284						wildSpawn = rand() % 5;
+	JP	M,L_130
+;  284						uint8_t wildSpawn;
+;  285						wildSpawn = rand() % 5;
 	CALL	_rand
 	LD	BC,5
 	CALL	__irems
 	LD	(IX+-1),L
-;  285						battle_SpawnWild(currentZoneData.spawnids[wildSpawn][nextTile -16], currentZoneData.spawnminlevels[wildSpawn][nextTile - 16], currentZoneData.spawnmaxlevels[wildSpawn][nextTile - 16]);
+;  286						battle_SpawnWild(currentZoneData.spawnids[wildSpawn][nextTile -16], currentZoneData.spawnminlevels[wildSpawn][nextTile - 16], currentZoneData.spawnmaxlevels[wildSpawn][nextTile - 16]);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -1303,31 +1305,31 @@ L_105:
 	POP	BC
 	POP	BC
 	POP	BC
-;  286						return 1;
+;  287						return 1;
 	LD	HL,1
-	JR	L_128
-;  287					}
-;  288				}
-;  289				else if (nextTile == 0x01) {
+	JR	L_131
+;  288					}
+;  289				}
+;  290				else if (nextTile == 0x01) {
 L_103:
 	LD	A,(_nextTile)
 	CP	A,1
 	JR	NZ,L_101
-;  290					ExitBuilding();
+;  291					ExitBuilding();
 	CALL	_ExitBuilding
-;  291				}
-;  292				else if (nextTile == 0x02) {
-	JR	L_127
+;  292				}
+;  293				else if (nextTile == 0x02) {
+	JR	L_130
 L_101:
 	LD	A,(_nextTile)
 	CP	A,2
 	JR	NZ,L_99
-;  293					surfing = false;
+;  294					surfing = false;
 	XOR	A,A
 	LD	(_surfing),A
-;  294				}
-;  295				else if (nextTile >= 0x20 && nextTile < 0x30) {
-	JR	L_127
+;  295				}
+;  296				else if (nextTile >= 0x20 && nextTile < 0x30) {
+	JR	L_130
 L_99:
 	LD	A,(_nextTile)
 	CP	A,32
@@ -1335,7 +1337,7 @@ L_99:
 	LD	A,(_nextTile)
 	CP	A,48
 	JR	NC,L_97
-;  296					ExitZone(nextTile - 32);
+;  297					ExitZone(nextTile - 32);
 	LD	A,(_nextTile)
 	SUB	A,32
 	LD	C,A
@@ -1343,17 +1345,17 @@ L_99:
 	PUSH	BC
 	CALL	_ExitZone
 	POP	BC
-;  297				}
-;  298				else if (nextTile >= 0x30 && nextTile < 0x40) {
-	JR	L_127
+;  298				}
+;  299				else if (nextTile >= 0x30 && nextTile < 0x40) {
+	JR	L_130
 L_97:
 	LD	A,(_nextTile)
 	CP	A,48
-	JR	C,L_127
+	JR	C,L_130
 	LD	A,(_nextTile)
 	CP	A,64
-	JR	NC,L_127
-;  299					if (FightTrainer(nextTile - 48)) {
+	JR	NC,L_130
+;  300					if (FightTrainer(nextTile - 48)) {
 	LD	A,(_nextTile)
 	SUB	A,48
 	LD	C,A
@@ -1362,63 +1364,73 @@ L_97:
 	CALL	_FightTrainer
 	POP	BC
 	OR	A,A
-	JR	Z,L_127
-;  300						return 1;
+	JR	Z,L_130
+;  301						return 1;
 	LD	HL,1
-	JR	L_128
-;  301					}
-;  302				}
-;  303			}
-;  304		}
-;  305	
-;  306		/* If not moving */
-;  307		else {
-L_125:
-;  308			if (kb_Data[7] & kb_Right) {
+	JR	L_131
+;  302					}
+;  303				}
+;  304			}
+;  305		}
+;  306	
+;  307		/* If not moving */
+;  308		else {
+L_128:
+;  309			if (kb_Data[7] & kb_Right) {
 	LD	A,(16056350)
 	AND	A,4
 	JR	Z,L_112
-;  309				moveDir = 1;
+;  310				moveDir = 1;
 	LD	A,1
 	LD	(_moveDir),A
-;  310			}
-;  311			else if (kb_Data[7] & kb_Left) {
-	JR	L_123
+;  311			}
+;  312			else if (kb_Data[7] & kb_Left) {
+	JR	L_126
 L_112:
 	LD	A,(16056350)
 	AND	A,2
 	JR	Z,L_110
-;  312				moveDir = 2;
+;  313				moveDir = 2;
 	LD	A,2
 	LD	(_moveDir),A
-;  313			}
-;  314			else if (kb_Data[7] & kb_Down) {
-	JR	L_123
+;  314			}
+;  315			else if (kb_Data[7] & kb_Down) {
+	JR	L_126
 L_110:
 	LD	A,(16056350)
 	AND	A,1
 	JR	Z,L_108
-;  315				moveDir = 3;
+;  316				moveDir = 3;
 	LD	A,3
 	LD	(_moveDir),A
-;  316	
-;  317			}
-;  318			else if (kb_Data[7] & kb_Up) {
-	JR	L_123
+;  317	
+;  318			}
+;  319			else if (kb_Data[7] & kb_Up) {
+	JR	L_126
 L_108:
 	LD	A,(16056350)
 	AND	A,8
-	JR	Z,L_123
-;  319				moveDir = 4;
+	JR	Z,L_126
+;  320				moveDir = 4;
 	LD	A,4
 	LD	(_moveDir),A
-;  320			}
-L_123:
-;  321			if (kb_Data[7]) {
+;  321			}
+L_126:
+;  322			
+;  323			if (kb_Data[7]) {
 	LD	A,(16056350)
 	OR	A,A
-	JR	Z,L_127
-;  322				if (GetNextTile(tx, ty, tilemap.width) < 64 && !((GetTypeMapData(tx, ty, tilemap.width) == 2) && (GetNextTile(tx, ty, tilemap.width) >= 0x10) && (GetNextTile(tx, ty, tilemap.width) <= 0x20))) {
+	JR	Z,L_125
+;  324				if (kb_Data[2] & kb_Alpha) {
+	LD	A,(16056340)
+	AND	A,128
+	JR	Z,L_118
+;  325					running = true;
+	LD	A,1
+	LD	(_running),A
+;  326				}
+L_118:
+;  327				if (GetNextTile(tx, ty, tilemap.width) < 64 && !((GetTypeMapData(tx, ty, tilemap.width) == 2) && (GetNextTile(tx, ty, tilemap.width) >= 0x10) && (GetNextTile(tx, ty, tilemap.width) <= 0x20))) {
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1439,7 +1451,7 @@ L_123:
 	OR	A,A
 	LD	BC,64
 	SBC	HL,BC
-	JP	P,L_121
+	JP	P,L_123
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1460,7 +1472,7 @@ L_123:
 	OR	A,A
 	LD	BC,2
 	SBC	HL,BC
-	JR	NZ,L_116
+	JR	NZ,L_117
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1482,7 +1494,7 @@ L_123:
 	LD	BC,16
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_116
+	JP	M,L_117
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1505,14 +1517,14 @@ L_123:
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_121
-L_116:
-;  323					moveState = 8;
+	JP	P,L_123
+L_117:
+;  328					moveState = 8;
 	LD	A,8
 	LD	(_moveState),A
-;  324				}
-L_121:
-;  325				if (GetNextTile(tx, ty, tilemap.width) >= 112 && GetNextTile(tx, ty, tilemap.width) < 120) {
+;  329				}
+L_123:
+;  330				if (GetNextTile(tx, ty, tilemap.width) >= 112 && GetNextTile(tx, ty, tilemap.width) < 120) {
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1534,7 +1546,7 @@ L_121:
 	LD	BC,112
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_127
+	JP	M,L_130
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1556,8 +1568,8 @@ L_121:
 	LD	BC,120
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_127
-;  326					if (GetNextTile(tx, ty, tilemap.width) - 111 > badgeCount) {
+	JP	P,L_130
+;  331					if (GetNextTile(tx, ty, tilemap.width) - 111 > badgeCount) {
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1583,8 +1595,8 @@ L_121:
 	LEA	BC,IY+-111
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_119
-;  327						sprintf(str, "You need %u badges to pass", (GetNextTile(tx, ty, tilemap.width) - 111));
+	JP	P,L_121
+;  332						sprintf(str, "You need %u badges to pass", (GetNextTile(tx, ty, tilemap.width) - 111));
 	LD	A,(_tilemap+13)
 	UEXT	HL
 	LD	L,A
@@ -1605,7 +1617,7 @@ L_121:
 	LD	IY,HL
 	LEA	BC,IY+-111
 	PUSH	BC
-	LD	BC,L__66
+	LD	BC,L__67
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -1613,37 +1625,44 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  328						text_Display(str, true);
+;  333						text_Display("This route is closed. Come back later.", true);
 	LD	BC,1
 	PUSH	BC
-	LD	BC,_str
+	LD	BC,L__68
 	PUSH	BC
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  329					}
-;  330					else {
-	JR	L_127
-L_119:
-;  331						moveState = 8;
+;  334					}
+;  335					else {
+	JR	L_130
+L_121:
+;  336						moveState = 8;
 	LD	A,8
 	LD	(_moveState),A
-;  332					}
-;  333				}
-;  334			}
-;  335		}
-L_127:
-;  336	
-;  337		map_Draw();
+;  337					}
+;  338				}
+;  339			}
+;  340			else {
+	JR	L_130
+L_125:
+;  341				running = false;
+	XOR	A,A
+	LD	(_running),A
+;  342			}
+;  343		}
+L_130:
+;  344	
+;  345		map_Draw();
 	CALL	_map_Draw
-;  338	
-;  339		gfx_SwapDraw();
+;  346	
+;  347		gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
 	OR	A,A
-;  340		return 0;
+;  348		return 0;
 	SBC	HL,HL
-;  341	}
-L_128:
+;  349	}
+L_131:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1657,6 +1676,7 @@ L_128:
 ;_str                                IMPORT    100   variable
 ;_sprintf                            IMPORT  -----   function
 ;_badgeCount                         IMPORT      1   variable
+;_running                            STATIC      1   variable
 ;_ExitZone                           IMPORT  -----   function
 ;_ExitBuilding                       IMPORT  -----   function
 ;_currentZoneData                    STATIC    640   variable
@@ -1699,21 +1719,24 @@ L_128:
 
 
 	SEGMENT STRSECT
-L__66:
+L__67:
 	DB	"You need %u badges to pass"
 	DB	0
+L__68:
+	DB	"This route is closed. Come back later."
+	DB	0
 	SEGMENT CODE
-;  342	void map_End(void) {
+;  350	void map_End(void) {
 _map_End:
 	LD	HL,-3
 	CALL	__frameset
-;  343		int tileIndex = 0;
-;  344		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+;  351		int tileIndex = 0;
+;  352		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_132
-L_130:
-;  345			free(mapTiles[tileIndex]);
+	JR	L_135
+L_133:
+;  353			free(mapTiles[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -1727,20 +1750,20 @@ L_130:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  346		}
-L_132:
+;  354		}
+L_135:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_130
-;  347		for (tileIndex = 0; tileIndex < 20; tileIndex++) {
+	JP	M,L_133
+;  355		for (tileIndex = 0; tileIndex < 20; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_136
-L_134:
-;  348			free(playerSprites[tileIndex]);
+	JR	L_139
+L_137:
+;  356			free(playerSprites[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -1754,20 +1777,20 @@ L_134:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  349		}
-L_136:
+;  357		}
+L_139:
 	LD	BC,20
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_134
-;  350		for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+	JP	M,L_137
+;  358		for (tileIndex = 0; tileIndex < 4; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_141
-L_139:
-;  351			free(enemySprites[tileIndex]);
+	JR	L_144
+L_142:
+;  359			free(enemySprites[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -1781,20 +1804,20 @@ L_139:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  352		}
-L_141:
+;  360		}
+L_144:
 	LD	BC,4
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_139
-;  353		for (tileIndex = 0; tileIndex < 3; tileIndex++) {
+	JP	M,L_142
+;  361		for (tileIndex = 0; tileIndex < 3; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_146
-L_144:
-;  354			free(pokeballSprites[tileIndex]);
+	JR	L_149
+L_147:
+;  362			free(pokeballSprites[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -1808,20 +1831,20 @@ L_144:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  355		}
-L_146:
+;  363		}
+L_149:
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_144
-;  356		free(pauseMenuSprite);
+	JP	M,L_147
+;  364		free(pauseMenuSprite);
 	LD	BC,(_pauseMenuSprite)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  357	}
+;  365	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1842,20 +1865,20 @@ L_146:
 ;       Spill Code: 0 (instruction)
 
 
-;  358	
-;  359	void map_Draw(void) {
+;  366	
+;  367	void map_Draw(void) {
 _map_Draw:
 	LD	HL,-12
 	CALL	__frameset
-;  360		/* Move Screen and Redraw */
-;  361		if (indoors) {
+;  368		/* Move Screen and Redraw */
+;  369		if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_151
-;  362			screenX = 0;
-;  363			screenY = 0;
-;  364	
-;  365			gfx_Tilemap(&tilemap, screenX, screenY);
+	JR	Z,L_154
+;  370			screenX = 0;
+;  371			screenY = 0;
+;  372	
+;  373			gfx_Tilemap(&tilemap, screenX, screenY);
 	LD	BC,0
 	PUSH	BC
 	PUSH	BC
@@ -1872,8 +1895,8 @@ _map_Draw:
 	POP	BC
 	POP	BC
 	POP	BC
-;  366	
-;  367			gfx_TransparentSprite_NoClip(playerSprites[moveDir * 3 + playerState - 3], playerX - 8, playerY + 4);
+;  374	
+;  375			gfx_TransparentSprite_NoClip(playerSprites[moveDir * 3 + playerState - 3], playerX - 8, playerY + 4);
 	LD	A,(_playerY)
 	ADD	A,4
 	LD	C,A
@@ -1909,11 +1932,11 @@ _map_Draw:
 	POP	BC
 	POP	BC
 	POP	BC
-;  368		}
-;  369		else {
-	JR	L_152
-L_151:
-;  370			screenX = Clamp(playerX - 160, 0, MAX_X);
+;  376		}
+;  377		else {
+	JR	L_155
+L_154:
+;  378			screenX = Clamp(playerX - 160, 0, MAX_X);
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,HL
@@ -1939,7 +1962,7 @@ L_151:
 	LD	(_screenX),HL
 	LD	A,E
 	LD	(_screenX+3),A
-;  371			screenY = Clamp(playerY - 112, 0, MAX_Y);
+;  379			screenY = Clamp(playerY - 112, 0, MAX_Y);
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,HL
@@ -1965,8 +1988,8 @@ L_151:
 	LD	(_screenY),HL
 	LD	A,E
 	LD	(_screenY+3),A
-;  372	
-;  373			gfx_Tilemap(&tilemap, screenX, screenY);
+;  380	
+;  381			gfx_Tilemap(&tilemap, screenX, screenY);
 	LD	BC,(_screenY)
 	PUSH	BC
 	LD	BC,(_screenX)
@@ -1977,8 +2000,8 @@ L_151:
 	POP	BC
 	POP	BC
 	POP	BC
-;  374			
-;  375			gfx_TransparentSprite_NoClip(playerSprites[(12*surfing) + (moveDir - 1) * (3 - surfing) + playerState], playerX - screenX - 8, playerY - screenY + 4);
+;  382			
+;  383			gfx_TransparentSprite_NoClip(playerSprites[(12*surfing) + (moveDir - 1) * (3 - surfing) + playerState], playerX - screenX - 8, playerY - screenY + 4);
 	LD	A,(_playerY)
 	LD	B,A
 	LD	A,(_screenY)
@@ -2039,13 +2062,13 @@ L_151:
 	POP	BC
 	POP	BC
 	POP	BC
-;  376		}
-L_152:
-;  377		DrawEnemies();
+;  384		}
+L_155:
+;  385		DrawEnemies();
 	CALL	_DrawEnemies
-;  378		map_DrawInformationBar();
+;  386		map_DrawInformationBar();
 	CALL	_map_DrawInformationBar
-;  379	}
+;  387	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2074,18 +2097,18 @@ L_152:
 ;       Spill Code: -1 (instruction)
 
 
-;  380	
-;  381	void HealParty(void) {
+;  388	
+;  389	void HealParty(void) {
 _HealParty:
 	LD	HL,-33
 	CALL	__frameset
-;  382		int pokemonIndex, moveIndex;
-;  383		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
+;  390		int pokemonIndex, moveIndex;
+;  391		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_161
-L_159:
-;  384			party[pokemonIndex].currenthealth = stats_CalculateStats(party[pokemonIndex]).health;
+	JR	L_164
+L_162:
+;  392			party[pokemonIndex].currenthealth = stats_CalculateStats(party[pokemonIndex]).health;
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
@@ -2115,9 +2138,9 @@ L_159:
 	LD	IY,(IX+-18)
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  385			party[pokemonIndex].currentstatus = 0;
+;  393			party[pokemonIndex].currentstatus = 0;
 	LD	(IY+15),0
-;  386			for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+;  394			for (moveIndex = 0; moveIndex < 4; moveIndex++) {
 	LD	BC,0
 	LD	(IX+-6),BC
 	LD	BC,(IX+-9)
@@ -2126,9 +2149,9 @@ L_159:
 	LD	HL,_party
 	ADD	HL,BC
 	LD	(IX+-12),HL
-	JR	L_158
-L_156:
-;  387				party[pokemonIndex].pp[moveIndex] = data_moves[party[pokemonIndex].moves[moveIndex]].uses;
+	JR	L_161
+L_159:
+;  395				party[pokemonIndex].pp[moveIndex] = data_moves[party[pokemonIndex].moves[moveIndex]].uses;
 	LD	BC,_party
 	LD	HL,(IX+-9)
 	ADD	HL,BC
@@ -2154,35 +2177,35 @@ L_156:
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  388			}
-L_158:
+;  396			}
+L_161:
 	LD	BC,4
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
-	JP	M,L_156
+	JP	M,L_159
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  389		}
-L_161:
+;  397		}
+L_164:
 	LD	BC,6
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_159
-;  390		text_Display("Your party has been healed", false);
+	JP	M,L_162
+;  398		text_Display("Your party has been healed", false);
 	LD	BC,0
 	PUSH	BC
-	LD	BC,L__77
+	LD	BC,L__79
 	PUSH	BC
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  391		map_LoadPokeballs();
+;  399		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;  392	}
+;  400	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2207,513 +2230,116 @@ L_161:
 
 
 	SEGMENT STRSECT
-L__77:
+L__79:
 	DB	"Your party has been healed"
 	DB	0
 	SEGMENT CODE
-;  393	void OpenBox(void) {
+;  401	void OpenBox(void) {
 _OpenBox:
-	LD	HL,-19
-	CALL	__frameset
-;  394		uint8_t boxMode;
-;  395		boxMode = text_AskQuestion2("Box", "Delete Save", false);
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__79
-	PUSH	BC
-	LD	BC,L__80
-	PUSH	BC
-	CALL	_text_AskQuestion2
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	(IX+-10),L
-;  396		if (boxMode == 2) {
-	LD	A,(IX+-10)
-	CP	A,2
-	JR	NZ,L_207
-;  397			text_Display("Are You Sure?", false);
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__82
-	PUSH	BC
-	CALL	_text_Display
-	POP	BC
-	POP	BC
-;  398			if (text_AskQuestion2("Yes", "No", false) == 1) {
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__83
-	PUSH	BC
-	LD	BC,L__84
-	PUSH	BC
-	CALL	_text_AskQuestion2
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	BC,1
-	OR	A,A
-	SBC	HL,BC
-	JR	NZ,L_208
-;  399				ti_Delete(appVarName);
-	LD	BC,_appVarName
-	PUSH	BC
-	CALL	_ti_Delete
-	POP	BC
-;  400			}
-;  401		}
-;  402		else if (boxMode == 1) {
-	JR	L_208
-L_207:
-	LD	A,(IX+-10)
-	CP	A,1
-	JR	NZ,L_208
-;  403			uint8_t lastSelection = 255;
-	LD	(IX+-3),255
-;  404			uint8_t boxPage = 0;
-	LD	(IX+-2),0
-;  405			uint8_t boxCurrent = 0;
-	LD	(IX+-1),0
-;  406			int boxIndex;
-;  407	
-;  408		redrawbox:
-L_165:
-;  409			gfx_SetColor(colors[0]);
-	LD	A,(_colors)
-	LD	C,A
-	LD	B,0
-	PUSH	BC
-	CALL	_gfx_SetColor
-	POP	BC
-;  410			gfx_FillRectangle(20, 20, 280, 200);
-	LD	BC,200
-	PUSH	BC
-	LD	BC,280
-	PUSH	BC
-	LD	BC,20
-	PUSH	BC
-	PUSH	BC
-	CALL	_gfx_FillRectangle
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-;  411			gfx_SetColor(colors[1]);
-	LD	HL,_colors
-	INC	HL
-	LD	C,(HL)
-	LD	B,0
-	PUSH	BC
-	CALL	_gfx_SetColor
-	POP	BC
-;  412			gfx_Rectangle(20, 20, 280, 200);
-	LD	BC,200
-	PUSH	BC
-	LD	BC,280
-	PUSH	BC
-	LD	BC,20
-	PUSH	BC
-	PUSH	BC
-	CALL	_gfx_Rectangle
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-;  413			gfx_SetColor(colors[0]);
-	LD	A,(_colors)
-	LD	C,A
-	LD	B,0
-	PUSH	BC
-	CALL	_gfx_SetColor
-	POP	BC
-;  414	
-;  415			gfx_PrintStringXY(">", 25, 25 + 20 * (boxCurrent));
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	A,20
-	CALL	__imul_b
-	LD	IY,HL
-	LEA	BC,IY+25
-	PUSH	BC
-	LD	BC,25
-	PUSH	BC
-	LD	BC,L__87
-	PUSH	BC
-	CALL	_gfx_PrintStringXY
-	POP	BC
-	POP	BC
-	POP	BC
-;  416			for (boxIndex = 0; boxIndex < 10 && boxIndex + boxPage < 36; boxIndex++) {
-	LD	BC,0
-	LD	(IX+-6),BC
-	JR	L_171
-L_169:
-;  417				if (party[boxIndex + boxPage].id > 0) {
-	LD	HL,34
-	LD	BC,(IX+-9)
-	CALL	__imulu
-	LD	BC,_party
-	ADD	HL,BC
-	LD	IY,HL
-	XOR	A,A
-	CP	A,(IY+0)
-	JR	NC,L_170
-;  418					sprintf(str, "LV%u %s", party[boxIndex + boxPage].level, data_pokemon[party[boxIndex + boxPage].id].name);
-	LD	HL,34
-	LD	BC,(IX+-9)
-	CALL	__imulu
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-13),HL
-	LD	IY,(IX+-13)
-	LD	A,(IY+0)
-	UEXT	HL
-	LD	L,A
-	LD	A,51
-	CALL	__imul_b
-	LD	BC,_data_pokemon
-	ADD	HL,BC
-	LD	IY,HL
-	PEA	IY+0
-	LD	IY,(IX+-13)
-	LD	A,(IY+9)
-	UEXT	HL
-	LD	L,A
-	PUSH	HL
-	LD	BC,L__89
-	PUSH	BC
-	LD	BC,_str
-	PUSH	BC
-	CALL	_sprintf
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-;  419					gfx_PrintStringXY(str, 35, 25 + boxIndex * 20);
-	LD	HL,(IX+-6)
-	LD	A,20
-	CALL	__imul_b
-	LD	IY,HL
-	LEA	BC,IY+25
-	PUSH	BC
-	LD	BC,35
-	PUSH	BC
-	LD	BC,_str
-	PUSH	BC
-	CALL	_gfx_PrintStringXY
-	POP	BC
-	POP	BC
-	POP	BC
-;  420				}
-;  421			}
-L_170:
-	LD	BC,(IX+-6)
-	INC	BC
-	LD	(IX+-6),BC
-L_171:
-	LD	BC,10
-	LD	HL,(IX+-6)
-	OR	A,A
-	SBC	HL,BC
-	CALL	__setflag
-	JP	P,L_172
-	LD	A,(IX+-2)
-	UEXT	HL
-	LD	L,A
-	LD	BC,(IX+-6)
-	ADD	HL,BC
-	LD	(IX+-9),HL
-	OR	A,A
-	LD	BC,36
-	SBC	HL,BC
-	CALL	__setflag
-	JP	M,L_169
-L_172:
-;  422			gfx_SwapDraw();
-	CALL	_gfx_SwapDraw
-;  423			Wait(20);
-	LD	BC,20
-	PUSH	BC
-	CALL	_Wait
-	POP	BC
-;  424	
-;  425			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-	JR	L_174
-L_175:
-	CALL	_kb_Scan
-L_174:
-	LD	A,(16056338)
-	AND	A,32
-	JR	NZ,L_175
-	LD	A,(16056348)
-	AND	A,64
-	JR	NZ,L_175
-;  426			kb_Scan();
-	CALL	_kb_Scan
-;  427			while (!(kb_Data[6] & kb_Clear)) {
-	JR	L_203
-L_204:
-;  428				kb_Scan();
-	CALL	_kb_Scan
-;  429				if (kb_Data[1] & kb_2nd) {
-	LD	A,(16056338)
-	AND	A,32
-	JR	Z,L_184
-;  430					if (lastSelection == 255) {
-	LD	A,(IX+-3)
-	CP	A,255
-	JR	NZ,L_178
-;  431						lastSelection = boxCurrent + boxPage;
-	LD	A,(IX+-1)
-	ADD	A,(IX+-2)
-	LD	(IX+-3),A
-;  432					}
-;  433					else {
-	JR	L_165
-L_178:
-;  434						tempcharacter2 = party[lastSelection];
-	LD	A,(IX+-3)
-	UEXT	HL
-	LD	L,A
-	LD	A,34
-	CALL	__imul_b
-	LD	(IX+-19),HL
-	LD	BC,_party
-	ADD	HL,BC
-	LD	DE,_tempcharacter2
-	LD	BC,34
-	LDIR	
-;  435						party[lastSelection] = party[boxCurrent + boxPage];
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	BC,HL
-	LD	A,(IX+-2)
-	UEXT	HL
-	LD	L,A
-	ADD	HL,BC
-	LD	BC,HL
-	LD	HL,34
-	CALL	__imulu
-	LD	(IX+-16),HL
-	LD	BC,_party
-	ADD	HL,BC
-	LD	BC,HL
-	LD	HL,(IX+-19)
-	LD	DE,_party
-	ADD	HL,DE
-	LD	DE,HL
-	LD	HL,BC
-	LD	BC,34
-	LDIR	
-;  436						party[boxCurrent + boxPage] = tempcharacter2;
-	LD	HL,(IX+-16)
-	LD	BC,_party
-	ADD	HL,BC
-	LD	DE,HL
-	LD	HL,_tempcharacter2
-	LD	BC,34
-	LDIR	
-;  437						lastSelection = 255;
-	LD	(IX+-3),255
-;  438					}
-;  439					goto redrawbox;
-	JR	L_165
-;  440				}
-L_184:
-;  441				if (kb_Data[6] & kb_Enter) {
-	LD	A,(16056348)
-	AND	A,1
-	JR	Z,L_193
-;  442					text_Display("Release Pokemon?", false);
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__97
-	PUSH	BC
-	CALL	_text_Display
-	POP	BC
-	POP	BC
-;  443					if (text_AskQuestion2("Yes", "No", false) == 1) {
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__98
-	PUSH	BC
-	LD	BC,L__99
-	PUSH	BC
-	CALL	_text_AskQuestion2
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	BC,1
-	OR	A,A
-	SBC	HL,BC
-	JR	NZ,L_165
-;  444						party[boxCurrent + boxPage] = clearcharacter2;
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	BC,HL
-	LD	A,(IX+-2)
-	UEXT	HL
-	LD	L,A
-	ADD	HL,BC
-	LD	A,34
-	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	DE,HL
-	LD	HL,_clearcharacter2
-	LD	BC,34
-	LDIR	
-;  445					}
-;  446					goto redrawbox;
-	JR	L_165
-;  447				}
-L_193:
-;  448				if ((kb_Data[7] & kb_Down) && boxCurrent + boxPage < 36) {
-	LD	A,(16056350)
-	AND	A,1
-	JR	Z,L_202
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	BC,HL
-	LD	A,(IX+-2)
-	UEXT	HL
-	LD	L,A
-	ADD	HL,BC
-	OR	A,A
-	LD	BC,36
-	SBC	HL,BC
-	JP	P,L_202
-;  449					boxCurrent++;
-	INC	(IX+-1)
-;  450					if (boxCurrent == 6 && boxPage < 26) {
-	LD	A,(IX+-1)
-	CP	A,6
-	JR	NZ,L_165
-	LD	A,(IX+-2)
-	CP	A,26
-	JR	NC,L_165
-;  451						boxPage++;
-	INC	(IX+-2)
-;  452						boxCurrent--;
-	DEC	(IX+-1)
-;  453					}
-;  454					goto redrawbox;
-	JR	L_165
-;  455				}
-L_202:
-;  456				if ((kb_Data[7] & kb_Up) && boxCurrent != 0) {
-	LD	A,(16056350)
-	AND	A,8
-	JR	Z,L_203
-	LD	A,(IX+-1)
-	OR	A,A
-	JR	Z,L_203
-;  457					boxCurrent--;
-	DEC	(IX+-1)
-;  458					if (boxCurrent == 4 && boxPage > 0) {
-	LD	A,(IX+-1)
-	CP	A,4
-	JR	NZ,L_165
-	XOR	A,A
-	CP	A,(IX+-2)
-	JR	NC,L_165
-;  459						boxPage--;
-	DEC	(IX+-2)
-;  460						boxCurrent++;
-	INC	(IX+-1)
-;  461					}
-;  462					goto redrawbox;
-	JR	L_165
-;  463				}
-;  464			}
-L_203:
-	LD	A,(16056348)
-	AND	A,64
-	JR	Z,L_204
-;  465		}
-L_208:
-;  466		map_LoadPokeballs();
+;  402		map_End();
+	CALL	_map_End
+;  403	
+;  404		menu_Box();
+	CALL	_menu_Box
+;  405	
+;  406		map_SetupGfx();
+	CALL	_map_SetupGfx
+;  407		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;  467	}
-	LD	SP,IX
-	POP	IX
+;  408		/*uint8_t boxMode;
+;  409		boxMode = text_AskQuestion2("Box", "Delete Save", false);
+;  410		if (boxMode == 2) {
+;  411			text_Display("Are You Sure?", false);
+;  412			if (text_AskQuestion2("Yes", "No", false) == 1) {
+;  413				ti_Delete(appVarName);
+;  414			}
+;  415		}
+;  416		else if (boxMode == 1) {
+;  417			uint8_t lastSelection = 255;
+;  418			uint8_t boxPage = 0;
+;  419			uint8_t boxCurrent = 0;
+;  420			int boxIndex;
+;  421	
+;  422		redrawbox:
+;  423			gfx_SetColor(colors[0]);
+;  424			gfx_FillRectangle(20, 20, 280, 200);
+;  425			gfx_SetColor(colors[1]);
+;  426			gfx_Rectangle(20, 20, 280, 200);
+;  427			gfx_SetColor(colors[0]);
+;  428	
+;  429			gfx_PrintStringXY(">", 25, 25 + 20 * (boxCurrent));
+;  430			for (boxIndex = 0; boxIndex < 10 && boxIndex + boxPage < 36; boxIndex++) {
+;  431				if (party[boxIndex + boxPage].id > 0) {
+;  432					sprintf(str, "LV%u %s", party[boxIndex + boxPage].level, data_pokemon[party[boxIndex + boxPage].id].name);
+;  433					gfx_PrintStringXY(str, 35, 25 + boxIndex * 20);
+;  434				}
+;  435			}
+;  436			gfx_SwapDraw();
+;  437			Wait(20);
+;  438	
+;  439			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+;  440			kb_Scan();
+;  441			while (!(kb_Data[6] & kb_Clear)) {
+;  442				kb_Scan();
+;  443				if (kb_Data[1] & kb_2nd) {
+;  444					if (lastSelection == 255) {
+;  445						lastSelection = boxCurrent + boxPage;
+;  446					}
+;  447					else {
+;  448						tempcharacter2 = party[lastSelection];
+;  449						party[lastSelection] = party[boxCurrent + boxPage];
+;  450						party[boxCurrent + boxPage] = tempcharacter2;
+;  451						lastSelection = 255;
+;  452					}
+;  453					goto redrawbox;
+;  454				}
+;  455				if (kb_Data[6] & kb_Enter) {
+;  456					text_Display("Release Pokemon?", false);
+;  457					if (text_AskQuestion2("Yes", "No", false) == 1) {
+;  458						party[boxCurrent + boxPage] = clearcharacter2;
+;  459					}
+;  460					goto redrawbox;
+;  461				}
+;  462				if ((kb_Data[7] & kb_Down) && boxCurrent + boxPage < 36) {
+;  463					boxCurrent++;
+;  464					if (boxCurrent == 6 && boxPage < 26) {
+;  465						boxPage++;
+;  466						boxCurrent--;
+;  467					}
+;  468					goto redrawbox;
+;  469				}
+;  470				if ((kb_Data[7] & kb_Up) && boxCurrent != 0) {
+;  471					boxCurrent--;
+;  472					if (boxCurrent == 4 && boxPage > 0) {
+;  473						boxPage--;
+;  474						boxCurrent++;
+;  475					}
+;  476					goto redrawbox;
+;  477				}
+;  478			}
+;  479		}*/
+;  480		/*map_LoadPokeballs();*/
+;  481	}
 	RET	
 
 
 ;**************************** _OpenBox ***************************
 ;Name                         Addr/Register   Size   Type
 ;_map_LoadPokeballs                  IMPORT  -----   function
-;_clearcharacter2                    STATIC     34   variable
-;_tempcharacter2                     STATIC     34   variable
-;_kb_Scan                            IMPORT  -----   function
-;_Wait                               IMPORT  -----   function
-;_gfx_SwapDraw                       IMPORT  -----   function
-;_str                                IMPORT    100   variable
-;_data_pokemon                       IMPORT  unknown variable
-;_sprintf                            IMPORT  -----   function
-;_party                              IMPORT   1224   variable
-;_gfx_PrintStringXY                  IMPORT  -----   function
-;_gfx_Rectangle                      IMPORT  -----   function
-;_gfx_FillRectangle                  IMPORT  -----   function
-;_colors                             IMPORT  unknown variable
-;_gfx_SetColor                       IMPORT  -----   function
-;_appVarName                         IMPORT  unknown variable
-;_ti_Delete                          IMPORT  -----   function
-;_text_Display                       IMPORT  -----   function
-;_text_AskQuestion2                  IMPORT  -----   function
-;boxMode                              IX-10      1   variable
-;G_3                                   IX-9      3   variable
-;boxIndex                              IX-6      3   variable
-;lastSelection                         IX-3      1   variable
-;boxPage                               IX-2      1   variable
-;boxCurrent                            IX-1      1   variable
+;_map_SetupGfx                       IMPORT  -----   function
+;_menu_Box                           IMPORT  -----   function
+;_map_End                            IMPORT  -----   function
 
 
-; Stack Frame Size: 25 (bytes)
+; Stack Frame Size: 6 (bytes)
 ;       Spill Code: -1 (instruction)
 
 
-	SEGMENT STRSECT
-L__79:
-	DB	"Delete Save"
-	DB	0
-L__80:
-	DB	"Box"
-	DB	0
-L__82:
-	DB	"Are You Sure?"
-	DB	0
-L__83:
-	DB	"No"
-	DB	0
-L__84:
-	DB	"Yes"
-	DB	0
-L__87:
-	DB	">"
-	DB	0
-L__89:
-	DB	"LV%u %s"
-	DB	0
-L__97:
-	DB	"Release Pokemon?"
-	DB	0
-L__98:
-	DB	"No"
-	DB	0
-L__99:
-	DB	"Yes"
-	DB	0
-	SEGMENT CODE
-;  468	void TalkToNpc1(void) {
+;  482	void TalkToNpc1(void) {
 _TalkToNpc1:
 	LD	HL,-6
 	CALL	__frameset
-;  469		text_Display(data_npcText[npc1], false);
+;  483		text_Display(data_npcText[npc1], false);
 	LD	A,(_npc1)
 	UEXT	HL
 	LD	L,A
@@ -2730,7 +2356,7 @@ _TalkToNpc1:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  470		if (!takenGifts[npc1] && data_npcReward[npc1] > 0) {
+;  484		if (!takenGifts[npc1] && data_npcReward[npc1] > 0) {
 	LD	A,(_npc1)
 	UEXT	HL
 	LD	L,A
@@ -2738,7 +2364,7 @@ _TalkToNpc1:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	NZ,L_216
+	JR	NZ,L_174
 	LD	A,(_npc1)
 	UEXT	HL
 	LD	L,A
@@ -2753,8 +2379,8 @@ _TalkToNpc1:
 	SBC	HL,HL
 	OR	A,A
 	SBC	HL,BC
-	JP	P,L_216
-;  471			playerItems[data_npcReward[npc1] - 1]++;
+	JP	P,L_174
+;  485			playerItems[data_npcReward[npc1] - 1]++;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	UEXT	HL
@@ -2767,7 +2393,7 @@ _TalkToNpc1:
 	INC	A
 	LD	HL,(IX+-6)
 	LD	(HL),A
-;  472			items_IndexToName(str1, data_npcReward[npc1] - 1);
+;  486			items_IndexToName(str1, data_npcReward[npc1] - 1);
 	LD	HL,(IX+-3)
 	LD	C,(HL)
 	DEC	C
@@ -2778,7 +2404,7 @@ _TalkToNpc1:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  473			if (data_npcReward[npc1] - 1 >= 20) {
+;  487			if (data_npcReward[npc1] - 1 >= 20) {
 	LD	A,(_npc1)
 	UEXT	HL
 	LD	L,A
@@ -2792,11 +2418,11 @@ _TalkToNpc1:
 	LD	BC,20
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_213
-;  474				sprintf(str, "Recieved the TM for %s", str1);
+	JP	M,L_171
+;  488				sprintf(str, "Recieved the TM for %s", str1);
 	LD	BC,_str1
 	PUSH	BC
-	LD	BC,L__114
+	LD	BC,L__85
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2804,14 +2430,14 @@ _TalkToNpc1:
 	POP	BC
 	POP	BC
 	POP	BC
-;  475			}
-;  476			else {
-	JR	L_214
-L_213:
-;  477				sprintf(str, "Recieved a %s", str1);
+;  489			}
+;  490			else {
+	JR	L_172
+L_171:
+;  491				sprintf(str, "Recieved a %s", str1);
 	LD	BC,_str1
 	PUSH	BC
-	LD	BC,L__115
+	LD	BC,L__86
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2819,9 +2445,9 @@ L_213:
 	POP	BC
 	POP	BC
 	POP	BC
-;  478			}
-L_214:
-;  479			text_Display(str, false);
+;  492			}
+L_172:
+;  493			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -2829,16 +2455,16 @@ L_214:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  480			takenGifts[npc1] = true;
+;  494			takenGifts[npc1] = true;
 	LD	A,(_npc1)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_takenGifts
 	ADD	HL,BC
 	LD	(HL),1
-;  481		}
-;  482	}
-L_216:
+;  495		}
+;  496	}
+L_174:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2856,7 +2482,7 @@ L_216:
 ;_npc1                               STATIC      1   variable
 ;_data_npcText                       IMPORT  unknown variable
 ;_text_Display                       IMPORT  -----   function
-;G_5                                   IX-3      3   variable
+;G_3                                   IX-3      3   variable
 
 
 ; Stack Frame Size: 12 (bytes)
@@ -2864,18 +2490,18 @@ L_216:
 
 
 	SEGMENT STRSECT
-L__114:
+L__85:
 	DB	"Recieved the TM for %s"
 	DB	0
-L__115:
+L__86:
 	DB	"Recieved a %s"
 	DB	0
 	SEGMENT CODE
-;  483	void TalkToNpc2(void) {
+;  497	void TalkToNpc2(void) {
 _TalkToNpc2:
 	LD	HL,-3
 	CALL	__frameset
-;  484		text_Display(data_npcText[npc2], false);
+;  498		text_Display(data_npcText[npc2], false);
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
@@ -2892,7 +2518,7 @@ _TalkToNpc2:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  485		if (!takenGifts[npc2]) {
+;  499		if (!takenGifts[npc2]) {
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
@@ -2900,8 +2526,8 @@ _TalkToNpc2:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	NZ,L_222
-;  486			playerItems[data_npcReward[npc2] - 1]++;
+	JR	NZ,L_180
+;  500			playerItems[data_npcReward[npc2] - 1]++;
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
@@ -2918,7 +2544,7 @@ _TalkToNpc2:
 	INC	A
 	LD	HL,(IX+-3)
 	LD	(HL),A
-;  487			items_IndexToName(str1, data_npcReward[npc2] - 1);
+;  501			items_IndexToName(str1, data_npcReward[npc2] - 1);
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
@@ -2933,7 +2559,7 @@ _TalkToNpc2:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  488			if (data_npcReward[npc2] - 1 >= 20) {
+;  502			if (data_npcReward[npc2] - 1 >= 20) {
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
@@ -2946,11 +2572,11 @@ _TalkToNpc2:
 	OR	A,A
 	LD	BC,20
 	SBC	HL,BC
-	JP	M,L_219
-;  489				sprintf(str, "Recieved the TM for %s", str1);
+	JP	M,L_177
+;  503				sprintf(str, "Recieved the TM for %s", str1);
 	LD	BC,_str1
 	PUSH	BC
-	LD	BC,L__119
+	LD	BC,L__90
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2958,14 +2584,14 @@ _TalkToNpc2:
 	POP	BC
 	POP	BC
 	POP	BC
-;  490			}
-;  491			else {
-	JR	L_220
-L_219:
-;  492				sprintf(str, "Recieved a %s", str1);
+;  504			}
+;  505			else {
+	JR	L_178
+L_177:
+;  506				sprintf(str, "Recieved a %s", str1);
 	LD	BC,_str1
 	PUSH	BC
-	LD	BC,L__120
+	LD	BC,L__91
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -2973,9 +2599,9 @@ L_219:
 	POP	BC
 	POP	BC
 	POP	BC
-;  493			}
-L_220:
-;  494			text_Display(str, false);
+;  507			}
+L_178:
+;  508			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -2983,16 +2609,16 @@ L_220:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  495			takenGifts[npc2] = true;
+;  509			takenGifts[npc2] = true;
 	LD	A,(_npc2)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_takenGifts
 	ADD	HL,BC
 	LD	(HL),1
-;  496		}
-;  497	}
-L_222:
+;  510		}
+;  511	}
+L_180:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3017,34 +2643,34 @@ L_222:
 
 
 	SEGMENT STRSECT
-L__119:
+L__90:
 	DB	"Recieved the TM for %s"
 	DB	0
-L__120:
+L__91:
 	DB	"Recieved a %s"
 	DB	0
 	SEGMENT CODE
-;  498	void EnterDoor(uint8_t index) {
+;  512	void EnterDoor(uint8_t index) {
 _EnterDoor:
 	LD	HL,-3
 	CALL	__frameset
-;  499		int tileIndex;
-;  500		lastPlayerX = playerX;
+;  513		int tileIndex;
+;  514		lastPlayerX = playerX;
 	LD	BC,(_playerX)
 	LD	HL,_lastPlayerX
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  501		lastPlayerY = playerY;
+;  515		lastPlayerY = playerY;
 	LD	BC,(_playerY)
 	LD	HL,_lastPlayerY
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  502		indoors = true;
+;  516		indoors = true;
 	LD	A,1
 	LD	(_indoors),A
-;  503		currentBuilding = currentZoneData.doorzones[index];
+;  517		currentBuilding = currentZoneData.doorzones[index];
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3052,13 +2678,13 @@ _EnterDoor:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(_currentBuilding),A
-;  504	
-;  505		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+;  518	
+;  519		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_226
-L_224:
-;  506			zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
+	JR	L_184
+L_182:
+;  520			zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -3080,21 +2706,21 @@ L_224:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  507		}
-L_226:
+;  521		}
+L_184:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_224
-;  508		tilemap.width = 21;
+	JP	M,L_182
+;  522		tilemap.width = 21;
 	LD	A,21
 	LD	(_tilemap+13),A
-;  509		tilemap.height = 15;
+;  523		tilemap.height = 15;
 	LD	A,15
 	LD	(_tilemap+12),A
-;  510		playerX = currentZoneData.doorx[index] * 16;
+;  524		playerX = currentZoneData.doorx[index] * 16;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3112,7 +2738,7 @@ L_226:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  511		playerY = currentZoneData.doory[index] * 16;
+;  525		playerY = currentZoneData.doory[index] * 16;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3130,21 +2756,21 @@ L_226:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  512		tx = playerX / 16;
+;  526		tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  513		ty = playerY / 16;
+;  527		ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  514		npc1 = currentZoneData.doornpc1[index];
+;  528		npc1 = currentZoneData.doornpc1[index];
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3152,7 +2778,7 @@ L_226:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(_npc1),A
-;  515		npc2 = currentZoneData.doornpc2[index];
+;  529		npc2 = currentZoneData.doornpc2[index];
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3160,9 +2786,9 @@ L_226:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(_npc2),A
-;  516		LoadMap();
+;  530		LoadMap();
 	CALL	_LoadMap
-;  517	}
+;  531	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3194,32 +2820,32 @@ L_226:
 ;       Spill Code: -1 (instruction)
 
 
-;  518	void ExitBuilding(void) {
+;  532	void ExitBuilding(void) {
 _ExitBuilding:
 	LD	HL,-3
 	CALL	__frameset
-;  519		int tileIndex;
-;  520		playerX = lastPlayerX;
+;  533		int tileIndex;
+;  534		playerX = lastPlayerX;
 	LD	BC,(_lastPlayerX)
 	LD	HL,_playerX
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  521		playerY = lastPlayerY;
+;  535		playerY = lastPlayerY;
 	LD	BC,(_lastPlayerY)
 	LD	HL,_playerY
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  522		indoors = false;
+;  536		indoors = false;
 	XOR	A,A
 	LD	(_indoors),A
-;  523		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
+;  537		for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_232
-L_230:
-;  524			zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
+	JR	L_190
+L_188:
+;  538			zx7_Decompress(mapTiles[tileIndex], outdoortileset_tiles_compressed[tileIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -3241,37 +2867,37 @@ L_230:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  525		}
-L_232:
+;  539		}
+L_190:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_230
-;  526		tilemap.width = OUTDOORWIDTH;
+	JP	M,L_188
+;  540		tilemap.width = OUTDOORWIDTH;
 	LD	A,48
 	LD	(_tilemap+13),A
-;  527		tilemap.height = OUTDOORHEIGHT;
+;  541		tilemap.height = OUTDOORHEIGHT;
 	LD	A,40
 	LD	(_tilemap+12),A
-;  528		tx = playerX / 16;
+;  542		tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  529		ty = playerY / 16;
+;  543		ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  530		LoadMap();
+;  544		LoadMap();
 	CALL	_LoadMap
-;  531	}
+;  545	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3298,10 +2924,10 @@ L_232:
 ;       Spill Code: -1 (instruction)
 
 
-;  532	void ExitZone(uint8_t index) {
+;  546	void ExitZone(uint8_t index) {
 _ExitZone:
 	CALL	__frameset0
-;  533		playerX = currentZoneData.exitx[index] * 16;
+;  547		playerX = currentZoneData.exitx[index] * 16;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3319,7 +2945,7 @@ _ExitZone:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  534		playerY = currentZoneData.exity[index] * 16;
+;  548		playerY = currentZoneData.exity[index] * 16;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3337,7 +2963,7 @@ _ExitZone:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  535		currentZone = currentZoneData.exitzone[index];
+;  549		currentZone = currentZoneData.exitzone[index];
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3348,23 +2974,23 @@ _ExitZone:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),0
-;  536		tx = playerX / 16;
+;  550		tx = playerX / 16;
 	LD	BC,(_playerX)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_tx),A
-;  537		ty = playerY / 16;
+;  551		ty = playerY / 16;
 	LD	BC,(_playerY)
 	CALL	__stoiu
 	LD	BC,16
 	CALL	__idivs
 	LD	A,L
 	LD	(_ty),A
-;  538		LoadMap();
+;  552		LoadMap();
 	CALL	_LoadMap
-;  539	}
+;  553	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3386,16 +3012,16 @@ _ExitZone:
 ;       Spill Code: -1 (instruction)
 
 
-;  540	bool FightTrainer(uint8_t index) {
+;  554	bool FightTrainer(uint8_t index) {
 _FightTrainer:
 	CALL	__frameset0
-;  541		currentTrainer = index;
+;  555		currentTrainer = index;
 	LD	A,(IX+6)
 	LD	(_currentTrainer),A
-;  542		if (indoors && !defeatedTrainersIndoors[currentBuilding][currentTrainer]) {
+;  556		if (indoors && !defeatedTrainersIndoors[currentBuilding][currentTrainer]) {
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_240
+	JR	Z,L_198
 	LD	A,(_currentBuilding)
 	UEXT	HL
 	LD	L,A
@@ -3410,8 +3036,8 @@ _FightTrainer:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	NZ,L_240
-;  543			text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
+	JR	NZ,L_198
+;  557			text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
 	LD	BC,_currentZoneData+608
 	LD	DE,1
 	PUSH	DE
@@ -3433,7 +3059,7 @@ _FightTrainer:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  544			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
+;  558			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
@@ -3445,15 +3071,15 @@ _FightTrainer:
 	POP	BC
 	POP	BC
 	POP	BC
-;  545			return true;
+;  559			return true;
 	LD	A,1
-	JR	L_242
-;  546		}
-;  547		else if (!indoors && !defeatedTrainers[currentZone][currentTrainer]) {
-L_240:
+	JR	L_200
+;  560		}
+;  561		else if (!indoors && !defeatedTrainers[currentZone][currentTrainer]) {
+L_198:
 	LD	A,(_indoors)
 	OR	A,A
-	JR	NZ,L_241
+	JR	NZ,L_199
 	LD	BC,(_currentZone)
 	CALL	__stoiu
 	ADD	HL,HL
@@ -3467,8 +3093,8 @@ L_240:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	NZ,L_241
-;  548			text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
+	JR	NZ,L_199
+;  562			text_Display(data_trainerText[currentZoneData.data_trainerText[index]], true);
 	LD	BC,_currentZoneData+608
 	LD	DE,1
 	PUSH	DE
@@ -3490,7 +3116,7 @@ L_240:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  549			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
+;  563			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
@@ -3502,15 +3128,15 @@ L_240:
 	POP	BC
 	POP	BC
 	POP	BC
-;  550			return true;
+;  564			return true;
 	LD	A,1
-	JR	L_242
-;  551		}
-L_241:
-;  552		return false;
+	JR	L_200
+;  565		}
+L_199:
+;  566		return false;
 	XOR	A,A
-;  553	}
-L_242:
+;  567	}
+L_200:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3535,19 +3161,19 @@ L_242:
 ;       Spill Code: -1 (instruction)
 
 
-;  554	
-;  555	void map_LoadPokeballs(void) {
+;  568	
+;  569	void map_LoadPokeballs(void) {
 _map_LoadPokeballs:
 	LD	HL,-6
 	CALL	__frameset
-;  556		int pokemonIndex;
-;  557		/* Generate pokemon info To Display At Top of Screen */
-;  558		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
+;  570		int pokemonIndex;
+;  571		/* Generate pokemon info To Display At Top of Screen */
+;  572		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_250
-L_248:
-;  559			if (party[pokemonIndex].id == 0) {
+	JR	L_208
+L_206:
+;  573			if (party[pokemonIndex].id == 0) {
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
@@ -3557,52 +3183,52 @@ L_248:
 	LD	IY,(IX+-6)
 	LD	A,(IY+0)
 	OR	A,A
-	JR	NZ,L_247
-;  560				pokeballdata[pokemonIndex] = 2;
+	JR	NZ,L_205
+;  574				pokeballdata[pokemonIndex] = 2;
 	LD	HL,(IX+-3)
 	LD	BC,_pokeballdata
 	ADD	HL,BC
 	LD	(HL),2
-;  561			}
-;  562			else {
-	JR	L_249
-L_247:
-;  563				if (party[pokemonIndex].currenthealth > 0) {
+;  575			}
+;  576			else {
+	JR	L_207
+L_205:
+;  577				if (party[pokemonIndex].currenthealth > 0) {
 	LD	IY,(IX+-6)
 	LD	BC,(IY+13)
 	OR	A,A
 	SBC	HL,HL
 	OR	A,A
 	SBC.SIS	HL,BC
-	JR	NC,L_245
-;  564					pokeballdata[pokemonIndex] = 0;
+	JR	NC,L_203
+;  578					pokeballdata[pokemonIndex] = 0;
 	LD	HL,(IX+-3)
 	LD	BC,_pokeballdata
 	ADD	HL,BC
 	LD	(HL),0
-;  565				}
-;  566				else {
-	JR	L_249
-L_245:
-;  567					pokeballdata[pokemonIndex] = 1;
+;  579				}
+;  580				else {
+	JR	L_207
+L_203:
+;  581					pokeballdata[pokemonIndex] = 1;
 	LD	HL,(IX+-3)
 	LD	BC,_pokeballdata
 	ADD	HL,BC
 	LD	(HL),1
-;  568				}
-;  569			}
-;  570		}
-L_249:
+;  582				}
+;  583			}
+;  584		}
+L_207:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-L_250:
+L_208:
 	LD	BC,6
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
-	JP	M,L_248
-;  571	}
+	JP	M,L_206
+;  585	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3612,7 +3238,7 @@ L_250:
 ;Name                         Addr/Register   Size   Type
 ;_pokeballdata                       STATIC      6   variable
 ;_party                              IMPORT   1224   variable
-;G_6                                   IX-6      3   variable
+;G_4                                   IX-6      3   variable
 ;pokemonIndex                          IX-3      3   variable
 
 
@@ -3620,25 +3246,25 @@ L_250:
 ;       Spill Code: -1 (instruction)
 
 
-;  572	void LoadMap(void) {
+;  586	void LoadMap(void) {
 _LoadMap:
 	LD	HL,-1
 	CALL	__frameset
-;  573		ti_var_t mapAV;
-;  574		if (indoors) {
+;  587		ti_var_t mapAV;
+;  588		if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_253
-;  575			mapAV = ti_Open("PKMNMD1", "r");
-	LD	BC,L__137
+	JR	Z,L_211
+;  589			mapAV = ti_Open("PKMNMD1", "r");
+	LD	BC,L__108
 	PUSH	BC
-	LD	BC,L__138
+	LD	BC,L__109
 	PUSH	BC
 	CALL	_ti_Open
 	POP	BC
 	POP	BC
 	LD	(IX+-1),A
-;  576			ti_Seek(((int)currentBuilding) * 1270, 0, mapAV);
+;  590			ti_Seek(((int)currentBuilding) * 1270, 0, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3654,7 +3280,7 @@ _LoadMap:
 	POP	BC
 	POP	BC
 	POP	BC
-;  577			ti_Read(&currentTileMap, 315, 1, mapAV);
+;  591			ti_Read(&currentTileMap, 315, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3669,7 +3295,7 @@ _LoadMap:
 	POP	BC
 	POP	BC
 	POP	BC
-;  578			ti_Read(&currentTypeMap, 315, 1, mapAV);
+;  592			ti_Read(&currentTypeMap, 315, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3684,7 +3310,7 @@ _LoadMap:
 	POP	BC
 	POP	BC
 	POP	BC
-;  579			ti_Read(&currentZoneData, 640, 1, mapAV);
+;  593			ti_Read(&currentZoneData, 640, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3699,20 +3325,20 @@ _LoadMap:
 	POP	BC
 	POP	BC
 	POP	BC
-;  580		}
-;  581		else {
-	JR	L_254
-L_253:
-;  582			mapAV = ti_Open("PKMNMD0", "r");
-	LD	BC,L__139
+;  594		}
+;  595		else {
+	JR	L_212
+L_211:
+;  596			mapAV = ti_Open("PKMNMD0", "r");
+	LD	BC,L__110
 	PUSH	BC
-	LD	BC,L__140
+	LD	BC,L__111
 	PUSH	BC
 	CALL	_ti_Open
 	POP	BC
 	POP	BC
 	LD	(IX+-1),A
-;  583			ti_Seek(((int)currentZone) * 4480, 0, mapAV);
+;  597			ti_Seek(((int)currentZone) * 4480, 0, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3727,7 +3353,7 @@ L_253:
 	POP	BC
 	POP	BC
 	POP	BC
-;  584			ti_Read(&currentTileMap, 1920, 1, mapAV);
+;  598			ti_Read(&currentTileMap, 1920, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3742,7 +3368,7 @@ L_253:
 	POP	BC
 	POP	BC
 	POP	BC
-;  585			ti_Read(&currentTypeMap, 1920, 1, mapAV);
+;  599			ti_Read(&currentTypeMap, 1920, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3757,7 +3383,7 @@ L_253:
 	POP	BC
 	POP	BC
 	POP	BC
-;  586			ti_Read(&currentZoneData, 640, 1, mapAV);
+;  600			ti_Read(&currentZoneData, 640, 1, mapAV);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3772,11 +3398,11 @@ L_253:
 	POP	BC
 	POP	BC
 	POP	BC
-;  587		}
-L_254:
-;  588		ti_CloseAll();
+;  601		}
+L_212:
+;  602		ti_CloseAll();
 	CALL	_ti_CloseAll
-;  589	}
+;  603	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3802,38 +3428,38 @@ L_254:
 
 
 	SEGMENT STRSECT
-L__137:
+L__108:
 	DB	"r"
 	DB	0
-L__138:
+L__109:
 	DB	"PKMNMD1"
 	DB	0
-L__139:
+L__110:
 	DB	"r"
 	DB	0
-L__140:
+L__111:
 	DB	"PKMNMD0"
 	DB	0
 	SEGMENT CODE
-;  590	
-;  591	int32_t Clamp(int32_t number, int min, int max) {
+;  604	
+;  605	int32_t Clamp(int32_t number, int min, int max) {
 _Clamp:
 	CALL	__frameset0
-;  592		if (number < min) {
+;  606		if (number < min) {
 	LD	BC,(IX+12)
 	CALL	__itol
 	LD	HL,(IX+6)
 	LD	E,(IX+9)
 	CALL	__lcmps
-	JP	P,L_258
-;  593			number = min;
+	JP	P,L_216
+;  607			number = min;
 	LD	BC,(IX+12)
 	CALL	__itol
 	LD	(IX+6),BC
 	LD	(IX+9),A
-;  594		}
-L_258:
-;  595		if (number > max) {
+;  608		}
+L_216:
+;  609		if (number > max) {
 	LD	BC,(IX+15)
 	CALL	__itol
 	LD	E,A
@@ -3842,18 +3468,18 @@ L_258:
 	LD	A,(IX+9)
 	CALL	__lcmps
 	CALL	__setflag
-	JP	P,L_259
-;  596			number = max;
+	JP	P,L_217
+;  610			number = max;
 	LD	BC,(IX+15)
 	CALL	__itol
 	LD	(IX+6),BC
 	LD	(IX+9),A
-;  597		}
-L_259:
-;  598		return number;
+;  611		}
+L_217:
+;  612		return number;
 	LD	HL,(IX+6)
 	LD	E,(IX+9)
-;  599	}
+;  613	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3870,32 +3496,32 @@ L_259:
 ;       Spill Code: -1 (instruction)
 
 
-;  600	uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width) {
+;  614	uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width) {
 _GetNextTile:
 	CALL	__frameset0
-;  601	
-;  602		switch (moveDir) {
+;  615	
+;  616		switch (moveDir) {
 	LD	A,(_moveDir)
 	UEXT	HL
 	LD	L,A
 	CALL	__seqcase
-L__145:
+L__116:
 	DW	4
 	DW	1
 	DB	0
-	DW24	L_261	
+	DW24	L_219	
 
-	DW24	L_262	
+	DW24	L_220	
 
-	DW24	L_263	
+	DW24	L_221	
 
-	DW24	L_264	
+	DW24	L_222	
 
-	DW24	L_265	
+	DW24	L_223	
 
-;  603		case 1:
-L_261:
-;  604			return(GetTypeMapData(tx + 1, ty, width));
+;  617		case 1:
+L_219:
+;  618			return(GetTypeMapData(tx + 1, ty, width));
 	LD	BC,(IX+12)
 	PUSH	BC
 	LD	C,(IX+9)
@@ -3908,10 +3534,10 @@ L_261:
 	POP	BC
 	POP	BC
 	POP	BC
-	JR	L_266
-;  605		case 2:
-L_262:
-;  606			return(GetTypeMapData(tx - 1, ty, width));
+	JR	L_224
+;  619		case 2:
+L_220:
+;  620			return(GetTypeMapData(tx - 1, ty, width));
 	LD	BC,(IX+12)
 	PUSH	BC
 	LD	C,(IX+9)
@@ -3924,10 +3550,10 @@ L_262:
 	POP	BC
 	POP	BC
 	POP	BC
-	JR	L_266
-;  607		case 3:
-L_263:
-;  608			return(GetTypeMapData(tx, ty + 1, width));
+	JR	L_224
+;  621		case 3:
+L_221:
+;  622			return(GetTypeMapData(tx, ty + 1, width));
 	LD	BC,(IX+12)
 	PUSH	BC
 	LD	C,(IX+9)
@@ -3940,10 +3566,10 @@ L_263:
 	POP	BC
 	POP	BC
 	POP	BC
-	JR	L_266
-;  609		case 4:
-L_264:
-;  610			return(GetTypeMapData(tx, ty - 1, width));
+	JR	L_224
+;  623		case 4:
+L_222:
+;  624			return(GetTypeMapData(tx, ty - 1, width));
 	LD	BC,(IX+12)
 	PUSH	BC
 	LD	C,(IX+9)
@@ -3956,13 +3582,13 @@ L_264:
 	POP	BC
 	POP	BC
 	POP	BC
-	JR	L_266
-;  611		}
-L_265:
-;  612		return 0;
+	JR	L_224
+;  625		}
+L_223:
+;  626		return 0;
 	XOR	A,A
-;  613	}
-L_266:
+;  627	}
+L_224:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3981,15 +3607,15 @@ L_266:
 ;       Spill Code: -1 (instruction)
 
 
-;  614	
-;  615	uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
+;  628	
+;  629	uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
 _GetTypeMapData:
 	CALL	__frameset0
-;  616		if (indoors) {
+;  630		if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_268
-;  617			return (currentTypeMap[(tx)+(ty)* width]);
+	JR	Z,L_226
+;  631			return (currentTypeMap[(tx)+(ty)* width]);
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -4004,11 +3630,11 @@ _GetTypeMapData:
 	LD	BC,_currentTypeMap
 	ADD	HL,BC
 	LD	A,(HL)
-	JR	L_269
-;  618		}
-;  619		else {
-L_268:
-;  620			return (currentTypeMap[(tx)+(ty)* width]);
+	JR	L_227
+;  632		}
+;  633		else {
+L_226:
+;  634			return (currentTypeMap[(tx)+(ty)* width]);
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -4023,9 +3649,9 @@ L_268:
 	LD	BC,_currentTypeMap
 	ADD	HL,BC
 	LD	A,(HL)
-;  621		}
-;  622	}
-L_269:
+;  635		}
+;  636	}
+L_227:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4044,25 +3670,25 @@ L_269:
 ;       Spill Code: -1 (instruction)
 
 
-;  623	
-;  624	void DrawEnemies(void) {
+;  637	
+;  638	void DrawEnemies(void) {
 _DrawEnemies:
 	LD	HL,-12
 	CALL	__frameset
-;  625		int xloc = 0;
-;  626		int yloc = 0;
-;  627		for (i = 0; i < 16; i++) {
+;  639		int xloc = 0;
+;  640		int yloc = 0;
+;  641		for (i = 0; i < 16; i++) {
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-	JR	L_281
-L_279:
-;  628			if (indoors){
+	JR	L_239
+L_237:
+;  642			if (indoors){
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_278
-;  629				if (currentZoneData.trainerdir[i] != 0) {
+	JR	Z,L_236
+;  643				if (currentZoneData.trainerdir[i] != 0) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,_currentZoneData+592
@@ -4070,8 +3696,8 @@ L_279:
 	LD	(IX+-9),HL
 	LD	A,(HL)
 	OR	A,A
-	JR	Z,L_280
-;  630					xloc = currentZoneData.trainerx[i] * 16;
+	JR	Z,L_238
+;  644					xloc = currentZoneData.trainerx[i] * 16;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,_currentZoneData+560
@@ -4084,7 +3710,7 @@ L_279:
 	ADD	HL,HL
 	ADD	HL,HL
 	LD	(IX+-3),HL
-;  631					yloc = currentZoneData.trainery[i] * 16;
+;  645					yloc = currentZoneData.trainery[i] * 16;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,_currentZoneData+576
@@ -4097,7 +3723,7 @@ L_279:
 	ADD	HL,HL
 	ADD	HL,HL
 	LD	(IX+-6),HL
-;  632					gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
+;  646					gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
 	LD	IY,(IX+-6)
 	LEA	BC,IY+4
 	PUSH	BC
@@ -4120,12 +3746,12 @@ L_279:
 	POP	BC
 	POP	BC
 	POP	BC
-;  633				}
-;  634			}
-;  635			else {
-	JR	L_280
-L_278:
-;  636				if (currentZoneData.trainerdir[i] != 0) {
+;  647				}
+;  648			}
+;  649			else {
+	JR	L_238
+L_236:
+;  650				if (currentZoneData.trainerdir[i] != 0) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,_currentZoneData+592
@@ -4133,8 +3759,8 @@ L_278:
 	LD	(IX+-12),HL
 	LD	A,(HL)
 	OR	A,A
-	JR	Z,L_280
-;  637					xloc = currentZoneData.trainerx[i] * 16 - screenX;
+	JR	Z,L_238
+;  651					xloc = currentZoneData.trainerx[i] * 16 - screenX;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,_currentZoneData+560
@@ -4150,7 +3776,7 @@ L_278:
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-3),HL
-;  638					yloc = currentZoneData.trainery[i] * 16 - screenY;
+;  652					yloc = currentZoneData.trainery[i] * 16 - screenY;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,(_screenY)
@@ -4165,28 +3791,28 @@ L_278:
 	ADD	HL,HL
 	OR	A,A
 	SBC	HL,BC
-;  639					if (xloc < 336 && yloc < 240 && xloc >= 0 && yloc >= 0) {
+;  653					if (xloc < 336 && yloc < 240 && xloc >= 0 && yloc >= 0) {
 	OR	A,A
 	LD	(IX+-6),HL
 	LD	HL,(IX+-3)
 	LD	BC,336
 	SBC	HL,BC
-	JP	P,L_280
+	JP	P,L_238
 	LD	BC,240
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	P,L_280
+	JP	P,L_238
 	LD	HL,(IX+-3)
 	CALL	__icmpzero
 	CALL	__setflag
-	JP	M,L_280
+	JP	M,L_238
 	LD	HL,(IX+-6)
 	CALL	__icmpzero
 	CALL	__setflag
-	JP	M,L_280
-;  640						gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
+	JP	M,L_238
+;  654						gfx_TransparentSprite(enemySprites[currentZoneData.trainerdir[i] - 1], xloc - 8, yloc + 4);
 	LD	IY,(IX+-6)
 	LEA	BC,IY+4
 	PUSH	BC
@@ -4209,25 +3835,25 @@ L_278:
 	POP	BC
 	POP	BC
 	POP	BC
-;  641					}
-;  642				}
-;  643			}
-;  644			
-;  645		}
-L_280:
+;  655					}
+;  656				}
+;  657			}
+;  658			
+;  659		}
+L_238:
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-L_281:
+L_239:
 	LD.LIS	BC,16
 	LD	HL,(_i)
 	OR	A,A
 	SBC.SIS	HL,BC
-	JR	C,L_279
-;  646	}
+	JR	C,L_237
+;  660	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4242,8 +3868,8 @@ L_281:
 ;_currentZoneData                    STATIC    640   variable
 ;_indoors                            IMPORT      1   variable
 ;_i                                  IMPORT      2   variable
-;G_11                                 IX-12      3   variable
-;G_9                                   IX-9      3   variable
+;G_9                                  IX-12      3   variable
+;G_7                                   IX-9      3   variable
 ;yloc                                  IX-6      3   variable
 ;xloc                                  IX-3      3   variable
 
@@ -4252,20 +3878,20 @@ L_281:
 ;       Spill Code: -1 (instruction)
 
 
-;  647	
-;  648	void map_DrawInformationBar(void) {
+;  661	
+;  662	void map_DrawInformationBar(void) {
 _map_DrawInformationBar:
 	LD	HL,-3
 	CALL	__frameset
-;  649		int pokemonIndex;
-;  650		gfx_SetColor(colors[0]);
+;  663		int pokemonIndex;
+;  664		gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  651		gfx_FillRectangle(0, 0, 320, 16);
+;  665		gfx_FillRectangle(0, 0, 320, 16);
 	LD	BC,16
 	PUSH	BC
 	LD	BC,320
@@ -4278,12 +3904,12 @@ _map_DrawInformationBar:
 	POP	BC
 	POP	BC
 	POP	BC
-;  652		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
+;  666		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_286
-L_284:
-;  653			gfx_TransparentSprite_NoClip(pokeballSprites[pokeballdata[pokemonIndex]], 16 * pokemonIndex, 0);
+	JR	L_244
+L_242:
+;  667			gfx_TransparentSprite_NoClip(pokeballSprites[pokeballdata[pokemonIndex]], 16 * pokemonIndex, 0);
 	LD	BC,_pokeballdata
 	LD	DE,0
 	PUSH	DE
@@ -4312,22 +3938,22 @@ L_284:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  654		}
-L_286:
+;  668		}
+L_244:
 	LD	BC,6
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_284
-;  655		sprintf(str, "%u$", playerMoney);
+	JP	M,L_242
+;  669		sprintf(str, "%u$", playerMoney);
 	LD	A,(_playerMoney+3)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	LD	BC,(_playerMoney)
 	PUSH	BC
-	LD	BC,L__159
+	LD	BC,L__130
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4336,7 +3962,7 @@ L_286:
 	POP	BC
 	POP	BC
 	POP	BC
-;  656		gfx_PrintStringXY(str, 100, 5);
+;  670		gfx_PrintStringXY(str, 100, 5);
 	LD	BC,5
 	PUSH	BC
 	LD	BC,100
@@ -4347,7 +3973,7 @@ L_286:
 	POP	BC
 	POP	BC
 	POP	BC
-;  657	}
+;  671	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4373,30 +3999,30 @@ L_286:
 
 
 	SEGMENT STRSECT
-L__159:
+L__130:
 	DB	"%u$"
 	DB	0
 	SEGMENT CODE
-;  658	
-;  659	void map_LoseFight(void) {
+;  672	
+;  673	void map_LoseFight(void) {
 _map_LoseFight:
 	LD	HL,-33
 	CALL	__frameset
-;  660		int tileIndex, partyIndex, moveIndex;
-;  661		text_Display("All your pokemon have fainted", false);
+;  674		int tileIndex, partyIndex, moveIndex;
+;  675		text_Display("All your pokemon have fainted", false);
 	LD	BC,0
 	PUSH	BC
-	LD	BC,L__161
+	LD	BC,L__132
 	PUSH	BC
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  662		for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+;  676		for (partyIndex = 0; partyIndex < 6; partyIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
-	JR	L_296
-L_294:
-;  663			party[partyIndex].currenthealth = stats_CalculateStats(party[partyIndex]).health;
+	JR	L_254
+L_252:
+;  677			party[partyIndex].currenthealth = stats_CalculateStats(party[partyIndex]).health;
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
@@ -4426,9 +4052,9 @@ L_294:
 	LD	IY,(IX+-18)
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  664			party[partyIndex].currentstatus = 0;
+;  678			party[partyIndex].currentstatus = 0;
 	LD	(IY+15),0
-;  665			for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+;  679			for (moveIndex = 0; moveIndex < 4; moveIndex++) {
 	LD	BC,0
 	LD	(IX+-6),BC
 	LD	BC,(IX+-9)
@@ -4437,9 +4063,9 @@ L_294:
 	LD	HL,_party
 	ADD	HL,BC
 	LD	(IX+-12),HL
-	JR	L_293
-L_291:
-;  666				party[partyIndex].pp[moveIndex] = data_moves[party[partyIndex].moves[moveIndex]].uses;
+	JR	L_251
+L_249:
+;  680				party[partyIndex].pp[moveIndex] = data_moves[party[partyIndex].moves[moveIndex]].uses;
 	LD	BC,_party
 	LD	HL,(IX+-9)
 	ADD	HL,BC
@@ -4465,61 +4091,61 @@ L_291:
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  667			}
-L_293:
+;  681			}
+L_251:
 	LD	BC,4
 	LD	HL,(IX+-6)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_291
+	JP	M,L_249
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  668		}
-L_296:
+;  682		}
+L_254:
 	LD	BC,6
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
-	JP	M,L_294
-;  669		playerX = 5*16;
+	JP	M,L_252
+;  683		playerX = 5*16;
 	LD	HL,_playerX
 	LD	(HL),80
 	INC	HL
 	LD	(HL),0
-;  670		playerY = 7*16;
+;  684		playerY = 7*16;
 	LD	HL,_playerY
 	LD	(HL),112
 	INC	HL
 	LD	(HL),0
-;  671		indoors = false;
+;  685		indoors = false;
 	XOR	A,A
 	LD	(_indoors),A
-;  672		currentZone = 0;
+;  686		currentZone = 0;
 	LD	HL,_currentZone
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  673		moveDir = 3;
+;  687		moveDir = 3;
 	LD	A,3
 	LD	(_moveDir),A
-;  674		tilemap.width = OUTDOORWIDTH;
+;  688		tilemap.width = OUTDOORWIDTH;
 	LD	A,48
 	LD	(_tilemap+13),A
-;  675		tilemap.height = OUTDOORHEIGHT;
+;  689		tilemap.height = OUTDOORHEIGHT;
 	LD	A,40
 	LD	(_tilemap+12),A
-;  676		tx = playerX / 16;
+;  690		tx = playerX / 16;
 	LD	A,5
 	LD	(_tx),A
-;  677		ty = playerY / 16;
+;  691		ty = playerY / 16;
 	LD	A,7
 	LD	(_ty),A
-;  678		LoadMap();
+;  692		LoadMap();
 	CALL	_LoadMap
-;  679	}
+;  693	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4540,9 +4166,9 @@ L_296:
 ;_stats_CalculateStats               IMPORT  -----   function
 ;_party                              IMPORT   1224   variable
 ;_text_Display                       IMPORT  -----   function
-;O_33                                 IX-15      3   variable
-;O_34                                 IX-12      3   variable
-;G_12                                  IX-9      3   variable
+;O_24                                 IX-15      3   variable
+;O_25                                 IX-12      3   variable
+;G_10                                  IX-9      3   variable
 ;moveIndex                             IX-6      3   variable
 ;partyIndex                            IX-3      3   variable
 
@@ -4552,21 +4178,21 @@ L_296:
 
 
 	SEGMENT STRSECT
-L__161:
+L__132:
 	DB	"All your pokemon have fainted"
 	DB	0
 	SEGMENT CODE
-;  680	
-;  681	void map_WinFight(bool wild, uint16_t rewardMoney) {
+;  694	
+;  695	void map_WinFight(bool wild, uint16_t rewardMoney) {
 _map_WinFight:
 	LD	HL,-28
 	CALL	__frameset
-;  682		char str1[16];
-;  683		if (!wild) {
+;  696		char str1[16];
+;  697		if (!wild) {
 	LD	A,(IX+6)
 	OR	A,A
-	JR	NZ,L_315
-;  684			playerMoney += rewardMoney;
+	JR	NZ,L_273
+;  698			playerMoney += rewardMoney;
 	LD	BC,(IX+9)
 	CALL	__stoiu
 	LD	A,(_playerMoney+3)
@@ -4578,11 +4204,11 @@ _map_WinFight:
 	LD	(_playerMoney),HL
 	LD	A,E
 	LD	(_playerMoney+3),A
-;  685			if (indoors) {
+;  699			if (indoors) {
 	LD	A,(_indoors)
 	OR	A,A
-	JR	Z,L_313
-;  686				defeatedTrainersIndoors[currentBuilding][currentTrainer] = true;
+	JR	Z,L_271
+;  700				defeatedTrainersIndoors[currentBuilding][currentTrainer] = true;
 	LD	A,(_currentBuilding)
 	UEXT	HL
 	LD	L,A
@@ -4596,7 +4222,7 @@ _map_WinFight:
 	LD	L,A
 	ADD	HL,BC
 	LD	(HL),1
-;  687				if (currentZoneData.trainerreward[currentTrainer] != 0) {
+;  701				if (currentZoneData.trainerreward[currentTrainer] != 0) {
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4609,8 +4235,8 @@ _map_WinFight:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	Z,L_315
-;  688					if (currentZoneData.trainerreward[currentTrainer] == 255) {
+	JR	Z,L_273
+;  702					if (currentZoneData.trainerreward[currentTrainer] == 255) {
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4621,10 +4247,10 @@ _map_WinFight:
 	OR	A,A
 	LD	BC,255
 	SBC	HL,BC
-	JR	NZ,L_304
-;  689						badgeCount++;
-;  690						sprintf(str, "Recieved a badge");
-	LD	BC,L__169
+	JR	NZ,L_262
+;  703						badgeCount++;
+;  704						sprintf(str, "Recieved a badge");
+	LD	BC,L__140
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4634,11 +4260,11 @@ _map_WinFight:
 	CALL	_sprintf
 	POP	BC
 	POP	BC
-;  691					}
-;  692					else {
-	JR	L_305
-L_304:
-;  693						playerItems[currentZoneData.trainerreward[currentTrainer] - 1]++;
+;  705					}
+;  706					else {
+	JR	L_263
+L_262:
+;  707						playerItems[currentZoneData.trainerreward[currentTrainer] - 1]++;
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4655,7 +4281,7 @@ L_304:
 	INC	A
 	LD	HL,(IX+-25)
 	LD	(HL),A
-;  694						items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
+;  708						items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4669,7 +4295,7 @@ L_304:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  695						if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
+;  709						if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4682,10 +4308,10 @@ L_304:
 	OR	A,A
 	LD	BC,20
 	SBC	HL,BC
-	JP	M,L_302
-;  696							sprintf(str, "Recieved the TM for %s", str1);
+	JP	M,L_260
+;  710							sprintf(str, "Recieved the TM for %s", str1);
 	PEA	IX+-22
-	LD	BC,L__171
+	LD	BC,L__142
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4693,13 +4319,13 @@ L_304:
 	POP	BC
 	POP	BC
 	POP	BC
-;  697						}
-;  698						else {
-	JR	L_305
-L_302:
-;  699							sprintf(str, "Recieved a %s", str1);
+;  711						}
+;  712						else {
+	JR	L_263
+L_260:
+;  713							sprintf(str, "Recieved a %s", str1);
 	PEA	IX+-22
-	LD	BC,L__172
+	LD	BC,L__143
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4707,10 +4333,10 @@ L_302:
 	POP	BC
 	POP	BC
 	POP	BC
-;  700						}
-;  701					}
-L_305:
-;  702					text_Display(str, false);
+;  714						}
+;  715					}
+L_263:
+;  716					text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -4718,12 +4344,12 @@ L_305:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  703				}
-;  704			}
-;  705			else {
-	JR	L_315
-L_313:
-;  706				defeatedTrainers[currentZone][currentTrainer] = true;
+;  717				}
+;  718			}
+;  719			else {
+	JR	L_273
+L_271:
+;  720				defeatedTrainers[currentZone][currentTrainer] = true;
 	LD	BC,(_currentZone)
 	CALL	__stoiu
 	ADD	HL,HL
@@ -4736,7 +4362,7 @@ L_313:
 	LD	L,A
 	ADD	HL,BC
 	LD	(HL),1
-;  707				if (currentZoneData.trainerreward[currentTrainer] != 0) {
+;  721				if (currentZoneData.trainerreward[currentTrainer] != 0) {
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4744,8 +4370,8 @@ L_313:
 	ADD	HL,BC
 	LD	A,(HL)
 	OR	A,A
-	JR	Z,L_315
-;  708					playerItems[currentZoneData.trainerreward[currentTrainer]-1]++;
+	JR	Z,L_273
+;  722					playerItems[currentZoneData.trainerreward[currentTrainer]-1]++;
 	LD	(IX+-3),BC
 	LD	A,(_currentTrainer)
 	UEXT	HL
@@ -4762,7 +4388,7 @@ L_313:
 	INC	A
 	LD	HL,(IX+-28)
 	LD	(HL),A
-;  709					items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
+;  723					items_IndexToName(str1, currentZoneData.trainerreward[currentTrainer] - 1);
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4776,7 +4402,7 @@ L_313:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  710					if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
+;  724					if (currentZoneData.trainerreward[currentTrainer] - 1 >= 20) {
 	LD	A,(_currentTrainer)
 	UEXT	HL
 	LD	L,A
@@ -4789,10 +4415,10 @@ L_313:
 	OR	A,A
 	LD	BC,20
 	SBC	HL,BC
-	JP	M,L_309
-;  711						sprintf(str, "Recieved the TM for %s", str1);
+	JP	M,L_267
+;  725						sprintf(str, "Recieved the TM for %s", str1);
 	PEA	IX+-22
-	LD	BC,L__175
+	LD	BC,L__146
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4800,13 +4426,13 @@ L_313:
 	POP	BC
 	POP	BC
 	POP	BC
-;  712					}
-;  713					else {
-	JR	L_310
-L_309:
-;  714						sprintf(str, "Recieved a %s", str1);
+;  726					}
+;  727					else {
+	JR	L_268
+L_267:
+;  728						sprintf(str, "Recieved a %s", str1);
 	PEA	IX+-22
-	LD	BC,L__176
+	LD	BC,L__147
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -4814,9 +4440,9 @@ L_309:
 	POP	BC
 	POP	BC
 	POP	BC
-;  715					}
-L_310:
-;  716					text_Display(str, false);
+;  729					}
+L_268:
+;  730					text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -4824,10 +4450,10 @@ L_310:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  717				}
-;  718			}
-;  719		}
-L_315:
+;  731				}
+;  732			}
+;  733		}
+L_273:
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4850,8 +4476,8 @@ L_315:
 ;_indoors                            IMPORT      1   variable
 ;_playerMoney                        IMPORT      4   variable
 ;str1                                 IX-22     16   variable
-;G_14                                  IX-6      3   variable
-;G_18                                  IX-3      3   variable
+;G_12                                  IX-6      3   variable
+;G_16                                  IX-3      3   variable
 ;rewardMoney                           IX+9      2   parameter
 ;wild                                  IX+6      1   parameter
 
@@ -4861,19 +4487,19 @@ L_315:
 
 
 	SEGMENT STRSECT
-L__169:
+L__140:
 	DB	"Recieved a badge"
 	DB	0
-L__171:
+L__142:
 	DB	"Recieved the TM for %s"
 	DB	0
-L__172:
+L__143:
 	DB	"Recieved a %s"
 	DB	0
-L__175:
+L__146:
 	DB	"Recieved the TM for %s"
 	DB	0
-L__176:
+L__147:
 	DB	"Recieved a %s"
 	DB	0
 	XREF _PKMNSD4_init:ROM
@@ -4898,10 +4524,8 @@ L__176:
 	XREF _lastPlayerX:ROM
 	XREF _playerY:ROM
 	XREF _playerX:ROM
-	XREF _appVarName:ROM
 	XREF _textBoxSprite2:ROM
 	XREF _textBoxSprite1:ROM
-	XREF _text_AskQuestion2:ROM
 	XREF _text_Display:ROM
 	XREF _items_ItemShop:ROM
 	XREF _items_IndexToName:ROM
@@ -4910,6 +4534,7 @@ L__176:
 	XREF _str:ROM
 	XREF _SetColors:ROM
 	XREF _Wait:ROM
+	XREF _menu_Box:ROM
 	XREF _menu_Menu:ROM
 	XREF _battle_SpawnTrainer:ROM
 	XREF _battle_SpawnWild:ROM
@@ -4917,7 +4542,6 @@ L__176:
 	XREF _data_npcText:ROM
 	XREF _data_trainerText:ROM
 	XREF _data_moves:ROM
-	XREF _data_pokemon:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_TransparentSprite_NoClip:ROM
 	XREF _gfx_TransparentSprite:ROM
@@ -4928,14 +4552,12 @@ L__176:
 	XREF _gfx_Blit:ROM
 	XREF _gfx_SwapDraw:ROM
 	XREF _gfx_FillRectangle:ROM
-	XREF _gfx_Rectangle:ROM
 	XREF _gfx_SetPalette:ROM
 	XREF _gfx_SetColor:ROM
 	XREF _gfx_Tilemap:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _kb_Scan:ROM
 	XREF _sprintf:ROM
-	XREF _ti_Delete:ROM
 	XREF _ti_Seek:ROM
 	XREF _ti_Read:ROM
 	XREF _ti_Open:ROM
@@ -4947,7 +4569,6 @@ L__176:
 	XREF __ladd:ROM
 	XREF __idivs:ROM
 	XREF __imuls:ROM
-	XREF __imulu:ROM
 	XREF __irems:ROM
 	XREF __stoiu:ROM
 	XREF __itol:ROM
@@ -5000,6 +4621,7 @@ L__176:
 	XDEF _moveState
 	XDEF _nextTile
 	XDEF _surfing
+	XDEF _running
 	XDEF _ty
 	XDEF _tx
 	XDEF _screenY

@@ -15,11 +15,11 @@ _itemNames:
 	DB	111
 	DB	107
 	DB	101
-	DB	98
+	DB	32
+	DB	66
 	DB	97
 	DB	108
 	DB	108
-	DB	0
 	DB	0
 	DB	0
 	DB	0
@@ -331,6 +331,1367 @@ _itemNames:
 	DB	0
 	DB	0
 	DB	0
+_itemDescriptions:
+	DB	65
+	DB	32
+	DB	116
+	DB	111
+	DB	111
+	DB	108
+	DB	32
+	DB	102
+	DB	111
+	DB	114
+	DB	32
+	DB	99
+	DB	97
+	DB	116
+	DB	99
+	DB	104
+	DB	105
+	DB	110
+	DB	103
+	DB	32
+	DB	119
+	DB	105
+	DB	108
+	DB	100
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	65
+	DB	32
+	DB	103
+	DB	111
+	DB	111
+	DB	100
+	DB	32
+	DB	66
+	DB	97
+	DB	108
+	DB	108
+	DB	32
+	DB	119
+	DB	105
+	DB	116
+	DB	104
+	DB	32
+	DB	97
+	DB	32
+	DB	104
+	DB	105
+	DB	103
+	DB	104
+	DB	101
+	DB	114
+	DB	32
+	DB	99
+	DB	97
+	DB	116
+	DB	99
+	DB	104
+	DB	32
+	DB	114
+	DB	97
+	DB	116
+	DB	101
+	DB	32
+	DB	116
+	DB	104
+	DB	97
+	DB	110
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	32
+	DB	66
+	DB	97
+	DB	108
+	DB	108
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	65
+	DB	32
+	DB	98
+	DB	101
+	DB	116
+	DB	116
+	DB	101
+	DB	114
+	DB	32
+	DB	66
+	DB	97
+	DB	108
+	DB	108
+	DB	32
+	DB	119
+	DB	105
+	DB	116
+	DB	104
+	DB	32
+	DB	97
+	DB	32
+	DB	104
+	DB	105
+	DB	103
+	DB	104
+	DB	101
+	DB	114
+	DB	32
+	DB	99
+	DB	97
+	DB	116
+	DB	99
+	DB	104
+	DB	32
+	DB	114
+	DB	97
+	DB	116
+	DB	101
+	DB	32
+	DB	116
+	DB	104
+	DB	97
+	DB	110
+	DB	32
+	DB	97
+	DB	32
+	DB	71
+	DB	114
+	DB	101
+	DB	97
+	DB	116
+	DB	32
+	DB	66
+	DB	97
+	DB	108
+	DB	108
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	84
+	DB	104
+	DB	101
+	DB	32
+	DB	98
+	DB	101
+	DB	115
+	DB	116
+	DB	32
+	DB	66
+	DB	97
+	DB	108
+	DB	108
+	DB	32
+	DB	116
+	DB	104
+	DB	97
+	DB	116
+	DB	32
+	DB	99
+	DB	97
+	DB	116
+	DB	99
+	DB	104
+	DB	101
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	119
+	DB	105
+	DB	116
+	DB	104
+	DB	111
+	DB	117
+	DB	116
+	DB	32
+	DB	102
+	DB	97
+	DB	105
+	DB	108
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	82
+	DB	101
+	DB	115
+	DB	116
+	DB	111
+	DB	114
+	DB	101
+	DB	115
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	72
+	DB	80
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	98
+	DB	121
+	DB	32
+	DB	50
+	DB	48
+	DB	32
+	DB	112
+	DB	111
+	DB	105
+	DB	110
+	DB	116
+	DB	115
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	82
+	DB	101
+	DB	115
+	DB	116
+	DB	111
+	DB	114
+	DB	101
+	DB	115
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	72
+	DB	80
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	98
+	DB	121
+	DB	32
+	DB	53
+	DB	48
+	DB	32
+	DB	112
+	DB	111
+	DB	105
+	DB	110
+	DB	116
+	DB	115
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	82
+	DB	101
+	DB	115
+	DB	116
+	DB	111
+	DB	114
+	DB	101
+	DB	115
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	72
+	DB	80
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	98
+	DB	121
+	DB	32
+	DB	49
+	DB	50
+	DB	48
+	DB	32
+	DB	112
+	DB	111
+	DB	105
+	DB	110
+	DB	116
+	DB	115
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	70
+	DB	117
+	DB	108
+	DB	108
+	DB	121
+	DB	32
+	DB	114
+	DB	101
+	DB	115
+	DB	116
+	DB	111
+	DB	114
+	DB	101
+	DB	115
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	72
+	DB	80
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	97
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	72
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	108
+	DB	108
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	115
+	DB	116
+	DB	97
+	DB	116
+	DB	117
+	DB	115
+	DB	32
+	DB	112
+	DB	114
+	DB	111
+	DB	98
+	DB	108
+	DB	101
+	DB	109
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	111
+	DB	110
+	DB	101
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	70
+	DB	117
+	DB	108
+	DB	108
+	DB	121
+	DB	32
+	DB	114
+	DB	101
+	DB	115
+	DB	116
+	DB	111
+	DB	114
+	DB	101
+	DB	115
+	DB	32
+	DB	116
+	DB	104
+	DB	101
+	DB	32
+	DB	72
+	DB	80
+	DB	32
+	DB	97
+	DB	110
+	DB	100
+	DB	32
+	DB	104
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	110
+	DB	121
+	DB	32
+	DB	115
+	DB	116
+	DB	97
+	DB	116
+	DB	117
+	DB	115
+	DB	32
+	DB	112
+	DB	114
+	DB	111
+	DB	98
+	DB	108
+	DB	101
+	DB	109
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	111
+	DB	110
+	DB	101
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	72
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	112
+	DB	111
+	DB	105
+	DB	115
+	DB	111
+	DB	110
+	DB	101
+	DB	100
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	72
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	98
+	DB	117
+	DB	114
+	DB	110
+	DB	101
+	DB	100
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	72
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	112
+	DB	97
+	DB	114
+	DB	97
+	DB	108
+	DB	121
+	DB	122
+	DB	101
+	DB	100
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	72
+	DB	101
+	DB	97
+	DB	108
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	102
+	DB	114
+	DB	111
+	DB	122
+	DB	101
+	DB	110
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	65
+	DB	119
+	DB	97
+	DB	107
+	DB	101
+	DB	110
+	DB	115
+	DB	32
+	DB	97
+	DB	32
+	DB	115
+	DB	108
+	DB	101
+	DB	101
+	DB	112
+	DB	105
+	DB	110
+	DB	103
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	77
+	DB	97
+	DB	107
+	DB	101
+	DB	115
+	DB	32
+	DB	99
+	DB	101
+	DB	114
+	DB	116
+	DB	97
+	DB	105
+	DB	110
+	DB	32
+	DB	115
+	DB	112
+	DB	101
+	DB	99
+	DB	105
+	DB	101
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	101
+	DB	118
+	DB	111
+	DB	108
+	DB	118
+	DB	101
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	77
+	DB	97
+	DB	107
+	DB	101
+	DB	115
+	DB	32
+	DB	99
+	DB	101
+	DB	114
+	DB	116
+	DB	97
+	DB	105
+	DB	110
+	DB	32
+	DB	115
+	DB	112
+	DB	101
+	DB	99
+	DB	105
+	DB	101
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	101
+	DB	118
+	DB	111
+	DB	108
+	DB	118
+	DB	101
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	77
+	DB	97
+	DB	107
+	DB	101
+	DB	115
+	DB	32
+	DB	99
+	DB	101
+	DB	114
+	DB	116
+	DB	97
+	DB	105
+	DB	110
+	DB	32
+	DB	115
+	DB	112
+	DB	101
+	DB	99
+	DB	105
+	DB	101
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	101
+	DB	118
+	DB	111
+	DB	108
+	DB	118
+	DB	101
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	77
+	DB	97
+	DB	107
+	DB	101
+	DB	115
+	DB	32
+	DB	99
+	DB	101
+	DB	114
+	DB	116
+	DB	97
+	DB	105
+	DB	110
+	DB	32
+	DB	115
+	DB	112
+	DB	101
+	DB	99
+	DB	105
+	DB	101
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	101
+	DB	118
+	DB	111
+	DB	108
+	DB	118
+	DB	101
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	77
+	DB	97
+	DB	107
+	DB	101
+	DB	115
+	DB	32
+	DB	99
+	DB	101
+	DB	114
+	DB	116
+	DB	97
+	DB	105
+	DB	110
+	DB	32
+	DB	115
+	DB	112
+	DB	101
+	DB	99
+	DB	105
+	DB	101
+	DB	115
+	DB	32
+	DB	111
+	DB	102
+	DB	32
+	DB	80
+	DB	111
+	DB	107
+	DB	101
+	DB	109
+	DB	111
+	DB	110
+	DB	32
+	DB	101
+	DB	118
+	DB	111
+	DB	108
+	DB	118
+	DB	101
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
 _itemPrices:
 	DW	200
 	DW	600
@@ -376,7 +1737,7 @@ _itemCount:
 ;   20	/* Item Data */
 ;   21	
 ;   22	char itemNames[20][16] = {
-;   23		"Pokeball",
+;   23		"Poke Ball",
 ;   24		"Great Ball",
 ;   25		"Ultra Ball",
 ;   26		"Master Ball",
@@ -397,22 +1758,44 @@ _itemCount:
 ;   41		"Leaf Stone",
 ;   42		"Water Stone"
 ;   43	};
-;   44	/* Used in shop */
-;   45	uint16_t itemPrices[20] = {
-;   46		200,600,1200,15000,300,700,1200,2500,600,3000,100,250,200,250,200,2100,2100,2100,2100,2100
-;   47	};
-;   48	uint8_t itemCount = 20;
+;   44	char itemDescriptions[20][68] = {
+;   45		"A tool for catching wild Pokemon",
+;   46		"A good Ball with a higher catch rate than a Poke Ball",
+;   47		"A better Ball with a higher catch rate than a Great Ball",
+;   48		"The best Ball that catches a Pokemon without fail",
+;   49		"Restores the HP of a Pokemon by 20 points",
+;   50		"Restores the HP of a Pokemon by 50 points",
+;   51		"Restores the HP of a Pokemon by 120 points",
+;   52		"Fully restores the HP of a Pokemon",
+;   53		"Heals all the status problems of one Pokemon",
+;   54		"Fully restores the HP and heals any status problems of one Pokemon",
+;   55		"Heals a poisoned Pokemon",
+;   56		"Heals a burned Pokemon",
+;   57		"Heals a paralyzed Pokemon",
+;   58		"Heals a frozen Pokemon",
+;   59		"Awakens a sleeping Pokemon",
+;   60		"Makes certain species of Pokemon evolve",
+;   61		"Makes certain species of Pokemon evolve",
+;   62		"Makes certain species of Pokemon evolve",
+;   63		"Makes certain species of Pokemon evolve",
+;   64		"Makes certain species of Pokemon evolve",
+;   65	};
+;   66	/* Used in shop */
+;   67	uint16_t itemPrices[20] = {
+;   68		200,600,1200,15000,300,700,1200,2500,600,3000,100,250,200,250,200,2100,2100,2100,2100,2100
+;   69	};
+;   70	uint8_t itemCount = 20;
 	SEGMENT CODE
-;   49	
-;   50	
-;   51	void items_IndexToName(char *name, uint8_t index) {
+;   71	
+;   72	
+;   73	void items_IndexToName(char *name, uint8_t index) {
 _items_IndexToName:
 	CALL	__frameset0
-;   52		if (index < 20) {
+;   74		if (index < 20) {
 	LD	A,(IX+9)
 	CP	A,20
 	JR	NC,L_1
-;   53			sprintf(name, itemNames[index]);
+;   75			sprintf(name, itemNames[index]);
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -428,11 +1811,11 @@ _items_IndexToName:
 	CALL	_sprintf
 	POP	BC
 	POP	BC
-;   54		}
-;   55		else {
+;   76		}
+;   77		else {
 	JR	L_2
 L_1:
-;   56			sprintf(name, data_moves[index-19].name);
+;   78			sprintf(name, data_moves[index-19].name);
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -449,8 +1832,8 @@ L_1:
 	CALL	_sprintf
 	POP	BC
 	POP	BC
-;   57		}
-;   58	}
+;   79		}
+;   80	}
 L_2:
 	LD	SP,IX
 	POP	IX
@@ -470,33 +1853,33 @@ L_2:
 ;       Spill Code: 0 (instruction)
 
 
-;   59	
-;   60	
-;   61	void items_ItemShop(void) {
+;   81	
+;   82	
+;   83	void items_ItemShop(void) {
 _items_ItemShop:
 	LD	HL,-8
 	CALL	__frameset
-;   62		uint8_t shopPage = 0;
+;   84		uint8_t shopPage = 0;
 	LD	(IX+-2),0
-;   63		uint8_t shopCurrent = 1;
+;   85		uint8_t shopCurrent = 1;
 	LD	(IX+-1),1
-;   64	
-;   65		gfx_SetDrawScreen();
+;   86	
+;   87		gfx_SetDrawScreen();
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;   66	reloadshop:
+;   88	reloadshop:
 L_3:
-;   67	
-;   68		gfx_SetColor(colors[0]);
+;   89	
+;   90		gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;   69		gfx_FillRectangle(20, 20, 290, 200);
+;   91		gfx_FillRectangle(20, 20, 290, 200);
 	LD	BC,200
 	PUSH	BC
 	LD	BC,290
@@ -509,7 +1892,7 @@ L_3:
 	POP	BC
 	POP	BC
 	POP	BC
-;   70		gfx_SetColor(colors[1]);
+;   92		gfx_SetColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -517,7 +1900,7 @@ L_3:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;   71		gfx_Rectangle(20, 20, 290, 200);
+;   93		gfx_Rectangle(20, 20, 290, 200);
 	LD	BC,200
 	PUSH	BC
 	LD	BC,290
@@ -530,14 +1913,14 @@ L_3:
 	POP	BC
 	POP	BC
 	POP	BC
-;   72		gfx_SetColor(colors[0]);
+;   94		gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;   73		gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
+;   95		gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -554,9 +1937,9 @@ L_3:
 	POP	BC
 	POP	BC
 	POP	BC
-;   74		map_DrawInformationBar();
+;   96		map_DrawInformationBar();
 	CALL	_map_DrawInformationBar
-;   75		while (kb_Data[1] & kb_2nd) { kb_Scan(); }
+;   97		while (kb_Data[1] & kb_2nd) { kb_Scan(); }
 	JR	L_4
 L_5:
 	CALL	_kb_Scan
@@ -564,16 +1947,16 @@ L_4:
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_5
-;   76	
-;   77		i = 0;
+;   98	
+;   99		i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;   78		while (i < 10) {
+;  100		while (i < 10) {
 	JR	L_8
 L_9:
-;   79			gfx_PrintStringXY(itemNames[i + shopPage], 35, 25 + i * 20);
+;  101			gfx_PrintStringXY(itemNames[i + shopPage], 35, 25 + i * 20);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
@@ -601,7 +1984,7 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;   80			sprintf(str, "%u$", itemPrices[i + shopPage]);
+;  102			sprintf(str, "%u$", itemPrices[i + shopPage]);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
@@ -623,7 +2006,7 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;   81			gfx_PrintStringXY(str, 170, 25 + i * 20);
+;  103			gfx_PrintStringXY(str, 170, 25 + i * 20);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
@@ -639,7 +2022,7 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;   82			sprintf(str, "%u", playerItems[i + shopPage]);
+;  104			sprintf(str, "%u", playerItems[i + shopPage]);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
@@ -661,7 +2044,7 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;   83			gfx_PrintStringXY(str, 240, 25 + i * 20);
+;  105			gfx_PrintStringXY(str, 240, 25 + i * 20);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
@@ -677,38 +2060,38 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;   84			i++;
+;  106			i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;   85		}
+;  107		}
 L_8:
 	LD.LIS	BC,10
 	LD	HL,(_i)
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_9
-;   86	
-;   87		while (!(kb_Data[6] & kb_Clear))
+;  108	
+;  109		while (!(kb_Data[6] & kb_Clear))
 	JR	L_31
 L_32:
-;   88		{
-;   89			kb_Scan();
+;  110		{
+;  111			kb_Scan();
 	CALL	_kb_Scan
-;   90			if (kb_Data[7] & kb_Up) {
+;  112			if (kb_Data[7] & kb_Up) {
 	LD	A,(16056350)
 	AND	A,8
 	JR	Z,L_16
-;   91				if (shopCurrent != 0) {
+;  113				if (shopCurrent != 0) {
 	LD	A,(IX+-1)
 	OR	A,A
 	JR	Z,L_16
-;   92					shopCurrent--;
+;  114					shopCurrent--;
 	DEC	(IX+-1)
-;   93					gfx_FillRectangle(25, 25, 9, 190);
+;  115					gfx_FillRectangle(25, 25, 9, 190);
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -721,7 +2104,7 @@ L_32:
 	POP	BC
 	POP	BC
 	POP	BC
-;   94					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
+;  116					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -738,25 +2121,25 @@ L_32:
 	POP	BC
 	POP	BC
 	POP	BC
-;   95					Wait(20);
+;  117					Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;   96				}
-;   97			}
+;  118				}
+;  119			}
 L_16:
-;   98			if (kb_Data[7] & kb_Down) {
+;  120			if (kb_Data[7] & kb_Down) {
 	LD	A,(16056350)
 	AND	A,1
 	JR	Z,L_22
-;   99				if (shopCurrent != 9) {
+;  121				if (shopCurrent != 9) {
 	LD	A,(IX+-1)
 	CP	A,9
 	JR	Z,L_22
-;  100					shopCurrent++;
+;  122					shopCurrent++;
 	INC	(IX+-1)
-;  101					gfx_FillRectangle(25, 25, 9, 190);
+;  123					gfx_FillRectangle(25, 25, 9, 190);
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -769,7 +2152,7 @@ L_16:
 	POP	BC
 	POP	BC
 	POP	BC
-;  102					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
+;  124					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -786,15 +2169,15 @@ L_16:
 	POP	BC
 	POP	BC
 	POP	BC
-;  103					Wait(20);
+;  125					Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  104				}
-;  105			}
+;  126				}
+;  127			}
 L_22:
-;  106			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+;  128			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
 	LD	A,(16056350)
 	AND	A,4
 	JR	NZ,L_21
@@ -802,23 +2185,23 @@ L_22:
 	AND	A,2
 	JR	Z,L_30
 L_21:
-;  107				if (shopPage == 10) {
+;  129				if (shopPage == 10) {
 	LD	A,(IX+-2)
 	CP	A,10
 	JR	NZ,L_19
-;  108					shopPage = 0;
+;  130					shopPage = 0;
 	LD	(IX+-2),0
-;  109				}
-;  110				else {
+;  131				}
+;  132				else {
 	JR	L_20
 L_19:
-;  111					shopPage = 10;
+;  133					shopPage = 10;
 	LD	(IX+-2),10
-;  112				}
+;  134				}
 L_20:
-;  113				shopCurrent = 0;
+;  135				shopCurrent = 0;
 	LD	(IX+-1),0
-;  114				gfx_FillRectangle(25, 25, 9, 190);
+;  136				gfx_FillRectangle(25, 25, 9, 190);
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -831,7 +2214,7 @@ L_20:
 	POP	BC
 	POP	BC
 	POP	BC
-;  115				gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
+;  137				gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
 	LD	BC,25
 	PUSH	BC
 	PUSH	BC
@@ -841,21 +2224,21 @@ L_20:
 	POP	BC
 	POP	BC
 	POP	BC
-;  116				Wait(20);
+;  138				Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  117				goto reloadshop;
+;  139				goto reloadshop;
 	JR	L_3
-;  118			}
+;  140			}
 L_30:
-;  119	
-;  120			if (kb_Data[1] & kb_2nd) {
+;  141	
+;  142			if (kb_Data[1] & kb_2nd) {
 	LD	A,(16056338)
 	AND	A,32
 	JR	Z,L_31
-;  121				if (playerMoney >= itemPrices[shopCurrent + shopPage]) {
+;  143				if (playerMoney >= itemPrices[shopCurrent + shopPage]) {
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -876,7 +2259,7 @@ L_30:
 	LD	HL,(_playerMoney)
 	CALL	__lcmpu
 	JR	C,L_25
-;  122					playerMoney -= itemPrices[shopCurrent + shopPage];
+;  144					playerMoney -= itemPrices[shopCurrent + shopPage];
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -898,7 +2281,7 @@ L_30:
 	LD	HL,(_playerMoney)
 	CALL	__lsub
 	LD	(_playerMoney),HL
-;  123					playerItems[shopCurrent + shopPage]++;
+;  145					playerItems[shopCurrent + shopPage]++;
 	LD	HL,_playerItems
 	LD	A,E
 	LD	BC,(IX+-8)
@@ -909,8 +2292,8 @@ L_30:
 	INC	A
 	LD	HL,(IX+-5)
 	LD	(HL),A
-;  124				}
-;  125				while (kb_Data[1] & kb_2nd) { kb_Scan(); }
+;  146				}
+;  147				while (kb_Data[1] & kb_2nd) { kb_Scan(); }
 	JR	L_25
 L_26:
 	CALL	_kb_Scan
@@ -918,20 +2301,20 @@ L_25:
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_26
-;  126				goto reloadshop;
+;  148				goto reloadshop;
 	JR	L_3
-;  127			}
-;  128		}
+;  149			}
+;  150		}
 L_31:
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_32
-;  129		gfx_SetDrawBuffer();
+;  151		gfx_SetDrawBuffer();
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;  130	}
+;  152	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -983,13 +2366,13 @@ L__16:
 	DB	">"
 	DB	0
 	SEGMENT CODE
-;  131	
-;  132	bool items_UseItem(uint8_t index) {
+;  153	
+;  154	bool items_UseItem(uint8_t index) {
 _items_UseItem:
 	LD	HL,-74
 	CALL	__frameset
-;  133		char itemName[20];
-;  134		if (index < 4 || playerItems[index] == 0) {
+;  155		char itemName[20];
+;  156		if (index < 4 || playerItems[index] == 0) {
 	LD	A,(IX+6)
 	CP	A,4
 	JR	C,L_37
@@ -1003,12 +2386,12 @@ _items_UseItem:
 	OR	A,A
 	JR	NZ,L_38
 L_37:
-;  135			return false;
+;  157			return false;
 	XOR	A,A
 	JR	L_76
-;  136		}
+;  158		}
 L_38:
-;  137		i = menu_PokemonMenu(false);
+;  159		i = menu_PokemonMenu(false);
 	LD	BC,0
 	PUSH	BC
 	CALL	_menu_PokemonMenu
@@ -1018,7 +2401,7 @@ L_38:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  138		if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
+;  160		if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
 	LD	HL,(_i)
 	CALL	__scmpzero
 	JR	Z,L_41
@@ -1039,29 +2422,29 @@ L_38:
 	CALL	__scmpzero
 	JR	NZ,L_42
 L_41:
-;  139			return false;
+;  161			return false;
 	XOR	A,A
 	JR	L_76
-;  140		}
+;  162		}
 L_42:
-;  141		i -= 1;
+;  163		i -= 1;
 	LD	IY,(_i)
 	LEA	BC,IY+-1
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  142		if (index < 8) {
+;  164		if (index < 8) {
 	LD	A,(IX+6)
 	CP	A,8
 	JR	NC,L_65
-;  143			playerItems[index]--;
+;  165			playerItems[index]--;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-3)
 	LD	(HL),A
-;  144			HealHp(i, healAmounts[index - 4]);
+;  166			HealHp(i, healAmounts[index - 4]);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -1081,20 +2464,20 @@ L_42:
 	CALL	_HealHp
 	POP	BC
 	POP	BC
-;  145		}
-;  146		else if (index < 10) {
+;  167		}
+;  168		else if (index < 10) {
 	JR	L_74
 L_65:
 	LD	A,(IX+6)
 	CP	A,10
 	JR	NC,L_63
-;  147			playerItems[index]--;
+;  169			playerItems[index]--;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-3)
 	LD	(HL),A
-;  148			HealStatus(i, 0);
+;  170			HealStatus(i, 0);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,0
@@ -1104,7 +2487,7 @@ L_65:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  149			HealStatus(i, 1);
+;  171			HealStatus(i, 1);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,1
@@ -1114,7 +2497,7 @@ L_65:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  150			HealStatus(i, 2);
+;  172			HealStatus(i, 2);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,2
@@ -1124,7 +2507,7 @@ L_65:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  151			HealStatus(i, 3);
+;  173			HealStatus(i, 3);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,3
@@ -1134,7 +2517,7 @@ L_65:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  152			HealStatus(i, 4);
+;  174			HealStatus(i, 4);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,4
@@ -1144,11 +2527,11 @@ L_65:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  153			if (index == 9) {
+;  175			if (index == 9) {
 	LD	A,(IX+6)
 	CP	A,9
 	JR	NZ,L_74
-;  154				HealHp(i, 1000);
+;  176				HealHp(i, 1000);
 	LD	A,(_i)
 	LD	C,A
 	LD	DE,1000
@@ -1158,21 +2541,21 @@ L_65:
 	CALL	_HealHp
 	POP	BC
 	POP	BC
-;  155			}
-;  156		}
-;  157		else if (index < 15) {
+;  177			}
+;  178		}
+;  179		else if (index < 15) {
 	JR	L_74
 L_63:
 	LD	A,(IX+6)
 	CP	A,15
 	JR	NC,L_61
-;  158			playerItems[index]--;
+;  180			playerItems[index]--;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-3)
 	LD	(HL),A
-;  159			HealStatus(i, index-10);
+;  181			HealStatus(i, index-10);
 	LD	A,(IX+6)
 	SUB	A,10
 	LD	C,A
@@ -1184,14 +2567,14 @@ L_63:
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
-;  160		}
-;  161		else if (index < 20) {
+;  182		}
+;  183		else if (index < 20) {
 	JR	L_74
 L_61:
 	LD	A,(IX+6)
 	CP	A,20
 	JR	NC,L_74
-;  162			sprintf(str, "%s has evolved", data_pokemon[party[i].id].name);
+;  184			sprintf(str, "%s has evolved", data_pokemon[party[i].id].name);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1213,7 +2596,7 @@ L_61:
 	LD	BC,_str
 	PUSH	BC
 	CALL	_sprintf
-;  163			if (data_pokemon[party[i].id].evolvelevel == index + 86) {
+;  185			if (data_pokemon[party[i].id].evolvelevel == index + 86) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	POP	BC
@@ -1247,7 +2630,7 @@ L_61:
 	LD	HL,BC
 	SBC	HL,DE
 	JR	NZ,L_56
-;  164				party[i].id = data_pokemon[party[i].id].evolveid;
+;  186				party[i].id = data_pokemon[party[i].id].evolveid;
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -1264,8 +2647,8 @@ L_61:
 	LD	A,(IY+45)
 	LD	IY,(IX+-44)
 	LD	(IY+0),A
-;  165			}
-;  166			else if (data_pokemon[party[i].id].evolvelevel == 106) {
+;  187			}
+;  188			else if (data_pokemon[party[i].id].evolvelevel == 106) {
 	JR	L_58
 L_56:
 	LD	IY,(IX+-21)
@@ -1280,9 +2663,9 @@ L_56:
 	LD	A,(IY+44)
 	CP	A,106
 	JR	NZ,L_54
-;  167				if (index = 19) {
+;  189				if (index = 19) {
 	LD	(IX+6),19
-;  168					party[i].id += 1;
+;  190					party[i].id += 1;
 	LD	HL,(IX+-6)
 	LD	BC,_party
 	ADD	HL,BC
@@ -1291,26 +2674,26 @@ L_56:
 	LD	A,(IY+0)
 	INC	A
 	LD	(IY+0),A
-;  169				}
-;  170				else if (index = 17) {
+;  191				}
+;  192				else if (index = 17) {
 	JR	L_58
-;  171					party[i].id += 2;
-;  172				}
-;  173				else if (index = 15) {
-;  174					party[i].id += 3;
-;  175				}
-;  176				else {
-;  177					return false;
-;  178				}
-;  179			}
-;  180			else {
+;  193					party[i].id += 2;
+;  194				}
+;  195				else if (index = 15) {
+;  196					party[i].id += 3;
+;  197				}
+;  198				else {
+;  199					return false;
+;  200				}
+;  201			}
+;  202			else {
 L_54:
-;  181				return false;
+;  203				return false;
 	XOR	A,A
 	JR	L_76
-;  182			}
+;  204			}
 L_58:
-;  183			playerItems[index]--;
+;  205			playerItems[index]--;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -1318,7 +2701,7 @@ L_58:
 	ADD	HL,BC
 	LD	(IX+-56),HL
 	LD	IY,(IX+-56)
-;  184			text_Display(str, false);
+;  206			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -1329,17 +2712,17 @@ L_58:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  185			return true;
+;  207			return true;
 	LD	A,1
 	JR	L_76
-;  186		}
+;  208		}
 L_74:
-;  187	
-;  188		if (index >= 20) {
+;  209	
+;  210		if (index >= 20) {
 	LD	A,(IX+6)
 	CP	A,20
 	JR	C,L_75
-;  189			if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
+;  211			if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1387,7 +2770,7 @@ L_74:
 	CP	A,(IY+14)
 	JR	NZ,L_72
 L_71:
-;  190				sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
+;  212				sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
 	LD	IY,(IX+-18)
 	PEA	IY+0
 	LD	BC,L__38
@@ -1398,7 +2781,7 @@ L_71:
 	POP	BC
 	POP	BC
 	POP	BC
-;  191				text_Display(str, false);
+;  213				text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -1406,7 +2789,7 @@ L_71:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  192				switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
+;  214				switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1482,10 +2865,10 @@ L__39:
 
 	DW24	L_75	
 
-;  193				{
-;  194				case 1:
+;  215				{
+;  216				case 1:
 L_67:
-;  195					party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
+;  217					party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1513,11 +2896,11 @@ L_67:
 	LD	A,(HL)
 	LD	IY,(IX+-65)
 	LD	(IY+1),A
-;  196					break;
+;  218					break;
 	JR	L_75
-;  197				case 2:
+;  219				case 2:
 L_68:
-;  198					party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
+;  220					party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1547,11 +2930,11 @@ L_68:
 	LEA	HL,IY+1
 	INC	HL
 	LD	(HL),A
-;  199					break;
+;  221					break;
 	JR	L_75
-;  200				case 3:
+;  222				case 3:
 L_69:
-;  201					party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
+;  223					party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1580,11 +2963,11 @@ L_69:
 	LD	IY,(IX+-71)
 	LEA	HL,IY+3
 	LD	(HL),A
-;  202					break;
+;  224					break;
 	JR	L_75
-;  203				case 4:
+;  225				case 4:
 L_70:
-;  204					party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
+;  226					party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1613,13 +2996,13 @@ L_70:
 	LD	IY,(IX+-74)
 	LEA	HL,IY+4
 	LD	(HL),A
-;  205					break;
+;  227					break;
 	JR	L_75
-;  206				}
-;  207			}
-;  208			else {
+;  228				}
+;  229			}
+;  230			else {
 L_72:
-;  209				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
+;  231				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
 	LD	IY,(IX+-9)
 	PEA	IY+0
 	LD	IY,(IX+-12)
@@ -1640,7 +3023,7 @@ L_72:
 	POP	BC
 	POP	BC
 	POP	BC
-;  210				text_Display(str, false);
+;  232				text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -1648,15 +3031,15 @@ L_72:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  211				return false;
+;  233				return false;
 	XOR	A,A
 	JR	L_76
-;  212			}
-;  213		}
+;  234			}
+;  235		}
 L_75:
-;  214	
-;  215	
-;  216		items_IndexToName(&itemName, index);
+;  236	
+;  237	
+;  238		items_IndexToName(&itemName, index);
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
@@ -1664,7 +3047,7 @@ L_75:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  217		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
+;  239		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -1691,7 +3074,7 @@ L_75:
 	POP	BC
 	POP	BC
 	POP	BC
-;  218		text_Display(str, true);
+;  240		text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -1699,9 +3082,9 @@ L_75:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  219		return true;
+;  241		return true;
 	LD	A,1
-;  220	}
+;  242	}
 L_76:
 	LD	SP,IX
 	POP	IX
@@ -1753,12 +3136,12 @@ L__41:
 	DB	"Used a %s on %s"
 	DB	0
 	SEGMENT CODE
-;  221	
-;  222	void HealHp(uint8_t index, uint16_t amount) {
+;  243	
+;  244	void HealHp(uint8_t index, uint16_t amount) {
 _HealHp:
 	LD	HL,-36
 	CALL	__frameset
-;  223		party[index].currenthealth += amount;
+;  245		party[index].currenthealth += amount;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -1775,7 +3158,7 @@ _HealHp:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  224		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
+;  246		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
 	LD	HL,(IX+-6)
 	LD	BC,_party
 	ADD	HL,BC
@@ -1799,7 +3182,7 @@ _HealHp:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	NC,L_78
-;  225			party[index].currenthealth = stats_CalculateStats(party[index]).health;
+;  247			party[index].currenthealth = stats_CalculateStats(party[index]).health;
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -1826,8 +3209,8 @@ _HealHp:
 	LD	BC,(HL)
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  226		}
-;  227	}
+;  248		}
+;  249	}
 L_78:
 	LD	SP,IX
 	POP	IX
@@ -1847,10 +3230,10 @@ L_78:
 ;       Spill Code: 0 (instruction)
 
 
-;  228	void HealStatus(uint8_t index, uint8_t type) {
+;  250	void HealStatus(uint8_t index, uint8_t type) {
 _HealStatus:
 	CALL	__frameset0
-;  229		party[index].currentstatus = 0;
+;  251		party[index].currentstatus = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -1860,7 +3243,7 @@ _HealStatus:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+15),0
-;  230	}
+;  252	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1913,6 +3296,7 @@ _HealStatus:
 	XDEF _items_IndexToName
 	XDEF _itemCount
 	XDEF _itemPrices
+	XDEF _itemDescriptions
 	XDEF _itemNames
 	XDEF _healAmounts
 	END

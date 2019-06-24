@@ -16,4 +16,6 @@ descriptions = []
 for link in links:
     page = requests.get(link)
     tree = html.fromstring(page.content)
-    descriptions.append(tree.xpath('//td[@class="cell-med-text"]/text()')[2][:-1])
+    descriptions.append(tree.xpath('//span[@class="igame firered"]/parent::*/parent::*/td/text()')[0][:-1])
+    
+print(str(descriptions).replace("'", "\"").replace("’", "\'").replace("[", "{").replace("]", "}"))

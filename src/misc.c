@@ -76,7 +76,7 @@ void SetColors(uint8_t gameState) {
 
 /* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
 void FindColors(void) {
-	//return;
+	return;
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	FindBestColors();
 	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);

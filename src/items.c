@@ -20,7 +20,7 @@ const uint16_t healAmounts[] = { 20,50,120,1000 };
 /* Item Data */
 
 char itemNames[20][16] = {
-	"Pokeball",
+	"Poke Ball",
 	"Great Ball",
 	"Ultra Ball",
 	"Master Ball",
@@ -40,6 +40,28 @@ char itemNames[20][16] = {
 	"Fire Stone",
 	"Leaf Stone",
 	"Water Stone"
+};
+char itemDescriptions[20][68] = {
+	"A tool for catching wild Pokemon",
+	"A good Ball with a higher catch rate than a Poke Ball",
+	"A better Ball with a higher catch rate than a Great Ball",
+	"The best Ball that catches a Pokemon without fail",
+	"Restores the HP of a Pokemon by 20 points",
+	"Restores the HP of a Pokemon by 50 points",
+	"Restores the HP of a Pokemon by 120 points",
+	"Fully restores the HP of a Pokemon",
+	"Heals all the status problems of one Pokemon",
+	"Fully restores the HP and heals any status problems of one Pokemon",
+	"Heals a poisoned Pokemon",
+	"Heals a burned Pokemon",
+	"Heals a paralyzed Pokemon",
+	"Heals a frozen Pokemon",
+	"Awakens a sleeping Pokemon",
+	"Makes certain species of Pokemon evolve",
+	"Makes certain species of Pokemon evolve",
+	"Makes certain species of Pokemon evolve",
+	"Makes certain species of Pokemon evolve",
+	"Makes certain species of Pokemon evolve",
 };
 /* Used in shop */
 uint16_t itemPrices[20] = {

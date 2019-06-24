@@ -273,7 +273,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 			
 			gfx_PrintStringXY(data_pokemon[party[pokemonIndex].id].name, 4, 32);
 			pokemonSprite = gfx_MallocSprite(56, 56);
-			if (pokemonIndex < 80) {
+			if (party[pokemonIndex].id < 80) {
 				zx7_Decompress(pokemonSprite, PKMNSD0[party[pokemonIndex].id]);
 			}
 			else {
@@ -312,6 +312,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 			}
 		}
 		else if (page == 2) {
+			char description[19] = { 0 };
 			zx7_Decompress(backgroundSprite, infoscreen2_compressed);
 			gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 
@@ -337,6 +338,21 @@ void menu_PokemonDetails(int pokemonIndex) {
 						gfx_TransparentSprite_NoClip(categoryIcons[2], 280, 59 + 24 * moveIndex);
 					}
 				}
+			}
+
+			if (party[pokemonIndex].moves[menuState] != 0) {
+				gfx_SetTextScale(1, 1);
+				strncpy(description, data_moveDescriptions[party[pokemonIndex].moves[menuState] - 1], 18);
+				gfx_PrintStringXY(description, 170, 185);
+				strncpy(description, data_moveDescriptions[party[pokemonIndex].moves[menuState] - 1] + 18, 18);
+				gfx_PrintStringXY(description, 170, 194);
+				strncpy(description, data_moveDescriptions[party[pokemonIndex].moves[menuState] - 1] + 36, 18);
+				gfx_PrintStringXY(description, 170, 203);
+				strncpy(description, data_moveDescriptions[party[pokemonIndex].moves[menuState] - 1] + 54, 18);
+				gfx_PrintStringXY(description, 170, 212);
+				strncpy(description, data_moveDescriptions[party[pokemonIndex].moves[menuState] - 1]+72, 6);
+				gfx_PrintStringXY(description, 170, 221);
+				gfx_SetTextScale(2, 2);
 			}
 
 			sprintf(str, "%u", data_moves[party[pokemonIndex].moves[menuState]].power);
@@ -436,6 +452,7 @@ int menu_Items(bool inBattle) {
 
 		kb_Scan();
 		if (page == 1) {
+			char description[37] = { 0 };
 			gfx_SetTextScale(2, 2);
 			gfx_PrintStringXY("Items", 12, 19);
 			gfx_SetTextScale(1, 1);
@@ -445,12 +462,18 @@ int menu_Items(bool inBattle) {
 				gfx_PrintStringXY(str, 274, 21 + 14 * (itemIndex - menuState));
 			}
 
+			strncpy(description, itemDescriptions[usableItems[menuState + cursorState]], 36);
+			gfx_PrintStringXY(description, 14, 185);
+			strncpy(description, itemDescriptions[usableItems[menuState + cursorState]] + 36, 32);
+			gfx_PrintStringXY(description, 14, 200);
+
 			gfx_SwapDraw();
 			while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
 				kb_Scan();
 			}
 		}
 		else if (page == 2) {
+			char description[37] = { 0 };
 			gfx_SetTextScale(2, 2);
 			gfx_PrintStringXY("TMs", 12, 19);
 			gfx_SetTextScale(1, 1);
@@ -458,6 +481,14 @@ int menu_Items(bool inBattle) {
 				sprintf(str, "TM%u %s", usableTMs[itemIndex] - 19, data_moves[usableTMs[itemIndex] - 19].name);
 				gfx_PrintStringXY(str, 140, 21 + 14 * (itemIndex - menuState));
 			}
+
+			strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20], 36);
+			gfx_PrintStringXY(description, 14, 185);
+			strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20] + 36, 36);
+			gfx_PrintStringXY(description, 14, 200);
+			strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20] + 72, 6);
+			gfx_PrintStringXY(description, 14, 215);
+
 			gfx_SwapDraw();
 			while (!((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left) || (kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
 				kb_Scan();
@@ -518,4 +549,35 @@ int menu_Items(bool inBattle) {
 	free(backgroundSprite);
 	gfx_SetDrawBuffer();
 	return -1;
+}
+void menu_Box() {
+	/*int pokemonIndex;
+	gfx_sprite_t *backgroundSprite;
+	gfx_sprite_t *pokemonSprites[30];
+	gfx_sprite_t *largeSprite;
+
+	backgroundSprite = gfx_MallocSprite(160, 120);
+
+
+	menu_Setup();
+
+	largeSprite = gfx_MallocSprite(56, 56);
+	for (pokemonIndex = 0; pokemonIndex < 30; pokemonIndex++) {
+		pokemonSprites[pokemonIndex] = largeSprite = gfx_MallocSprite(28, 28);
+		if (party[pokemonIndex].id < 80) {
+			zx7_Decompress(largeSprite, PKMNSD0[party[pokemonIndex].id]);
+		}
+		else {
+			zx7_Decompress(largeSprite, PKMNSD1[party[pokemonIndex].id - 80]);
+		}
+		memcpy(pokemonSprites[pokemonIndex] + 2, largeSprite + 2, 784);
+		gfx_TransparentSprite_NoClip(pokemonSprites[pokemonIndex], 30 * (pokemonIndex % 6), 30 * (pokemonIndex / 6));
+	}
+
+
+	while (!((kb_Data[6] & kb_Clear))) {
+		kb_Scan();
+	}
+
+	free(backgroundSprite);*/
 }

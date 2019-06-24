@@ -274,45 +274,17 @@ L_7:
 ;   77	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
 ;   78	void FindColors(void) {
 _FindColors:
-;   79		//return;
+;   79		return;
 ;   80		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD4+90
-	LD	BC,446
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
 ;   81		FindBestColors();
-	CALL	_FindBestColors
 ;   82		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD5+111
-	LD	BC,512
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
 ;   83		FindBestColors();
-	CALL	_FindBestColors
 ;   84	}
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD5                            IMPORT    114   variable
-;_FindBestColors                     IMPORT  -----   function
-;_PKMNSD4                            IMPORT     93   variable
-;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
@@ -991,11 +963,9 @@ L_56:
 
 
 	XREF _PKMNSD5:ROM
-	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
-	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM
