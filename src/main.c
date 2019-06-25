@@ -86,6 +86,11 @@ void main(void) {
 				playerItems[starter] = 1;
 			}
 		}
+		for (starter = 1; starter < 36; starter++) {
+			if (rand() % 2) {
+				party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
+			}
+		}
 	}
 
 	map_LoadPokeballs();

@@ -1,7 +1,7 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\SRC\MAIN.C"
+	FILE	"SRC\MAIN.C"
 	.assume ADL=1
 	SEGMENT DATA
 _gameState:
@@ -54,7 +54,7 @@ _gameState:
 ;   45	
 ;   46	void main(void) {
 _main:
-	LD	HL,-72
+	LD	HL,-106
 	CALL	__frameset
 ;   47		int colorIndex;
 ;   48		/* Seed RNG */
@@ -124,7 +124,7 @@ _main:
 ;   71		if (newGame) {
 	LD	A,(_newGame)
 	OR	A,A
-	JR	Z,L_12
+	JR	Z,L_18
 ;   72			uint8_t starter = 0;
 	LD	(IX+-1),0
 ;   73			newGame = false;
@@ -230,74 +230,122 @@ L_9:
 	LD	A,(IX+-1)
 	CP	A,185
 	JR	C,L_7
-;   89		}
-L_12:
-;   90	
-;   91		map_LoadPokeballs();
-	CALL	_map_LoadPokeballs
-;   92		do {
+;   89			for (starter = 1; starter < 36; starter++) {
+	LD	(IX+-1),1
+	JR	L_15
+L_13:
+;   90				if (rand() % 2) {
+	CALL	_rand
+	LD	BC,2
+	CALL	__irems
+	CALL	__icmpzero
+	JR	Z,L_14
+;   91					party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
+	CALL	_rand
+	LD	BC,101
+	CALL	__irems
+	LD	C,L
+	LD	B,0
+	PUSH	BC
+	CALL	_rand
+	LD	BC,152
+	CALL	__irems
+	LD	C,L
+	LD	B,0
+	PUSH	BC
+	PEA	IX+-106
+	CALL	_stats_NewCharacter
+	LD	IY,HL
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,34
+	CALL	__imul_b
+	LD	BC,_party
+	ADD	HL,BC
+	LD	DE,HL
+	LD	HL,IY
+	LD	BC,34
+	LDIR	
+;   92				}
+;   93			}
+L_14:
+	INC	(IX+-1)
+L_15:
+	LD	A,(IX+-1)
+	CP	A,36
+	JR	C,L_13
+;   94		}
 L_18:
-;   93			kb_Scan();
+;   95	
+;   96		map_LoadPokeballs();
+	CALL	_map_LoadPokeballs
+;   97		do {
+L_24:
+;   98			kb_Scan();
 	CALL	_kb_Scan
-;   94			if (gameState == 0) {
+;   99			if (gameState == 0) {
 	LD	A,(_gameState)
 	OR	A,A
-	JR	NZ,L_17
-;   95				gameState = map_Loop();
+	JR	NZ,L_23
+;  100				gameState = map_Loop();
 	CALL	_map_Loop
 	LD	A,L
-;   96				if (gameState == 1) {
+;  101				if (gameState == 1) {
 	CP	A,1
 	LD	(_gameState),A
-	JR	NZ,L_19
-;   97					map_End();
+	JR	NZ,L_25
+;  102					map_End();
 	CALL	_map_End
-;   98					battle_Setup();
+;  103					battle_Setup();
 	CALL	_battle_Setup
-;   99				}
-;  100			}
-;  101			else if (gameState == 1) {
-	JR	L_19
-L_17:
+;  104				}
+;  105			}
+;  106			else if (gameState == 1) {
+	JR	L_25
+L_23:
 	LD	A,(_gameState)
 	CP	A,1
-	JR	NZ,L_19
-;  102				gameState = battle_Loop();
+	JR	NZ,L_25
+;  107				gameState = battle_Loop();
 	CALL	_battle_Loop
 	LD	A,L
 	LD	(_gameState),A
-;  103				if (gameState == 0) {
+;  108				if (gameState == 0) {
 	OR	A,A
-	JR	NZ,L_19
-;  104					battle_End();
+	JR	NZ,L_25
+;  109					battle_End();
 	CALL	_battle_End
-;  105					map_Setup();
+;  110					map_Setup();
 	CALL	_map_Setup
-;  106				}
-;  107			}
-;  108		} while (gameState < 2);
-L_19:
+;  111				}
+;  112			}
+;  113		} while (gameState < 2);
+L_25:
 	LD	A,(_gameState)
 	CP	A,2
-	JR	C,L_18
-;  109	
-;  110		map_End();
+	JR	C,L_24
+;  114	
+;  115		map_End();
 	CALL	_map_End
-;  111		battle_End();
+;  116		battle_End();
 	CALL	_battle_End
-;  112		free(textBoxSprite1);
+;  117		free(textBoxSprite1);
 	LD	BC,(_textBoxSprite1)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  113		free(textBoxSprite2);
+;  118		free(textBoxSprite2);
 	LD	BC,(_textBoxSprite2)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  114	
-;  115	
-;  116		gfx_End();
+;  119	
+;  120	
+;  121		gfx_End();
 	CALL	_gfx_End
 	LD	SP,IX
 	POP	IX
@@ -339,7 +387,7 @@ L_19:
 ;starter                               IX-1      1   variable
 
 
-; Stack Frame Size: 78 (bytes)
+; Stack Frame Size: 112 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
@@ -390,6 +438,7 @@ L__5:
 	XREF __irems:ROM
 	XREF __frameset:ROM
 	XREF __icmpzero:ROM
+	XREF __imul_b:ROM
 	XDEF _main
 	XDEF _gameState
 	END

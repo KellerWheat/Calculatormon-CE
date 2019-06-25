@@ -28,6 +28,7 @@
 #include "gfx/PKMNSD2.h"
 #include "gfx/PKMNSD3.h"
 #include "gfx/PKMNSD5.h"
+#include "gfx/PKMNSD6.h"
 
 void SetupBattleGfx(void);
 
@@ -106,6 +107,7 @@ void battle_Initialize(void) {
 	PKMNSD2_init();
 	PKMNSD3_init();
 	PKMNSD5_init();
+	PKMNSD6_init();
 }
 void battle_Setup(void) {
 	int pokemonIndex;
@@ -726,6 +728,9 @@ void attack(bool player, uint8_t move) {
 		}
 	}
 
+	sprintf(str, "%s used %s", username, data_moves[move].name);
+	text_Display(str, true);
+
 	if (air[!player] || (data_moves[move].accuracy * statmodvalues[statmods[player][5]] / statmodvalues[statmods[!player][6]]) < (rand() % 100)) {
 		text_Display("It Missed", true);
 		if (data_moves[move].statustype == 25) {
@@ -743,8 +748,7 @@ void attack(bool player, uint8_t move) {
 		hitcount = 1;
 	}
 
-	sprintf(str, "%s used %s", username, data_moves[move].name);
-	text_Display(str, true);
+	
 
 
 startattack:

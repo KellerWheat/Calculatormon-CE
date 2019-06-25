@@ -1,7 +1,7 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\..\SRC\GFX\INDOORTILESET.C"
+	FILE	"SRC\GFX\INDOORTILESET.C"
 	.assume ADL=1
 	SEGMENT DATA
 _indoortileset_tiles_compressed:
@@ -134,7 +134,7 @@ _indoortileset_tiles_compressed:
 	DW24	3347
 	DW24	3356
 	XDEF _indoortileset_tiles_compressed
-;    1	// convpng v6.8
+;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "map_gfx.h"
 ;    4	

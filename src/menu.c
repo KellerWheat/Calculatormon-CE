@@ -26,6 +26,7 @@
 #include "gfx/PKMNSD2.h"
 #include "gfx/PKMNSD3.h"
 #include "gfx/PKMNSD5.h"
+#include "gfx/PKMNSD6.h"
 
 void MoveMenuCursor(int max);
 
@@ -551,33 +552,109 @@ int menu_Items(bool inBattle) {
 	return -1;
 }
 void menu_Box() {
-	/*int pokemonIndex;
+	int pokemonIndex, memIndex, menuState;
+	bool grabbingPokemon;
+	gfx_sprite_t *tempSprite;
 	gfx_sprite_t *backgroundSprite;
-	gfx_sprite_t *pokemonSprites[30];
+	gfx_sprite_t *pokemonSprites[36];
 	gfx_sprite_t *largeSprite;
 
-	backgroundSprite = gfx_MallocSprite(160, 120);
+	
 
 
 	menu_Setup();
+	gfx_SetTextFGColor(colors[1]);
 
+
+	backgroundSprite = gfx_MallocSprite(160, 120);
+	zx7_Decompress(backgroundSprite, pc_compressed);
 	largeSprite = gfx_MallocSprite(56, 56);
-	for (pokemonIndex = 0; pokemonIndex < 30; pokemonIndex++) {
-		pokemonSprites[pokemonIndex] = largeSprite = gfx_MallocSprite(28, 28);
-		if (party[pokemonIndex].id < 80) {
-			zx7_Decompress(largeSprite, PKMNSD0[party[pokemonIndex].id]);
+	for (pokemonIndex = 0; pokemonIndex < 36; pokemonIndex++) {
+		pokemonSprites[pokemonIndex] = gfx_MallocSprite(30, 24);
+		zx7_Decompress(pokemonSprites[pokemonIndex], PKMNSD6[party[pokemonIndex].id]);
+	}
+	
+
+	if (party[pokemonIndex].id < 80) {
+		zx7_Decompress(largeSprite, PKMNSD0[party[0].id]);
+	}
+	else {
+		zx7_Decompress(largeSprite, PKMNSD1[party[0].id - 80]);
+	}
+
+	menuState = 0;
+	grabbingPokemon = false;
+	
+	while (!(kb_Data[6] & kb_Clear)) {
+		gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+		for (pokemonIndex = 0; pokemonIndex < 36; pokemonIndex++) {
+			if (party[pokemonIndex].id != 0) {
+				gfx_TransparentSprite_NoClip(pokemonSprites[pokemonIndex], 121 + 32 * (pokemonIndex % 6), 18 + 32 * (pokemonIndex / 6) + 18 * ((pokemonIndex / 6) > 0));
+			}
+		}
+		if (grabbingPokemon) {
+			gfx_TransparentSprite_NoClip(closedhand, 127 + 32 * (menuState % 6), 12 + 32 * (menuState / 6) + 18 * ((menuState / 6) > 0));
 		}
 		else {
-			zx7_Decompress(largeSprite, PKMNSD1[party[pokemonIndex].id - 80]);
+			gfx_TransparentSprite_NoClip(openhand, 127 + 32 * (menuState % 6), 2 + 32 * (menuState / 6) + 18 * ((menuState / 6) > 0));
 		}
-		memcpy(pokemonSprites[pokemonIndex] + 2, largeSprite + 2, 784);
-		gfx_TransparentSprite_NoClip(pokemonSprites[pokemonIndex], 30 * (pokemonIndex % 6), 30 * (pokemonIndex / 6));
-	}
+		if (party[menuState].id != 0) {
+			gfx_TransparentSprite_NoClip(largeSprite, 32, 114);
+			
+			gfx_PrintStringXY(data_pokemon[party[menuState].id].name, 20, 186);
+			sprintf(str, "Level %u", party[menuState].level);
+			gfx_PrintStringXY(str, 20, 196);
+		}
 
+		
 
-	while (!((kb_Data[6] & kb_Clear))) {
+		gfx_SwapDraw();
+
+		Wait(20);
 		kb_Scan();
+		/* Wait until a key is pressed */
+		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear) || kb_Data[7])) { kb_Scan(); }
+		if (kb_Data[1] & kb_2nd) {
+			grabbingPokemon = !grabbingPokemon;
+		}
+		if (kb_Data[7]) {
+			int oldState = menuState;
+			if ((kb_Data[7] & kb_Up) && menuState / 6 > 0) {
+				menuState -= 6;
+			}
+			if ((kb_Data[7] & kb_Down) && menuState / 6 < 5) {
+				menuState += 6;
+			}
+			if ((kb_Data[7] & kb_Left) && menuState % 6 > 0) {
+				menuState -= 1;
+			}
+			if ((kb_Data[7] & kb_Right) && menuState % 6 < 5) {
+				menuState += 1;
+			}
+
+			if (grabbingPokemon) {
+				tempcharacter = party[menuState];
+				party[menuState] = party[oldState];
+				party[oldState] = tempcharacter;
+				tempSprite = pokemonSprites[menuState];
+				pokemonSprites[menuState] = pokemonSprites[oldState];
+				pokemonSprites[oldState] = tempSprite;
+			}
+
+
+			if (party[pokemonIndex].id < 80) {
+				zx7_Decompress(largeSprite, PKMNSD0[party[menuState].id]);
+			}
+			else {
+				zx7_Decompress(largeSprite, PKMNSD1[party[menuState].id - 80]);
+			}
+		}
 	}
 
-	free(backgroundSprite);*/
+
+	for (pokemonIndex = 0; pokemonIndex < 36; pokemonIndex++) {
+		free(pokemonSprites[pokemonIndex]);
+	}
+	free(largeSprite);
+	free(backgroundSprite);
 }

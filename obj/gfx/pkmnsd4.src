@@ -1,7 +1,7 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\..\SRC\GFX\PKMNSD4.C"
+	FILE	"SRC\GFX\PKMNSD4.C"
 	.assume ADL=1
 	SEGMENT DATA
 _PKMNSD4:
@@ -36,7 +36,7 @@ _PKMNSD4:
 	DW24	4393
 	DW24	12163
 	DW24	15528
-;    1	// convpng v6.8
+;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD4.h"
 ;    4	

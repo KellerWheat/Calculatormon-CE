@@ -1,7 +1,7 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\SRC\BATTLE.C"
+	FILE	"SRC\BATTLE.C"
 	.assume ADL=1
 	SEGMENT TEXT
 _statmodvalues:
@@ -179,97 +179,101 @@ _statuscolors:
 ;   28	#include "gfx/PKMNSD2.h"
 ;   29	#include "gfx/PKMNSD3.h"
 ;   30	#include "gfx/PKMNSD5.h"
-;   31	
-;   32	void SetupBattleGfx(void);
-;   33	
-;   34	bool playerturn(void);
-;   35	bool enemyturn(void);
-;   36	int selectMove(void);
-;   37	void redrawcharacters(void);
-;   38	void attack(bool player, uint8_t move);
-;   39	
-;   40	uint8_t CalculateXpPercent(void);
-;   41	void applystatus(bool player);
-;   42	void resetstatus(bool player);
-;   43	void takedamage(bool player, int amount);
-;   44	void heal(bool player, int amount);
-;   45	bool capture(uint8_t ball);
-;   46	void addxp(void);
-;   47	
+;   31	#include "gfx/PKMNSD6.h"
+;   32	
+;   33	void SetupBattleGfx(void);
+;   34	
+;   35	bool playerturn(void);
+;   36	bool enemyturn(void);
+;   37	int selectMove(void);
+;   38	void redrawcharacters(void);
+;   39	void attack(bool player, uint8_t move);
+;   40	
+;   41	uint8_t CalculateXpPercent(void);
+;   42	void applystatus(bool player);
+;   43	void resetstatus(bool player);
+;   44	void takedamage(bool player, int amount);
+;   45	void heal(bool player, int amount);
+;   46	bool capture(uint8_t ball);
+;   47	void addxp(void);
 ;   48	
-;   49	const int statmodvalues[] = { 25,29,33,40,50,67,100,150,200,250,300,350,400 };
-;   50	const struct pokemonData clearcharacter = { 0 };
-;   51	
-;   52	uint8_t currentplayer;
-;   53	uint8_t currentenemy;
-;   54	
-;   55	char playername[20];
-;   56	char enemyname[20];
-;   57	
-;   58	gfx_sprite_t *playerSprite;
-;   59	gfx_sprite_t *enemySprite;
-;   60	
-;   61	gfx_sprite_t *backgroundSprite;
-;   62	gfx_sprite_t *hpBarSprite;
-;   63	gfx_sprite_t *statusSprites[5];
-;   64	
-;   65	struct pokemonData enemyparty[6];
-;   66	uint8_t attackturn = 0;
-;   67	uint8_t chosenmove[2];
-;   68	bool wild;
-;   69	
-;   70	struct pokemonStats stats[2];
-;   71	uint8_t *currentStatusPointer[2];
-;   72	uint8_t statmods[2][7];
-;   73	
-;   74	uint8_t confusedturns[2];
-;   75	bool leech[2];
-;   76	uint8_t trapturns[2];
-;   77	uint8_t reflectturns[2];
-;   78	uint8_t lightscreenturns[2];
-;   79	uint8_t mistturns[2];
-;   80	bool flinch[2];
-;   81	bool highcritratio[2];
-;   82	bool rage[2];
-;   83	bool transformed[2];
-;   84	bool converted[2];
-;   85	struct pokemonData originalpokemon[2];
-;   86	uint16_t bidedamage[2];
-;   87	uint16_t substitutehealth[2];
-;   88	
-;   89	uint8_t disabledmove[2];
-;   90	uint8_t disabledturns[2];
-;   91	uint8_t lastmove[2];
-;   92	uint8_t attackturns[2];
-;   93	bool air[2];
-;   94	uint16_t payday;
-;   95	bool run;
-;   96	
-;   97	uint8_t battleMenuState1 = 0;
-;   98	uint8_t battleMenuState2 = 0;
-;   99	uint8_t battleMenuCurrent = 1;
-;  100	
-;  101	const uint8_t statuscolors[5] = { 2,3,4,5,6 };
+;   49	
+;   50	const int statmodvalues[] = { 25,29,33,40,50,67,100,150,200,250,300,350,400 };
+;   51	const struct pokemonData clearcharacter = { 0 };
+;   52	
+;   53	uint8_t currentplayer;
+;   54	uint8_t currentenemy;
+;   55	
+;   56	char playername[20];
+;   57	char enemyname[20];
+;   58	
+;   59	gfx_sprite_t *playerSprite;
+;   60	gfx_sprite_t *enemySprite;
+;   61	
+;   62	gfx_sprite_t *backgroundSprite;
+;   63	gfx_sprite_t *hpBarSprite;
+;   64	gfx_sprite_t *statusSprites[5];
+;   65	
+;   66	struct pokemonData enemyparty[6];
+;   67	uint8_t attackturn = 0;
+;   68	uint8_t chosenmove[2];
+;   69	bool wild;
+;   70	
+;   71	struct pokemonStats stats[2];
+;   72	uint8_t *currentStatusPointer[2];
+;   73	uint8_t statmods[2][7];
+;   74	
+;   75	uint8_t confusedturns[2];
+;   76	bool leech[2];
+;   77	uint8_t trapturns[2];
+;   78	uint8_t reflectturns[2];
+;   79	uint8_t lightscreenturns[2];
+;   80	uint8_t mistturns[2];
+;   81	bool flinch[2];
+;   82	bool highcritratio[2];
+;   83	bool rage[2];
+;   84	bool transformed[2];
+;   85	bool converted[2];
+;   86	struct pokemonData originalpokemon[2];
+;   87	uint16_t bidedamage[2];
+;   88	uint16_t substitutehealth[2];
+;   89	
+;   90	uint8_t disabledmove[2];
+;   91	uint8_t disabledturns[2];
+;   92	uint8_t lastmove[2];
+;   93	uint8_t attackturns[2];
+;   94	bool air[2];
+;   95	uint16_t payday;
+;   96	bool run;
+;   97	
+;   98	uint8_t battleMenuState1 = 0;
+;   99	uint8_t battleMenuState2 = 0;
+;  100	uint8_t battleMenuCurrent = 1;
+;  101	
+;  102	const uint8_t statuscolors[5] = { 2,3,4,5,6 };
 	SEGMENT CODE
-;  102	
-;  103	void battle_Initialize(void) {
+;  103	
+;  104	void battle_Initialize(void) {
 _battle_Initialize:
-;  104		PKMNSD0_init();
+;  105		PKMNSD0_init();
 	CALL	_PKMNSD0_init
-;  105		PKMNSD1_init();
+;  106		PKMNSD1_init();
 	CALL	_PKMNSD1_init
-;  106		PKMNSD2_init();
+;  107		PKMNSD2_init();
 	CALL	_PKMNSD2_init
-;  107		PKMNSD3_init();
+;  108		PKMNSD3_init();
 	CALL	_PKMNSD3_init
-;  108		PKMNSD5_init();
+;  109		PKMNSD5_init();
 	CALL	_PKMNSD5_init
-;  109	}
+;  110		PKMNSD6_init();
+	CALL	_PKMNSD6_init
+;  111	}
 	RET	
 
 
 ;**************************** _battle_Initialize ***************************
 ;Name                         Addr/Register   Size   Type
+;_PKMNSD6_init                       IMPORT  -----   function
 ;_PKMNSD5_init                       IMPORT  -----   function
 ;_PKMNSD3_init                       IMPORT  -----   function
 ;_PKMNSD2_init                       IMPORT  -----   function
@@ -281,17 +285,17 @@ _battle_Initialize:
 ;       Spill Code: 0 (instruction)
 
 
-;  110	void battle_Setup(void) {
+;  112	void battle_Setup(void) {
 _battle_Setup:
 	LD	HL,-30
 	CALL	__frameset
-;  111		int pokemonIndex;
-;  112		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the pokemon sent out has not fainted
+;  113		int pokemonIndex;
+;  114		for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the pokemon sent out has not fainted
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_6
 L_4:
-;  113			if (party[pokemonIndex].currenthealth != 0 && party[pokemonIndex].id != 0) {
+;  115			if (party[pokemonIndex].currenthealth != 0 && party[pokemonIndex].id != 0) {
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
@@ -306,14 +310,14 @@ L_4:
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_5
-;  114				currentplayer = pokemonIndex;
+;  116				currentplayer = pokemonIndex;
 	LD	A,(IX+-3)
 	LD	(_currentplayer),A
-;  115				pokemonIndex = 6;
+;  117				pokemonIndex = 6;
 	LD	BC,6
 	LD	(IX+-3),BC
-;  116			}
-;  117		}
+;  118			}
+;  119		}
 L_5:
 	LD	BC,(IX+-3)
 	INC	BC
@@ -324,15 +328,15 @@ L_6:
 	OR	A,A
 	SBC	HL,BC
 	JP	M,L_4
-;  118		SetupBattleGfx();
+;  120		SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  119	
-;  120		battleMenuState1 = 0;
-;  121		battleMenuState2 = 0;
-;  122		battleMenuCurrent = 1;
-;  123	
-;  124		
-;  125		stats[0] = stats_CalculateStats(enemyparty[0]);
+;  121	
+;  122		battleMenuState1 = 0;
+;  123		battleMenuState2 = 0;
+;  124		battleMenuCurrent = 1;
+;  125	
+;  126		
+;  127		stats[0] = stats_CalculateStats(enemyparty[0]);
 	LD	IY,0
 	ADD	IY,SP
 	LEA	IY,IY+-36
@@ -358,7 +362,7 @@ L_6:
 	LD	DE,_stats
 	LD	BC,12
 	LDIR	
-;  126		stats[1] = stats_CalculateStats(party[0]);
+;  128		stats[1] = stats_CalculateStats(party[0]);
 	LD	IY,0
 	ADD	IY,SP
 	LEA	IY,IY+-36
@@ -378,11 +382,11 @@ L_6:
 	LD	DE,_stats+12
 	LD	BC,12
 	LDIR	
-;  127		currentenemy = 0;
+;  129		currentenemy = 0;
 	XOR	A,A
-;  128		attackturn = 0;
-;  129	
-;  130		resetstatus(true);
+;  130		attackturn = 0;
+;  131	
+;  132		resetstatus(true);
 	LD	BC,1
 	PUSH	BC
 	LD	(_currentenemy),A
@@ -390,21 +394,21 @@ L_6:
 	LD	(_attackturn),A
 	CALL	_resetstatus
 	POP	BC
-;  131		resetstatus(false);
+;  133		resetstatus(false);
 	LD	BC,0
 	PUSH	BC
 	CALL	_resetstatus
 	POP	BC
-;  132		payday = 0;
+;  134		payday = 0;
 	LD	HL,_payday
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  133	
-;  134		run = false;
+;  135	
+;  136		run = false;
 	XOR	A,A
 	LD	(_run),A
-;  135	}
+;  137	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -434,11 +438,11 @@ L_6:
 ;       Spill Code: 0 (instruction)
 
 
-;  136	void SetupBattleGfx(void) {
+;  138	void SetupBattleGfx(void) {
 _SetupBattleGfx:
 	LD	HL,-6
 	CALL	__frameset
-;  137		zx7_Decompress(textBoxSprite1, battletextbox1_compressed);
+;  139		zx7_Decompress(textBoxSprite1, battletextbox1_compressed);
 	LD	HL,_PKMNSD5+6
 	LD	BC,(HL)
 	PUSH	BC
@@ -447,7 +451,7 @@ _SetupBattleGfx:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  138		zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
+;  140		zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
 	LD	HL,_PKMNSD5+9
 	LD	BC,(HL)
 	PUSH	BC
@@ -456,7 +460,7 @@ _SetupBattleGfx:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  139		backgroundSprite = gfx_MallocSprite(160, 88);
+;  141		backgroundSprite = gfx_MallocSprite(160, 88);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,88
@@ -467,17 +471,17 @@ _SetupBattleGfx:
 	POP	BC
 	POP	BC
 	POP	BC
-;  140		zx7_Decompress(backgroundSprite, background_compressed);
+;  142		zx7_Decompress(backgroundSprite, background_compressed);
 	LD	IY,_PKMNSD5
 	LD	(_backgroundSprite),HL
-	LD	BC,(IY+105)
+	LD	BC,(IY+108)
 	PUSH	BC
 	LD	BC,(_backgroundSprite)
 	PUSH	BC
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  141		hpBarSprite = gfx_MallocSprite(98, 10);
+;  143		hpBarSprite = gfx_MallocSprite(98, 10);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,10
@@ -488,17 +492,17 @@ _SetupBattleGfx:
 	POP	BC
 	POP	BC
 	POP	BC
-;  142		zx7_Decompress(hpBarSprite, hpbar_compressed);
+;  144		zx7_Decompress(hpBarSprite, hpbar_compressed);
 	LD	IY,_PKMNSD5
 	LD	(_hpBarSprite),HL
-	LD	BC,(IY+108)
+	LD	BC,(IY+111)
 	PUSH	BC
 	LD	BC,(_hpBarSprite)
 	PUSH	BC
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  143		playerSprite = gfx_MallocSprite(56, 56);
+;  145		playerSprite = gfx_MallocSprite(56, 56);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,56
@@ -508,7 +512,7 @@ _SetupBattleGfx:
 	POP	BC
 	POP	BC
 	POP	BC
-;  144		enemySprite = gfx_MallocSprite(56, 56);
+;  146		enemySprite = gfx_MallocSprite(56, 56);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,56
@@ -520,8 +524,8 @@ _SetupBattleGfx:
 	POP	BC
 	POP	BC
 	LD	(_enemySprite),HL
-;  145	
-;  146		if (party[currentplayer].id < 80) {
+;  147	
+;  148		if (party[currentplayer].id < 80) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -534,7 +538,7 @@ _SetupBattleGfx:
 	LD	A,(IY+0)
 	CP	A,80
 	JR	NC,L_10
-;  147			zx7_Decompress(playerSprite, PKMNSD2[party[currentplayer].id]);
+;  149			zx7_Decompress(playerSprite, PKMNSD2[party[currentplayer].id]);
 	LD	IY,(IX+-3)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -551,11 +555,11 @@ _SetupBattleGfx:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  148		}
-;  149		else {
+;  150		}
+;  151		else {
 	JR	L_13
 L_10:
-;  150			zx7_Decompress(playerSprite, PKMNSD3[party[currentplayer].id - 80]);
+;  152			zx7_Decompress(playerSprite, PKMNSD3[party[currentplayer].id - 80]);
 	LD	IY,(IX+-3)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -574,9 +578,9 @@ L_10:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  151		}
+;  153		}
 L_13:
-;  152		if (enemyparty[currentenemy].id < 80) {
+;  154		if (enemyparty[currentenemy].id < 80) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -589,7 +593,7 @@ L_13:
 	LD	A,(IY+0)
 	CP	A,80
 	JR	NC,L_12
-;  153			zx7_Decompress(enemySprite, PKMNSD0[enemyparty[currentenemy].id]);
+;  155			zx7_Decompress(enemySprite, PKMNSD0[enemyparty[currentenemy].id]);
 	LD	IY,(IX+-6)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -606,11 +610,11 @@ L_13:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  154		}
-;  155		else {
+;  156		}
+;  157		else {
 	JR	L_14
 L_12:
-;  156			zx7_Decompress(enemySprite, PKMNSD1[enemyparty[currentenemy].id - 80]);
+;  158			zx7_Decompress(enemySprite, PKMNSD1[enemyparty[currentenemy].id - 80]);
 	LD	IY,(IX+-6)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -629,29 +633,29 @@ L_12:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  157		}
+;  159		}
 L_14:
-;  158	
-;  159	
-;  160		MallocIcons();
-	CALL	_MallocIcons
+;  160	
 ;  161	
-;  162		SetColors(1);
+;  162		MallocIcons();
+	CALL	_MallocIcons
+;  163	
+;  164		SetColors(1);
 	LD	BC,1
 	PUSH	BC
 	CALL	_SetColors
 	POP	BC
-;  163		gfx_FillScreen(colors[0]);
+;  165		gfx_FillScreen(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_FillScreen
 	POP	BC
-;  164		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+;  166		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
-	LD	HL,_PKMNSD5+111
+	LD	HL,_PKMNSD5+114
 	LD	BC,512
 	PUSH	BC
 	LD	BC,(HL)
@@ -660,16 +664,16 @@ L_14:
 	POP	BC
 	POP	BC
 	POP	BC
-;  165		gfx_SwapDraw();
+;  167		gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  166		gfx_SetTextScale(1, 1);
+;  168		gfx_SetTextScale(1, 1);
 	LD	BC,1
 	PUSH	BC
 	PUSH	BC
 	CALL	_gfx_SetTextScale
 	POP	BC
 	POP	BC
-;  167		gfx_SetTextFGColor(colors[1]);
+;  169		gfx_SetTextFGColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -677,14 +681,14 @@ L_14:
 	PUSH	BC
 	CALL	_gfx_SetTextFGColor
 	POP	BC
-;  168		gfx_SetColor(colors[0]);
+;  170		gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  169	}
+;  171	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -701,11 +705,11 @@ L_14:
 ;_gfx_FillScreen                     IMPORT  -----   function
 ;_SetColors                          IMPORT  -----   function
 ;_MallocIcons                        IMPORT  -----   function
-;_PKMNSD1                            IMPORT    219   variable
+;_PKMNSD1                            IMPORT    216   variable
 ;_PKMNSD0                            IMPORT    240   variable
 ;_currentenemy                       STATIC      1   variable
 ;_enemyparty                         STATIC    204   variable
-;_PKMNSD3                            IMPORT    219   variable
+;_PKMNSD3                            IMPORT    216   variable
 ;_PKMNSD2                            IMPORT    240   variable
 ;_currentplayer                      STATIC      1   variable
 ;_party                              IMPORT   1224   variable
@@ -717,7 +721,7 @@ L_14:
 ;_gfx_AllocSprite                    IMPORT  -----   function
 ;_textBoxSprite2                     IMPORT      3   variable
 ;_textBoxSprite1                     IMPORT      3   variable
-;_PKMNSD5                            IMPORT    114   variable
+;_PKMNSD5                            IMPORT    117   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;G_6                                   IX-6      3   variable
 ;G_2                                   IX-3      3   variable
@@ -727,15 +731,15 @@ L_14:
 ;       Spill Code: 0 (instruction)
 
 
-;  170	int battle_Loop(void) {
+;  172	int battle_Loop(void) {
 _battle_Loop:
 	LD	HL,-9
 	CALL	__frameset
-;  171		/* Battle */
-;  172		redrawcharacters();
+;  173		/* Battle */
+;  174		redrawcharacters();
 	CALL	_redrawcharacters
-;  173		/* Switch to a new poketmon or lose battle if health is 0 */
-;  174		if (party[currentplayer].currenthealth == 0) {
+;  175		/* Switch to a new poketmon or lose battle if health is 0 */
+;  176		if (party[currentplayer].currenthealth == 0) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -747,7 +751,7 @@ _battle_Loop:
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	NZ,L_40
-;  175			sprintf(str, "%s fainted", playername);
+;  177			sprintf(str, "%s fainted", playername);
 	LD	BC,_playername
 	PUSH	BC
 	LD	BC,L__9
@@ -758,7 +762,7 @@ _battle_Loop:
 	POP	BC
 	POP	BC
 	POP	BC
-;  176			text_Display(str, false);
+;  178			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -766,17 +770,17 @@ _battle_Loop:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  177			attackturn = 0;
+;  179			attackturn = 0;
 	XOR	A,A
-;  178	
-;  179			if (transformed[true]) {
+;  180	
+;  181			if (transformed[true]) {
 	LD	HL,_transformed
 	INC	HL
 	LD	(_attackturn),A
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_18
-;  180				party[currentplayer] = originalpokemon[true];
+;  182				party[currentplayer] = originalpokemon[true];
 	LD	BC,_originalpokemon+34
 	LD	A,(_currentplayer)
 	UEXT	HL
@@ -789,15 +793,15 @@ _battle_Loop:
 	LD	HL,BC
 	LD	BC,34
 	LDIR	
-;  181			}
+;  183			}
 L_18:
-;  182			if (converted[true]) {
+;  184			if (converted[true]) {
 	LD	HL,_converted
 	INC	HL
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_19
-;  183				data_pokemon[party[currentplayer].id].element1 = 1;
+;  185				data_pokemon[party[currentplayer].id].element1 = 1;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -815,18 +819,18 @@ L_18:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+16),1
-;  184			}
+;  186			}
 L_19:
-;  185	
-;  186			i = 0;
+;  187	
+;  188			i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  187			while (i < 6) {
+;  189			while (i < 6) {
 	JR	L_24
 L_25:
-;  188				if (party[i].currenthealth != 0 && party[i].id != 0) {
+;  190				if (party[i].currenthealth != 0 && party[i].id != 0) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -842,43 +846,43 @@ L_25:
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_23
-;  189					currentplayer = i;
-;  190					resetstatus(true);
+;  191					currentplayer = i;
+;  192					resetstatus(true);
 	LD	BC,1
 	PUSH	BC
 	LD	A,(_i)
 	LD	(_currentplayer),A
 	CALL	_resetstatus
 	POP	BC
-;  191					return 1;
+;  193					return 1;
 	LD	HL,1
 	JR	L_62
-;  192				}
+;  194				}
 L_23:
-;  193				i++;
+;  195				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  194			}
+;  196			}
 L_24:
 	LD.LIS	BC,6
 	LD	HL,(_i)
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_25
-;  195	
-;  196			map_LoseFight();
+;  197	
+;  198			map_LoseFight();
 	CALL	_map_LoseFight
 	OR	A,A
-;  197			return 0;
+;  199			return 0;
 	SBC	HL,HL
 	JR	L_62
-;  198		}
+;  200		}
 L_40:
-;  199		if (enemyparty[currentenemy].currenthealth == 0) {
+;  201		if (enemyparty[currentenemy].currenthealth == 0) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -890,7 +894,7 @@ L_40:
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	NZ,L_60
-;  200			sprintf(str, "%s fainted", enemyname);
+;  202			sprintf(str, "%s fainted", enemyname);
 	LD	BC,_enemyname
 	PUSH	BC
 	LD	BC,L__16
@@ -901,7 +905,7 @@ L_40:
 	POP	BC
 	POP	BC
 	POP	BC
-;  201			text_Display(str, false);
+;  203			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -909,17 +913,17 @@ L_40:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  202			addxp();
+;  204			addxp();
 	CALL	_addxp
-;  203			attackturn = 0;
+;  205			attackturn = 0;
 	XOR	A,A
 	LD	(_attackturn),A
-;  204	
-;  205			if (transformed[false]) {
+;  206	
+;  207			if (transformed[false]) {
 	LD	A,(_transformed)
 	OR	A,A
 	JR	Z,L_30
-;  206				enemyparty[currentenemy] = originalpokemon[false];
+;  208				enemyparty[currentenemy] = originalpokemon[false];
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -931,13 +935,13 @@ L_40:
 	LD	HL,_originalpokemon
 	LD	BC,34
 	LDIR	
-;  207			}
+;  209			}
 L_30:
-;  208			if (converted[false]) {
+;  210			if (converted[false]) {
 	LD	A,(_converted)
 	OR	A,A
 	JR	Z,L_31
-;  209				data_pokemon[enemyparty[currentenemy].id].element1 = 1;
+;  211				data_pokemon[enemyparty[currentenemy].id].element1 = 1;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -955,18 +959,18 @@ L_30:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+16),1
-;  210			}
+;  212			}
 L_31:
-;  211	
-;  212			i = 0;
+;  213	
+;  214			i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  213			while (i < 6) {
+;  215			while (i < 6) {
 	JR	L_36
 L_37:
-;  214				if (enemyparty[i].currenthealth != 0 && enemyparty[i].id != 0) {
+;  216				if (enemyparty[i].currenthealth != 0 && enemyparty[i].id != 0) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -982,35 +986,35 @@ L_37:
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_35
-;  215					currentenemy = i;
-;  216					resetstatus(false);
+;  217					currentenemy = i;
+;  218					resetstatus(false);
 	LD	BC,0
 	PUSH	BC
 	LD	A,(_i)
 	LD	(_currentenemy),A
 	CALL	_resetstatus
 	POP	BC
-;  217					return 1;
+;  219					return 1;
 	LD	HL,1
 	JR	L_62
-;  218				}
+;  220				}
 L_35:
-;  219				i++;
+;  221				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  220			}
+;  222			}
 L_36:
 	LD.LIS	BC,6
 	LD	HL,(_i)
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_37
-;  221	
-;  222			playerMoney += payday;
+;  223	
+;  224			playerMoney += payday;
 	LD	BC,(_payday)
 	CALL	__stoiu
 	LD	A,(_playerMoney+3)
@@ -1022,7 +1026,7 @@ L_36:
 	LD	(_playerMoney),HL
 	LD	A,E
 	LD	(_playerMoney+3),A
-;  223			map_WinFight(wild, enemyparty[0].level * 40);
+;  225			map_WinFight(wild, enemyparty[0].level * 40);
 	LD	A,(_enemyparty+9)
 	LD	C,A
 	LD	B,0
@@ -1037,38 +1041,38 @@ L_36:
 	POP	BC
 	POP	BC
 	OR	A,A
-;  224			return 0;
+;  226			return 0;
 	SBC	HL,HL
 	JR	L_62
-;  225		}
+;  227		}
 L_60:
-;  226		/* If 0 determine who attacks first, if 1 or 2 let other character attack, if 3 do end of turn stuff */
-;  227		if (attackturn == 0) {
+;  228		/* If 0 determine who attacks first, if 1 or 2 let other character attack, if 3 do end of turn stuff */
+;  229		if (attackturn == 0) {
 	LD	A,(_attackturn)
 	OR	A,A
 	JR	NZ,L_59
-;  228			while (!playerturn()) {};
+;  230			while (!playerturn()) {};
 L_41:
 	CALL	_playerturn
 	OR	A,A
 	JR	Z,L_41
-;  229			while (!enemyturn()) {};
+;  231			while (!enemyturn()) {};
 L_44:
 	CALL	_enemyturn
 	OR	A,A
 	JR	Z,L_44
-;  230			if (run) {
+;  232			if (run) {
 	LD	A,(_run)
 	OR	A,A
 	JR	Z,L_52
 	OR	A,A
-;  231				return 0;
+;  233				return 0;
 	SBC	HL,HL
 	JR	L_62
-;  232			}
+;  234			}
 L_52:
-;  233			/* Paralysis gets a speed reduction */
-;  234			if ((((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) || data_moves[chosenmove[false]].statustype == 31) && data_moves[chosenmove[true]].statustype != 31) {
+;  235			/* Paralysis gets a speed reduction */
+;  236			if ((((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) || data_moves[chosenmove[false]].statustype == 31) && data_moves[chosenmove[true]].statustype != 31) {
 	LD	IY,_stats
 	LD	BC,(IY+22)
 	CALL	__stoiu
@@ -1154,7 +1158,7 @@ L_49:
 	LD	A,(IY+19)
 	CP	A,31
 	JR	Z,L_51
-;  235				attack(false, chosenmove[false]);
+;  237				attack(false, chosenmove[false]);
 	LD	A,(_chosenmove)
 	LD	C,A
 	LD	B,0
@@ -1164,14 +1168,14 @@ L_49:
 	CALL	_attack
 	POP	BC
 	POP	BC
-;  236				attackturn = 1;
+;  238				attackturn = 1;
 	LD	A,1
 	LD	(_attackturn),A
-;  237			}
-;  238			else {
+;  239			}
+;  240			else {
 	JR	L_61
 L_51:
-;  239				attack(true, chosenmove[true]);
+;  241				attack(true, chosenmove[true]);
 	LD	HL,_chosenmove
 	INC	HL
 	LD	C,(HL)
@@ -1182,23 +1186,23 @@ L_51:
 	CALL	_attack
 	POP	BC
 	POP	BC
-;  240				
-;  241				attackturn = 2;
+;  242				
+;  243				attackturn = 2;
 	LD	A,2
 	LD	(_attackturn),A
-;  242			}
-;  243		}
-;  244		else if(attackturn < 3) {
+;  244			}
+;  245		}
+;  246		else if(attackturn < 3) {
 	JR	L_61
 L_59:
 	LD	A,(_attackturn)
 	CP	A,3
 	JR	NC,L_57
-;  245			if (attackturn == 1) {
+;  247			if (attackturn == 1) {
 	LD	A,(_attackturn)
 	CP	A,1
 	JR	NZ,L_55
-;  246				attack(true, chosenmove[true]);
+;  248				attack(true, chosenmove[true]);
 	LD	HL,_chosenmove
 	INC	HL
 	LD	C,(HL)
@@ -1209,16 +1213,16 @@ L_59:
 	CALL	_attack
 	POP	BC
 	POP	BC
-;  247				attackturn = 3;
+;  249				attackturn = 3;
 	LD	A,3
 	LD	(_attackturn),A
-;  248			}
+;  250			}
 L_55:
-;  249			if (attackturn == 2) {
+;  251			if (attackturn == 2) {
 	LD	A,(_attackturn)
 	CP	A,2
 	JR	NZ,L_61
-;  250				attack(false, chosenmove[false]);
+;  252				attack(false, chosenmove[false]);
 	LD	A,(_chosenmove)
 	LD	C,A
 	LD	B,0
@@ -1228,45 +1232,45 @@ L_55:
 	CALL	_attack
 	POP	BC
 	POP	BC
-;  251				attackturn = 3;
+;  253				attackturn = 3;
 	LD	A,3
 	LD	(_attackturn),A
-;  252			}
-;  253		}
-;  254		else {
+;  254			}
+;  255		}
+;  256		else {
 	JR	L_61
 L_57:
-;  255			/* After both turns */
-;  256			applystatus(true);
+;  257			/* After both turns */
+;  258			applystatus(true);
 	LD	BC,1
 	PUSH	BC
 	CALL	_applystatus
 	POP	BC
-;  257			applystatus(false);
+;  259			applystatus(false);
 	LD	BC,0
 	PUSH	BC
 	CALL	_applystatus
 	POP	BC
-;  258			flinch[true] = false;
+;  260			flinch[true] = false;
 	LD	HL,_flinch
 	INC	HL
 	LD	(HL),0
-;  259			flinch[false] = false;
+;  261			flinch[false] = false;
 	XOR	A,A
 	LD	(_flinch),A
-;  260			attackturn = 0;
+;  262			attackturn = 0;
 	XOR	A,A
 	LD	(_attackturn),A
-;  261			return 1;
+;  263			return 1;
 	LD	HL,1
 	JR	L_62
-;  262		}
+;  264		}
 L_61:
-;  263		
-;  264	
-;  265		return 1;
+;  265		
+;  266	
+;  267		return 1;
 	LD	HL,1
-;  266	}
+;  268	}
 L_62:
 	LD	SP,IX
 	POP	IX
@@ -1324,19 +1328,19 @@ L__16:
 	DB	"%s fainted"
 	DB	0
 	SEGMENT CODE
-;  267	
-;  268	
-;  269	void battle_SpawnWild(uint8_t id, uint8_t minlevel, uint8_t maxlevel) {
+;  269	
+;  270	
+;  271	void battle_SpawnWild(uint8_t id, uint8_t minlevel, uint8_t maxlevel) {
 _battle_SpawnWild:
 	LD	HL,-43
 	CALL	__frameset
-;  270		int partyIndex;
-;  271		for(partyIndex = 0; partyIndex < 6; partyIndex++){
+;  272		int partyIndex;
+;  273		for(partyIndex = 0; partyIndex < 6; partyIndex++){
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_66
 L_64:
-;  272			enemyparty[partyIndex] = clearcharacter;
+;  274			enemyparty[partyIndex] = clearcharacter;
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
@@ -1349,7 +1353,7 @@ L_64:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  273		}
+;  275		}
 L_66:
 	LD	BC,6
 	LD	HL,(IX+-3)
@@ -1357,7 +1361,7 @@ L_66:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_64
-;  274		enemyparty[0] = stats_NewCharacter(id,(rand() % (maxlevel-minlevel+1))+minlevel);
+;  276		enemyparty[0] = stats_NewCharacter(id,(rand() % (maxlevel-minlevel+1))+minlevel);
 	CALL	_rand
 	LD	DE,HL
 	LD	A,(IX+12)
@@ -1395,10 +1399,10 @@ L_66:
 	LD	DE,_enemyparty
 	LD	BC,34
 	LDIR	
-;  275		wild = true;
+;  277		wild = true;
 	LD	A,1
 	LD	(_wild),A
-;  276	}
+;  278	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1421,17 +1425,17 @@ L_66:
 ;       Spill Code: -1 (instruction)
 
 
-;  277	void battle_SpawnTrainer(uint8_t ids[6][16], uint8_t levels[6][16], uint8_t trainernum) {
+;  279	void battle_SpawnTrainer(uint8_t ids[6][16], uint8_t levels[6][16], uint8_t trainernum) {
 _battle_SpawnTrainer:
 	LD	HL,-37
 	CALL	__frameset
-;  278		int partyIndex;
-;  279		for(partyIndex = 0; partyIndex < 6; partyIndex++){
+;  280		int partyIndex;
+;  281		for(partyIndex = 0; partyIndex < 6; partyIndex++){
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_72
 L_70:
-;  280			enemyparty[partyIndex] = stats_NewCharacter(ids[partyIndex][trainernum],levels[partyIndex][trainernum]);
+;  282			enemyparty[partyIndex] = stats_NewCharacter(ids[partyIndex][trainernum],levels[partyIndex][trainernum]);
 	LD	HL,(IX+-3)
 	ADD	HL,HL
 	ADD	HL,HL
@@ -1477,7 +1481,7 @@ L_70:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  281		}
+;  283		}
 L_72:
 	LD	BC,6
 	LD	HL,(IX+-3)
@@ -1485,10 +1489,10 @@ L_72:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_70
-;  282		wild = false;
+;  284		wild = false;
 	XOR	A,A
 	LD	(_wild),A
-;  283	}
+;  285	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1509,12 +1513,12 @@ L_72:
 ;       Spill Code: -1 (instruction)
 
 
-;  284	
-;  285	bool playerturn() {
+;  286	
+;  287	bool playerturn() {
 _playerturn:
 	LD	HL,-24
 	CALL	__frameset
-;  286		if (attackturns[true] > 0) {
+;  288		if (attackturns[true] > 0) {
 	LD	HL,_attackturns
 	INC	HL
 	LD	A,(HL)
@@ -1527,28 +1531,28 @@ _playerturn:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_76
-;  287			chosenmove[true] = lastmove[true];
+;  289			chosenmove[true] = lastmove[true];
 	LD	IY,_lastmove
 	LD	HL,_chosenmove
 	INC	HL
 	LD	A,(IY+1)
 	LD	(HL),A
-;  288			return true;
+;  290			return true;
 	LD	A,1
 	JR	L_111
-;  289		}
+;  291		}
 L_76:
-;  290		i = 0;
+;  292		i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  291		/* Select Whether to fight, run, ect */
-;  292		if (battleMenuState1 == 0) {
+;  293		/* Select Whether to fight, run, ect */
+;  294		if (battleMenuState1 == 0) {
 	LD	A,(_battleMenuState1)
 	OR	A,A
 	JR	NZ,L_109
-;  293			switch (text_AskQuestion4("Fight","Item","Switch","Run", true))
+;  295			switch (text_AskQuestion4("Fight","Item","Switch","Run", true))
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__45
@@ -1582,33 +1586,33 @@ L__49:
 
 	DW24	L_109	
 
-;  294			{
-;  295			case 0:
+;  296			{
+;  297			case 0:
 L_77:
-;  296				return false;
+;  298				return false;
 	XOR	A,A
 	JR	L_111
-;  297			case 1:
+;  299			case 1:
 L_78:
-;  298				battleMenuState1 = 1;
+;  300				battleMenuState1 = 1;
 	LD	A,1
 	LD	(_battleMenuState1),A
-;  299				return false;
+;  301				return false;
 	XOR	A,A
 	JR	L_111
-;  300			case 2:
+;  302			case 2:
 L_79:
-;  301				battleMenuState1 = 2;
+;  303				battleMenuState1 = 2;
 	LD	A,2
 	LD	(_battleMenuState1),A
-;  302				return false;
+;  304				return false;
 	XOR	A,A
 	JR	L_111
-;  303			case 3:
+;  305			case 3:
 L_80:
-;  304				battle_End();
+;  306				battle_End();
 	CALL	_battle_End
-;  305				i = menu_PokemonMenu(false);
+;  307				i = menu_PokemonMenu(false);
 	LD	BC,0
 	PUSH	BC
 	CALL	_menu_PokemonMenu
@@ -1618,9 +1622,9 @@ L_80:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  306				SetupBattleGfx();
+;  308				SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  307				if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
+;  309				if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
 	LD	HL,(_i)
 	CALL	__scmpzero
 	JR	Z,L_84
@@ -1644,8 +1648,8 @@ L_80:
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_84
-;  308					currentplayer = i - 1;
-;  309					resetstatus(true);
+;  310					currentplayer = i - 1;
+;  311					resetstatus(true);
 	LD	BC,1
 	PUSH	BC
 	LD	A,(_i)
@@ -1653,25 +1657,25 @@ L_80:
 	LD	(_currentplayer),A
 	CALL	_resetstatus
 	POP	BC
-;  310					redrawcharacters();
+;  312					redrawcharacters();
 	CALL	_redrawcharacters
-;  311					return true;
+;  313					return true;
 	LD	A,1
 	JR	L_111
-;  312				}
+;  314				}
 L_84:
-;  313				redrawcharacters();
+;  315				redrawcharacters();
 	CALL	_redrawcharacters
-;  314				return false;
+;  316				return false;
 	XOR	A,A
 	JR	L_111
-;  315			case 4:
+;  317			case 4:
 L_85:
-;  316				if (!wild) {
+;  318				if (!wild) {
 	LD	A,(_wild)
 	OR	A,A
 	JR	NZ,L_90
-;  317					text_Display("Can't run from trainers!", true);
+;  319					text_Display("Can't run from trainers!", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__54
@@ -1679,13 +1683,13 @@ L_85:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  318					return false;
+;  320					return false;
 	XOR	A,A
 	JR	L_111
-;  319				}
+;  321				}
 L_90:
-;  320				//NOT REAL RUN FUNCTION
-;  321				if (stats[1].speed > stats[0].speed || (rand() % 3) == 0) {
+;  322				//NOT REAL RUN FUNCTION
+;  323				if (stats[1].speed > stats[0].speed || (rand() % 3) == 0) {
 	LD	IY,_stats
 	LD	BC,(IY+22)
 	LD	HL,(_stats+10)
@@ -1698,15 +1702,15 @@ L_90:
 	CALL	__icmpzero
 	JR	NZ,L_89
 L_88:
-;  322					run = true;
+;  324					run = true;
 	LD	A,1
 	LD	(_run),A
-;  323					return true;
+;  325					return true;
 	JR	L_111
-;  324				}
-;  325				else {
+;  326				}
+;  327				else {
 L_89:
-;  326					text_Display("Failed to run away!", true);
+;  328					text_Display("Failed to run away!", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__57
@@ -1714,28 +1718,28 @@ L_89:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  327					return true;
+;  329					return true;
 	LD	A,1
 	JR	L_111
-;  328				}
-;  329				return false;
-;  330			}
-;  331		}
+;  330				}
+;  331				return false;
+;  332			}
+;  333		}
 L_109:
-;  332		/* Select which move to use */
-;  333		if (battleMenuState1 == 1) {
+;  334		/* Select which move to use */
+;  335		if (battleMenuState1 == 1) {
 	LD	A,(_battleMenuState1)
 	CP	A,1
 	JR	NZ,L_108
-;  334			int selectedMove;
-;  335			selectedMove = selectMove();
+;  336			int selectedMove;
+;  337			selectedMove = selectMove();
 	CALL	_selectMove
 	LD	(IX+-12),HL
-;  336			battleMenuState1 = 0;
+;  338			battleMenuState1 = 0;
 	XOR	A,A
 	LD	(_battleMenuState1),A
-;  337			/* Checks if the move can be used */
-;  338			if (selectedMove == 0 || party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
+;  339			/* Checks if the move can be used */
+;  340			if (selectedMove == 0 || party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
 	LD	HL,(IX+-12)
 	CALL	__icmpzero
 	JR	Z,L_95
@@ -1768,12 +1772,12 @@ L_109:
 	SBC	HL,BC
 	JR	NZ,L_96
 L_95:
-;  339				return false;
+;  341				return false;
 	XOR	A,A
 	JR	L_111
-;  340			}
+;  342			}
 L_96:
-;  341			chosenmove[true] = party[currentplayer].moves[selectedMove - 1];
+;  343			chosenmove[true] = party[currentplayer].moves[selectedMove - 1];
 	LD	BC,_party
 	LD	HL,(IX+-9)
 	ADD	HL,BC
@@ -1785,7 +1789,7 @@ L_96:
 	LD	IY,_chosenmove
 	LD	A,(HL)
 	LD	(IY+1),A
-;  342			party[currentplayer].pp[selectedMove - 1]--;
+;  344			party[currentplayer].pp[selectedMove - 1]--;
 	LD	IY,(IX+-21)
 	LEA	HL,IY+5
 	LD	BC,(IX+-6)
@@ -1797,48 +1801,48 @@ L_96:
 	ADD	HL,BC
 	DEC	A
 	LD	(HL),A
-;  343		}
-;  344		/* Items */
-;  345		else if (battleMenuState1 == 2) {
+;  345		}
+;  346		/* Items */
+;  347		else if (battleMenuState1 == 2) {
 	JR	L_110
 L_108:
 	LD	A,(_battleMenuState1)
 	CP	A,2
 	JR	NZ,L_110
-;  346			int chosenItem;
-;  347			battleMenuState1 = 0;
+;  348			int chosenItem;
+;  349			battleMenuState1 = 0;
 	XOR	A,A
 	LD	(_battleMenuState1),A
-;  348			battle_End();
+;  350			battle_End();
 	CALL	_battle_End
-;  349			chosenItem = menu_Items(true);
+;  351			chosenItem = menu_Items(true);
 	LD	BC,1
 	PUSH	BC
 	CALL	_menu_Items
 	POP	BC
 	LD	(IX+-3),HL
-;  350			SetupBattleGfx();
+;  352			SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  351			if (chosenItem == -1) {
+;  353			if (chosenItem == -1) {
 	LD	BC,16777215
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_105
-;  352				return false;
+;  354				return false;
 	XOR	A,A
 	JR	L_111
-;  353			}
+;  355			}
 L_105:
-;  354			if (chosenItem < 4) {
+;  356			if (chosenItem < 4) {
 	LD	BC,4
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_104
-;  355				redrawcharacters();
+;  357				redrawcharacters();
 	CALL	_redrawcharacters
-;  356				sprintf(str, "Used a %s", itemNames[chosenItem]);
+;  358				sprintf(str, "Used a %s", itemNames[chosenItem]);
 	LD	HL,(IX+-3)
 	ADD	HL,HL
 	ADD	HL,HL
@@ -1855,7 +1859,7 @@ L_105:
 	POP	BC
 	POP	BC
 	POP	BC
-;  357				text_Display(str, true);
+;  359				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -1863,7 +1867,7 @@ L_105:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  358				playerItems[chosenItem]--;
+;  360				playerItems[chosenItem]--;
 	LD	BC,(IX+-3)
 	LD	HL,_playerItems
 	ADD	HL,BC
@@ -1871,12 +1875,12 @@ L_105:
 	LD	A,(HL)
 	DEC	A
 	LD	IY,(IX+-24)
-;  359				chosenmove[true] = 0;
+;  361				chosenmove[true] = 0;
 	LD	HL,_chosenmove
 	INC	HL
 	LD	(IY),A
 	LD	(HL),0
-;  360				if (capture(chosenItem + 1)) {
+;  362				if (capture(chosenItem + 1)) {
 	LD	C,(IX+-3)
 	INC	C
 	LD	B,0
@@ -1885,7 +1889,7 @@ L_105:
 	POP	BC
 	OR	A,A
 	JR	Z,L_110
-;  361					map_WinFight(wild, enemyparty[0].level * 40);
+;  363					map_WinFight(wild, enemyparty[0].level * 40);
 	LD	A,(_enemyparty+9)
 	LD	C,A
 	LD	B,0
@@ -1899,18 +1903,18 @@ L_105:
 	CALL	_map_WinFight
 	POP	BC
 	POP	BC
-;  362					run = true;
+;  364					run = true;
 	LD	A,1
 	LD	(_run),A
-;  363					return true;
+;  365					return true;
 	JR	L_111
-;  364				}
-;  365			}
-;  366			else {
+;  366				}
+;  367			}
+;  368			else {
 L_104:
-;  367				battle_End();
+;  369				battle_End();
 	CALL	_battle_End
-;  368				if (items_UseItem(chosenItem)) {
+;  370				if (items_UseItem(chosenItem)) {
 	LD	C,(IX+-3)
 	LD	B,0
 	PUSH	BC
@@ -1918,32 +1922,32 @@ L_104:
 	POP	BC
 	OR	A,A
 	JR	Z,L_102
-;  369					chosenmove[true] = 0;
+;  371					chosenmove[true] = 0;
 	LD	HL,_chosenmove
 	INC	HL
 	LD	(HL),0
-;  370					SetupBattleGfx();
+;  372					SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  371					redrawcharacters();
+;  373					redrawcharacters();
 	CALL	_redrawcharacters
-;  372				}
-;  373				else {
+;  374				}
+;  375				else {
 	JR	L_110
 L_102:
-;  374					SetupBattleGfx();
+;  376					SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  375					redrawcharacters();
+;  377					redrawcharacters();
 	CALL	_redrawcharacters
-;  376					return false;
+;  378					return false;
 	XOR	A,A
 	JR	L_111
-;  377				}
-;  378			}
-;  379		}
+;  379				}
+;  380			}
+;  381		}
 L_110:
-;  380		return true;
+;  382		return true;
 	LD	A,1
-;  381	}
+;  383	}
 L_111:
 	LD	SP,IX
 	POP	IX
@@ -2015,17 +2019,17 @@ L__65:
 	DB	"Used a %s"
 	DB	0
 	SEGMENT CODE
-;  382	
-;  383	int selectMove(void) {
+;  384	
+;  385	int selectMove(void) {
 _selectMove:
 	LD	HL,-26
 	CALL	__frameset
-;  384		int8_t tv1, tv2, iconIndex;
-;  385		tv1 = 0;
+;  386		int8_t tv1, tv2, iconIndex;
+;  387		tv1 = 0;
 	LD	(IX+-1),0
-;  386		tv2 = 0;
-;  387	
-;  388		zx7_Decompress(textBoxSprite2, battletextbox3_compressed);
+;  388		tv2 = 0;
+;  389	
+;  390		zx7_Decompress(textBoxSprite2, battletextbox3_compressed);
 	LD	HL,_PKMNSD5+12
 	LD	(IX+-2),0
 	LD	BC,(HL)
@@ -2035,17 +2039,17 @@ _selectMove:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  389		gfx_Blit(gfx_screen);
+;  391		gfx_Blit(gfx_screen);
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
-;  390		text_DrawTextBox();
+;  392		text_DrawTextBox();
 	CALL	_text_DrawTextBox
-;  391	
-;  392	
 ;  393	
-;  394		gfx_PrintStringXY(">", 15, 190);
+;  394	
+;  395	
+;  396		gfx_PrintStringXY(">", 15, 190);
 	LD	BC,190
 	PUSH	BC
 	LD	BC,15
@@ -2056,7 +2060,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  395		gfx_PrintStringXY(data_moves[party[currentplayer].moves[0]].name, 25, 190);
+;  397		gfx_PrintStringXY(data_moves[party[currentplayer].moves[0]].name, 25, 190);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2082,7 +2086,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  396		gfx_PrintStringXY(data_moves[party[currentplayer].moves[1]].name, 25, 205);
+;  398		gfx_PrintStringXY(data_moves[party[currentplayer].moves[1]].name, 25, 205);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2110,7 +2114,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  397		gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
+;  399		gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2137,7 +2141,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  398		gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
+;  400		gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2164,8 +2168,8 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  399	
-;  400		if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+;  401	
+;  402		if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2180,7 +2184,7 @@ _selectMove:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_113
-;  401			gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  403			gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
@@ -2209,7 +2213,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  402			sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  404			sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2245,7 +2249,7 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  403			gfx_PrintStringXY(str, 271, 209);
+;  405			gfx_PrintStringXY(str, 271, 209);
 	LD	BC,209
 	PUSH	BC
 	LD	BC,271
@@ -2256,21 +2260,21 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  404		}
+;  406		}
 L_113:
-;  405		
-;  406	
-;  407		gfx_SwapDraw();
+;  407		
+;  408	
+;  409		gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  408		gfx_SetDrawScreen();
+;  410		gfx_SetDrawScreen();
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;  409	
-;  410		kb_Scan();
+;  411	
+;  412		kb_Scan();
 	CALL	_kb_Scan
-;  411		if ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
+;  413		if ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_115
@@ -2278,21 +2282,21 @@ L_113:
 	AND	A,64
 	JR	Z,L_116
 L_115:
-;  412			Wait(50);
+;  414			Wait(50);
 	LD	BC,50
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  413		}
+;  415		}
 L_116:
-;  414		kb_Scan();
+;  416		kb_Scan();
 	CALL	_kb_Scan
-;  415		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
+;  417		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
 	JR	L_133
 L_134:
-;  416			kb_Scan();
+;  418			kb_Scan();
 	CALL	_kb_Scan
-;  417			if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
+;  419			if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
 	LD	A,(16056350)
 	AND	A,1
 	JR	NZ,L_124
@@ -2300,21 +2304,21 @@ L_134:
 	AND	A,8
 	JR	Z,L_132
 L_124:
-;  418				if (tv1 == 1) {
+;  420				if (tv1 == 1) {
 	LD	A,(IX+-1)
 	CP	A,1
 	JR	NZ,L_120
-;  419					tv1 = 0;
+;  421					tv1 = 0;
 	LD	(IX+-1),0
-;  420				}
-;  421				else {
+;  422				}
+;  423				else {
 	JR	L_121
 L_120:
-;  422					tv1 = 1;
+;  424					tv1 = 1;
 	LD	(IX+-1),1
-;  423				}
+;  425				}
 L_121:
-;  424				gfx_FillRectangle(14, 185, 10, 45);
+;  426				gfx_FillRectangle(14, 185, 10, 45);
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2328,7 +2332,7 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  425				gfx_FillRectangle(134, 185, 10, 45);
+;  427				gfx_FillRectangle(134, 185, 10, 45);
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2342,7 +2346,7 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  426				gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
+;  428				gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -2365,8 +2369,8 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  427	
-;  428				gfx_FillRectangle(263, 185, 48, 46);
+;  429	
+;  430				gfx_FillRectangle(263, 185, 48, 46);
 	LD	BC,46
 	PUSH	BC
 	LD	BC,48
@@ -2380,7 +2384,7 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  429				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+;  431				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
 	LD	A,(IX+-2)
 	SEXT	HL
 	LD	L,(IX+-2)
@@ -2406,7 +2410,7 @@ L_121:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_123
-;  430					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  432					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
@@ -2435,7 +2439,7 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  431					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  433					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2482,7 +2486,7 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  432					gfx_PrintStringXY(str, 271, 209);
+;  434					gfx_PrintStringXY(str, 271, 209);
 	LD	BC,209
 	PUSH	BC
 	LD	BC,271
@@ -2493,17 +2497,17 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  433				}
+;  435				}
 L_123:
-;  434	
-;  435				Wait(20);
+;  436	
+;  437				Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  436			}
+;  438			}
 L_132:
-;  437			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
+;  439			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
 	LD	A,(16056350)
 	AND	A,4
 	JR	NZ,L_131
@@ -2511,21 +2515,21 @@ L_132:
 	AND	A,2
 	JR	Z,L_133
 L_131:
-;  438				if (tv2 == 1) {
+;  440				if (tv2 == 1) {
 	LD	A,(IX+-2)
 	CP	A,1
 	JR	NZ,L_127
-;  439					tv2 = 0;
+;  441					tv2 = 0;
 	LD	(IX+-2),0
-;  440				}
-;  441				else {
+;  442				}
+;  443				else {
 	JR	L_128
 L_127:
-;  442					tv2 = 1;
+;  444					tv2 = 1;
 	LD	(IX+-2),1
-;  443				}
+;  445				}
 L_128:
-;  444				gfx_FillRectangle(14, 185, 10, 45);
+;  446				gfx_FillRectangle(14, 185, 10, 45);
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2539,7 +2543,7 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  445				gfx_FillRectangle(134, 185, 10, 45);
+;  447				gfx_FillRectangle(134, 185, 10, 45);
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2553,7 +2557,7 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  446				gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
+;  448				gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -2576,8 +2580,8 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  447	
-;  448				gfx_FillRectangle(263, 185, 48, 46);
+;  449	
+;  450				gfx_FillRectangle(263, 185, 48, 46);
 	LD	BC,46
 	PUSH	BC
 	LD	BC,48
@@ -2591,7 +2595,7 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  449				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+;  451				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
 	LD	A,(IX+-2)
 	SEXT	HL
 	LD	L,(IX+-2)
@@ -2617,7 +2621,7 @@ L_128:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_130
-;  450					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  452					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
@@ -2646,7 +2650,7 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  451					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  453					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -2693,7 +2697,7 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  452					gfx_PrintStringXY(str, 271, 209);
+;  454					gfx_PrintStringXY(str, 271, 209);
 	LD	BC,209
 	PUSH	BC
 	LD	BC,271
@@ -2704,16 +2708,16 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  453				}
+;  455				}
 L_130:
-;  454	
-;  455				Wait(20);
+;  456	
+;  457				Wait(20);
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  456			}
-;  457		}
+;  458			}
+;  459		}
 L_133:
 	LD	A,(16056338)
 	AND	A,32
@@ -2722,7 +2726,7 @@ L_133:
 	AND	A,64
 	JR	Z,L_134
 L_135:
-;  458		zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
+;  460		zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
 	LD	HL,_PKMNSD5+9
 	LD	BC,(HL)
 	PUSH	BC
@@ -2731,22 +2735,22 @@ L_135:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-;  459		if (kb_Data[6] & kb_Clear) {
+;  461		if (kb_Data[6] & kb_Clear) {
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_137
 	OR	A,A
-;  460			return(0);
+;  462			return(0);
 	SBC	HL,HL
 	JR	L_138
-;  461		}
+;  463		}
 L_137:
-;  462		gfx_SetDrawBuffer();
+;  464		gfx_SetDrawBuffer();
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
-;  463		return (tv1 + 1 + 2 * (tv2));
+;  465		return (tv1 + 1 + 2 * (tv2));
 	LD	A,(IX+-2)
 	SEXT	HL
 	LD	L,(IX+-2)
@@ -2759,7 +2763,7 @@ L_137:
 	INC	BC
 	LD	HL,DE
 	ADD	HL,BC
-;  464	}
+;  466	}
 L_138:
 	LD	SP,IX
 	POP	IX
@@ -2784,7 +2788,7 @@ L_138:
 ;_text_DrawTextBox                   IMPORT  -----   function
 ;_gfx_Blit                           IMPORT  -----   function
 ;_textBoxSprite2                     IMPORT      3   variable
-;_PKMNSD5                            IMPORT    114   variable
+;_PKMNSD5                            IMPORT    117   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;G_21                                 IX-17      3   variable
 ;G_18                                 IX-14      3   variable
@@ -2819,12 +2823,12 @@ L__85:
 	DB	"%u/%u"
 	DB	0
 	SEGMENT CODE
-;  465	
-;  466	bool enemyturn() {
+;  467	
+;  468	bool enemyturn() {
 _enemyturn:
 	LD	HL,-12
 	CALL	__frameset
-;  467		if (attackturns[false] > 0) {
+;  469		if (attackturns[false] > 0) {
 	LD	A,(_attackturns)
 	UEXT	HL
 	LD	L,A
@@ -2834,15 +2838,15 @@ _enemyturn:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_156
-;  468			chosenmove[false] = lastmove[false];
+;  470			chosenmove[false] = lastmove[false];
 	LD	A,(_lastmove)
 	LD	(_chosenmove),A
-;  469			return true;
+;  471			return true;
 	LD	A,1
 	JR	L_158
-;  470		}
+;  472		}
 L_156:
-;  471		switch (rand() % 4)
+;  473		switch (rand() % 4)
 	CALL	_rand
 	LD	BC,4
 	CALL	__irems
@@ -2861,10 +2865,10 @@ L__91:
 
 	DW24	L_157	
 
-;  472		{
-;  473		case 0:
+;  474		{
+;  475		case 0:
 L_140:
-;  474			if (enemyparty[currentenemy].moves[0] == 0 || disabledmove[false] == 1) {
+;  476			if (enemyparty[currentenemy].moves[0] == 0 || disabledmove[false] == 1) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -2887,20 +2891,20 @@ L_140:
 	SBC	HL,BC
 	JR	NZ,L_143
 L_142:
-;  475				return false;
+;  477				return false;
 	XOR	A,A
 	JR	L_158
-;  476			}
+;  478			}
 L_143:
-;  477			chosenmove[false] = enemyparty[currentenemy].moves[0];
+;  479			chosenmove[false] = enemyparty[currentenemy].moves[0];
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	LD	(_chosenmove),A
-;  478			break;
+;  480			break;
 	JR	L_157
-;  479		case 1:
+;  481		case 1:
 L_144:
-;  480			if (enemyparty[currentenemy].moves[1] == 0 || disabledmove[false] == 2) {
+;  482			if (enemyparty[currentenemy].moves[1] == 0 || disabledmove[false] == 2) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -2924,20 +2928,20 @@ L_144:
 	SBC	HL,BC
 	JR	NZ,L_147
 L_146:
-;  481				return false;
+;  483				return false;
 	XOR	A,A
 	JR	L_158
-;  482			}
+;  484			}
 L_147:
-;  483			chosenmove[false] = enemyparty[currentenemy].moves[1];
+;  485			chosenmove[false] = enemyparty[currentenemy].moves[1];
 	LD	HL,(IX+-6)
 	LD	A,(HL)
 	LD	(_chosenmove),A
-;  484			break;
+;  486			break;
 	JR	L_157
-;  485		case 2:
+;  487		case 2:
 L_148:
-;  486			if (enemyparty[currentenemy].moves[2] == 0 || disabledmove[false] == 3) {
+;  488			if (enemyparty[currentenemy].moves[2] == 0 || disabledmove[false] == 3) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -2960,20 +2964,20 @@ L_148:
 	SBC	HL,BC
 	JR	NZ,L_151
 L_150:
-;  487				return false;
+;  489				return false;
 	XOR	A,A
 	JR	L_158
-;  488			}
+;  490			}
 L_151:
-;  489			chosenmove[false] = enemyparty[currentenemy].moves[2];
+;  491			chosenmove[false] = enemyparty[currentenemy].moves[2];
 	LD	HL,(IX+-9)
 	LD	A,(HL)
 	LD	(_chosenmove),A
-;  490			break;
+;  492			break;
 	JR	L_157
-;  491		case 3:
+;  493		case 3:
 L_152:
-;  492			if (enemyparty[currentenemy].moves[3] == 0 || disabledmove[false] == 4) {
+;  494			if (enemyparty[currentenemy].moves[3] == 0 || disabledmove[false] == 4) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -2996,21 +3000,21 @@ L_152:
 	SBC	HL,BC
 	JR	NZ,L_155
 L_154:
-;  493				return false;
+;  495				return false;
 	XOR	A,A
 	JR	L_158
-;  494			}
+;  496			}
 L_155:
-;  495			chosenmove[false] = enemyparty[currentenemy].moves[3];
+;  497			chosenmove[false] = enemyparty[currentenemy].moves[3];
 	LD	HL,(IX+-12)
 	LD	A,(HL)
 	LD	(_chosenmove),A
-;  496			break;
-;  497		}
+;  498			break;
+;  499		}
 L_157:
-;  498		return true;
+;  500		return true;
 	LD	A,1
-;  499	}
+;  501	}
 L_158:
 	LD	SP,IX
 	POP	IX
@@ -3036,12 +3040,12 @@ L_158:
 ;       Spill Code: -1 (instruction)
 
 
-;  500	void redrawcharacters(void) {
+;  502	void redrawcharacters(void) {
 _redrawcharacters:
 	LD	HL,-9
 	CALL	__frameset
-;  501		int statusIndex, healthRatio;
-;  502		gfx_SetColor(colors[1]);
+;  503		int statusIndex, healthRatio;
+;  504		gfx_SetColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -3049,10 +3053,10 @@ _redrawcharacters:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  503		text_DrawTextBox();
+;  505		text_DrawTextBox();
 	CALL	_text_DrawTextBox
-;  504	
-;  505		gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
+;  506	
+;  507		gfx_ScaledSprite_NoClip(backgroundSprite, 0, 0, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
@@ -3067,7 +3071,7 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  506		gfx_ScaledTransparentSprite_NoClip(playerSprite, 20, 64, 2, 2);
+;  508		gfx_ScaledTransparentSprite_NoClip(playerSprite, 20, 64, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
@@ -3083,7 +3087,7 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  507		gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 8, 2, 2);
+;  509		gfx_ScaledTransparentSprite_NoClip(enemySprite, 190, 8, 2, 2);
 	LD	BC,2
 	PUSH	BC
 	PUSH	BC
@@ -3099,10 +3103,10 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  508	
-;  509		/* Display Information about player and enemy */
-;  510		
-;  511		gfx_PrintStringXY(data_pokemon[enemyparty[currentenemy].id].name, 17, 29);
+;  510	
+;  511		/* Display Information about player and enemy */
+;  512		
+;  513		gfx_PrintStringXY(data_pokemon[enemyparty[currentenemy].id].name, 17, 29);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3128,7 +3132,7 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  512		sprintf(str, "Lv%u", enemyparty[currentenemy].level);
+;  514		sprintf(str, "Lv%u", enemyparty[currentenemy].level);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3149,7 +3153,7 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  513		gfx_PrintStringXY(str, 98, 29);
+;  515		gfx_PrintStringXY(str, 98, 29);
 	LD	BC,29
 	PUSH	BC
 	LD	BC,98
@@ -3160,14 +3164,14 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-;  514		gfx_Sprite(hpBarSprite, 40, 40);
+;  516		gfx_Sprite(hpBarSprite, 40, 40);
 	LD	BC,40
 	PUSH	BC
 	PUSH	BC
 	LD	BC,(_hpBarSprite)
 	PUSH	BC
 	CALL	_gfx_Sprite
-;  515		healthRatio = (enemyparty[currentenemy].currenthealth * 78) / stats[0].health;
+;  517		healthRatio = (enemyparty[currentenemy].currenthealth * 78) / stats[0].health;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3186,7 +3190,7 @@ _redrawcharacters:
 	LD	BC,HL
 	LD	HL,DE
 	CALL	__idivs
-;  516		if (healthRatio > 34) {
+;  518		if (healthRatio > 34) {
 	OR	A,A
 	POP	BC
 	POP	BC
@@ -3196,14 +3200,14 @@ _redrawcharacters:
 	LD	HL,34
 	SBC	HL,BC
 	JP	P,L_162
-;  517			gfx_SetColor(colors[8]);
+;  519			gfx_SetColor(colors[8]);
 	LD	HL,_colors+8
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  518		}else if (healthRatio > 14) {
+;  520		}else if (healthRatio > 14) {
 	JR	L_163
 L_162:
 	LD	BC,(IX+-3)
@@ -3212,26 +3216,26 @@ L_162:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_160
-;  519			gfx_SetColor(colors[9]);
+;  521			gfx_SetColor(colors[9]);
 	LD	HL,_colors+9
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  520		}else {
+;  522		}else {
 	JR	L_163
 L_160:
-;  521			gfx_SetColor(colors[10]);
+;  523			gfx_SetColor(colors[10]);
 	LD	HL,_colors+10
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  522		}
+;  524		}
 L_163:
-;  523		gfx_FillRectangle(58, 42, healthRatio, 6);
+;  525		gfx_FillRectangle(58, 42, healthRatio, 6);
 	LD	BC,6
 	PUSH	BC
 	LD	BC,(IX+-3)
@@ -3245,7 +3249,7 @@ L_163:
 	POP	BC
 	POP	BC
 	POP	BC
-;  524		if (enemyparty[currentenemy].currentstatus > 0) {
+;  526		if (enemyparty[currentenemy].currentstatus > 0) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3258,8 +3262,8 @@ L_163:
 	XOR	A,A
 	CP	A,(IY+15)
 	JR	NC,L_165
-;  525			
-;  526			gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus-1], 18, 41);
+;  527			
+;  528			gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus-1], 18, 41);
 	LD	BC,41
 	PUSH	BC
 	LD	BC,18
@@ -3280,10 +3284,10 @@ L_163:
 	POP	BC
 	POP	BC
 	POP	BC
-;  527		}
+;  529		}
 L_165:
-;  528	
-;  529		gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
+;  530	
+;  531		gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3309,7 +3313,7 @@ L_165:
 	POP	BC
 	POP	BC
 	POP	BC
-;  530		sprintf(str, "Lv%u", party[currentplayer].level);
+;  532		sprintf(str, "Lv%u", party[currentplayer].level);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3330,7 +3334,7 @@ L_165:
 	POP	BC
 	POP	BC
 	POP	BC
-;  531		gfx_PrintStringXY(str, 264, 129);
+;  533		gfx_PrintStringXY(str, 264, 129);
 	LD	BC,129
 	PUSH	BC
 	LD	BC,264
@@ -3341,7 +3345,7 @@ L_165:
 	POP	BC
 	POP	BC
 	POP	BC
-;  532		gfx_Sprite(hpBarSprite, 204, 140);
+;  534		gfx_Sprite(hpBarSprite, 204, 140);
 	LD	BC,140
 	PUSH	BC
 	LD	BC,204
@@ -3352,7 +3356,7 @@ L_165:
 	POP	BC
 	POP	BC
 	POP	BC
-;  533		healthRatio = (party[currentplayer].currenthealth * 78) / stats[1].health;
+;  535		healthRatio = (party[currentplayer].currenthealth * 78) / stats[1].health;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3373,22 +3377,22 @@ L_165:
 	LD	HL,DE
 	CALL	__idivs
 	LD	(IX+-3),HL
-;  534		if (healthRatio > 34) {
+;  536		if (healthRatio > 34) {
 	LD	BC,HL
 	LD	HL,34
 	OR	A,A
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_169
-;  535			gfx_SetColor(colors[8]);
+;  537			gfx_SetColor(colors[8]);
 	LD	HL,_colors+8
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  536		}
-;  537		else if (healthRatio > 14) {
+;  538		}
+;  539		else if (healthRatio > 14) {
 	JR	L_170
 L_169:
 	LD	BC,(IX+-3)
@@ -3397,27 +3401,27 @@ L_169:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_167
-;  538			gfx_SetColor(colors[9]);
+;  540			gfx_SetColor(colors[9]);
 	LD	HL,_colors+9
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  539		}
-;  540		else {
+;  541		}
+;  542		else {
 	JR	L_170
 L_167:
-;  541			gfx_SetColor(colors[10]);
+;  543			gfx_SetColor(colors[10]);
 	LD	HL,_colors+10
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  542		}
+;  544		}
 L_170:
-;  543		gfx_FillRectangle(222, 142, healthRatio, 6);
+;  545		gfx_FillRectangle(222, 142, healthRatio, 6);
 	LD	BC,6
 	PUSH	BC
 	LD	BC,(IX+-3)
@@ -3431,8 +3435,8 @@ L_170:
 	POP	BC
 	POP	BC
 	POP	BC
-;  544		
-;  545		sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
+;  546		
+;  547		sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
 	LD	IY,_stats
 	LD	BC,(IY+12)
 	CALL	__stoiu
@@ -3457,7 +3461,7 @@ L_170:
 	POP	BC
 	POP	BC
 	POP	BC
-;  546		gfx_PrintStringXY(str, 247, 153);
+;  548		gfx_PrintStringXY(str, 247, 153);
 	LD	BC,153
 	PUSH	BC
 	LD	BC,247
@@ -3468,15 +3472,15 @@ L_170:
 	POP	BC
 	POP	BC
 	POP	BC
-;  547	
-;  548		gfx_SetTextFGColor(colors[11]);
+;  549	
+;  550		gfx_SetTextFGColor(colors[11]);
 	LD	HL,_colors+11
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetTextFGColor
 	POP	BC
-;  549		gfx_PrintStringXY("XP", 193, 166);
+;  551		gfx_PrintStringXY("XP", 193, 166);
 	LD	BC,166
 	PUSH	BC
 	LD	BC,193
@@ -3487,14 +3491,14 @@ L_170:
 	POP	BC
 	POP	BC
 	POP	BC
-;  550		gfx_SetColor(colors[7]);
+;  552		gfx_SetColor(colors[7]);
 	LD	HL,_colors+7
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  551		if (party[currentplayer].level < 100) {
+;  553		if (party[currentplayer].level < 100) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3506,7 +3510,7 @@ L_170:
 	LD	A,(IY+9)
 	CP	A,100
 	JR	NC,L_173
-;  552			gfx_FillRectangle(210, 168, CalculateXpPercent(), 4);
+;  554			gfx_FillRectangle(210, 168, CalculateXpPercent(), 4);
 	LD	BC,4
 	PUSH	BC
 	CALL	_CalculateXpPercent
@@ -3522,9 +3526,9 @@ L_170:
 	POP	BC
 	POP	BC
 	POP	BC
-;  553		}
+;  555		}
 L_173:
-;  554		if (party[currentplayer].currentstatus > 0) {
+;  556		if (party[currentplayer].currentstatus > 0) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3537,7 +3541,7 @@ L_173:
 	XOR	A,A
 	CP	A,(IY+15)
 	JR	NC,L_174
-;  555			gfx_TransparentSprite_NoClip(statusIcons[party[currentplayer].currentstatus - 1], 182, 141);
+;  557			gfx_TransparentSprite_NoClip(statusIcons[party[currentplayer].currentstatus - 1], 182, 141);
 	LD	BC,141
 	PUSH	BC
 	LD	BC,182
@@ -3558,17 +3562,17 @@ L_173:
 	POP	BC
 	POP	BC
 	POP	BC
-;  556		}
+;  558		}
 L_174:
-;  557	
-;  558		gfx_SetColor(colors[0]);
+;  559	
+;  560		gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  559		gfx_SetTextFGColor(colors[1]);
+;  561		gfx_SetTextFGColor(colors[1]);
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -3576,9 +3580,9 @@ L_174:
 	PUSH	BC
 	CALL	_gfx_SetTextFGColor
 	POP	BC
-;  560		gfx_SwapDraw();
+;  562		gfx_SwapDraw();
 	CALL	_gfx_SwapDraw
-;  561	}
+;  563	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3634,13 +3638,13 @@ L__109:
 	DB	"XP"
 	DB	0
 	SEGMENT CODE
-;  562	
-;  563	uint8_t CalculateXpPercent(void) {
+;  564	
+;  565	uint8_t CalculateXpPercent(void) {
 _CalculateXpPercent:
 	LD	HL,-21
 	CALL	__frameset
-;  564		int cXp, sXp, mXp;
-;  565		cXp = party[currentplayer].xp;
+;  566		int cXp, sXp, mXp;
+;  567		cXp = party[currentplayer].xp;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3652,7 +3656,7 @@ _CalculateXpPercent:
 	LD	IY,(IX+-15)
 	LD	BC,(IY+10)
 	LD	(IX+-6),BC
-;  566		sXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level];
+;  568		sXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level];
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -3682,7 +3686,7 @@ _CalculateXpPercent:
 	ADD	HL,BC
 	LD	BC,(HL)
 	LD	(IX+-3),BC
-;  567		mXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1];
+;  569		mXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1];
 	LD	A,(IY+49)
 	UEXT	HL
 	LD	L,A
@@ -3701,7 +3705,7 @@ _CalculateXpPercent:
 	ADD	HL,BC
 	LD	BC,(HL)
 	LD	(IX+-9),BC
-;  568		return((uint8_t)((92 * (cXp - sXp)) / (mXp - sXp)));
+;  570		return((uint8_t)((92 * (cXp - sXp)) / (mXp - sXp)));
 	LD	BC,(IX+-3)
 	LD	HL,(IX+-6)
 	OR	A,A
@@ -3717,8 +3721,8 @@ _CalculateXpPercent:
 	LD	HL,DE
 	CALL	__idivs
 	LD	A,L
-;  569	
-;  570	}
+;  571	
+;  572	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3739,32 +3743,32 @@ _CalculateXpPercent:
 ;       Spill Code: -1 (instruction)
 
 
-;  571	
-;  572	void battle_End(void) {
+;  573	
+;  574	void battle_End(void) {
 _battle_End:
-;  573		free(playerSprite);
+;  575		free(playerSprite);
 	LD	BC,(_playerSprite)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  574		free(enemySprite);
+;  576		free(enemySprite);
 	LD	BC,(_enemySprite)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  575		free(backgroundSprite);
+;  577		free(backgroundSprite);
 	LD	BC,(_backgroundSprite)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  576		free(hpBarSprite);
+;  578		free(hpBarSprite);
 	LD	BC,(_hpBarSprite)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;  577		FreeIcons();
+;  579		FreeIcons();
 	CALL	_FreeIcons
-;  578	}
+;  580	}
 	RET	
 
 
@@ -3782,46 +3786,46 @@ _battle_End:
 ;       Spill Code: -1 (instruction)
 
 
-;  579	
-;  580	void attack(bool player, uint8_t move) {
+;  581	
+;  582	void attack(bool player, uint8_t move) {
 _attack:
 	LD	HL,-564
 	CALL	__frameset
-;  581		
-;  582		char username[20];
-;  583		char nonusername[20];
-;  584		uint32_t damage;
-;  585		uint8_t hitcount = 0;
+;  583		
+;  584		char username[20];
+;  585		char nonusername[20];
+;  586		uint32_t damage;
+;  587		uint8_t hitcount = 0;
 	LD	(IX+-36),0
-;  586		uint8_t userlevel;
-;  587		uint8_t nonuserlevel;
-;  588	
-;  589		uint8_t userelement1;
-;  590		uint8_t userelement2;
-;  591		uint8_t nonuserelement1;
-;  592		uint8_t nonuserelement2;
-;  593	
-;  594		if (move == 0) {
+;  588		uint8_t userlevel;
+;  589		uint8_t nonuserlevel;
+;  590	
+;  591		uint8_t userelement1;
+;  592		uint8_t userelement2;
+;  593		uint8_t nonuserelement1;
+;  594		uint8_t nonuserelement2;
+;  595	
+;  596		if (move == 0) {
 	LD	A,(IX+9)
 	OR	A,A
 	JR	Z,L_587
-;  595			return;
-;  596		}
-;  597		
-;  598		
-;  599		rage[player] = false;
+;  597			return;
+;  598		}
+;  599		
+;  600		
+;  601		rage[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_rage
 	ADD	HL,BC
 	LD	(HL),0
-;  600	
-;  601		if (player) {
+;  602	
+;  603		if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_181
-;  602			strcpy(username, playername);
+;  604			strcpy(username, playername);
 	LD	BC,_playername
 	PUSH	BC
 	LD	HL,IX
@@ -3832,7 +3836,7 @@ _attack:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  603			strcpy(nonusername, enemyname);
+;  605			strcpy(nonusername, enemyname);
 	LD	BC,_enemyname
 	PUSH	BC
 	LD	HL,IX
@@ -3843,7 +3847,7 @@ _attack:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  604			userlevel = party[currentplayer].level;
+;  606			userlevel = party[currentplayer].level;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3858,7 +3862,7 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-23),A
-;  605			nonuserlevel = enemyparty[currentenemy].level;
+;  607			nonuserlevel = enemyparty[currentenemy].level;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3873,7 +3877,7 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-111),A
-;  606			userelement1 = data_pokemon[party[currentplayer].id].element1;
+;  608			userelement1 = data_pokemon[party[currentplayer].id].element1;
 	LD	BC,-408
 	CALL	__ildix
 	LD	IY,HL
@@ -3892,13 +3896,13 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-112),A
-;  607			userelement2 = data_pokemon[party[currentplayer].id].element2;
+;  609			userelement2 = data_pokemon[party[currentplayer].id].element2;
 	LD	BC,-405
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
 	LD	(IX+-113),A
-;  608			nonuserelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
+;  610			nonuserelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
 	LD	BC,-402
 	CALL	__ildix
 	LD	IY,HL
@@ -3917,18 +3921,18 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-64),A
-;  609			nonuserelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
+;  611			nonuserelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
 	LD	BC,-399
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
 	LD	(IX+-65),A
-;  610	
-;  611		}
-;  612		else {
+;  612	
+;  613		}
+;  614		else {
 	JR	L_183
 L_181:
-;  613			strcpy(username, enemyname);
+;  615			strcpy(username, enemyname);
 	LD	BC,_enemyname
 	PUSH	BC
 	LD	HL,IX
@@ -3939,7 +3943,7 @@ L_181:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  614			strcpy(nonusername, playername);
+;  616			strcpy(nonusername, playername);
 	LD	BC,_playername
 	PUSH	BC
 	LD	HL,IX
@@ -3950,7 +3954,7 @@ L_181:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  615			userlevel = enemyparty[currentenemy].level;
+;  617			userlevel = enemyparty[currentenemy].level;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -3965,7 +3969,7 @@ L_181:
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-23),A
-;  616			nonuserlevel = party[currentplayer].level;
+;  618			nonuserlevel = party[currentplayer].level;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -3980,7 +3984,7 @@ L_181:
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-111),A
-;  617			userelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
+;  619			userelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
 	LD	BC,-420
 	CALL	__ildix
 	LD	IY,HL
@@ -3999,13 +4003,13 @@ L_181:
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-112),A
-;  618			userelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
+;  620			userelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
 	LD	BC,-417
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
 	LD	(IX+-113),A
-;  619			nonuserelement1 = data_pokemon[party[currentplayer].id].element1;
+;  621			nonuserelement1 = data_pokemon[party[currentplayer].id].element1;
 	LD	BC,-414
 	CALL	__ildix
 	LD	IY,HL
@@ -4024,16 +4028,16 @@ L_181:
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-64),A
-;  620			nonuserelement2 = data_pokemon[party[currentplayer].id].element2;
+;  622			nonuserelement2 = data_pokemon[party[currentplayer].id].element2;
 	LD	BC,-411
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
 	LD	(IX+-65),A
-;  621		}
+;  623		}
 L_183:
-;  622	
-;  623		if (flinch[player]) {
+;  624	
+;  625		if (flinch[player]) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4042,7 +4046,7 @@ L_183:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_185
-;  624			sprintf(str, "%s flinched", username);
+;  626			sprintf(str, "%s flinched", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4056,7 +4060,7 @@ L_183:
 	POP	BC
 	POP	BC
 	POP	BC
-;  625			text_Display(str, true);
+;  627			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4064,9 +4068,9 @@ L_183:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  626		}
+;  628		}
 L_185:
-;  627		if (data_moves[move].type == 16) {
+;  629		if (data_moves[move].type == 16) {
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -4082,7 +4086,7 @@ L_185:
 	LD	A,(IY+15)
 	CP	A,16
 	JR	NZ,L_191
-;  628			sprintf(str, "%s used %s", username, data_moves[move].name);
+;  630			sprintf(str, "%s used %s", username, data_moves[move].name);
 	CALL	__ildix
 	LD	IY,HL
 	PEA	IY+0
@@ -4100,7 +4104,7 @@ L_185:
 	POP	BC
 	POP	BC
 	POP	BC
-;  629			text_Display(str, true);
+;  631			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4108,18 +4112,18 @@ L_185:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  630			move = 1 + (rand() % 165);
+;  632			move = 1 + (rand() % 165);
 	CALL	_rand
 	LD	BC,165
 	CALL	__irems
 	INC	L
 	LD	(IX+9),L
-;  631		}
+;  633		}
 L_191:
-;  632	
-;  633	
-;  634		
-;  635		if (data_moves[move].type == 17) {
+;  634	
+;  635	
+;  636		
+;  637		if (data_moves[move].type == 17) {
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -4135,7 +4139,7 @@ L_191:
 	LD	A,(IY+15)
 	CP	A,17
 	JR	NZ,L_192
-;  636			sprintf(str, "%s used %s", username, data_moves[move].name);
+;  638			sprintf(str, "%s used %s", username, data_moves[move].name);
 	CALL	__ildix
 	LD	IY,HL
 	PEA	IY+0
@@ -4153,7 +4157,7 @@ L_191:
 	POP	BC
 	POP	BC
 	POP	BC
-;  637			text_Display(str, true);
+;  639			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4161,7 +4165,7 @@ L_191:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  638			move = lastmove[!player];
+;  640			move = lastmove[!player];
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_187
@@ -4183,9 +4187,9 @@ L_188:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IX+9),A
-;  639		}
+;  641		}
 L_192:
-;  640		lastmove[player] = move;
+;  642		lastmove[player] = move;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4193,8 +4197,8 @@ L_192:
 	ADD	HL,BC
 	LD	A,(IX+9)
 	LD	(HL),A
-;  641	
-;  642		if (data_moves[move].type == 19 && data_moves[lastmove[!player]].type != 0) {
+;  643	
+;  644		if (data_moves[move].type == 19 && data_moves[lastmove[!player]].type != 0) {
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -4244,7 +4248,7 @@ L_195:
 	LD	A,(IY+15)
 	OR	A,A
 	JR	Z,L_203
-;  643			text_Display("It Failed", true);
+;  645			text_Display("It Failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__127
@@ -4252,17 +4256,17 @@ L_195:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  644			return;
+;  646			return;
 	JR	L_587
-;  645		}
+;  647		}
 L_203:
-;  646	
-;  647		if (data_moves[move].statustype == 32) {
+;  648	
+;  649		if (data_moves[move].statustype == 32) {
 	LD	IY,(IX+-13)
 	LD	A,(IY+19)
 	CP	A,32
 	JR	NZ,L_211
-;  648			if (attackturns[player] == 0) {
+;  650			if (attackturns[player] == 0) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4275,7 +4279,7 @@ L_203:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_201
-;  649				attackturns[player] = (rand() % 2) + 2;
+;  651				attackturns[player] = (rand() % 2) + 2;
 	LD	HL,(IX+-110)
 	CALL	__istix
 	CALL	_rand
@@ -4285,9 +4289,9 @@ L_203:
 	INC	HL
 	LD	IY,(IX+-110)
 	LD	(IY),L
-;  650			}
+;  652			}
 L_201:
-;  651			attackturns[player]--;
+;  653			attackturns[player]--;
 	LD	BC,-314
 	CALL	__ildix
 	LD	BC,-423
@@ -4300,9 +4304,9 @@ L_201:
 	LD	A,(IY)
 	DEC	A
 	LD	(HL),A
-;  652		}
+;  654		}
 L_211:
-;  653		if (data_moves[move].statustype == 33 || data_moves[move].statustype == 36 || data_moves[move].statustype == 37 || data_moves[move].statustype == 38) {
+;  655		if (data_moves[move].statustype == 33 || data_moves[move].statustype == 36 || data_moves[move].statustype == 37 || data_moves[move].statustype == 38) {
 	LD	BC,(IX+-13)
 	LD	(IX+-104),BC
 	LD	BC,(IX+-13)
@@ -4336,7 +4340,7 @@ L_211:
 	CP	A,38
 	JR	NZ,L_216
 L_210:
-;  654			if (attackturns[player] == 0) {
+;  656			if (attackturns[player] == 0) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4346,10 +4350,10 @@ L_210:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_209
-;  655				attackturns[player] = 1;
+;  657				attackturns[player] = 1;
 	LD	HL,(IX+-51)
 	LD	(HL),1
-;  656				sprintf(str, "%s is building up power", username, data_moves[move].name);
+;  658				sprintf(str, "%s is building up power", username, data_moves[move].name);
 	LD	IY,(IX+-104)
 	PEA	IY+0
 	LD	HL,IX
@@ -4366,7 +4370,7 @@ L_210:
 	POP	BC
 	POP	BC
 	POP	BC
-;  657				text_Display(str, true);
+;  659				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4374,10 +4378,10 @@ L_210:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  658				return;
+;  660				return;
 	JR	L_587
-;  659			}
-;  660			else if (attackturns[player] == 1) {
+;  661			}
+;  662			else if (attackturns[player] == 1) {
 L_209:
 	LD	HL,(IX+-51)
 	LD	A,(HL)
@@ -4387,20 +4391,20 @@ L_209:
 	LD	BC,1
 	SBC	HL,BC
 	JR	NZ,L_216
-;  661				attackturns[player] = 0;
+;  663				attackturns[player] = 0;
 	LD	HL,(IX+-51)
 	LD	(HL),0
-;  662			}
-;  663		}
+;  664			}
+;  665		}
 L_216:
-;  664		if (data_moves[move].statustype == 34) {
+;  666		if (data_moves[move].statustype == 34) {
 	LD	BC,(IX+-122)
 	LD	(IX+-29),BC
 	LD	IY,(IX+-29)
 	LD	A,(IY+19)
 	CP	A,34
 	JR	NZ,L_223
-;  665			if (attackturns[player] == 0) {
+;  667			if (attackturns[player] == 0) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4410,20 +4414,20 @@ L_216:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_214
-;  666				attackturns[player] = 1;
+;  668				attackturns[player] = 1;
 	LD	HL,(IX+-63)
 	LD	(HL),1
-;  667				air[player] = true;
+;  669				air[player] = true;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	DE,_air
 	ADD	HL,DE
 	LD	(HL),1
-;  668				return;
+;  670				return;
 	JR	L_587
-;  669			}
-;  670			else if (attackturns[player] == 1) {
+;  671			}
+;  672			else if (attackturns[player] == 1) {
 L_214:
 	LD	HL,(IX+-63)
 	LD	A,(HL)
@@ -4433,20 +4437,20 @@ L_214:
 	LD	BC,1
 	SBC	HL,BC
 	JR	NZ,L_223
-;  671				attackturns[player] = 0;
+;  673				attackturns[player] = 0;
 	LD	HL,(IX+-63)
 	LD	(HL),0
-;  672				air[player] = false;
+;  674				air[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	DE,_air
 	ADD	HL,DE
 	LD	(HL),0
-;  673			}
-;  674		}
+;  675			}
+;  676		}
 L_223:
-;  675		if (data_moves[move].type == 20 && attackturns[player] != 1) {
+;  677		if (data_moves[move].type == 20 && attackturns[player] != 1) {
 	LD	HL,(IX+-29)
 	LD	BC,-335
 	CALL	__istix
@@ -4467,12 +4471,12 @@ L_223:
 	LD	BC,1
 	SBC	HL,BC
 	JR	Z,L_226
-;  676			if (attackturns[player] == 0) {
+;  678			if (attackturns[player] == 0) {
 	LD	HL,(IX+-32)
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_220
-;  677				bidedamage[player] = 0;
+;  679				bidedamage[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4481,8 +4485,8 @@ L_223:
 	ADD	HL,BC
 	LD	(HL),0
 	INC	HL
-;  678				attackturns[player] = 2;
-;  679				sprintf(str, "%s used Bide", username);
+;  680				attackturns[player] = 2;
+;  681				sprintf(str, "%s used Bide", username);
 	LD	IY,IX
 	LD	BC,-376
 	ADD	IY,BC
@@ -4499,7 +4503,7 @@ L_223:
 	POP	BC
 	POP	BC
 	POP	BC
-;  680				text_Display(str, true);
+;  682				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4507,19 +4511,19 @@ L_223:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  681			}
-;  682			else {
+;  683			}
+;  684			else {
 	JR	L_221
 L_220:
-;  683				attackturns[player]--;
+;  685				attackturns[player]--;
 	LD	HL,(IX+-32)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-32)
 	LD	(HL),A
-;  684			}
+;  686			}
 L_221:
-;  685			sprintf(str, "%s is storing energy", username);
+;  687			sprintf(str, "%s is storing energy", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4533,7 +4537,7 @@ L_221:
 	POP	BC
 	POP	BC
 	POP	BC
-;  686			text_Display(str, true);
+;  688			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4541,13 +4545,13 @@ L_221:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  687			return;
+;  689			return;
 	JR	L_587
-;  688		}
+;  690		}
 L_226:
-;  689	
-;  690		/* Exit if character's status prevents movement */
-;  691		if ((*currentStatusPointer[player] == 3) && (rand() % 4 == 1)) {
+;  691	
+;  692		/* Exit if character's status prevents movement */
+;  693		if ((*currentStatusPointer[player] == 3) && (rand() % 4 == 1)) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4572,7 +4576,7 @@ L_226:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_230
-;  692			sprintf(str, "%s is paralysed", username);
+;  694			sprintf(str, "%s is paralysed", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4586,7 +4590,7 @@ L_226:
 	POP	BC
 	POP	BC
 	POP	BC
-;  693			text_Display(str, true);
+;  695			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4594,11 +4598,11 @@ L_226:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  694			return;
+;  696			return;
 	JR	L_587
-;  695		}
+;  697		}
 L_230:
-;  696		if (*currentStatusPointer[player] == 4) {
+;  698		if (*currentStatusPointer[player] == 4) {
 	LD	HL,(IX+-54)
 	LD	BC,-344
 	CALL	__istix
@@ -4611,16 +4615,16 @@ L_230:
 	LD	BC,4
 	SBC	HL,BC
 	JR	NZ,L_234
-;  697			if (rand() % 3 == 0) {
+;  699			if (rand() % 3 == 0) {
 	CALL	_rand
 	LD	BC,3
 	CALL	__irems
 	CALL	__icmpzero
 	JR	NZ,L_228
-;  698				*currentStatusPointer[player] = 1;
+;  700				*currentStatusPointer[player] = 1;
 	LD	HL,(IX+-54)
 	LD	BC,-344
-;  699				sprintf(str, "%s woke up", username);
+;  701				sprintf(str, "%s woke up", username);
 	LD	IY,IX
 	LD	DE,-376
 	ADD	IY,DE
@@ -4638,7 +4642,7 @@ L_230:
 	POP	BC
 	POP	BC
 	POP	BC
-;  700				text_Display(str, true);
+;  702				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4646,11 +4650,11 @@ L_230:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  701			}
-;  702			else {
+;  703			}
+;  704			else {
 	JR	L_234
 L_228:
-;  703				sprintf(str, "%s is asleep", username);
+;  705				sprintf(str, "%s is asleep", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4664,7 +4668,7 @@ L_228:
 	POP	BC
 	POP	BC
 	POP	BC
-;  704				text_Display(str, true);
+;  706				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4672,12 +4676,12 @@ L_228:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  705				return;
+;  707				return;
 	JR	L_587
-;  706			}
-;  707		}
+;  708			}
+;  709		}
 L_234:
-;  708		if (*currentStatusPointer[player] == 5) {
+;  710		if (*currentStatusPointer[player] == 5) {
 	LD	BC,-344
 	CALL	__ildix
 	LD	(IX+-101),HL
@@ -4692,16 +4696,16 @@ L_234:
 	LD	BC,5
 	SBC	HL,BC
 	JR	NZ,L_238
-;  709			if (rand() % 5 == 0) {
+;  711			if (rand() % 5 == 0) {
 	CALL	_rand
 	LD	BC,5
 	CALL	__irems
 	CALL	__icmpzero
 	JR	NZ,L_232
-;  710				*currentStatusPointer[player] = 0;
+;  712				*currentStatusPointer[player] = 0;
 	LD	HL,(IX+-101)
 	LD	BC,-347
-;  711				sprintf(str, "%s thawed out", username);
+;  713				sprintf(str, "%s thawed out", username);
 	LD	IY,IX
 	LD	DE,-376
 	ADD	IY,DE
@@ -4719,7 +4723,7 @@ L_234:
 	POP	BC
 	POP	BC
 	POP	BC
-;  712				text_Display(str, true);
+;  714				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4727,11 +4731,11 @@ L_234:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  713			}
-;  714			else {
+;  715			}
+;  716			else {
 	JR	L_238
 L_232:
-;  715				sprintf(str, "%s is frozen", username);
+;  717				sprintf(str, "%s is frozen", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4745,7 +4749,7 @@ L_232:
 	POP	BC
 	POP	BC
 	POP	BC
-;  716				text_Display(str, true);
+;  718				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4753,12 +4757,12 @@ L_232:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  717				return;
+;  719				return;
 	JR	L_587
-;  718			}
-;  719		}
+;  720			}
+;  721		}
 L_238:
-;  720		if (confusedturns[player] > 0) {
+;  722		if (confusedturns[player] > 0) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4774,19 +4778,19 @@ L_238:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_251
-;  721			confusedturns[player] --;
+;  723			confusedturns[player] --;
 	LD	HL,(IX+-68)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-68)
 	LD	(HL),A
-;  722			if (rand() % 2 == 0) {
+;  724			if (rand() % 2 == 0) {
 	CALL	_rand
 	LD	BC,2
 	CALL	__irems
 	CALL	__icmpzero
 	JR	NZ,L_251
-;  723				sprintf(str, "%s hurt itself in its confusion", username);
+;  725				sprintf(str, "%s hurt itself in its confusion", username);
 	LD	HL,IX
 	LD	BC,-376
 	ADD	HL,BC
@@ -4800,7 +4804,7 @@ L_238:
 	POP	BC
 	POP	BC
 	POP	BC
-;  724				text_Display(str, true);
+;  726				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4808,13 +4812,13 @@ L_238:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  725				return;
+;  727				return;
 	JR	L_587
-;  726			}
-;  727		}
+;  728			}
+;  729		}
 L_251:
-;  728	
-;  729		if (air[!player] || (data_moves[move].accuracy * statmodvalues[statmods[player][5]] / statmodvalues[statmods[!player][6]]) < (rand() % 100)) {
+;  730	
+;  731		if (air[!player] || (data_moves[move].accuracy * statmodvalues[statmods[player][5]] / statmodvalues[statmods[!player][6]]) < (rand() % 100)) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_240
@@ -4952,7 +4956,7 @@ L_245:
 	SBC	HL,BC
 	JP	P,L_254
 L_250:
-;  730			text_Display("It Missed", true);
+;  732			text_Display("It Missed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__163
@@ -4960,14 +4964,14 @@ L_250:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  731			if (data_moves[move].statustype == 25) {
+;  733			if (data_moves[move].statustype == 25) {
 	LD	BC,-335
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	CP	A,25
 	JR	NZ,L_587
-;  732				takedamage(player, stats[player].health);
+;  734				takedamage(player, stats[player].health);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4985,12 +4989,12 @@ L_250:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  733			}
-;  734			return;
+;  735			}
+;  736			return;
 	JR	L_587
-;  735		}
+;  737		}
 L_254:
-;  736		if (!(*currentStatusPointer[player] == 4) && data_moves[move].statustype == 26) {
+;  738		if (!(*currentStatusPointer[player] == 4) && data_moves[move].statustype == 26) {
 	LD	BC,-347
 	CALL	__ildix
 	LD	HL,(HL)
@@ -5008,7 +5012,7 @@ L_254:
 	LD	A,(IY+19)
 	CP	A,26
 	JR	NZ,L_256
-;  737			text_Display("It Failed", true);
+;  739			text_Display("It Failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__167
@@ -5016,9 +5020,9 @@ L_254:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  738		}
+;  740		}
 L_256:
-;  739		if (data_moves[move].statustype == 22) {
+;  741		if (data_moves[move].statustype == 22) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-39)
 	LD	(IX+-71),BC
@@ -5026,25 +5030,25 @@ L_256:
 	LD	A,(IY+19)
 	CP	A,22
 	JR	NZ,L_258
-;  740			hitcount = (rand() % 3) + 1;
+;  742			hitcount = (rand() % 3) + 1;
 	CALL	_rand
 	LD	BC,3
 	CALL	__irems
 	INC	HL
 	LD	(IX+-36),L
-;  741		}
+;  743		}
 L_258:
-;  742		if (data_moves[move].statustype == 23) {
+;  744		if (data_moves[move].statustype == 23) {
 	LD	IY,(IX+-71)
 	LD	A,(IY+19)
 	CP	A,23
 	JR	NZ,L_259
-;  743			hitcount = 1;
+;  745			hitcount = 1;
 	LD	(IX+-36),1
-;  744		}
+;  746		}
 L_259:
-;  745	
-;  746		sprintf(str, "%s used %s", username, data_moves[move].name);
+;  747	
+;  748		sprintf(str, "%s used %s", username, data_moves[move].name);
 	LD	BC,(IX+-71)
 	LEA	IY,IX+-128
 	LD	(IY+-9),BC
@@ -5064,7 +5068,7 @@ L_259:
 	POP	BC
 	POP	BC
 	POP	BC
-;  747		text_Display(str, true);
+;  749		text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -5072,11 +5076,11 @@ L_259:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  748	
-;  749	
-;  750	startattack:
+;  750	
+;  751	
+;  752	startattack:
 L_260:
-;  751		if (data_moves[move].type < 2 || data_moves[move].type == 19) {
+;  753		if (data_moves[move].type < 2 || data_moves[move].type == 19) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-9)
 	LD	(IX+-3),BC
@@ -5093,7 +5097,7 @@ L_260:
 	CP	A,19
 	JR	NZ,L_449
 L_448:
-;  752			if (data_moves[move].type == 0) {
+;  754			if (data_moves[move].type == 0) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-48)
 	LD	(IX+-26),BC
@@ -5101,7 +5105,7 @@ L_448:
 	LD	A,(IY+15)
 	OR	A,A
 	JR	NZ,L_293
-;  753				damage = ((((2 * userlevel / 5) + 2)*data_moves[move].power*(stats[player].attack*statmodvalues[statmods[player][0]] / 100) / (stats[!player].defence * statmodvalues[statmods[!player][1]] / 100)) / 50) + 2;
+;  755				damage = ((((2 * userlevel / 5) + 2)*data_moves[move].power*(stats[player].attack*statmodvalues[statmods[player][0]] / 100) / (stats[!player].defence * statmodvalues[statmods[!player][1]] / 100)) / 50) + 2;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_263
@@ -5284,8 +5288,8 @@ L_268:
 	CALL	__itol
 	LD	(IX+-7),BC
 	LD	(IX+-4),A
-;  754			}
-;  755			else if (data_moves[move].type == 1) {
+;  756			}
+;  757			else if (data_moves[move].type == 1) {
 	JR	L_294
 L_293:
 	LD	BC,(IX+-26)
@@ -5297,7 +5301,7 @@ L_293:
 	LD	A,(IY+15)
 	CP	A,1
 	JR	NZ,L_291
-;  756				damage = ((((2 * userlevel / 5) + 2)*data_moves[move].power*(stats[player].specialattack*statmodvalues[statmods[player][2]] / 100) / (stats[!player].specialdefence * statmodvalues[statmods[!player][3]] / 100)) / 50) + 2;
+;  758				damage = ((((2 * userlevel / 5) + 2)*data_moves[move].power*(stats[player].specialattack*statmodvalues[statmods[player][2]] / 100) / (stats[!player].specialdefence * statmodvalues[statmods[!player][3]] / 100)) / 50) + 2;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_271
@@ -5482,11 +5486,11 @@ L_276:
 	CALL	__itol
 	LD	(IX+-7),BC
 	LD	(IX+-4),A
-;  757			}
-;  758			else {
+;  759			}
+;  760			else {
 	JR	L_294
 L_291:
-;  759				damage = ((((2 * userlevel / 5) + 2) * data_moves[lastmove[!player]].power * 2 * (stats[player].attack*statmodvalues[statmods[player][0]] / 100) / (stats[!player].defence * statmodvalues[statmods[!player][1]] / 100)) / 50) + 2;
+;  761				damage = ((((2 * userlevel / 5) + 2) * data_moves[lastmove[!player]].power * 2 * (stats[player].attack*statmodvalues[statmods[player][0]] / 100) / (stats[!player].defence * statmodvalues[statmods[!player][1]] / 100)) / 50) + 2;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_279
@@ -5692,9 +5696,9 @@ L_288:
 	CALL	__itol
 	LD	(IX+-7),BC
 	LD	(IX+-4),A
-;  760			}
+;  762			}
 L_294:
-;  761			damage *= ((rand() % 16) + 85);//  /100
+;  763			damage *= ((rand() % 16) + 85);//  /100
 	CALL	_rand
 	LD	BC,16
 	CALL	__irems
@@ -5708,7 +5712,7 @@ L_294:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  762			damage *= elements[data_moves[move].element][nonuserelement1];// /2
+;  764			damage *= elements[data_moves[move].element][nonuserelement1];// /2
 	LD	BC,(IX+-80)
 	LD	(IX+-19),BC
 	LD	HL,BC
@@ -5740,7 +5744,7 @@ L_294:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  763			damage *= elements[data_moves[move].element][nonuserelement2];// /2
+;  765			damage *= elements[data_moves[move].element][nonuserelement2];// /2
 	LD	BC,-426
 	CALL	__ildix
 	LD	IY,HL
@@ -5779,7 +5783,7 @@ L_294:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  764			damage /= 400;
+;  766			damage /= 400;
 	LD	HL,(IX+-7)
 	LD	E,(IX+-4)
 	LD	BC,400
@@ -5787,7 +5791,7 @@ L_294:
 	CALL	__ldivu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  765			if (data_moves[move].element == userelement1 || data_moves[move].element == userelement2) {
+;  767			if (data_moves[move].element == userelement1 || data_moves[move].element == userelement2) {
 	LD	A,(IX+-112)
 	PUSH	IY
 	PUSH	BC
@@ -5807,7 +5811,7 @@ L_294:
 	CP	A,(IX+-113)
 	JR	NZ,L_309
 L_296:
-;  766				damage *= 1.5;
+;  768				damage *= 1.5;
 	LD	BC,(IX+-7)
 	LD	A,(IX+-4)
 	CALL	__ultof
@@ -5817,11 +5821,11 @@ L_296:
 	CALL	__ftol
 	LD	(IX+-7),BC
 	LD	(IX+-4),A
-;  767			}
+;  769			}
 L_309:
-;  768	
-;  769			/* Critical Hit */
-;  770			if (data_moves[move].statustype == 24 || highcritratio[player] || data_moves[move].statustype == 36) {
+;  770	
+;  771			/* Critical Hit */
+;  772			if (data_moves[move].statustype == 24 || highcritratio[player] || data_moves[move].statustype == 36) {
 	LD	BC,(IX+-77)
 	LD	(IX+-107),BC
 	LEA	IY,IX+-128
@@ -5846,11 +5850,11 @@ L_309:
 	CP	A,36
 	JR	NZ,L_308
 L_307:
-;  771				if (player) {
+;  773				if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_302
-;  772					if (data_pokemon[party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
+;  774					if (data_pokemon[party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -5913,7 +5917,7 @@ L_307:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_314
-;  773						damage *= (2 * userlevel + 5) / (userlevel + 5);
+;  775						damage *= (2 * userlevel + 5) / (userlevel + 5);
 	LD	A,(IX+-23)
 	UEXT	HL
 	LD	IY,(IX+-22)
@@ -5932,12 +5936,12 @@ L_307:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  774					}
-;  775				}
-;  776				else {
+;  776					}
+;  777				}
+;  778				else {
 	JR	L_314
 L_302:
-;  777					if (data_pokemon[enemyparty[currentenemy].id].basespeed * 4 < (rand() % 256)) {
+;  779					if (data_pokemon[enemyparty[currentenemy].id].basespeed * 4 < (rand() % 256)) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -6001,7 +6005,7 @@ L_302:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_314
-;  778						damage *= (2 * userlevel + 5) / (userlevel + 5);
+;  780						damage *= (2 * userlevel + 5) / (userlevel + 5);
 	LD	IY,-131
 	LD	BC,IX
 	ADD	IY,BC
@@ -6023,17 +6027,17 @@ L_302:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  779					}
-;  780				}
-;  781			}
-;  782			else {
+;  781					}
+;  782				}
+;  783			}
+;  784			else {
 	JR	L_314
 L_308:
-;  783				if (player) {
+;  785				if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_306
-;  784					if (data_pokemon[party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
+;  786					if (data_pokemon[party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -6094,7 +6098,7 @@ L_308:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_314
-;  785						damage *= (2 * userlevel + 5) / (userlevel + 5);
+;  787						damage *= (2 * userlevel + 5) / (userlevel + 5);
 	LD	A,(IX+-23)
 	UEXT	HL
 	LD	IY,(IX+-128)
@@ -6113,12 +6117,12 @@ L_308:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  786					}
-;  787				}
-;  788				else {
+;  788					}
+;  789				}
+;  790				else {
 	JR	L_314
 L_306:
-;  789					if (data_pokemon[enemyparty[currentenemy].id].basespeed / 2 < (rand() % 256)) {
+;  791					if (data_pokemon[enemyparty[currentenemy].id].basespeed / 2 < (rand() % 256)) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -6180,7 +6184,7 @@ L_306:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_314
-;  790						damage *= (2 * userlevel + 5) / (userlevel + 5);
+;  792						damage *= (2 * userlevel + 5) / (userlevel + 5);
 	LD	IY,-143
 	LD	BC,IX
 	ADD	IY,BC
@@ -6202,12 +6206,12 @@ L_306:
 	CALL	__lmulu
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
-;  791					}
-;  792				}
-;  793			}
+;  793					}
+;  794				}
+;  795			}
 L_314:
-;  794	
-;  795			takedamage(!player, damage);
+;  796	
+;  797			takedamage(!player, damage);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_311
@@ -6230,8 +6234,8 @@ L_312:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  796	
-;  797			if (data_moves[move].statustype == 21 || data_moves[move].statustype == 26) {
+;  798	
+;  799			if (data_moves[move].statustype == 21 || data_moves[move].statustype == 26) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-78)
 	LD	(IY+-84),BC
@@ -6245,7 +6249,7 @@ L_312:
 	CP	A,26
 	JR	NZ,L_318
 L_316:
-;  798				heal(player, damage / 2);
+;  800				heal(player, damage / 2);
 	LD	BC,(IX+-7)
 	LD	A,(IX+-4)
 	LD	L,1
@@ -6257,9 +6261,9 @@ L_316:
 	CALL	_heal
 	POP	BC
 	POP	BC
-;  799			}
+;  801			}
 L_318:
-;  800			if (data_moves[move].statustype == 19) {
+;  802			if (data_moves[move].statustype == 19) {
 	LD	BC,(IX+-19)
 	LD	(IX+-80),BC
 	LD	HL,(IX+-19)
@@ -6277,7 +6281,7 @@ L_318:
 	LD	A,(IY+19)
 	CP	A,19
 	JR	NZ,L_321
-;  801				takedamage(player, damage / 3);
+;  803				takedamage(player, damage / 3);
 	LD	HL,(IX+-7)
 	LD	E,(IX+-4)
 	LD	BC,3
@@ -6290,27 +6294,27 @@ L_318:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  802			}
+;  804			}
 L_321:
-;  803			if (hitcount > 0) {
+;  805			if (hitcount > 0) {
 	XOR	A,A
 	CP	A,(IX+-36)
 	JR	NC,L_323
-;  804				hitcount--;
+;  806				hitcount--;
 	DEC	(IX+-36)
-;  805				redrawcharacters();
+;  807				redrawcharacters();
 	CALL	_redrawcharacters
-;  806				Wait(15);
+;  808				Wait(15);
 	LD	BC,15
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  807				goto startattack;
+;  809				goto startattack;
 	JR	L_260
-;  808			}
+;  810			}
 L_323:
-;  809	
-;  810			if (elements[data_moves[move].element][nonuserelement1] * elements[data_moves[move].element][nonuserelement2] < 4) {
+;  811	
+;  812			if (elements[data_moves[move].element][nonuserelement1] * elements[data_moves[move].element][nonuserelement2] < 4) {
 	LD	BC,_data_moves
 	LD	HL,(IX+-19)
 	ADD	HL,BC
@@ -6360,7 +6364,7 @@ L_323:
 	LD	BC,4
 	SBC	HL,BC
 	JP	P,L_325
-;  811				text_Display("Not Very Effective", true);
+;  813				text_Display("Not Very Effective", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__199
@@ -6368,9 +6372,9 @@ L_323:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  812			}
+;  814			}
 L_325:
-;  813			if (elements[data_moves[move].element][nonuserelement1] * elements[data_moves[move].element][nonuserelement2] > 4) {
+;  815			if (elements[data_moves[move].element][nonuserelement1] * elements[data_moves[move].element][nonuserelement2] > 4) {
 	LD	BC,_data_moves
 	LD	HL,(IX+-19)
 	ADD	HL,BC
@@ -6422,7 +6426,7 @@ L_325:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_336
-;  814				text_Display("Super Effective", true);
+;  816				text_Display("Super Effective", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__201
@@ -6430,9 +6434,9 @@ L_325:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  815			}
+;  817			}
 L_336:
-;  816			if (rage[!player]) {
+;  818			if (rage[!player]) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_327
@@ -6454,7 +6458,7 @@ L_328:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_337
-;  817				statmods[!player][0]++;
+;  819				statmods[!player][0]++;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_331
@@ -6482,13 +6486,13 @@ L_332:
 	CALL	__ildix
 	INC	A
 	LD	(HL),A
-;  818			}
+;  820			}
 L_337:
-;  819			redrawcharacters();
+;  821			redrawcharacters();
 	CALL	_redrawcharacters
-;  820		}
-;  821		/* Raise user stat */
-;  822		else if (data_moves[move].type == 2) {
+;  822		}
+;  823		/* Raise user stat */
+;  824		else if (data_moves[move].type == 2) {
 	JR	L_583
 L_449:
 	LD	BC,(IX+-3)
@@ -6498,7 +6502,7 @@ L_449:
 	LD	A,(IY+15)
 	CP	A,2
 	JR	NZ,L_447
-;  823			if (statmods[player][data_moves[move].statustype] + data_moves[move].power > 12) {
+;  825			if (statmods[player][data_moves[move].statustype] + data_moves[move].power > 12) {
 	LD	BC,-305
 	CALL	__ildix
 	LD	(IX+-45),HL
@@ -6536,7 +6540,7 @@ L_449:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_339
-;  824				statmods[player][data_moves[move].statustype] = 12;
+;  826				statmods[player][data_moves[move].statustype] = 12;
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
 	LD	(IY+-87),BC
@@ -6550,11 +6554,11 @@ L_449:
 	LD	L,A
 	ADD	HL,BC
 	LD	(HL),12
-;  825			}
-;  826			else {
+;  827			}
+;  828			else {
 	JR	L_340
 L_339:
-;  827				statmods[player][data_moves[move].statustype] += data_moves[move].power;
+;  829				statmods[player][data_moves[move].statustype] += data_moves[move].power;
 	LD	BC,_data_moves
 	LD	HL,(IX+-45)
 	ADD	HL,BC
@@ -6611,9 +6615,9 @@ L_339:
 	LD	IY,DE
 	ADD	A,(IY+16)
 	LD	(HL),A
-;  828			}
+;  830			}
 L_340:
-;  829			sprintf(str, "%s's %s rose", username, text_status2[data_moves[move].statustype]);
+;  831			sprintf(str, "%s's %s rose", username, text_status2[data_moves[move].statustype]);
 	LEA	IY,IX+-128
 	LD	IY,(IY+-87)
 	LD	A,(IY+19)
@@ -6640,7 +6644,7 @@ L_340:
 	POP	BC
 	POP	BC
 	POP	BC
-;  830			text_Display(str, true);
+;  832			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -6648,9 +6652,9 @@ L_340:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  831		}
-;  832		/* Lower non-user stat */
-;  833		else if (data_moves[move].type == 3) {
+;  833		}
+;  834		/* Lower non-user stat */
+;  835		else if (data_moves[move].type == 3) {
 	JR	L_583
 L_447:
 	LD	BC,(IX+-3)
@@ -6660,7 +6664,7 @@ L_447:
 	LD	A,(IY+15)
 	CP	A,3
 	JR	NZ,L_445
-;  834			if (statmods[!player][data_moves[move].statustype] < data_moves[move].power) {
+;  836			if (statmods[!player][data_moves[move].statustype] < data_moves[move].power) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_342
@@ -6708,7 +6712,7 @@ L_343:
 	LD	A,(HL)
 	CP	A,(IY+16)
 	JR	NC,L_354
-;  835				statmods[!player][data_moves[move].statustype] = 0;
+;  837				statmods[!player][data_moves[move].statustype] = 0;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_346
@@ -6736,11 +6740,11 @@ L_347:
 	LD	L,A
 	ADD	HL,BC
 	LD	(HL),0
-;  836			}
-;  837			else {
+;  838			}
+;  839			else {
 	JR	L_355
 L_354:
-;  838				statmods[!player][data_moves[move].statustype] -= data_moves[move].power;
+;  840				statmods[!player][data_moves[move].statustype] -= data_moves[move].power;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_350
@@ -6809,9 +6813,9 @@ L_351:
 	LD	IY,DE
 	SUB	A,(IY+16)
 	LD	(HL),A
-;  839			}
+;  841			}
 L_355:
-;  840			sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
+;  842			sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
 	LEA	IY,IX+-128
 	LD	IY,(IY+-96)
 	LD	A,(IY+19)
@@ -6838,7 +6842,7 @@ L_355:
 	POP	BC
 	POP	BC
 	POP	BC
-;  841			text_Display(str, true);
+;  843			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -6846,15 +6850,15 @@ L_355:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  842		}
-;  843		else if (data_moves[move].type == 5) {
+;  844		}
+;  845		else if (data_moves[move].type == 5) {
 	JR	L_583
 L_445:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,5
 	JR	NZ,L_443
-;  844			takedamage(!player, data_moves[move].power);
+;  846			takedamage(!player, data_moves[move].power);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_357
@@ -6880,8 +6884,8 @@ L_358:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  845		}
-;  846		else if (data_moves[move].type == 6 || data_moves[move].type == 7) {
+;  847		}
+;  848		else if (data_moves[move].type == 6 || data_moves[move].type == 7) {
 	JR	L_583
 L_443:
 	LD	IY,(IX+-3)
@@ -6893,18 +6897,18 @@ L_443:
 	CP	A,7
 	JR	NZ,L_441
 L_440:
-;  847			if (wild) {
+;  849			if (wild) {
 	LD	A,(_wild)
 	OR	A,A
 	JR	Z,L_362
-;  848				run = true;
+;  850				run = true;
 	LD	A,1
 	LD	(_run),A
-;  849			}
-;  850			else {
+;  851			}
+;  852			else {
 	JR	L_583
 L_362:
-;  851				text_Display("It Failed", true);
+;  853				text_Display("It Failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__219
@@ -6912,16 +6916,16 @@ L_362:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  852			}
-;  853		}
-;  854		else if (data_moves[move].type == 8) {
+;  854			}
+;  855		}
+;  856		else if (data_moves[move].type == 8) {
 	JR	L_583
 L_441:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,8
 	JR	NZ,L_439
-;  855			heal(player, stats[player].health / 2);
+;  857			heal(player, stats[player].health / 2);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -6941,15 +6945,15 @@ L_441:
 	CALL	_heal
 	POP	BC
 	POP	BC
-;  856		}
-;  857		else if (data_moves[move].type == 9) {
+;  858		}
+;  859		else if (data_moves[move].type == 9) {
 	JR	L_583
 L_439:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,9
 	JR	NZ,L_437
-;  858			takedamage(!player, userlevel);
+;  860			takedamage(!player, userlevel);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_364
@@ -6974,15 +6978,15 @@ L_365:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  859		}
-;  860		else if (data_moves[move].type == 10) {
+;  861		}
+;  862		else if (data_moves[move].type == 10) {
 	JR	L_583
 L_437:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,10
 	JR	NZ,L_435
-;  861			takedamage(!player, userlevel * 20 / (10 + (rand() % 20)));
+;  863			takedamage(!player, userlevel * 20 / (10 + (rand() % 20)));
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_368
@@ -7047,15 +7051,15 @@ L_369:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  862		}
-;  863		else if (data_moves[move].type == 11) {
+;  864		}
+;  865		else if (data_moves[move].type == 11) {
 	JR	L_583
 L_435:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,11
 	JR	NZ,L_433
-;  864			takedamage(!player, stats[!player].health / 2);
+;  866			takedamage(!player, stats[!player].health / 2);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_372
@@ -7100,23 +7104,23 @@ L_377:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  865		}
-;  866		else if (data_moves[move].type == 12) {
+;  867		}
+;  868		else if (data_moves[move].type == 12) {
 	JR	L_583
 L_433:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,12
 	JR	NZ,L_431
-;  867			i = 0;
+;  869			i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  868			while (i < sizeof(statmods[player])) {
+;  870			while (i < sizeof(statmods[player])) {
 	JR	L_380
 L_381:
-;  869				statmods[player][i] = 6;
+;  871				statmods[player][i] = 6;
 	LD	BC,(IX+-116)
 	LD	(IX+-57),BC
 	LD	BC,(_i)
@@ -7124,14 +7128,14 @@ L_381:
 	LD	BC,(IX+-57)
 	ADD	HL,BC
 	LD	(HL),6
-;  870				i++;
+;  872				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  871			}
+;  873			}
 L_380:
 	LD	BC,(_i)
 	CALL	__stoiu
@@ -7139,23 +7143,23 @@ L_380:
 	LD	BC,7
 	SBC	HL,BC
 	JR	C,L_381
-;  872			while (i < sizeof(statmods[!player])) {
+;  874			while (i < sizeof(statmods[!player])) {
 	JR	L_387
 L_388:
-;  873				statmods[player][i] = 6;
+;  875				statmods[player][i] = 6;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,(IX+-57)
 	ADD	HL,BC
 	LD	(HL),6
-;  874				i++;
+;  876				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  875			}
+;  877			}
 L_387:
 	LD	BC,(_i)
 	CALL	__stoiu
@@ -7164,14 +7168,14 @@ L_387:
 	SBC	HL,BC
 	JR	C,L_388
 	JR	L_583
-;  876		}
-;  877		else if (data_moves[move].type == 13) {
+;  878		}
+;  879		else if (data_moves[move].type == 13) {
 L_431:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,13
 	JR	NZ,L_429
-;  878			*currentStatusPointer[player] = 4;
+;  880			*currentStatusPointer[player] = 4;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -7182,7 +7186,7 @@ L_431:
 	ADD	HL,BC
 	LD	HL,(HL)
 	LD	(HL),4
-;  879			heal(player, 1000);
+;  881			heal(player, 1000);
 	LD	BC,1000
 	PUSH	BC
 	LD	C,(IX+6)
@@ -7191,15 +7195,15 @@ L_431:
 	CALL	_heal
 	POP	BC
 	POP	BC
-;  880		}
-;  881		else if (data_moves[move].type == 14) {
+;  882		}
+;  883		else if (data_moves[move].type == 14) {
 	JR	L_583
 L_429:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,14
 	JR	NZ,L_427
-;  882			disabledturns[!player] = (rand() % 7) + 2;
+;  884			disabledturns[!player] = (rand() % 7) + 2;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_391
@@ -7225,7 +7229,7 @@ L_392:
 	LD	BC,_disabledturns
 	ADD	HL,BC
 	LD	(HL),A
-;  883			disabledmove[!player] = lastmove[!player];
+;  885			disabledmove[!player] = lastmove[!player];
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_399
@@ -7282,15 +7286,15 @@ L_396:
 	CALL	__ildix
 	POP	BC
 	LD	(HL),A
-;  884		}
-;  885		else if (data_moves[move].type == 15) {
+;  886		}
+;  887		else if (data_moves[move].type == 15) {
 	JR	L_583
 L_427:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,15
 	JR	NZ,L_425
-;  886			if ((int)userlevel - (int)nonuserlevel + 30 > (rand() % 100)) {
+;  888			if ((int)userlevel - (int)nonuserlevel + 30 > (rand() % 100)) {
 	LD	A,(IX+-23)
 	UEXT	HL
 	LD	L,A
@@ -7340,7 +7344,7 @@ L_427:
 	OR	A,A
 	SBC	HL,DE
 	JP	P,L_407
-;  887				takedamage(!player, 800);
+;  889				takedamage(!player, 800);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_403
@@ -7363,11 +7367,11 @@ L_404:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  888			}
-;  889			else {
+;  890			}
+;  891			else {
 	JR	L_583
 L_407:
-;  890				text_Display("It Missed", true);
+;  892				text_Display("It Missed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__239
@@ -7375,20 +7379,20 @@ L_407:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  891			}
-;  892		}
-;  893		else if (data_moves[move].type == 18) {
+;  893			}
+;  894		}
+;  895		else if (data_moves[move].type == 18) {
 	JR	L_583
 L_425:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,18
 	JR	NZ,L_423
-;  894			if (player) {
+;  896			if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_409
-;  895				originalpokemon[player] = party[currentplayer];
+;  897				originalpokemon[player] = party[currentplayer];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -7470,7 +7474,7 @@ L_425:
 	POP	BC
 	LD	BC,34
 	LDIR	
-;  896				party[currentplayer] = enemyparty[currentenemy];
+;  898				party[currentplayer] = enemyparty[currentenemy];
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -7539,11 +7543,11 @@ L_425:
 	LD	BC,HL
 	POP	HL
 	LDIR	
-;  897			}
-;  898			else {
+;  899			}
+;  900			else {
 	JR	L_583
 L_409:
-;  899				originalpokemon[player] = enemyparty[currentenemy];
+;  901				originalpokemon[player] = enemyparty[currentenemy];
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -7625,7 +7629,7 @@ L_409:
 	POP	BC
 	LD	BC,34
 	LDIR	
-;  900				enemyparty[currentenemy] = party[currentplayer];
+;  902				enemyparty[currentenemy] = party[currentplayer];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -7694,16 +7698,16 @@ L_409:
 	LD	BC,HL
 	POP	HL
 	LDIR	
-;  901			}
-;  902		}
-;  903		else if (data_moves[move].type == 20) {
+;  903			}
+;  904		}
+;  905		else if (data_moves[move].type == 20) {
 	JR	L_583
 L_423:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,20
 	JR	NZ,L_421
-;  904			takedamage(!player, bidedamage[player] * 2);
+;  906			takedamage(!player, bidedamage[player] * 2);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_411
@@ -7734,26 +7738,26 @@ L_412:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  905			attackturns[player] = 0;
+;  907			attackturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	DE,_attackturns
 	ADD	HL,DE
 	LD	(HL),0
-;  906		}
-;  907		else if (data_moves[move].type == 21) {
+;  908		}
+;  909		else if (data_moves[move].type == 21) {
 	JR	L_583
 L_421:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,21
 	JR	NZ,L_419
-;  908			if (player) {
+;  910			if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_415
-;  909				data_pokemon[party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
+;  911				data_pokemon[party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -7789,11 +7793,11 @@ L_421:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+16),A
-;  910			}
-;  911			else {
+;  912			}
+;  913			else {
 	JR	L_416
 L_415:
-;  912				data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[party[currentplayer].id].element1;
+;  914				data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[party[currentplayer].id].element1;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -7829,24 +7833,24 @@ L_415:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+16),A
-;  913			}
+;  915			}
 L_416:
-;  914			converted[player] = true;
+;  916			converted[player] = true;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_converted
 	ADD	HL,BC
 	LD	(HL),1
-;  915		}
-;  916		else if (data_moves[move].type == 22) {
+;  917		}
+;  918		else if (data_moves[move].type == 22) {
 	JR	L_583
 L_419:
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,22
 	JR	NZ,L_583
-;  917			takedamage(player, stats[player].health / 4);
+;  919			takedamage(player, stats[player].health / 4);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -7868,7 +7872,7 @@ L_419:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-;  918			substitutehealth[player] += stats[player].health / 4;
+;  920			substitutehealth[player] += stats[player].health / 4;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -7919,7 +7923,7 @@ L_419:
 	LD	HL,IY
 	LD	(HL),C
 	INC	HL
-;  919			sprintf(str, "%s created a substitute to take damage", username);
+;  921			sprintf(str, "%s created a substitute to take damage", username);
 	LD	IY,IX
 	LD	DE,-376
 	ADD	IY,DE
@@ -7934,7 +7938,7 @@ L_419:
 	POP	BC
 	POP	BC
 	POP	BC
-;  920			text_Display(str, true);
+;  922			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -7942,10 +7946,10 @@ L_419:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  921		}
+;  923		}
 L_583:
-;  922		/* Apply Stat or Status Effects */
-;  923		if (data_moves[move].type == 4 || (rand() % 100) < data_moves[move].statuschance) {
+;  924		/* Apply Stat or Status Effects */
+;  925		if (data_moves[move].type == 4 || (rand() % 100) < data_moves[move].statuschance) {
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -8008,7 +8012,7 @@ L_583:
 	SBC	HL,DE
 	JP	P,L_586
 L_582:
-;  924			if (data_moves[move].statustype == 30) {
+;  926			if (data_moves[move].statustype == 30) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-108)
 	LD	(IX+-39),BC
@@ -8016,7 +8020,7 @@ L_582:
 	LD	A,(IY+19)
 	CP	A,30
 	JR	NZ,L_452
-;  925				e = rand() % 3;
+;  927				e = rand() % 3;
 	CALL	_rand
 	LD	BC,3
 	CALL	__irems
@@ -8025,18 +8029,18 @@ L_582:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  926			}
-;  927			else {
+;  928			}
+;  929			else {
 	JR	L_471
 L_452:
-;  928				e = 3;
+;  930				e = 3;
 	LD	HL,_e
 	LD	(HL),3
 	INC	HL
 	LD	(HL),0
-;  929			}
+;  931			}
 L_471:
-;  930			if (data_moves[move].statustype < 7) {
+;  932			if (data_moves[move].statustype < 7) {
 	LD	BC,(IX+-39)
 	LEA	IY,IX+-128
 	LD	(IY+-123),BC
@@ -8046,7 +8050,7 @@ L_471:
 	LD	A,(IY+19)
 	CP	A,7
 	JR	NC,L_484
-;  931				if (mistturns[!player] || statmods[!player][data_moves[move].statustype] == 0) {
+;  933				if (mistturns[!player] || statmods[!player][data_moves[move].statustype] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_454
@@ -8100,7 +8104,7 @@ L_459:
 	OR	A,A
 	JR	NZ,L_469
 L_468:
-;  932					if (data_moves[move].type == 4) {
+;  934					if (data_moves[move].type == 4) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-123)
 	LD	(IX+-83),BC
@@ -8108,7 +8112,7 @@ L_468:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_484
-;  933						text_Display("It Failed", true);
+;  935						text_Display("It Failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__257
@@ -8116,12 +8120,12 @@ L_468:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  934					}
-;  935				}
-;  936				else {
+;  936					}
+;  937				}
+;  938				else {
 	JR	L_484
 L_469:
-;  937					statmods[!player][data_moves[move].statustype] --;
+;  939					statmods[!player][data_moves[move].statustype] --;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_464
@@ -8184,7 +8188,7 @@ L_465:
 	POP	BC
 	DEC	A
 	LD	(HL),A
-;  938					sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
+;  940					sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
 	LD	A,B
 	UEXT	HL
 	LD	L,A
@@ -8209,7 +8213,7 @@ L_465:
 	POP	BC
 	POP	BC
 	POP	BC
-;  939					text_Display(str, true);
+;  941					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8217,10 +8221,10 @@ L_465:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  940				}
-;  941			}
+;  942				}
+;  943			}
 L_484:
-;  942			if (data_moves[move].statustype == 7) {
+;  944			if (data_moves[move].statustype == 7) {
 	LD	BC,(IX+-83)
 	LD	(IX+-86),BC
 	LEA	IY,IX+-128
@@ -8229,7 +8233,7 @@ L_484:
 	LD	A,(IY+19)
 	CP	A,7
 	JR	NZ,L_498
-;  943				if (*currentStatusPointer[!player] == 0) {
+;  945				if (*currentStatusPointer[!player] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_473
@@ -8252,7 +8256,7 @@ L_474:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_482
-;  944					*currentStatusPointer[!player] = 1;
+;  946					*currentStatusPointer[!player] = 1;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_477
@@ -8271,7 +8275,7 @@ L_478:
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
 	ADD	HL,BC
-;  945					sprintf(str, "%s was poisoned", nonusername);
+;  947					sprintf(str, "%s was poisoned", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8287,7 +8291,7 @@ L_478:
 	POP	BC
 	POP	BC
 	POP	BC
-;  946					text_Display(str, true);
+;  948					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8295,8 +8299,8 @@ L_478:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  947				}
-;  948				else if (data_moves[move].type == 4) {
+;  949				}
+;  950				else if (data_moves[move].type == 4) {
 	JR	L_498
 L_482:
 	LD	BC,(IX+-86)
@@ -8306,7 +8310,7 @@ L_482:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_498
-;  949					text_Display("It failed", true);
+;  951					text_Display("It failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__266
@@ -8314,10 +8318,10 @@ L_482:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  950				}
-;  951			}
+;  952				}
+;  953			}
 L_498:
-;  952			if (data_moves[move].statustype == 8 || e == 0) {
+;  954			if (data_moves[move].statustype == 8 || e == 0) {
 	LEA	IY,IX+-128
 	LD	BC,(IY+-126)
 	LD	(IX+-89),BC
@@ -8332,7 +8336,7 @@ L_498:
 	CALL	__scmpzero
 	JR	NZ,L_512
 L_497:
-;  953				if (*currentStatusPointer[!player] == 0) {
+;  955				if (*currentStatusPointer[!player] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_487
@@ -8355,7 +8359,7 @@ L_488:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_496
-;  954					*currentStatusPointer[!player] = 2;
+;  956					*currentStatusPointer[!player] = 2;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_491
@@ -8374,7 +8378,7 @@ L_492:
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
 	ADD	HL,BC
-;  955					sprintf(str, "%s was burned", nonusername);
+;  957					sprintf(str, "%s was burned", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8390,7 +8394,7 @@ L_492:
 	POP	BC
 	POP	BC
 	POP	BC
-;  956					text_Display(str, true);
+;  958					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8398,8 +8402,8 @@ L_492:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  957				}
-;  958				else if (data_moves[move].type == 4) {
+;  959				}
+;  960				else if (data_moves[move].type == 4) {
 	JR	L_512
 L_496:
 	LD	HL,(IX+-89)
@@ -8409,7 +8413,7 @@ L_496:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_512
-;  959					text_Display("It failed", true);
+;  961					text_Display("It failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__274
@@ -8417,10 +8421,10 @@ L_496:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  960				}
-;  961			}
+;  962				}
+;  963			}
 L_512:
-;  962			if (data_moves[move].statustype == 9 || e == 1) {
+;  964			if (data_moves[move].statustype == 9 || e == 1) {
 	LD	BC,-260
 	CALL	__ildix
 	LD	(IX+-92),HL
@@ -8436,7 +8440,7 @@ L_512:
 	SBC.SIS	HL,BC
 	JR	NZ,L_525
 L_511:
-;  963				if (*currentStatusPointer[!player] == 0) {
+;  965				if (*currentStatusPointer[!player] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_501
@@ -8459,7 +8463,7 @@ L_502:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_510
-;  964					*currentStatusPointer[!player] = 3;
+;  966					*currentStatusPointer[!player] = 3;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_505
@@ -8478,7 +8482,7 @@ L_506:
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
 	ADD	HL,BC
-;  965					sprintf(str, "%s was paralysed", nonusername);
+;  967					sprintf(str, "%s was paralysed", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8494,7 +8498,7 @@ L_506:
 	POP	BC
 	POP	BC
 	POP	BC
-;  966					text_Display(str, true);
+;  968					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8502,8 +8506,8 @@ L_506:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  967				}
-;  968				else if (data_moves[move].type == 4) {
+;  969				}
+;  970				else if (data_moves[move].type == 4) {
 	JR	L_525
 L_510:
 	LD	HL,(IX+-92)
@@ -8513,7 +8517,7 @@ L_510:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_525
-;  969					text_Display("It failed", true);
+;  971					text_Display("It failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__282
@@ -8521,10 +8525,10 @@ L_510:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  970				}
-;  971			}
+;  972				}
+;  973			}
 L_525:
-;  972			if (data_moves[move].statustype == 10) {
+;  974			if (data_moves[move].statustype == 10) {
 	LD	BC,-266
 	CALL	__ildix
 	LD	(IX+-95),HL
@@ -8534,7 +8538,7 @@ L_525:
 	LD	A,(IY+19)
 	CP	A,10
 	JR	NZ,L_539
-;  973				if (*currentStatusPointer[!player] == 0) {
+;  975				if (*currentStatusPointer[!player] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_514
@@ -8557,7 +8561,7 @@ L_515:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_523
-;  974					*currentStatusPointer[!player] = 4;
+;  976					*currentStatusPointer[!player] = 4;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_518
@@ -8577,7 +8581,7 @@ L_519:
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
 	ADD	HL,BC
-;  975					sprintf(str, "%s fell asleep", nonusername);
+;  977					sprintf(str, "%s fell asleep", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8593,7 +8597,7 @@ L_519:
 	POP	BC
 	POP	BC
 	POP	BC
-;  976					text_Display(str, true);
+;  978					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8601,8 +8605,8 @@ L_519:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  977				}
-;  978				else if (data_moves[move].type == 4) {
+;  979				}
+;  980				else if (data_moves[move].type == 4) {
 	JR	L_539
 L_523:
 	LD	HL,(IX+-95)
@@ -8612,7 +8616,7 @@ L_523:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_539
-;  979					text_Display("It failed", true);
+;  981					text_Display("It failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__289
@@ -8620,10 +8624,10 @@ L_523:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  980				}
-;  981			}
+;  982				}
+;  983			}
 L_539:
-;  982			if (data_moves[move].statustype == 11 || e == 2) {
+;  984			if (data_moves[move].statustype == 11 || e == 2) {
 	LD	BC,-272
 	CALL	__ildix
 	LD	(IX+-98),HL
@@ -8639,7 +8643,7 @@ L_539:
 	SBC.SIS	HL,BC
 	JR	NZ,L_545
 L_538:
-;  983				if (*currentStatusPointer[!player] == 0) {
+;  985				if (*currentStatusPointer[!player] == 0) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_528
@@ -8663,7 +8667,7 @@ L_529:
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_537
-;  984					*currentStatusPointer[!player] = 5;
+;  986					*currentStatusPointer[!player] = 5;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_532
@@ -8683,7 +8687,7 @@ L_533:
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
 	ADD	HL,BC
-;  985					sprintf(str, "%s was frozen", nonusername);
+;  987					sprintf(str, "%s was frozen", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8699,7 +8703,7 @@ L_533:
 	POP	BC
 	POP	BC
 	POP	BC
-;  986					text_Display(str, true);
+;  988					text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8707,8 +8711,8 @@ L_533:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  987				}
-;  988				else if (data_moves[move].type == 4) {
+;  989				}
+;  990				else if (data_moves[move].type == 4) {
 	JR	L_545
 L_537:
 	LD	HL,(IX+-98)
@@ -8718,7 +8722,7 @@ L_537:
 	LD	A,(IY+15)
 	CP	A,4
 	JR	NZ,L_545
-;  989					text_Display("It failed", true);
+;  991					text_Display("It failed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__297
@@ -8726,11 +8730,11 @@ L_537:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  990				}
-;  991			}
+;  992				}
+;  993			}
 L_545:
-;  992	
-;  993			if (data_moves[move].statustype == 12) {
+;  994	
+;  995			if (data_moves[move].statustype == 12) {
 	LD	BC,-278
 	CALL	__ildix
 	LD	(IX+-16),HL
@@ -8738,7 +8742,7 @@ L_545:
 	LD	A,(IY+19)
 	CP	A,12
 	JR	NZ,L_551
-;  994				confusedturns[!player] = (rand() % 4) + 1;
+;  996				confusedturns[!player] = (rand() % 4) + 1;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_541
@@ -8763,7 +8767,7 @@ L_542:
 	LD	HL,(IY)
 	LD	BC,_confusedturns
 	ADD	HL,BC
-;  995				sprintf(str, "%s was confused", nonusername);
+;  997				sprintf(str, "%s was confused", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8778,7 +8782,7 @@ L_542:
 	POP	BC
 	POP	BC
 	POP	BC
-;  996				text_Display(str, true);
+;  998				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8786,14 +8790,14 @@ L_542:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  997			}
+;  999			}
 L_551:
-;  998			if (data_moves[move].statustype == 13) {
+; 1000			if (data_moves[move].statustype == 13) {
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
 	CP	A,13
 	JR	NZ,L_557
-;  999				leech[!player] = true;
+; 1001				leech[!player] = true;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_547
@@ -8813,7 +8817,7 @@ L_548:
 	LD	HL,(HL)
 	LD	BC,_leech
 	ADD	HL,BC
-; 1000				sprintf(str, "%s was leeched", nonusername);
+; 1002				sprintf(str, "%s was leeched", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8828,7 +8832,7 @@ L_548:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1001				text_Display(str, true);
+; 1003				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8836,14 +8840,14 @@ L_548:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1002			}
+; 1004			}
 L_557:
-; 1003			if (data_moves[move].statustype == 14) {
+; 1005			if (data_moves[move].statustype == 14) {
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
 	CP	A,14
 	JR	NZ,L_559
-; 1004				trapturns[!player] = (rand() % 2) + 4;
+; 1006				trapturns[!player] = (rand() % 2) + 4;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_553
@@ -8869,7 +8873,7 @@ L_554:
 	LD	HL,(IY)
 	LD	BC,_trapturns
 	ADD	HL,BC
-; 1005				sprintf(str, "%s was trapped", nonusername);
+; 1007				sprintf(str, "%s was trapped", nonusername);
 	LD	IY,IX
 	LD	BC,-396
 	ADD	IY,BC
@@ -8884,7 +8888,7 @@ L_554:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1006				text_Display(str, true);
+; 1008				text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -8892,51 +8896,51 @@ L_554:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1007			}
+; 1009			}
 L_559:
-; 1008			if (data_moves[move].statustype == 15) {
+; 1010			if (data_moves[move].statustype == 15) {
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
 	CP	A,15
 	JR	NZ,L_561
-; 1009				reflectturns[player] = 5;
+; 1011				reflectturns[player] = 5;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_reflectturns
 	ADD	HL,BC
 	LD	(HL),5
-; 1010			}
+; 1012			}
 L_561:
-; 1011			if (data_moves[move].statustype == 16) {
+; 1013			if (data_moves[move].statustype == 16) {
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
 	CP	A,16
 	JR	NZ,L_563
-; 1012				lightscreenturns[player] = 5;
+; 1014				lightscreenturns[player] = 5;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_lightscreenturns
 	ADD	HL,BC
 	LD	(HL),5
-; 1013			}
+; 1015			}
 L_563:
-; 1014			if (data_moves[move].statustype == 17) {
+; 1016			if (data_moves[move].statustype == 17) {
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
 	CP	A,17
 	JR	NZ,L_570
-; 1015				mistturns[player] = 5;
+; 1017				mistturns[player] = 5;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_mistturns
 	ADD	HL,BC
 	LD	(HL),5
-; 1016			}
+; 1018			}
 L_570:
-; 1017			if (data_moves[move].statustype == 18 || data_moves[move].statustype == 38) {
+; 1019			if (data_moves[move].statustype == 18 || data_moves[move].statustype == 38) {
 	LD	HL,(IX+-16)
 	LD	BC,-287
 	CALL	__istix
@@ -8951,7 +8955,7 @@ L_570:
 	CP	A,38
 	JR	NZ,L_572
 L_569:
-; 1018				flinch[!player] = true;
+; 1020				flinch[!player] = true;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_566
@@ -8972,9 +8976,9 @@ L_567:
 	LD	BC,_flinch
 	ADD	HL,BC
 	LD	(HL),1
-; 1019			}
+; 1021			}
 L_572:
-; 1020			if (data_moves[move].statustype == 27) {
+; 1022			if (data_moves[move].statustype == 27) {
 	LD	BC,-287
 	CALL	__ildix
 	LD	(IX+-42),HL
@@ -8982,21 +8986,21 @@ L_572:
 	LD	A,(IY+19)
 	CP	A,27
 	JR	NZ,L_576
-; 1021				highcritratio[player] = true;
+; 1023				highcritratio[player] = true;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_highcritratio
 	ADD	HL,BC
 	LD	(HL),1
-; 1022			}
+; 1024			}
 L_576:
-; 1023			if (data_moves[move].statustype == 28) {
+; 1025			if (data_moves[move].statustype == 28) {
 	LD	IY,(IX+-42)
 	LD	A,(IY+19)
 	CP	A,28
 	JR	NZ,L_578
-; 1024				statmods[player][0]++;
+; 1026				statmods[player][0]++;
 	LD	BC,-356
 	CALL	__ildix
 	LD	BC,_statmods
@@ -9009,7 +9013,7 @@ L_576:
 	LD	BC,-468
 	CALL	__ildix
 	INC	A
-; 1025				statmods[player][1]++;
+; 1027				statmods[player][1]++;
 	LD	IY,-468
 	LD	BC,IX
 	ADD	IY,BC
@@ -9027,23 +9031,23 @@ L_576:
 	LD	A,(HL)
 	INC	A
 	LD	(IY+1),A
-; 1026			}
+; 1028			}
 L_578:
-; 1027			if (data_moves[move].statustype == 29) {
+; 1029			if (data_moves[move].statustype == 29) {
 	LD	IY,(IX+-42)
 	LD	A,(IY+19)
 	CP	A,29
 	JR	NZ,L_581
-; 1028				rage[player] = true;
+; 1030				rage[player] = true;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_rage
 	ADD	HL,BC
 	LD	(HL),1
-; 1029			}
+; 1031			}
 L_581:
-; 1030			if (data_moves[move].statustype == 35 && player) {
+; 1032			if (data_moves[move].statustype == 35 && player) {
 	LD	BC,(IX+-42)
 	LEA	IY,IX+-128
 	LD	(IY+-114),BC
@@ -9054,7 +9058,7 @@ L_581:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_586
-; 1031				payday += party[currentplayer].level*2;
+; 1033				payday += party[currentplayer].level*2;
 	LD	A,(_currentplayer)
 	LD	DE,(_payday)
 	UEXT	HL
@@ -9074,13 +9078,13 @@ L_581:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-; 1032			}
-; 1033		}
+; 1034			}
+; 1035		}
 L_586:
-; 1034	
-; 1035		
 ; 1036	
-; 1037		if (attackturns[player] == 1 && data_moves[move].statustype == 32) {
+; 1037		
+; 1038	
+; 1039		if (attackturns[player] == 1 && data_moves[move].statustype == 32) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9102,11 +9106,11 @@ L_586:
 	LD	A,(IY+19)
 	CP	A,32
 	JR	NZ,L_587
-; 1038			attackturns[player] = 0;
+; 1040			attackturns[player] = 0;
 	LD	BC,-293
 	CALL	__ildix
 	LD	(HL),0
-; 1039			confusedturns[player] = (rand() % 4) + 1;
+; 1041			confusedturns[player] = (rand() % 4) + 1;
 	CALL	_rand
 	LD	BC,4
 	CALL	__irems
@@ -9117,7 +9121,7 @@ L_586:
 	LD	L,A
 	LD	DE,_confusedturns
 	ADD	HL,DE
-; 1040			sprintf(str, "%s became confused", username);
+; 1042			sprintf(str, "%s became confused", username);
 	LD	IY,IX
 	LD	DE,-376
 	ADD	IY,DE
@@ -9132,7 +9136,7 @@ L_586:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1041			text_Display(str, true);
+; 1043			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -9140,8 +9144,8 @@ L_586:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1042		}
-; 1043	}
+; 1044		}
+; 1045	}
 L_587:
 	LD	SP,IX
 	POP	IX
@@ -9448,38 +9452,38 @@ L__320:
 	DB	"%s became confused"
 	DB	0
 	SEGMENT CODE
-; 1044	
-; 1045	void applystatus(bool player) {
+; 1046	
+; 1047	void applystatus(bool player) {
 _applystatus:
 	LD	HL,-41
 	CALL	__frameset
-; 1046		char name[20];
-; 1047		if (player) {
+; 1048		char name[20];
+; 1049		if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_589
-; 1048			strcpy(name, playername);
+; 1050			strcpy(name, playername);
 	LD	BC,_playername
 	PUSH	BC
 	PEA	IX+-32
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-; 1049		}
-; 1050		else {
+; 1051		}
+; 1052		else {
 	JR	L_591
 L_589:
-; 1051			strcpy(name, enemyname);
+; 1053			strcpy(name, enemyname);
 	LD	BC,_enemyname
 	PUSH	BC
 	PEA	IX+-32
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-; 1052		}
+; 1054		}
 L_591:
-; 1053		/* Poison */
-; 1054		if (*currentStatusPointer[player] == 1) {
+; 1055		/* Poison */
+; 1056		if (*currentStatusPointer[player] == 1) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9497,7 +9501,7 @@ L_591:
 	LD	BC,1
 	SBC	HL,BC
 	JR	NZ,L_593
-; 1055			sprintf(str, "%s was hurt by its poison", name);
+; 1057			sprintf(str, "%s was hurt by its poison", name);
 	PEA	IX+-32
 	LD	BC,L__324
 	PUSH	BC
@@ -9507,7 +9511,7 @@ L_591:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1056			text_Display(str, true);
+; 1058			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -9515,7 +9519,7 @@ L_591:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1057			takedamage(player, stats[player].health / 12);
+; 1059			takedamage(player, stats[player].health / 12);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9535,10 +9539,10 @@ L_591:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-; 1058		}
+; 1060		}
 L_593:
-; 1059		/* Burn */
-; 1060		if (*currentStatusPointer[player] == 2) {
+; 1061		/* Burn */
+; 1062		if (*currentStatusPointer[player] == 2) {
 	LD	HL,(IX+-9)
 	LD	HL,(HL)
 	LD	A,(HL)
@@ -9548,7 +9552,7 @@ L_593:
 	LD	BC,2
 	SBC	HL,BC
 	JR	NZ,L_599
-; 1061			sprintf(str, "%s was hurt by its burn", name);
+; 1063			sprintf(str, "%s was hurt by its burn", name);
 	PEA	IX+-32
 	LD	BC,L__326
 	PUSH	BC
@@ -9558,7 +9562,7 @@ L_593:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1062			text_Display(str, true);
+; 1064			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -9566,7 +9570,7 @@ L_593:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1063			takedamage(player, stats[player].health / 12);
+; 1065			takedamage(player, stats[player].health / 12);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9586,10 +9590,10 @@ L_593:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-; 1064		}
+; 1066		}
 L_599:
-; 1065		/* Leech */
-; 1066		if (leech[player]) {
+; 1067		/* Leech */
+; 1068		if (leech[player]) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9598,7 +9602,7 @@ L_599:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_602
-; 1067			sprintf(str, "%s's health was stolen by leech seed", name);
+; 1069			sprintf(str, "%s's health was stolen by leech seed", name);
 	PEA	IX+-32
 	LD	BC,L__328
 	PUSH	BC
@@ -9608,7 +9612,7 @@ L_599:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1068			text_Display(str, true);
+; 1070			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -9616,7 +9620,7 @@ L_599:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1069			takedamage(player, stats[player].health / 8);
+; 1071			takedamage(player, stats[player].health / 8);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9636,7 +9640,7 @@ L_599:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-; 1070			heal(!player, stats[player].health / 8);
+; 1072			heal(!player, stats[player].health / 8);
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_595
@@ -9666,10 +9670,10 @@ L_596:
 	CALL	_heal
 	POP	BC
 	POP	BC
-; 1071		}
+; 1073		}
 L_602:
-; 1072		/* Trap */
-; 1073		if (trapturns[player] > 0) {
+; 1074		/* Trap */
+; 1075		if (trapturns[player] > 0) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9685,7 +9689,7 @@ L_602:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_604
-; 1074			sprintf(str, "%s's was hurt by the trap", name);
+; 1076			sprintf(str, "%s's was hurt by the trap", name);
 	PEA	IX+-32
 	LD	BC,L__331
 	PUSH	BC
@@ -9695,7 +9699,7 @@ L_602:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1075			text_Display(str, true);
+; 1077			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -9703,7 +9707,7 @@ L_602:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1076			takedamage(player, stats[player].health / 16);
+; 1078			takedamage(player, stats[player].health / 16);
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9723,16 +9727,16 @@ L_602:
 	CALL	_takedamage
 	POP	BC
 	POP	BC
-; 1077			trapturns[player]--;
+; 1079			trapturns[player]--;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-3)
 	LD	(HL),A
-; 1078		}
+; 1080		}
 L_604:
-; 1079	
-; 1080		reflectturns[player]--;
+; 1081	
+; 1082		reflectturns[player]--;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9743,7 +9747,7 @@ L_604:
 	DEC	A
 	LD	HL,(IX+-41)
 	LD	(HL),A
-; 1081		lightscreenturns[player]--;
+; 1083		lightscreenturns[player]--;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9754,7 +9758,7 @@ L_604:
 	DEC	A
 	LD	HL,(IX+-38)
 	LD	(HL),A
-; 1082		mistturns[player]--;
+; 1084		mistturns[player]--;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9765,7 +9769,7 @@ L_604:
 	DEC	A
 	LD	HL,(IX+-35)
 	LD	(HL),A
-; 1083		if (disabledturns[player] == 1) {
+; 1085		if (disabledturns[player] == 1) {
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9779,22 +9783,22 @@ L_604:
 	LD	BC,1
 	SBC	HL,BC
 	JR	NZ,L_609
-; 1084			disabledmove[player] = 0;
+; 1086			disabledmove[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_disabledmove
 	ADD	HL,BC
 	LD	(HL),0
-; 1085		}
+; 1087		}
 L_609:
-; 1086		disabledturns[player]--;
+; 1088		disabledturns[player]--;
 	LD	HL,(IX+-6)
 	LD	A,(HL)
 	DEC	A
 	LD	HL,(IX+-6)
 	LD	(HL),A
-; 1087	}
+; 1089	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -9845,22 +9849,22 @@ L__331:
 	DB	"%s's was hurt by the trap"
 	DB	0
 	SEGMENT CODE
-; 1088	/* When a new pokemon is sent out, reset everything 
-; 1089	   This also decompresses the new pokemon's sprite
-; 1090	 */
-; 1091	void resetstatus(bool player) {
+; 1090	/* When a new pokemon is sent out, reset everything 
+; 1091	   This also decompresses the new pokemon's sprite
+; 1092	 */
+; 1093	void resetstatus(bool player) {
 _resetstatus:
 	LD	HL,-44
 	CALL	__frameset
-; 1092		i = 0;
+; 1094		i = 0;
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-; 1093		while (i < sizeof(statmods[player])) {
+; 1095		while (i < sizeof(statmods[player])) {
 	JR	L_612
 L_613:
-; 1094			statmods[player][i] = 6;
+; 1096			statmods[player][i] = 6;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -9873,14 +9877,14 @@ L_613:
 	CALL	__stoiu
 	ADD	HL,DE
 	LD	(HL),6
-; 1095			i++;
+; 1097			i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-; 1096		}
+; 1098		}
 L_612:
 	LD	BC,(_i)
 	CALL	__stoiu
@@ -9888,21 +9892,21 @@ L_612:
 	LD	BC,7
 	SBC	HL,BC
 	JR	C,L_613
-; 1097		confusedturns[player] = 0;
+; 1099		confusedturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_confusedturns
 	ADD	HL,BC
 	LD	(HL),0
-; 1098		leech[player] = false;
+; 1100		leech[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_leech
 	ADD	HL,BC
 	LD	(HL),0
-; 1099		leech[!player] = false;
+; 1101		leech[!player] = false;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_616
@@ -9917,14 +9921,14 @@ L_617:
 	LD	HL,(IX+-11)
 	ADD	HL,BC
 	LD	(HL),0
-; 1100		trapturns[player] = 0;
+; 1102		trapturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_trapturns
 	ADD	HL,BC
 	LD	(HL),0
-; 1101		reflectturns[!player] = 0;
+; 1103		reflectturns[!player] = 0;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_620
@@ -9939,7 +9943,7 @@ L_621:
 	LD	HL,(IX+-14)
 	ADD	HL,BC
 	LD	(HL),0
-; 1102		lightscreenturns[!player] = 0;
+; 1104		lightscreenturns[!player] = 0;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_624
@@ -9954,21 +9958,21 @@ L_625:
 	LD	HL,(IX+-5)
 	ADD	HL,BC
 	LD	(HL),0
-; 1103		mistturns[player] = 0;
+; 1105		mistturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_mistturns
 	ADD	HL,BC
 	LD	(HL),0
-; 1104		flinch[player] = false;
+; 1106		flinch[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_flinch
 	ADD	HL,BC
 	LD	(HL),0
-; 1105		flinch[!player] = false;
+; 1107		flinch[!player] = false;
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_628
@@ -9983,77 +9987,77 @@ L_629:
 	LD	HL,(IX+-8)
 	ADD	HL,BC
 	LD	(HL),0
-; 1106		highcritratio[player] = false;
+; 1108		highcritratio[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_highcritratio
 	ADD	HL,BC
 	LD	(HL),0
-; 1107		rage[player] = false;
+; 1109		rage[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_rage
 	ADD	HL,BC
 	LD	(HL),0
-; 1108		disabledmove[player] = 0;
+; 1110		disabledmove[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_disabledmove
 	ADD	HL,BC
 	LD	(HL),0
-; 1109		disabledturns[player] = 0;
+; 1111		disabledturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_disabledturns
 	ADD	HL,BC
 	LD	(HL),0
-; 1110		lastmove[player] = 0;
+; 1112		lastmove[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_lastmove
 	ADD	HL,BC
 	LD	(HL),0
-; 1111		attackturns[player] = 0;
+; 1113		attackturns[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_attackturns
 	ADD	HL,BC
 	LD	(HL),0
-; 1112		air[player] = false;
+; 1114		air[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_air
 	ADD	HL,BC
 	LD	(HL),0
-; 1113		chosenmove[player] = 0;
+; 1115		chosenmove[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_chosenmove
 	ADD	HL,BC
 	LD	(HL),0
-; 1114		transformed[player] = false;
+; 1116		transformed[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_transformed
 	ADD	HL,BC
 	LD	(HL),0
-; 1115		converted[player] = false;
+; 1117		converted[player] = false;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_converted
 	ADD	HL,BC
 	LD	(HL),0
-; 1116		substitutehealth[player] = 0;
+; 1118		substitutehealth[player] = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -10063,13 +10067,13 @@ L_629:
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-; 1117	
-; 1118		if (player) {
+; 1119	
+; 1120		if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_638
-; 1119			uint8_t pokemonID;
-; 1120			sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
+; 1121			uint8_t pokemonID;
+; 1122			sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10095,7 +10099,7 @@ L_629:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1121			stats[1] = stats_CalculateStats(party[currentplayer]);
+; 1123			stats[1] = stats_CalculateStats(party[currentplayer]);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10120,8 +10124,8 @@ L_629:
 	LD	DE,_stats+12
 	LD	BC,12
 	LDIR	
-; 1122	
-; 1123			pokemonID = party[currentplayer].id;
+; 1124	
+; 1125			pokemonID = party[currentplayer].id;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10132,10 +10136,10 @@ L_629:
 	LD	IY,HL
 	LD	A,(IY+0)
 	LD	(IX+-1),A
-; 1124			if (pokemonID < 80) {
+; 1126			if (pokemonID < 80) {
 	CP	A,80
 	JR	NC,L_632
-; 1125				zx7_Decompress(playerSprite, PKMNSD2[pokemonID]);
+; 1127				zx7_Decompress(playerSprite, PKMNSD2[pokemonID]);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -10151,11 +10155,11 @@ L_629:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-; 1126			}
-; 1127			else {
+; 1128			}
+; 1129			else {
 	JR	L_633
 L_632:
-; 1128				zx7_Decompress(playerSprite, PKMNSD3[pokemonID - 80]);
+; 1130				zx7_Decompress(playerSprite, PKMNSD3[pokemonID - 80]);
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -10173,9 +10177,9 @@ L_632:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-; 1129			}
+; 1131			}
 L_633:
-; 1130			currentStatusPointer[1] = &party[currentplayer].currentstatus;
+; 1132			currentStatusPointer[1] = &party[currentplayer].currentstatus;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10190,12 +10194,12 @@ L_633:
 	LEA	BC,IY+15
 	LD	HL,(IX+-44)	; unspill
 	LD	(HL),BC
-; 1131		}
-; 1132		else {
+; 1133		}
+; 1134		else {
 	JR	L_639
 L_638:
-; 1133			uint8_t pokemonID;
-; 1134			sprintf(enemyname, "Enemy %s", data_pokemon[enemyparty[currentenemy].id].name);
+; 1135			uint8_t pokemonID;
+; 1136			sprintf(enemyname, "Enemy %s", data_pokemon[enemyparty[currentenemy].id].name);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10221,7 +10225,7 @@ L_638:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1135			stats[0] = stats_CalculateStats(enemyparty[currentenemy]);
+; 1137			stats[0] = stats_CalculateStats(enemyparty[currentenemy]);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10246,8 +10250,8 @@ L_638:
 	LD	BC,12
 	LDIR	
 	LD	SP,IY
-; 1136	
-; 1137			pokemonID = enemyparty[currentenemy].id;
+; 1138	
+; 1139			pokemonID = enemyparty[currentenemy].id;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10258,11 +10262,11 @@ L_638:
 	LD	IY,HL
 	LD	A,(IY+0)
 	LD	(IX+-2),A
-; 1138			
-; 1139			if (pokemonID < 80) {
+; 1140			
+; 1141			if (pokemonID < 80) {
 	CP	A,80
 	JR	NC,L_635
-; 1140				zx7_Decompress(enemySprite, PKMNSD0[pokemonID]);
+; 1142				zx7_Decompress(enemySprite, PKMNSD0[pokemonID]);
 	LD	A,(IX+-2)
 	UEXT	HL
 	LD	L,A
@@ -10278,11 +10282,11 @@ L_638:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-; 1141			}
-; 1142			else {
+; 1143			}
+; 1144			else {
 	JR	L_636
 L_635:
-; 1143				zx7_Decompress(enemySprite, PKMNSD1[pokemonID - 80]);
+; 1145				zx7_Decompress(enemySprite, PKMNSD1[pokemonID - 80]);
 	LD	A,(IX+-2)
 	UEXT	HL
 	LD	L,A
@@ -10300,9 +10304,9 @@ L_635:
 	CALL	_zx7_Decompress
 	POP	BC
 	POP	BC
-; 1144			}
+; 1146			}
 L_636:
-; 1145			currentStatusPointer[0] = &enemyparty[currentenemy].currentstatus;
+; 1147			currentStatusPointer[0] = &enemyparty[currentenemy].currentstatus;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10313,8 +10317,8 @@ L_636:
 	LD	IY,HL
 	LEA	BC,IY+15
 	LD	(_currentStatusPointer),BC
-; 1146		}
-; 1147	}
+; 1148		}
+; 1149	}
 L_639:
 	LD	SP,IX
 	POP	IX
@@ -10323,14 +10327,14 @@ L_639:
 
 ;**************************** _resetstatus ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD1                            IMPORT    219   variable
+;_PKMNSD1                            IMPORT    216   variable
 ;_enemySprite                        STATIC      3   variable
 ;_PKMNSD0                            IMPORT    240   variable
 ;_enemyname                          STATIC     20   variable
 ;_currentenemy                       STATIC      1   variable
 ;_enemyparty                         STATIC    204   variable
 ;_currentStatusPointer               STATIC      6   variable
-;_PKMNSD3                            IMPORT    219   variable
+;_PKMNSD3                            IMPORT    216   variable
 ;_playerSprite                       STATIC      3   variable
 ;_PKMNSD2                            IMPORT    240   variable
 ;_zx7_Decompress                     IMPORT  -----   function
@@ -10382,12 +10386,12 @@ L__342:
 	DB	"Enemy %s"
 	DB	0
 	SEGMENT CODE
-; 1148	
-; 1149	void takedamage(bool player, int amount) {
+; 1150	
+; 1151	void takedamage(bool player, int amount) {
 _takedamage:
 	LD	HL,-30
 	CALL	__frameset
-; 1150		bidedamage[player] += amount;
+; 1152		bidedamage[player] += amount;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -10404,7 +10408,7 @@ _takedamage:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-; 1151		if (substitutehealth[player] > 0) {
+; 1153		if (substitutehealth[player] > 0) {
 	LD	HL,(IX+-6)
 	LD	BC,_substitutehealth
 	ADD	HL,BC
@@ -10416,7 +10420,7 @@ _takedamage:
 	OR	A,A
 	SBC	HL,BC
 	JP	P,L_649
-; 1152			text_Display("The substitute blocked the damage", true);
+; 1154			text_Display("The substitute blocked the damage", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__346
@@ -10424,7 +10428,7 @@ _takedamage:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1153			if (substitutehealth[player] <= amount) {
+; 1155			if (substitutehealth[player] <= amount) {
 	LD	BC,(IX+-6)
 	LD	HL,_substitutehealth
 	ADD	HL,BC
@@ -10437,9 +10441,9 @@ _takedamage:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_641
-; 1154				substitutehealth[player] = 0;
+; 1156				substitutehealth[player] = 0;
 	LD	HL,(IX+-18)
-; 1155				text_Display("The substitute was destroyed", true);
+; 1157				text_Display("The substitute was destroyed", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__348
@@ -10450,11 +10454,11 @@ _takedamage:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1156			}
-; 1157			else {
+; 1158			}
+; 1159			else {
 	JR	L_650
 L_641:
-; 1158				substitutehealth[player] -= amount;
+; 1160				substitutehealth[player] -= amount;
 	LD	BC,(IX+-6)
 	LD	HL,_substitutehealth
 	ADD	HL,BC
@@ -10468,16 +10472,16 @@ L_641:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-; 1159			}
-; 1160		}
-; 1161		else {
+; 1161			}
+; 1162		}
+; 1163		else {
 	JR	L_650
 L_649:
-; 1162			if (player) {
+; 1164			if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_647
-; 1163				if (party[currentplayer].currenthealth <= amount) {
+; 1165				if (party[currentplayer].currenthealth <= amount) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10495,15 +10499,15 @@ L_649:
 	OR	A,A
 	SBC	HL,BC
 	JP	M,L_643
-; 1164					party[currentplayer].currenthealth = 0;
+; 1166					party[currentplayer].currenthealth = 0;
 	LD	IY,(IX+-15)
 	LD	(IY+13),0
 	LD	(IY+14),0
-; 1165				}
-; 1166				else {
+; 1167				}
+; 1168				else {
 	JR	L_650
 L_643:
-; 1167					party[currentplayer].currenthealth -= amount;
+; 1169					party[currentplayer].currenthealth -= amount;
 	LD	BC,_party
 	LD	HL,(IX+-9)
 	ADD	HL,BC
@@ -10516,12 +10520,12 @@ L_643:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1168				}
-; 1169			}
-; 1170			else {
+; 1170				}
+; 1171			}
+; 1172			else {
 	JR	L_650
 L_647:
-; 1171				if (enemyparty[currentenemy].currenthealth <= amount) {
+; 1173				if (enemyparty[currentenemy].currenthealth <= amount) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10540,15 +10544,15 @@ L_647:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_645
-; 1172					enemyparty[currentenemy].currenthealth = 0;
+; 1174					enemyparty[currentenemy].currenthealth = 0;
 	LD	IY,(IX+-21)
 	LD	(IY+13),0
 	LD	(IY+14),0
-; 1173				}
-; 1174				else {
+; 1175				}
+; 1176				else {
 	JR	L_650
 L_645:
-; 1175					enemyparty[currentenemy].currenthealth -= amount;
+; 1177					enemyparty[currentenemy].currenthealth -= amount;
 	LD	BC,_enemyparty
 	LD	HL,(IX+-12)
 	ADD	HL,BC
@@ -10561,13 +10565,13 @@ L_645:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1176				}
-; 1177			}
-; 1178		}
+; 1178				}
+; 1179			}
+; 1180		}
 L_650:
-; 1179		redrawcharacters();
+; 1181		redrawcharacters();
 	CALL	_redrawcharacters
-; 1180	}
+; 1182	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -10605,15 +10609,15 @@ L__348:
 	DB	"The substitute was destroyed"
 	DB	0
 	SEGMENT CODE
-; 1181	void heal(bool player, int amount) {
+; 1183	void heal(bool player, int amount) {
 _heal:
 	LD	HL,-12
 	CALL	__frameset
-; 1182		if (player) {
+; 1184		if (player) {
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_655
-; 1183			party[currentplayer].currenthealth += amount;
+; 1185			party[currentplayer].currenthealth += amount;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10630,7 +10634,7 @@ _heal:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1184			if (party[currentplayer].currenthealth >= stats[1].health) {
+; 1186			if (party[currentplayer].currenthealth >= stats[1].health) {
 	LD	IY,_stats
 	LD	BC,(IY+12)
 	LD	IY,(IX+-9)
@@ -10638,7 +10642,7 @@ _heal:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_656
-; 1185				party[currentplayer].currenthealth = stats[1].health;
+; 1187				party[currentplayer].currenthealth = stats[1].health;
 	LD	IY,_stats
 	LD	BC,_party
 	LD	HL,(IX+-3)
@@ -10647,12 +10651,12 @@ _heal:
 	LD	IY,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1186			}
-; 1187		}
-; 1188		else {
+; 1188			}
+; 1189		}
+; 1190		else {
 	JR	L_656
 L_655:
-; 1189			enemyparty[currentenemy].currenthealth += amount;
+; 1191			enemyparty[currentenemy].currenthealth += amount;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10669,13 +10673,13 @@ L_655:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1190			if (enemyparty[currentenemy].currenthealth >= stats[0].health) {
+; 1192			if (enemyparty[currentenemy].currenthealth >= stats[0].health) {
 	LD	BC,(_stats)
 	LD	HL,(IY+13)
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_656
-; 1191				enemyparty[currentenemy].currenthealth = stats[0].health;
+; 1193				enemyparty[currentenemy].currenthealth = stats[0].health;
 	LD	HL,(IX+-6)
 	LD	BC,(_stats)
 	LD	DE,_enemyparty
@@ -10683,12 +10687,12 @@ L_655:
 	LD	IY,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1192			}
-; 1193		}
+; 1194			}
+; 1195		}
 L_656:
-; 1194		redrawcharacters();
+; 1196		redrawcharacters();
 	CALL	_redrawcharacters
-; 1195	}
+; 1197	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -10712,14 +10716,14 @@ L_656:
 ;       Spill Code: -3 (instruction)
 
 
-; 1196	
-; 1197	
 ; 1198	
-; 1199	void addxp(void) {
+; 1199	
+; 1200	
+; 1201	void addxp(void) {
 _addxp:
 	LD	HL,-68
 	CALL	__frameset
-; 1200		uint16_t xpgain = (enemyparty[currentenemy].level * data_pokemon[enemyparty[currentenemy].id].xpdrop) / 7;
+; 1202		uint16_t xpgain = (enemyparty[currentenemy].level * data_pokemon[enemyparty[currentenemy].id].xpdrop) / 7;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -10751,7 +10755,7 @@ _addxp:
 	CALL	__idivs
 	LD	(IX+-14),L
 	LD	(IX+-13),H
-; 1201		party[currentplayer].xp += xpgain;
+; 1203		party[currentplayer].xp += xpgain;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10766,10 +10770,10 @@ _addxp:
 	LD	BC,(IY+10)
 	ADD	HL,BC
 	LD	(IY+10),HL
-; 1202		while ((party[currentplayer].level < 100) && (party[currentplayer].xp >= xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1])) {
+; 1204		while ((party[currentplayer].level < 100) && (party[currentplayer].xp >= xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1])) {
 	JR	L_674
 L_675:
-; 1203			party[currentplayer].level++;
+; 1205			party[currentplayer].level++;
 	LD	BC,_party
 	LD	HL,(IX+-3)
 	ADD	HL,BC
@@ -10778,7 +10782,7 @@ L_675:
 	LD	A,(IY+9)
 	INC	A
 	LD	(IY+9),A
-; 1204			sprintf(str, "%s leveled up", data_pokemon[party[currentplayer].id].name);
+; 1206			sprintf(str, "%s leveled up", data_pokemon[party[currentplayer].id].name);
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10796,7 +10800,7 @@ L_675:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1205			text_Display(str, false);
+; 1207			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -10804,15 +10808,15 @@ L_675:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1206			for (i = 0; i < 10; i++)
+; 1208			for (i = 0; i < 10; i++)
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
 	JR	L_670
 L_668:
-; 1207			{
-; 1208				if (data_pokemon[party[currentplayer].id].movelevels[i] == party[currentplayer].level) {
+; 1209			{
+; 1210				if (data_pokemon[party[currentplayer].id].movelevels[i] == party[currentplayer].level) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10840,7 +10844,7 @@ L_668:
 	LD	IY,(IX+-29)
 	CP	A,(IY+9)
 	JR	NZ,L_667
-; 1209					sprintf(str, "%s wants to learn %s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+; 1211					sprintf(str, "%s wants to learn %s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -10887,7 +10891,7 @@ L_668:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1210					text_Display(str, false);
+; 1212					text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -10895,7 +10899,7 @@ L_668:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1211					sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+; 1213					sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -10934,7 +10938,7 @@ L_668:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1212					text_Display(str, false);
+; 1214					text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -10942,7 +10946,7 @@ L_668:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1213					switch (text_AskQuestion4(data_moves[party[currentplayer].moves[0]].name, data_moves[party[currentplayer].moves[1]].name, data_moves[party[currentplayer].moves[2]].name, data_moves[party[currentplayer].moves[3]].name, false))
+; 1215					switch (text_AskQuestion4(data_moves[party[currentplayer].moves[0]].name, data_moves[party[currentplayer].moves[1]].name, data_moves[party[currentplayer].moves[2]].name, data_moves[party[currentplayer].moves[3]].name, false))
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11019,10 +11023,10 @@ L__361:
 
 	DW24	L_667	
 
-; 1214					{
-; 1215					case 1:
+; 1216					{
+; 1217					case 1:
 L_661:
-; 1216						party[currentplayer].moves[0] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1218						party[currentplayer].moves[0] = data_pokemon[party[currentplayer].id].moveids[i];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11048,11 +11052,11 @@ L_661:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+1),A
-; 1217						break;
+; 1219						break;
 	JR	L_667
-; 1218					case 2:
+; 1220					case 2:
 L_662:
-; 1219						party[currentplayer].moves[1] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1221						party[currentplayer].moves[1] = data_pokemon[party[currentplayer].id].moveids[i];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11078,11 +11082,11 @@ L_662:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+2),A
-; 1220						break;
+; 1222						break;
 	JR	L_667
-; 1221					case 3:
+; 1223					case 3:
 L_663:
-; 1222						party[currentplayer].moves[2] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1224						party[currentplayer].moves[2] = data_pokemon[party[currentplayer].id].moveids[i];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11108,11 +11112,11 @@ L_663:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+3),A
-; 1223						break;
+; 1225						break;
 	JR	L_667
-; 1224					case 4:
+; 1226					case 4:
 L_664:
-; 1225						party[currentplayer].moves[3] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1227						party[currentplayer].moves[3] = data_pokemon[party[currentplayer].id].moveids[i];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11138,11 +11142,11 @@ L_664:
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+4),A
-; 1226						break;
-; 1227					}
-; 1228				}
+; 1228						break;
+; 1229					}
+; 1230				}
 L_667:
-; 1229				i++;
+; 1231				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
@@ -11155,14 +11159,14 @@ L_667:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-; 1230			}
+; 1232			}
 L_670:
 	LD.LIS	BC,10
 	LD	HL,(_i)
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_668
-; 1231			if (party[currentplayer].level == data_pokemon[party[currentplayer].id].evolvelevel) {
+; 1233			if (party[currentplayer].level == data_pokemon[party[currentplayer].id].evolvelevel) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11185,7 +11189,7 @@ L_670:
 	LD	IY,(IX+-53)
 	CP	A,(IY+9)
 	JR	NZ,L_674
-; 1232				sprintf(str, "%s is evolving", data_pokemon[party[currentplayer].id].name);
+; 1234				sprintf(str, "%s is evolving", data_pokemon[party[currentplayer].id].name);
 	LD	BC,_party
 	LD	HL,(IX+-9)
 	ADD	HL,BC
@@ -11207,7 +11211,7 @@ L_670:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1233				text_Display(str, false);
+; 1235				text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -11215,7 +11219,7 @@ L_670:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1234				if (text_AskQuestion2("Continue", "Stop", false) == 1) {
+; 1236				if (text_AskQuestion2("Continue", "Stop", false) == 1) {
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__365
@@ -11230,7 +11234,7 @@ L_670:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_674
-; 1235					party[currentplayer].id = data_pokemon[party[currentplayer].id].evolveid;
+; 1237					party[currentplayer].id = data_pokemon[party[currentplayer].id].evolveid;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
@@ -11251,9 +11255,9 @@ L_670:
 	LD	A,(IY+45)
 	LD	IY,(IX+-56)
 	LD	(IY+0),A
-; 1236				}
-; 1237			}
-; 1238		}
+; 1238				}
+; 1239			}
+; 1240		}
 L_674:
 	LD	A,(_currentplayer)
 	UEXT	HL
@@ -11309,7 +11313,7 @@ L_674:
 	SBC	HL,BC
 	JP	P,L_675
 L_676:
-; 1239		party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
+; 1241		party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
 	LD	BC,_party
 	LD	HL,(IX+-12)
 	ADD	HL,BC
@@ -11340,7 +11344,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+22),C
 	LD	(IY+23),B
-; 1240		party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
+; 1242		party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
 	LD	IY,(IX+-65)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -11360,7 +11364,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+24),C
 	LD	(IY+25),B
-; 1241		party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
+; 1243		party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
 	LD	IY,(IX+-62)
 	LD	C,(IY+20)
 	LD	IY,(IX+-68)
@@ -11370,7 +11374,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+26),C
 	LD	(IY+27),B
-; 1242		party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
+; 1244		party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
 	LD	IY,(IX+-62)
 	LD	C,(IY+21)
 	LD	IY,(IX+-68)
@@ -11380,7 +11384,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+28),C
 	LD	(IY+29),B
-; 1243		party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
+; 1245		party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
 	LD	IY,(IX+-62)
 	LD	C,(IY+22)
 	LD	IY,(IX+-68)
@@ -11390,7 +11394,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+30),C
 	LD	(IY+31),B
-; 1244		party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
+; 1246		party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
 	LD	IY,(IX+-62)
 	LD	C,(IY+23)
 	LD	IY,(IX+-68)
@@ -11400,7 +11404,7 @@ L_676:
 	LD	BC,HL
 	LD	(IY+32),C
 	LD	(IY+33),B
-; 1245	}
+; 1247	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -11453,23 +11457,23 @@ L__366:
 	DB	"Continue"
 	DB	0
 	SEGMENT CODE
-; 1246	/* ball is 1-4 */
-; 1247	bool capture(uint8_t ball) {
+; 1248	/* ball is 1-4 */
+; 1249	bool capture(uint8_t ball) {
 _capture:
 	LD	HL,-20
 	CALL	__frameset
-; 1248		uint8_t n1;
-; 1249		uint8_t n2;
-; 1250		uint32_t f;
-; 1251		bool captured = false;
+; 1250		uint8_t n1;
+; 1251		uint8_t n2;
+; 1252		uint32_t f;
+; 1253		bool captured = false;
 	LD	(IX+-6),0
-; 1252		uint8_t slot = 0;
-; 1253		/* Check if pokemon is captured*/
-; 1254		if (!wild) {
+; 1254		uint8_t slot = 0;
+; 1255		/* Check if pokemon is captured*/
+; 1256		if (!wild) {
 	LD	A,(_wild)
 	OR	A,A
 	JR	NZ,L_703
-; 1255			text_Display("You cannot catch trainer pokemon", true);
+; 1257			text_Display("You cannot catch trainer pokemon", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__372
@@ -11477,47 +11481,47 @@ _capture:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1256			return false;
+; 1258			return false;
 	XOR	A,A
 	JR	L_717
-; 1257		}
+; 1259		}
 L_703:
-; 1258		if (ball == 4) {
+; 1260		if (ball == 4) {
 	LD	A,(IX+6)
 	CP	A,4
 	JR	NZ,L_702
-; 1259			captured = true;
+; 1261			captured = true;
 	LD	(IX+-6),1
-; 1260		}
-; 1261		else {
+; 1262		}
+; 1263		else {
 	JR	L_715
 L_702:
-; 1262			if (ball = 1) {
+; 1264			if (ball = 1) {
 	LD	(IX+6),1
-; 1263				n1 = rand() % 255;
+; 1265				n1 = rand() % 255;
 	CALL	_rand
 	LD	BC,255
 	CALL	__irems
 	LD	(IX+-7),L
-; 1264			}
-; 1265			if (ball = 2) {
-; 1266				n1 = rand() % 200;
+; 1266			}
+; 1267			if (ball = 2) {
+; 1268				n1 = rand() % 200;
 	CALL	_rand
 	LD	BC,200
 	CALL	__irems
 	LD	(IX+-7),L
-; 1267			}
-; 1268			if (ball = 3) {
-; 1269				n1 = rand() % 150;
+; 1269			}
+; 1270			if (ball = 3) {
+; 1271				n1 = rand() % 150;
 	CALL	_rand
 	LD	BC,150
 	CALL	__irems
 	LD	(IX+-7),L
-; 1270			}
-; 1271			n2 = n1;
+; 1272			}
+; 1273			n2 = n1;
 	LD	A,(IX+-7)
 	LD	(IX+-8),A
-; 1272			if (*currentStatusPointer[false] == 4 || *currentStatusPointer[false] == 5) {
+; 1274			if (*currentStatusPointer[false] == 4 || *currentStatusPointer[false] == 5) {
 	LD	HL,(_currentStatusPointer)
 	LD	A,(HL)
 	UEXT	HL
@@ -11535,24 +11539,24 @@ L_702:
 	SBC	HL,BC
 	JR	NZ,L_694
 L_688:
-; 1273				if (n1 < 25) {
+; 1275				if (n1 < 25) {
 	LD	A,(IX+-7)
 	CP	A,25
 	JR	NC,L_687
-; 1274					captured = true;
+; 1276					captured = true;
 	LD	(IX+-6),1
-; 1275				}
-; 1276				else {
+; 1277				}
+; 1278				else {
 	JR	L_694
 L_687:
-; 1277					n2 -= 25;
+; 1279					n2 -= 25;
 	LD	A,(IX+-7)
 	SUB	A,25
 	LD	(IX+-8),A
-; 1278				}
-; 1279			}
+; 1280				}
+; 1281			}
 L_694:
-; 1280			if (*currentStatusPointer[false] == 1 || *currentStatusPointer[false] == 2 || *currentStatusPointer[false] == 3) {
+; 1282			if (*currentStatusPointer[false] == 1 || *currentStatusPointer[false] == 2 || *currentStatusPointer[false] == 3) {
 	LD	HL,(_currentStatusPointer)
 	LD	A,(HL)
 	UEXT	HL
@@ -11578,24 +11582,24 @@ L_694:
 	SBC	HL,BC
 	JR	NZ,L_700
 L_693:
-; 1281				if (n1 < 12) {
+; 1283				if (n1 < 12) {
 	LD	A,(IX+-7)
 	CP	A,12
 	JR	NC,L_692
-; 1282					captured = true;
+; 1284					captured = true;
 	LD	(IX+-6),1
-; 1283				}
-; 1284				else {
+; 1285				}
+; 1286				else {
 	JR	L_700
 L_692:
-; 1285					n2 -= 12;
+; 1287					n2 -= 12;
 	LD	A,(IX+-8)
 	SUB	A,12
 	LD	(IX+-8),A
-; 1286				}
-; 1287			}
+; 1288				}
+; 1289			}
 L_700:
-; 1288			if (n2 <= data_pokemon[enemyparty[currentenemy].id].catchrate) {
+; 1290			if (n2 <= data_pokemon[enemyparty[currentenemy].id].catchrate) {
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -11616,13 +11620,13 @@ L_700:
 	LD	A,(IY+50)
 	CP	A,(IX+-8)
 	JR	C,L_715
-; 1289				f = stats[false].health;
+; 1291				f = stats[false].health;
 	LD	BC,(_stats)
 	CALL	__stoiu
 	LD	(IX+-5),HL
 	XOR	A,A
 	LD	(IX+-2),A
-; 1290				f *= 255;
+; 1292				f *= 255;
 	LD	HL,(IX+-5)
 	LD	E,(IX+-2)
 	LD	BC,255
@@ -11630,7 +11634,7 @@ L_700:
 	CALL	__lmulu
 	LD	(IX+-5),HL
 	LD	(IX+-2),E
-; 1291				f *= 4;
+; 1293				f *= 4;
 	LD	HL,(IX+-5)
 	LD	E,(IX+-2)
 	LD	BC,4
@@ -11638,7 +11642,7 @@ L_700:
 	CALL	__lmulu
 	LD	(IX+-5),HL
 	LD	(IX+-2),E
-; 1292				f /= enemyparty[currentenemy].currenthealth;
+; 1294				f /= enemyparty[currentenemy].currenthealth;
 	LD	IY,(IX+-11)
 	LD	BC,(IY+13)
 	CALL	__stoiu
@@ -11649,11 +11653,11 @@ L_700:
 	CALL	__ldivu
 	LD	(IX+-5),HL
 	LD	(IX+-2),E
-; 1293				if (ball == 2) {
-; 1294					f /= 8;
-; 1295				}
-; 1296				else {
-; 1297					f /= 12;
+; 1295				if (ball == 2) {
+; 1296					f /= 8;
+; 1297				}
+; 1298				else {
+; 1299					f /= 12;
 	LD	HL,(IX+-5)
 	LD	E,(IX+-2)
 	LD	BC,12
@@ -11661,8 +11665,8 @@ L_700:
 	CALL	__ldivu
 	LD	(IX+-5),HL
 	LD	(IX+-2),E
-; 1298				}
-; 1299				if (f >= (rand() % 255)) {
+; 1300				}
+; 1301				if (f >= (rand() % 255)) {
 	CALL	_rand
 	LD	BC,255
 	CALL	__irems
@@ -11672,18 +11676,18 @@ L_700:
 	LD	E,(IX+-2)
 	CALL	__lcmpu
 	JR	C,L_715
-; 1300					captured = true;
+; 1302					captured = true;
 	LD	(IX+-6),1
-; 1301				}
-; 1302			}
-; 1303		}
+; 1303				}
+; 1304			}
+; 1305		}
 L_715:
-; 1304		/* Find open slot if pokemon is captured */
-; 1305		if (captured) {
+; 1306		/* Find open slot if pokemon is captured */
+; 1307		if (captured) {
 	LD	A,(IX+-6)
 	OR	A,A
 	JR	Z,L_714
-; 1306			sprintf(str, "%s was caught", data_pokemon[enemyparty[currentenemy].id].name);
+; 1308			sprintf(str, "%s was caught", data_pokemon[enemyparty[currentenemy].id].name);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -11709,7 +11713,7 @@ L_715:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1307			text_Display(str, false);
+; 1309			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -11717,11 +11721,11 @@ L_715:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1308			for (slot = 0; slot < 36; slot++) {
+; 1310			for (slot = 0; slot < 36; slot++) {
 	LD	(IX+-1),0
 	JR	L_710
 L_708:
-; 1309				if (party[slot].id == 0) {
+; 1311				if (party[slot].id == 0) {
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -11734,7 +11738,7 @@ L_708:
 	LD	A,(IY+0)
 	OR	A,A
 	JR	NZ,L_707
-; 1310					party[slot] = enemyparty[currentenemy];
+; 1312					party[slot] = enemyparty[currentenemy];
 	LD	A,(_currentenemy)
 	LD	DE,(IX+-14)
 	LD	BC,34
@@ -11751,11 +11755,11 @@ L_708:
 	ADD	HL,BC
 	LD	BC,(IX+-17)	; unspill
 	LDIR	
-; 1311					slot = 40;
+; 1313					slot = 40;
 	LD	(IX+-1),40
-; 1312				}
+; 1314				}
 L_707:
-; 1313				i++;
+; 1315				i++;
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
@@ -11763,16 +11767,16 @@ L_707:
 	INC	HL
 	LD	(HL),B
 	INC	(IX+-1)
-; 1314			}
+; 1316			}
 L_710:
 	LD	A,(IX+-1)
 	CP	A,36
 	JR	C,L_708
-; 1315			if (slot == 36) {
+; 1317			if (slot == 36) {
 	LD	A,(IX+-1)
 	CP	A,36
 	JR	NZ,L_716
-; 1316				text_Display("No open slots for pokemon", false);
+; 1318				text_Display("No open slots for pokemon", false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__388
@@ -11780,12 +11784,12 @@ L_710:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1317			}
-; 1318		}
-; 1319		else {
+; 1319			}
+; 1320		}
+; 1321		else {
 	JR	L_716
 L_714:
-; 1320			sprintf(str, "%s broke free", data_pokemon[enemyparty[currentenemy].id].name);
+; 1322			sprintf(str, "%s broke free", data_pokemon[enemyparty[currentenemy].id].name);
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -11811,7 +11815,7 @@ L_714:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1321			text_Display(str, true);
+; 1323			text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -11819,11 +11823,11 @@ L_714:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1322		}
+; 1324		}
 L_716:
-; 1323		return captured;
+; 1325		return captured;
 	LD	A,(IX+-6)
-; 1324	}
+; 1326	}
 L_717:
 	LD	SP,IX
 	POP	IX
@@ -11871,6 +11875,7 @@ L__388:
 L__389:
 	DB	"%s broke free"
 	DB	0
+	XREF _PKMNSD6_init:ROM
 	XREF _PKMNSD5_init:ROM
 	XREF _PKMNSD5:ROM
 	XREF _PKMNSD3_init:ROM

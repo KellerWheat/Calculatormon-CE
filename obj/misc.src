@@ -1,7 +1,7 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\SRC\MISC.C"
+	FILE	"SRC\MISC.C"
 	.assume ADL=1
 	SEGMENT BSS
 _str:
@@ -39,18 +39,18 @@ _colorSets:
 	DB	29
 	DB	230
 	DB	199
-	DB	8
-	DB	255
-	DB	247
-	DB	216
-	DB	38
-	DB	48
+	DB	9
+	DB	7
+	DB	164
+	DB	10
+	DB	51
+	DB	97
 	DB	0
-	DB	129
-	DB	37
-	DB	163
-	DB	138
-	DB	102
+	DB	23
+	DB	50
+	DB	175
+	DB	156
+	DB	118
 	DB	0
 _colorValues:
 	DB	247
@@ -133,7 +133,7 @@ _categoryIcons:
 ;   32	
 ;   33	uint8_t colorSets[2][COLORCOUNT] = {
 ;   34		{8,5,214,112,231,154,16,20,121,230,29,230,199,},
-;   35		{8,255,247,216,38,48,0,129,37,163,138,102,0,},
+;   35		{9,7,164,10,51,97,0,23,50,175,156,118,0,},
 ;   36	};
 ;   37	
 ;   38	uint8_t colorValues[COLORCOUNT][3] = {
@@ -846,7 +846,7 @@ L_41:
 ;Name                         Addr/Register   Size   Type
 ;_categoryIcons                      STATIC      9   variable
 ;_statusIcons                        STATIC     15   variable
-;_PKMNSD5                            IMPORT    114   variable
+;_PKMNSD5                            IMPORT    117   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_typeIcons                          STATIC     51   variable
 ;_malloc                             IMPORT  -----   function

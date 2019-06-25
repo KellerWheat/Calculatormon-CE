@@ -1,84 +1,84 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\..\SRC\GFX\MENUCURSORSMALL.C"
+	FILE	"SRC\GFX\MENUCURSORSMALL.C"
 	.assume ADL=1
 	SEGMENT DATA
 _menucursorsmall_data:
 	DB	7
 	DB	10
-	DB	73
-	DB	73
-	DB	73
+	DB	5
+	DB	5
+	DB	5
 	DB	0
 	DB	0
 	DB	0
 	DB	0
-	DB	73
-	DB	48
-	DB	73
-	DB	73
+	DB	5
+	DB	182
+	DB	5
+	DB	5
 	DB	0
 	DB	0
 	DB	0
-	DB	73
-	DB	48
-	DB	48
-	DB	73
-	DB	73
+	DB	5
+	DB	182
+	DB	182
+	DB	5
+	DB	5
 	DB	0
 	DB	0
-	DB	73
-	DB	48
-	DB	48
-	DB	48
-	DB	73
-	DB	73
+	DB	5
+	DB	182
+	DB	182
+	DB	182
+	DB	5
+	DB	5
 	DB	0
-	DB	73
-	DB	48
-	DB	48
-	DB	48
-	DB	48
-	DB	73
-	DB	73
-	DB	73
-	DB	48
-	DB	48
-	DB	48
-	DB	48
-	DB	73
-	DB	73
-	DB	73
-	DB	48
-	DB	48
-	DB	48
-	DB	73
-	DB	73
+	DB	5
+	DB	182
+	DB	182
+	DB	182
+	DB	182
+	DB	5
+	DB	5
+	DB	5
+	DB	182
+	DB	182
+	DB	182
+	DB	182
+	DB	5
+	DB	5
+	DB	5
+	DB	182
+	DB	182
+	DB	182
+	DB	5
+	DB	5
 	DB	0
-	DB	73
-	DB	48
-	DB	48
-	DB	73
-	DB	73
-	DB	0
-	DB	0
-	DB	73
-	DB	48
-	DB	73
-	DB	73
+	DB	5
+	DB	182
+	DB	182
+	DB	5
+	DB	5
 	DB	0
 	DB	0
+	DB	5
+	DB	182
+	DB	5
+	DB	5
 	DB	0
-	DB	73
-	DB	73
-	DB	73
+	DB	0
+	DB	0
+	DB	5
+	DB	5
+	DB	5
 	DB	0
 	DB	0
 	DB	0
 	DB	0
 	XDEF _menucursorsmall_data
-;    1	// convpng v6.8
+;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "battle_gfx.h"
 ;    4	

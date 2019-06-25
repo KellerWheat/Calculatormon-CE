@@ -1,9 +1,9 @@
-// convpng v6.8
+// convpng v7.0
 #include <stdint.h>
 #include "PKMNSD1.h"
 
 #include <fileioc.h>
-uint8_t *PKMNSD1[73] = {
+uint8_t *PKMNSD1[72] = {
  (uint8_t*)0,
  (uint8_t*)589,
  (uint8_t*)790,
@@ -76,7 +76,6 @@ uint8_t *PKMNSD1[73] = {
  (uint8_t*)35058,
  (uint8_t*)35731,
  (uint8_t*)36325,
- (uint8_t*)36671,
 };
 
 bool PKMNSD1_init(void) {
