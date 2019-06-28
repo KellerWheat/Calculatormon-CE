@@ -1,8 +1,9 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\GFX\MENUCURSOR.C"
 	.assume ADL=1
+.DEBUG "C"
 	SEGMENT DATA
 _menucursor_data:
 	DB	13
@@ -35,8 +36,8 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -48,9 +49,9 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -61,10 +62,10 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -74,11 +75,11 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -87,12 +88,12 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -100,126 +101,114 @@ _menucursor_data:
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	5
-	DB	5
-	DB	5
-	DB	0
-	DB	5
-	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	0
-	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	0
 	DB	0
-	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
 	DB	0
 	DB	0
 	DB	0
-	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -227,11 +216,11 @@ _menucursor_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	0
 	DB	5
 	DB	5
-	DB	182
-	DB	182
+	DB	94
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -240,10 +229,10 @@ _menucursor_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	0
 	DB	5
 	DB	5
-	DB	5
+	DB	94
+	DB	94
 	DB	5
 	DB	5
 	DB	5
@@ -253,7 +242,7 @@ _menucursor_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	0
+	DB	5
 	DB	5
 	DB	5
 	DB	5
@@ -266,7 +255,26 @@ _menucursor_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	5
+	DB	5
+	DB	5
+	DB	5
+	DB	5
 	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+.DEFINE "menucursor_data"
+.ALIAS "_menucursor_data"
+.CLASS 69
+.VALUE _menucursor_data
+.DIM 262
+.TYPE 108
+.ENDEF
 	XDEF _menucursor_data
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>

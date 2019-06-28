@@ -1,8 +1,270 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\GFX\PKMNSD2.C"
 	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "__stdio_file",1
+.DEFINE "slot"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "__stdio_file"
+.BEGREC "NONAME3",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME4"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "NONAME10",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME10"
 	SEGMENT DATA
 _PKMNSD2:
 	DW24	0
@@ -85,6 +347,13 @@ _PKMNSD2:
 	DW24	29131
 	DW24	29560
 	DW24	29991
+.DEFINE "PKMNSD2"
+.ALIAS "_PKMNSD2"
+.CLASS 69
+.VALUE _PKMNSD2
+.DIM 80
+.TYPE 364
+.ENDEF
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD2.h"
@@ -176,15 +445,68 @@ _PKMNSD2:
 ;   88	
 ;   89	bool PKMNSD2_init(void) {
 _PKMNSD2_init:
-	LD	HL,-10
-	CALL	__frameset
+.DEFINE "_PKMNSD2_init"
+
+.VALUE _PKMNSD2_init
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "PKMNSD2_init",89,"_PKMNSD2_init"
+
+.LINE 89
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "appvar"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE -7
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
 ;   90	    unsigned int data, i;
 ;   91	    ti_var_t appvar;
 ;   92	
 ;   93	    ti_CloseAll();
+.LINE 93
+
 	CALL	_ti_CloseAll
 ;   94	
 ;   95	    appvar = ti_Open("PKMNSD2", "r");
+.LINE 95
+
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -194,6 +516,8 @@ _PKMNSD2_init:
 	POP	BC
 	LD	(IX+-4),A
 ;   96	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD2[0];
+.LINE 96
+
 	LD	C,(IX+-4)
 	LD	B,0
 	PUSH	BC
@@ -204,11 +528,15 @@ _PKMNSD2_init:
 	SBC	HL,BC
 	LD	(IX+-7),HL
 ;   97	    for (i = 0; i < PKMNSD2_num; i++) {
+.LINE 97
+
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
 ;   98	        PKMNSD2[i] += data;
+.LINE 98
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -216,9 +544,9 @@ L_1:
 	LD	BC,_PKMNSD2
 	ADD	HL,BC
 	LD	(IX+-10),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-10)
 	LD	BC,(IX+-7)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -226,6 +554,8 @@ L_1:
 	LD	(IX+-3),BC
 ;   99	    }
 L_3:
+.LINE 99
+
 	LD	BC,80
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -233,11 +563,17 @@ L_3:
 	JR	C,L_1
 ;  100	
 ;  101	    ti_CloseAll();
+.LINE 101
+
 	CALL	_ti_CloseAll
 ;  102	
 ;  103	    return (bool)appvar;
+.LINE 103
+
 	LD	A,(IX+-4)
 ;  104	}
+.LINE 104
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -258,6 +594,7 @@ L_3:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "PKMNSD2_init",104,"_PKMNSD2_init"
 	SEGMENT STRSECT
 L__0:
 	DB	"r"
@@ -268,7 +605,6 @@ L__1:
 	XREF _ti_GetDataPtr:ROM
 	XREF _ti_Open:ROM
 	XREF _ti_CloseAll:ROM
-	XREF __frameset:ROM
 	XDEF _PKMNSD2_init
 	XDEF _PKMNSD2
 	END

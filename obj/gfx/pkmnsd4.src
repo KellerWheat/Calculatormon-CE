@@ -1,8 +1,270 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\GFX\PKMNSD4.C"
 	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "__stdio_file",1
+.DEFINE "slot"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "__stdio_file"
+.BEGREC "NONAME3",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME4"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME3"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "NONAME10",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME10"
 	SEGMENT DATA
 _PKMNSD4:
 	DW24	0
@@ -34,8 +296,15 @@ _PKMNSD4:
 	DW24	4188
 	DW24	4254
 	DW24	4393
-	DW24	12163
-	DW24	15528
+	DW24	12159
+	DW24	15524
+.DEFINE "PKMNSD4"
+.ALIAS "_PKMNSD4"
+.CLASS 69
+.VALUE _PKMNSD4
+.DIM 31
+.TYPE 364
+.ENDEF
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD4.h"
@@ -72,21 +341,72 @@ _PKMNSD4:
 ;   33	 (uint8_t*)4188,
 ;   34	 (uint8_t*)4254,
 ;   35	 (uint8_t*)4393,
-;   36	 (uint8_t*)12163,
-;   37	 (uint8_t*)15528,
+;   36	 (uint8_t*)12159,
+;   37	 (uint8_t*)15524,
 ;   38	};
 ;   39	
 ;   40	bool PKMNSD4_init(void) {
 _PKMNSD4_init:
-	LD	HL,-19
-	CALL	__frameset
+.DEFINE "_PKMNSD4_init"
+
+.VALUE _PKMNSD4_init
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "PKMNSD4_init",40,"_PKMNSD4_init"
+
+.LINE 40
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "appvar"
+
+.CLASS 65
+
+.VALUE -7
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-19
+	LD	SP,HL
 ;   41	    unsigned int data, i;
 ;   42	    ti_var_t appvar;
 ;   43	
 ;   44	    ti_CloseAll();
+.LINE 44
+
 	CALL	_ti_CloseAll
 ;   45	
 ;   46	    appvar = ti_Open("PKMNSD4", "r");
+.LINE 46
+
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -96,6 +416,8 @@ _PKMNSD4_init:
 	POP	BC
 	LD	(IX+-7),A
 ;   47	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD4[0];
+.LINE 47
+
 	LD	C,(IX+-7)
 	LD	B,0
 	PUSH	BC
@@ -106,11 +428,15 @@ _PKMNSD4_init:
 	SBC	HL,BC
 	LD	(IX+-6),HL
 ;   48	    for (i = 0; i < PKMNSD4_num; i++) {
+.LINE 48
+
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
 ;   49	        PKMNSD4[i] += data;
+.LINE 49
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -118,9 +444,9 @@ L_1:
 	LD	BC,_PKMNSD4
 	ADD	HL,BC
 	LD	(IX+-10),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-10)
 	LD	BC,(IX+-6)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -128,6 +454,8 @@ L_1:
 	LD	(IX+-3),BC
 ;   50	    }
 L_3:
+.LINE 50
+
 	LD	BC,31
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -135,21 +463,29 @@ L_3:
 	JR	C,L_1
 ;   51	
 ;   52	    ti_CloseAll();
+.LINE 52
+
 	CALL	_ti_CloseAll
 ;   53	
 ;   54	    data = (unsigned int)PKMNSD4[27] - (unsigned int)pokeball_tiles_compressed[0];
-	LD	BC,(_pokeball_tiles_compressed)
-;   55	    for (i = 0; i < pokeball_tiles_num; i++) {
-	LD	DE,0
+.LINE 54
+
 	LD	HL,_PKMNSD4+81
 	LD	HL,(HL)
+	LD	BC,(_pokeball_tiles_compressed)
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-6),HL
-	LD	(IX+-3),DE
+;   55	    for (i = 0; i < pokeball_tiles_num; i++) {
+.LINE 55
+
+	LD	BC,0
+	LD	(IX+-3),BC
 	JR	L_8
 L_6:
 ;   56	        pokeball_tiles_compressed[i] += data;
+.LINE 56
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -157,9 +493,9 @@ L_6:
 	LD	BC,_pokeball_tiles_compressed
 	ADD	HL,BC
 	LD	(IX+-13),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-13)
 	LD	BC,(IX+-6)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -167,6 +503,8 @@ L_6:
 	LD	(IX+-3),BC
 ;   57	    }
 L_8:
+.LINE 57
+
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -174,18 +512,24 @@ L_8:
 	JR	C,L_6
 ;   58	
 ;   59	    data = (unsigned int)PKMNSD4[28] - (unsigned int)outdoortileset_tiles_compressed[0];
-	LD	BC,(_outdoortileset_tiles_compressed)
-;   60	    for (i = 0; i < outdoortileset_tiles_num; i++) {
-	LD	DE,0
+.LINE 59
+
 	LD	HL,_PKMNSD4+84
 	LD	HL,(HL)
+	LD	BC,(_outdoortileset_tiles_compressed)
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-6),HL
-	LD	(IX+-3),DE
+;   60	    for (i = 0; i < outdoortileset_tiles_num; i++) {
+.LINE 60
+
+	LD	BC,0
+	LD	(IX+-3),BC
 	JR	L_13
 L_11:
 ;   61	        outdoortileset_tiles_compressed[i] += data;
+.LINE 61
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -193,9 +537,9 @@ L_11:
 	LD	BC,_outdoortileset_tiles_compressed
 	ADD	HL,BC
 	LD	(IX+-16),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-16)
 	LD	BC,(IX+-6)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -203,6 +547,8 @@ L_11:
 	LD	(IX+-3),BC
 ;   62	    }
 L_13:
+.LINE 62
+
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -210,18 +556,24 @@ L_13:
 	JR	C,L_11
 ;   63	
 ;   64	    data = (unsigned int)PKMNSD4[29] - (unsigned int)indoortileset_tiles_compressed[0];
-	LD	BC,(_indoortileset_tiles_compressed)
-;   65	    for (i = 0; i < indoortileset_tiles_num; i++) {
-	LD	DE,0
+.LINE 64
+
 	LD	HL,_PKMNSD4+87
 	LD	HL,(HL)
+	LD	BC,(_indoortileset_tiles_compressed)
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-6),HL
-	LD	(IX+-3),DE
+;   65	    for (i = 0; i < indoortileset_tiles_num; i++) {
+.LINE 65
+
+	LD	BC,0
+	LD	(IX+-3),BC
 	JR	L_18
 L_16:
 ;   66	        indoortileset_tiles_compressed[i] += data;
+.LINE 66
+
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -229,9 +581,9 @@ L_16:
 	LD	BC,_indoortileset_tiles_compressed
 	ADD	HL,BC
 	LD	(IX+-19),HL
-	LD	HL,(HL)
 	LD	IY,(IX+-19)
 	LD	BC,(IX+-6)
+	LD	HL,(HL)
 	ADD	HL,BC
 	LD	(IY),HL
 	LD	BC,(IX+-3)
@@ -239,6 +591,8 @@ L_16:
 	LD	(IX+-3),BC
 ;   67	    }
 L_18:
+.LINE 67
+
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
@@ -246,8 +600,12 @@ L_18:
 	JR	C,L_16
 ;   68	
 ;   69	    return (bool)appvar;
+.LINE 69
+
 	LD	A,(IX+-7)
 ;   70	}
+.LINE 70
+
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -271,6 +629,7 @@ L_18:
 ;       Spill Code: 0 (instruction)
 
 
+.ENDFUNC "PKMNSD4_init",70,"_PKMNSD4_init"
 	SEGMENT STRSECT
 L__0:
 	DB	"r"
@@ -284,7 +643,6 @@ L__1:
 	XREF _indoortileset_tiles_compressed:ROM
 	XREF _outdoortileset_tiles_compressed:ROM
 	XREF _pokeball_tiles_compressed:ROM
-	XREF __frameset:ROM
 	XDEF _PKMNSD4_init
 	XDEF _PKMNSD4
 	END

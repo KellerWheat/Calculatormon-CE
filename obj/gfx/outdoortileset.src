@@ -1,8 +1,9 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\GFX\OUTDOORTILESET.C"
 	.assume ADL=1
+.DEBUG "C"
 	SEGMENT DATA
 _outdoortileset_tiles_compressed:
 	DW24	0
@@ -112,27 +113,34 @@ _outdoortileset_tiles_compressed:
 	DW24	6435
 	DW24	6512
 	DW24	6613
-	DW24	6663
-	DW24	6688
-	DW24	6718
-	DW24	6748
-	DW24	6795
-	DW24	6804
-	DW24	6901
-	DW24	6975
-	DW24	7010
-	DW24	7092
-	DW24	7152
-	DW24	7197
-	DW24	7291
-	DW24	7327
-	DW24	7421
-	DW24	7471
-	DW24	7519
-	DW24	7593
-	DW24	7654
-	DW24	7718
-	DW24	7761
+	DW24	6662
+	DW24	6687
+	DW24	6717
+	DW24	6747
+	DW24	6793
+	DW24	6802
+	DW24	6899
+	DW24	6973
+	DW24	7008
+	DW24	7090
+	DW24	7150
+	DW24	7195
+	DW24	7289
+	DW24	7325
+	DW24	7419
+	DW24	7469
+	DW24	7517
+	DW24	7589
+	DW24	7650
+	DW24	7714
+	DW24	7757
+.DEFINE "outdoortileset_tiles_compressed"
+.ALIAS "_outdoortileset_tiles_compressed"
+.CLASS 69
+.VALUE _outdoortileset_tiles_compressed
+.DIM 128
+.TYPE 364
+.ENDEF
 	XDEF _outdoortileset_tiles_compressed
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>

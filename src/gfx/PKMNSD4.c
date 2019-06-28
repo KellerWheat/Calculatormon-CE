@@ -33,8 +33,8 @@ uint8_t *PKMNSD4[31] = {
  (uint8_t*)4188,
  (uint8_t*)4254,
  (uint8_t*)4393,
- (uint8_t*)12163,
- (uint8_t*)15528,
+ (uint8_t*)12159,
+ (uint8_t*)15524,
 };
 
 bool PKMNSD4_init(void) {

@@ -2,7 +2,6 @@
 #define ITEMS_H
 
 void items_IndexToName(char *name, uint8_t index);
-void items_ItemShop(void);
 bool items_UseItem(uint8_t index);
 
 extern char itemNames[20][16];

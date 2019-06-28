@@ -364,7 +364,7 @@ extern uint8_t *indoortileset_tiles_compressed[128];
 #define indoortileset_tile_125_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[125])
 #define indoortileset_tile_126_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[126])
 #define indoortileset_tile_127_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[127])
-#define sizeof_map_gfx_pal 446
+#define sizeof_map_gfx_pal 460
 #define map_gfx_pal ((uint16_t*)PKMNSD4[30])
 bool PKMNSD4_init(void);
 

@@ -20,6 +20,7 @@
 #include "savegame.h"
 #include "stats.h"
 #include "gfx/battle_gfx.h"
+#include "gfx/map_gfx.h"
 #include "items.h"
 #include "gfx/PKMNSD0.h"
 #include "gfx/PKMNSD1.h"
@@ -657,4 +658,65 @@ void menu_Box() {
 	}
 	free(largeSprite);
 	free(backgroundSprite);
+}
+void menu_ItemShop(gfx_sprite_t *shopSprite) {
+	int menuState, cursorState, itemIndex;
+	gfx_SwapDraw();
+	gfx_Blit(gfx_screen);
+	while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+
+	menuState = 0;
+	cursorState = 0;
+	while (!(kb_Data[6] & kb_Clear)) {
+		
+		gfx_SetColor(colors[0]);
+		gfx_FillRectangle(100, 0, 220, 16);
+		sprintf(str, "%u$", playerMoney);
+		gfx_PrintStringXY(str, 100, 5);
+
+		gfx_ScaledTransparentSprite_NoClip(shopSprite, 26, 46, 2, 2);
+		gfx_TransparentSprite_NoClip(mapcursorsmall, 47, 61 + 14 * cursorState);
+
+		for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < 20; itemIndex++) {
+			gfx_PrintStringXY(itemNames[itemIndex], 60, 64 + 14 * (itemIndex - menuState));
+			sprintf(str, "%u", playerItems[itemIndex]);
+			gfx_PrintStringXY(str, 172, 65 + 14 * (itemIndex - menuState));
+		}
+
+		gfx_SwapDraw();
+
+		kb_Scan();
+		while (!((kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+			kb_Scan();
+		}
+
+		if (kb_Data[7] & kb_Up) {
+			if (menuState > 0 && cursorState <= 2) {
+				menuState--;
+			}
+			else if (menuState + cursorState > 0) {
+				cursorState--;
+			}
+		}
+		if (kb_Data[7] & kb_Down) {
+			if (menuState + 10 < 20 && cursorState >= 3) {
+				menuState++;
+			}
+			else if (menuState + cursorState < 19) {
+				cursorState++;
+			}
+		}
+		if (kb_Data[1] & kb_2nd) {
+			if (playerMoney >= itemPrices[menuState + cursorState]) {
+				playerItems[menuState + cursorState]++;
+				playerMoney -= itemPrices[menuState + cursorState];
+			}
+			Wait(10);
+		}
+		else {
+			Wait(20);
+		}
+		
+	}
+	gfx_SwapDraw();
 }

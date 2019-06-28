@@ -210,7 +210,16 @@ int map_Loop(void) {
 			HealParty();
 		}
 		else if (nextTile == 0x42) {
-			items_ItemShop();
+			gfx_sprite_t *shopSpriteOriginal;
+			map_End();
+
+			shopSpriteOriginal = gfx_MallocSprite(134, 84);
+			zx7_Decompress(shopSpriteOriginal, shop_compressed);
+
+			menu_ItemShop(shopSpriteOriginal);
+
+			free(shopSpriteOriginal);
+			map_SetupGfx();
 		}
 		else if (nextTile == 0x43) {
 			OpenBox();
@@ -400,84 +409,11 @@ void HealParty(void) {
 }
 void OpenBox(void) {
 	map_End();
-
+	
 	menu_Box();
 
 	map_SetupGfx();
 	map_LoadPokeballs();
-	/*uint8_t boxMode;
-	boxMode = text_AskQuestion2("Box", "Delete Save", false);
-	if (boxMode == 2) {
-		text_Display("Are You Sure?", false);
-		if (text_AskQuestion2("Yes", "No", false) == 1) {
-			ti_Delete(appVarName);
-		}
-	}
-	else if (boxMode == 1) {
-		uint8_t lastSelection = 255;
-		uint8_t boxPage = 0;
-		uint8_t boxCurrent = 0;
-		int boxIndex;
-
-	redrawbox:
-		gfx_SetColor(colors[0]);
-		gfx_FillRectangle(20, 20, 280, 200);
-		gfx_SetColor(colors[1]);
-		gfx_Rectangle(20, 20, 280, 200);
-		gfx_SetColor(colors[0]);
-
-		gfx_PrintStringXY(">", 25, 25 + 20 * (boxCurrent));
-		for (boxIndex = 0; boxIndex < 10 && boxIndex + boxPage < 36; boxIndex++) {
-			if (party[boxIndex + boxPage].id > 0) {
-				sprintf(str, "LV%u %s", party[boxIndex + boxPage].level, data_pokemon[party[boxIndex + boxPage].id].name);
-				gfx_PrintStringXY(str, 35, 25 + boxIndex * 20);
-			}
-		}
-		gfx_SwapDraw();
-		Wait(20);
-
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-		kb_Scan();
-		while (!(kb_Data[6] & kb_Clear)) {
-			kb_Scan();
-			if (kb_Data[1] & kb_2nd) {
-				if (lastSelection == 255) {
-					lastSelection = boxCurrent + boxPage;
-				}
-				else {
-					tempcharacter2 = party[lastSelection];
-					party[lastSelection] = party[boxCurrent + boxPage];
-					party[boxCurrent + boxPage] = tempcharacter2;
-					lastSelection = 255;
-				}
-				goto redrawbox;
-			}
-			if (kb_Data[6] & kb_Enter) {
-				text_Display("Release Pokemon?", false);
-				if (text_AskQuestion2("Yes", "No", false) == 1) {
-					party[boxCurrent + boxPage] = clearcharacter2;
-				}
-				goto redrawbox;
-			}
-			if ((kb_Data[7] & kb_Down) && boxCurrent + boxPage < 36) {
-				boxCurrent++;
-				if (boxCurrent == 6 && boxPage < 26) {
-					boxPage++;
-					boxCurrent--;
-				}
-				goto redrawbox;
-			}
-			if ((kb_Data[7] & kb_Up) && boxCurrent != 0) {
-				boxCurrent--;
-				if (boxCurrent == 4 && boxPage > 0) {
-					boxPage--;
-					boxCurrent++;
-				}
-				goto redrawbox;
-			}
-		}
-	}*/
-	/*map_LoadPokeballs();*/
 }
 void TalkToNpc1(void) {
 	text_Display(data_npcText[npc1], false);
