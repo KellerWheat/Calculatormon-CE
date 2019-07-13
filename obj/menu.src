@@ -5417,7 +5417,7 @@ L_335:
 	LD	(IX+-9),BC
 	JR	L_305
 L_303:
-;  681				gfx_PrintStringXY(itemNames[itemIndex], 60, 64 + 14 * (itemIndex - menuState));
+;  681				gfx_PrintStringXY(itemNames[itemIndex], 60, 63 + 14 * (itemIndex - menuState));
 	LD	BC,(IX+-3)
 	LD	HL,(IX+-9)
 	OR	A,A
@@ -5425,7 +5425,7 @@ L_303:
 	LD	A,14
 	CALL	__imul_b
 	LD	IY,HL
-	LEA	BC,IY+64
+	LEA	BC,IY+63
 	PUSH	BC
 	LD	BC,60
 	PUSH	BC
@@ -5457,7 +5457,7 @@ L_303:
 	POP	BC
 	POP	BC
 	POP	BC
-;  683				gfx_PrintStringXY(str, 172, 65 + 14 * (itemIndex - menuState));
+;  683				gfx_PrintStringXY(str, 172, 63 + 14 * (itemIndex - menuState));
 	LD	BC,(IX+-3)
 	LD	HL,(IX+-9)
 	OR	A,A
@@ -5465,9 +5465,43 @@ L_303:
 	LD	A,14
 	CALL	__imul_b
 	LD	IY,HL
-	LEA	BC,IY+65
+	LEA	BC,IY+63
 	PUSH	BC
 	LD	BC,172
+	PUSH	BC
+	LD	BC,_str
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  684				sprintf(str, "%u$", itemPrices[itemIndex]);
+	LD	HL,(IX+-9)
+	ADD	HL,HL
+	LD	BC,_itemPrices
+	ADD	HL,BC
+	LD	BC,(HL)
+	CALL	__stoiu
+	PUSH	HL
+	LD	BC,L__190
+	PUSH	BC
+	LD	BC,_str
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
+;  685				gfx_PrintStringXY(str, 204, 63 + 14 * (itemIndex - menuState));
+	LD	BC,(IX+-3)
+	LD	HL,(IX+-9)
+	OR	A,A
+	SBC	HL,BC
+	LD	A,14
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+63
+	PUSH	BC
+	LD	BC,204
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
@@ -5478,7 +5512,7 @@ L_303:
 	LD	BC,(IX+-9)
 	INC	BC
 	LD	(IX+-9),BC
-;  684			}
+;  686			}
 L_305:
 	LD	IY,(IX+-3)
 	LEA	BC,IY+10
@@ -5493,18 +5527,18 @@ L_305:
 	CALL	__setflag
 	JP	M,L_303
 L_306:
-;  685	
-;  686			gfx_SwapDraw();
-	CALL	_gfx_SwapDraw
 ;  687	
-;  688			kb_Scan();
+;  688			gfx_SwapDraw();
+	CALL	_gfx_SwapDraw
+;  689	
+;  690			kb_Scan();
 	CALL	_kb_Scan
-;  689			while (!((kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
+;  691			while (!((kb_Data[6] & kb_Clear) || (kb_Data[1] & kb_2nd) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Down))) {
 	JR	L_310
 L_311:
-;  690				kb_Scan();
+;  692				kb_Scan();
 	CALL	_kb_Scan
-;  691			}
+;  693			}
 L_310:
 	LD	A,(16056348)
 	AND	A,64
@@ -5519,12 +5553,12 @@ L_310:
 	AND	A,1
 	JR	Z,L_311
 L_319:
-;  692	
-;  693			if (kb_Data[7] & kb_Up) {
+;  694	
+;  695			if (kb_Data[7] & kb_Up) {
 	LD	A,(16056350)
 	AND	A,8
 	JR	Z,L_327
-;  694				if (menuState > 0 && cursorState <= 2) {
+;  696				if (menuState > 0 && cursorState <= 2) {
 	LD	BC,(IX+-3)
 	OR	A,A
 	SBC	HL,HL
@@ -5537,12 +5571,12 @@ L_319:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_317
-;  695					menuState--;
+;  697					menuState--;
 	LD	BC,(IX+-3)
 	DEC	BC
 	LD	(IX+-3),BC
-;  696				}
-;  697				else if (menuState + cursorState > 0) {
+;  698				}
+;  699				else if (menuState + cursorState > 0) {
 	JR	L_327
 L_317:
 	LD	BC,(IX+-6)
@@ -5555,18 +5589,18 @@ L_317:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_327
-;  698					cursorState--;
+;  700					cursorState--;
 	LD	BC,(IX+-6)
 	DEC	BC
 	LD	(IX+-6),BC
-;  699				}
-;  700			}
+;  701				}
+;  702			}
 L_327:
-;  701			if (kb_Data[7] & kb_Down) {
+;  703			if (kb_Data[7] & kb_Down) {
 	LD	A,(16056350)
 	AND	A,1
 	JR	Z,L_333
-;  702				if (menuState + 10 < 20 && cursorState >= 3) {
+;  704				if (menuState + 10 < 20 && cursorState >= 3) {
 	LD	IY,(IX+-3)
 	LEA	HL,IY+10
 	LD	BC,20
@@ -5579,12 +5613,12 @@ L_327:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_325
-;  703					menuState++;
+;  705					menuState++;
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  704				}
-;  705				else if (menuState + cursorState < 19) {
+;  706				}
+;  707				else if (menuState + cursorState < 19) {
 	JR	L_333
 L_325:
 	LD	BC,(IX+-6)
@@ -5595,18 +5629,18 @@ L_325:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_333
-;  706					cursorState++;
+;  708					cursorState++;
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  707				}
-;  708			}
+;  709				}
+;  710			}
 L_333:
-;  709			if (kb_Data[1] & kb_2nd) {
+;  711			if (kb_Data[1] & kb_2nd) {
 	LD	A,(16056338)
 	AND	A,32
 	JR	Z,L_332
-;  710				if (playerMoney >= itemPrices[menuState + cursorState]) {
+;  712				if (playerMoney >= itemPrices[menuState + cursorState]) {
 	LD	BC,(IX+-6)
 	LD	HL,(IX+-3)
 	ADD	HL,BC
@@ -5623,7 +5657,7 @@ L_333:
 	LD	HL,(_playerMoney)
 	CALL	__lcmpu
 	JR	C,L_330
-;  711					playerItems[menuState + cursorState]++;
+;  713					playerItems[menuState + cursorState]++;
 	LD	BC,(IX+-12)
 	LD	HL,_playerItems
 	ADD	HL,BC
@@ -5632,7 +5666,7 @@ L_333:
 	INC	A
 	LD	HL,(IX+-15)
 	LD	(HL),A
-;  712					playerMoney -= itemPrices[menuState + cursorState];
+;  714					playerMoney -= itemPrices[menuState + cursorState];
 	LD	HL,(IX+-12)
 	ADD	HL,HL
 	LD	BC,_itemPrices
@@ -5648,31 +5682,29 @@ L_333:
 	LD	(_playerMoney),HL
 	LD	A,E
 	LD	(_playerMoney+3),A
-;  713				}
+;  715				}
 L_330:
-;  714				Wait(10);
+;  716				Wait(10);
 	LD	BC,10
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  715			}
-;  716			else {
+;  717			}
+;  718			else {
 	JR	L_334
 L_332:
-;  717				Wait(20);
-	LD	BC,20
+;  719				Wait(15);
+	LD	BC,15
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
-;  718			}
-;  719			
-;  720		}
+;  720			}
+;  721			
+;  722		}
 L_334:
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_335
-;  721		gfx_SwapDraw();
-	CALL	_gfx_SwapDraw
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -5714,6 +5746,9 @@ L__188:
 	DB	0
 L__189:
 	DB	"%u"
+	DB	0
+L__190:
+	DB	"%u$"
 	DB	0
 	XREF _PKMNSD6:ROM
 	XREF _PKMNSD5:ROM

@@ -13,6 +13,7 @@ void MallocIcons(void);
 void FreeIcons(void);
 
 extern char str[100];
+extern bool debugging;
 extern uint16_t i;
 extern uint16_t e;
 

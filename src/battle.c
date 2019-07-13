@@ -70,8 +70,8 @@ bool wild;
 
 struct pokemonStats stats[2];
 uint8_t *currentStatusPointer[2];
-uint8_t statmods[2][7];
 
+uint8_t statmods[2][7];
 uint8_t confusedturns[2];
 bool leech[2];
 uint8_t trapturns[2];
@@ -697,7 +697,7 @@ void attack(bool player, uint8_t move) {
 	}
 	if (*currentStatusPointer[player] == 4) {
 		if (rand() % 3 == 0) {
-			*currentStatusPointer[player] = 1;
+			*currentStatusPointer[player] = 0;
 			sprintf(str, "%s woke up", username);
 			text_Display(str, true);
 		}
@@ -782,6 +782,7 @@ startattack:
 					damage *= (2 * userlevel + 5) / (userlevel + 5);
 				}
 			}
+			text_Display("Critical Hit", true);
 		}
 		else {
 			if (player) {

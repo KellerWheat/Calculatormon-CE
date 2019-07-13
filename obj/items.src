@@ -1,795 +1,14 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\ITEMS.C"
 	.assume ADL=1
-.DEBUG "C"
-	SEGMENT CODE
-.BEGREC "NONAME0",6
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "rem"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME0"
-.BEGREC "NONAME1",8
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 5
-.ENDEF
-.DEFINE "rem"
-.VALUE 4
-.CLASS 8
-.TYPE 5
-.ENDEF
-.ENDREC "NONAME1"
-.BEGREC "header",6
-.DEFINE "s"
-.VALUE 0
-.CLASS 11
-.TAG "NONAME2"
-.TYPE 8
-.ENDEF
-.DEFINE "x"
-.VALUE 0
-.CLASS 11
-.TYPE 2
-.ENDEF
-.ENDREC "header"
-.BEGREC "NONAME2",6
-.DEFINE "ptr"
-.VALUE 0
-.CLASS 8
-.TAG "header"
-.TYPE 40
-.ENDEF
-.DEFINE "size"
-.VALUE 3
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME2"
-.BEGREC "NONAME3",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME3"
-.BEGREC "NONAME4",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME4"
-.BEGREC "NONAME5",6
-.DEFINE "x"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "y"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME5"
-.BEGREC "NONAME6",12
-.DEFINE "xmin"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymin"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "xmax"
-.VALUE 6
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymax"
-.VALUE 9
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME6"
-.BEGREC "NONAME7",18
-.DEFINE "map"
-.VALUE 0
-.CLASS 8
-.TYPE 44
-.ENDEF
-.DEFINE "tiles"
-.VALUE 3
-.CLASS 8
-.TAG "NONAME3"
-.TYPE 296
-.ENDEF
-.DEFINE "tile_height"
-.VALUE 6
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "tile_width"
-.VALUE 7
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_height"
-.VALUE 8
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_width"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_width"
-.VALUE 10
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_height"
-.VALUE 11
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 12
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "width"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "y_loc"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "x_loc"
-.VALUE 15
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME7"
-.BEGREC "fmt_type",19
-.DEFINE "status"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "flags"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "size"
-.VALUE 2
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "chr"
-.VALUE 3
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "type"
-.VALUE 4
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "field_width"
-.VALUE 5
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "precision"
-.VALUE 6
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "set_begin"
-.VALUE 7
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "set_end"
-.VALUE 10
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "pad_whole"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_pre_fract"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_post_fract"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_at"
-.VALUE 16
-.CLASS 8
-.TYPE 34
-.ENDEF
-.ENDREC "fmt_type"
-.BEGREC "flt_info",12
-.DEFINE "flags"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "digits"
-.VALUE 2
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.ENDREC "flt_info"
-.BEGREC "NONAME8",9
-.DEFINE "sign"
-.VALUE 0
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "mant"
-.VALUE 2
-.CLASS 8
-.DIM 7
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME8"
-.BEGREC "NONAME9",18
-.DEFINE "real"
-.VALUE 0
-.CLASS 8
-.TAG "NONAME8"
-.TYPE 8
-.ENDEF
-.DEFINE "imag"
-.VALUE 9
-.CLASS 8
-.TAG "NONAME8"
-.TYPE 8
-.ENDEF
-.ENDREC "NONAME9"
-.BEGREC "NONAME10",11
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME8"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME10"
-.BEGREC "NONAME11",20
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME9"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME11"
-.BEGREC "NONAME12",11
-.DEFINE "cols"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "rows"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME8"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME12"
-.BEGREC "NONAME13",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME13"
-.BEGREC "NONAME14",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME14"
-.BEGREC "NONAME15",3
-.DEFINE "size"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME15"
-.BEGREC "__stdio_file",1
-.DEFINE "slot"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "__stdio_file"
-.BEGREC "pokemonData",34
-.DEFINE "id"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "moves"
-.VALUE 1
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "pp"
-.VALUE 5
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "level"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xp"
-.VALUE 10
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "currenthealth"
-.VALUE 13
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "currentstatus"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthIV"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "attackIV"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "defenceIV"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialattackIV"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialdefenceIV"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "speedIV"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthEV"
-.VALUE 22
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attackEV"
-.VALUE 24
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defenceEV"
-.VALUE 26
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattackEV"
-.VALUE 28
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefenceEV"
-.VALUE 30
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speedEV"
-.VALUE 32
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonData"
-.BEGREC "pokemonType",51
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 16
-.TYPE 98
-.ENDEF
-.DEFINE "element1"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "element2"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basehealth"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "baseattack"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basedefence"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialattack"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialdefence"
-.VALUE 22
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespeed"
-.VALUE 23
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "movelevels"
-.VALUE 24
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "moveids"
-.VALUE 34
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "evolvelevel"
-.VALUE 44
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolveid"
-.VALUE 45
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolvesfrom"
-.VALUE 46
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xpdrop"
-.VALUE 47
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "xptype"
-.VALUE 49
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "catchrate"
-.VALUE 50
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "pokemonType"
-.BEGREC "pokemonStats",12
-.DEFINE "health"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attack"
-.VALUE 2
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defence"
-.VALUE 4
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattack"
-.VALUE 6
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefence"
-.VALUE 8
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speed"
-.VALUE 10
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonStats"
-.BEGREC "move",21
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 14
-.TYPE 98
-.ENDEF
-.DEFINE "element"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "power"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "accuracy"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "uses"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statustype"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statuschance"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "move"
-.BEGREC "zoneData",640
-.DEFINE "spawnids"
-.VALUE 0
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnminlevels"
-.VALUE 80
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnmaxlevels"
-.VALUE 160
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "exitzone"
-.VALUE 240
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exitx"
-.VALUE 256
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exity"
-.VALUE 272
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorzones"
-.VALUE 288
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorx"
-.VALUE 304
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doory"
-.VALUE 320
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc1"
-.VALUE 336
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc2"
-.VALUE 352
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerspawnids"
-.VALUE 368
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerspawnlevels"
-.VALUE 464
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerx"
-.VALUE 560
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainery"
-.VALUE 576
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerdir"
-.VALUE 592
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "data_trainerText"
-.VALUE 608
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerreward"
-.VALUE 624
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.ENDREC "zoneData"
 	SEGMENT TEXT
 _healAmounts:
 	DW	20
 	DW	50
 	DW	120
 	DW	1000
-.DEFINE "healAmounts"
-.ALIAS "_healAmounts"
-.CLASS 84
-.VALUE _healAmounts
-.DIM 4
-.TYPE 109
-.ENDEF
 	SEGMENT DATA
 _itemNames:
 	DB	80
@@ -1112,14 +331,6 @@ _itemNames:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "itemNames"
-.ALIAS "_itemNames"
-.CLASS 69
-.VALUE _itemNames
-.DIM 20
-.DIM 16
-.TYPE 866
-.ENDEF
 _itemDescriptions:
 	DB	65
 	DB	32
@@ -2481,14 +1692,6 @@ _itemDescriptions:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "itemDescriptions"
-.ALIAS "_itemDescriptions"
-.CLASS 69
-.VALUE _itemDescriptions
-.DIM 20
-.DIM 68
-.TYPE 866
-.ENDEF
 _itemPrices:
 	DW	200
 	DW	600
@@ -2510,21 +1713,8 @@ _itemPrices:
 	DW	2100
 	DW	2100
 	DW	2100
-.DEFINE "itemPrices"
-.ALIAS "_itemPrices"
-.CLASS 69
-.VALUE _itemPrices
-.DIM 20
-.TYPE 109
-.ENDEF
 _itemCount:
 	DB	20
-.DEFINE "itemCount"
-.ALIAS "_itemCount"
-.CLASS 69
-.VALUE _itemCount
-.TYPE 12
-.ENDEF
 ;    1	#include <graphx.h>
 ;    2	#include <stdio.h>
 ;    3	#include <stdint.h>
@@ -2600,52 +1790,12 @@ _itemCount:
 ;   72	
 ;   73	void items_IndexToName(char *name, uint8_t index) {
 _items_IndexToName:
-.DEFINE "_items_IndexToName"
-
-.VALUE _items_IndexToName
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "items_IndexToName",73,"_items_IndexToName"
-
-.LINE 73
-
-.DEFINE "name"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "index"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 12
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
+	CALL	__frameset0
 ;   74		if (index < 20) {
-.LINE 74
-
 	LD	A,(IX+9)
 	CP	A,20
 	JR	NC,L_1
 ;   75			sprintf(name, itemNames[index]);
-.LINE 75
-
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -2663,13 +1813,9 @@ _items_IndexToName:
 	POP	BC
 ;   76		}
 ;   77		else {
-.LINE 77
-
 	JR	L_2
 L_1:
 ;   78			sprintf(name, data_moves[index-19].name);
-.LINE 78
-
 	LD	A,(IX+9)
 	UEXT	HL
 	LD	L,A
@@ -2689,8 +1835,6 @@ L_1:
 ;   79		}
 ;   80	}
 L_2:
-.LINE 80
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2709,74 +1853,26 @@ L_2:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "items_IndexToName",80,"_items_IndexToName"
 ;   81	
 ;   82	
 ;   83	void items_ItemShop(void) {
 _items_ItemShop:
-.DEFINE "_items_ItemShop"
-
-.VALUE _items_ItemShop
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "items_ItemShop",83,"_items_ItemShop"
-
-.LINE 83
-
-.DEFINE "shopCurrent"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "shopPage"
-
-.CLASS 65
-
-.VALUE -2
-
-.TYPE 12
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	LEA	HL,IX+-11
-	LD	SP,HL
+	LD	HL,-8
+	CALL	__frameset
 ;   84		uint8_t shopPage = 0;
-.LINE 84
-
 	LD	(IX+-2),0
 ;   85		uint8_t shopCurrent = 1;
-.LINE 85
-
 	LD	(IX+-1),1
 ;   86	
 ;   87		gfx_SetDrawScreen();
-.LINE 87
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;   88	reloadshop:
-.LINE 88
-
 L_3:
 ;   89	
 ;   90		gfx_SetColor(colors[0]);
-.LINE 90
-
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
@@ -2784,8 +1880,6 @@ L_3:
 	CALL	_gfx_SetColor
 	POP	BC
 ;   91		gfx_FillRectangle(20, 20, 290, 200);
-.LINE 91
-
 	LD	BC,200
 	PUSH	BC
 	LD	BC,290
@@ -2799,8 +1893,6 @@ L_3:
 	POP	BC
 	POP	BC
 ;   92		gfx_SetColor(colors[1]);
-.LINE 92
-
 	LD	HL,_colors
 	INC	HL
 	LD	C,(HL)
@@ -2809,8 +1901,6 @@ L_3:
 	CALL	_gfx_SetColor
 	POP	BC
 ;   93		gfx_Rectangle(20, 20, 290, 200);
-.LINE 93
-
 	LD	BC,200
 	PUSH	BC
 	LD	BC,290
@@ -2824,8 +1914,6 @@ L_3:
 	POP	BC
 	POP	BC
 ;   94		gfx_SetColor(colors[0]);
-.LINE 94
-
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
@@ -2833,8 +1921,6 @@ L_3:
 	CALL	_gfx_SetColor
 	POP	BC
 ;   95		gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-.LINE 95
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -2852,12 +1938,8 @@ L_3:
 	POP	BC
 	POP	BC
 ;   96		map_DrawInformationBar();
-.LINE 96
-
 	CALL	_map_DrawInformationBar
 ;   97		while (kb_Data[1] & kb_2nd) { kb_Scan(); }
-.LINE 97
-
 	JR	L_4
 L_5:
 	CALL	_kb_Scan
@@ -2867,32 +1949,26 @@ L_4:
 	JR	NZ,L_5
 ;   98	
 ;   99		i = 0;
-.LINE 99
-
 	LD	HL,_i
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
 ;  100		while (i < 10) {
-.LINE 100
-
 	JR	L_8
 L_9:
 ;  101			gfx_PrintStringXY(itemNames[i + shopPage], 35, 25 + i * 20);
-.LINE 101
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
 	CALL	__imul_b
 	LD	IY,HL
-	LEA	BC,IY+25
-	PUSH	BC
-	LD	BC,35
-	PUSH	BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
+	LEA	DE,IY+25
+	PUSH	DE
+	LD	DE,35
+	PUSH	DE
 	LD	A,(IX+-2)
 	UEXT	HL
 	LD	L,A
@@ -2909,8 +1985,6 @@ L_9:
 	POP	BC
 	POP	BC
 ;  102			sprintf(str, "%u$", itemPrices[i + shopPage]);
-.LINE 102
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
@@ -2933,8 +2007,6 @@ L_9:
 	POP	BC
 	POP	BC
 ;  103			gfx_PrintStringXY(str, 170, 25 + i * 20);
-.LINE 103
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
@@ -2951,8 +2023,6 @@ L_9:
 	POP	BC
 	POP	BC
 ;  104			sprintf(str, "%u", playerItems[i + shopPage]);
-.LINE 104
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
@@ -2975,8 +2045,6 @@ L_9:
 	POP	BC
 	POP	BC
 ;  105			gfx_PrintStringXY(str, 240, 25 + i * 20);
-.LINE 105
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,20
@@ -2993,8 +2061,6 @@ L_9:
 	POP	BC
 	POP	BC
 ;  106			i++;
-.LINE 106
-
 	LD	BC,(_i)
 	INC	BC
 	LD	HL,_i
@@ -3003,8 +2069,6 @@ L_9:
 	LD	(HL),B
 ;  107		}
 L_8:
-.LINE 107
-
 	LD.LIS	BC,10
 	LD	HL,(_i)
 	OR	A,A
@@ -3012,34 +2076,22 @@ L_8:
 	JR	C,L_9
 ;  108	
 ;  109		while (!(kb_Data[6] & kb_Clear))
-.LINE 109
-
 	JR	L_31
 L_32:
 ;  110		{
 ;  111			kb_Scan();
-.LINE 111
-
 	CALL	_kb_Scan
 ;  112			if (kb_Data[7] & kb_Up) {
-.LINE 112
-
 	LD	A,(16056350)
 	AND	A,8
 	JR	Z,L_16
 ;  113				if (shopCurrent != 0) {
-.LINE 113
-
 	LD	A,(IX+-1)
 	OR	A,A
 	JR	Z,L_16
 ;  114					shopCurrent--;
-.LINE 114
-
 	DEC	(IX+-1)
 ;  115					gfx_FillRectangle(25, 25, 9, 190);
-.LINE 115
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -3053,8 +2105,6 @@ L_32:
 	POP	BC
 	POP	BC
 ;  116					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-.LINE 116
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -3072,8 +2122,6 @@ L_32:
 	POP	BC
 	POP	BC
 ;  117					Wait(20);
-.LINE 117
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
@@ -3081,27 +2129,17 @@ L_32:
 ;  118				}
 ;  119			}
 L_16:
-.LINE 119
-
 ;  120			if (kb_Data[7] & kb_Down) {
-.LINE 120
-
 	LD	A,(16056350)
 	AND	A,1
 	JR	Z,L_22
 ;  121				if (shopCurrent != 9) {
-.LINE 121
-
 	LD	A,(IX+-1)
 	CP	A,9
 	JR	Z,L_22
 ;  122					shopCurrent++;
-.LINE 122
-
 	INC	(IX+-1)
 ;  123					gfx_FillRectangle(25, 25, 9, 190);
-.LINE 123
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -3115,8 +2153,6 @@ L_16:
 	POP	BC
 	POP	BC
 ;  124					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-.LINE 124
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -3134,8 +2170,6 @@ L_16:
 	POP	BC
 	POP	BC
 ;  125					Wait(20);
-.LINE 125
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
@@ -3143,11 +2177,7 @@ L_16:
 ;  126				}
 ;  127			}
 L_22:
-.LINE 127
-
 ;  128			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
-.LINE 128
-
 	LD	A,(16056350)
 	AND	A,4
 	JR	NZ,L_21
@@ -3156,36 +2186,22 @@ L_22:
 	JR	Z,L_30
 L_21:
 ;  129				if (shopPage == 10) {
-.LINE 129
-
 	LD	A,(IX+-2)
 	CP	A,10
 	JR	NZ,L_19
 ;  130					shopPage = 0;
-.LINE 130
-
 	LD	(IX+-2),0
 ;  131				}
 ;  132				else {
-.LINE 132
-
 	JR	L_20
 L_19:
 ;  133					shopPage = 10;
-.LINE 133
-
 	LD	(IX+-2),10
 ;  134				}
 L_20:
-.LINE 134
-
 ;  135				shopCurrent = 0;
-.LINE 135
-
 	LD	(IX+-1),0
 ;  136				gfx_FillRectangle(25, 25, 9, 190);
-.LINE 136
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,9
@@ -3199,8 +2215,6 @@ L_20:
 	POP	BC
 	POP	BC
 ;  137				gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-.LINE 137
-
 	LD	BC,25
 	PUSH	BC
 	PUSH	BC
@@ -3211,30 +2225,20 @@ L_20:
 	POP	BC
 	POP	BC
 ;  138				Wait(20);
-.LINE 138
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;  139				goto reloadshop;
-.LINE 139
-
 	JR	L_3
 ;  140			}
 L_30:
-.LINE 140
-
 ;  141	
 ;  142			if (kb_Data[1] & kb_2nd) {
-.LINE 142
-
 	LD	A,(16056338)
 	AND	A,32
 	JR	Z,L_31
 ;  143				if (playerMoney >= itemPrices[shopCurrent + shopPage]) {
-.LINE 143
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -3248,23 +2252,14 @@ L_30:
 	ADD	HL,BC
 	LD	BC,(HL)
 	CALL	__stoiu
-	LD	BC,HL
-	LD	(IX+-9),B	; spill
-	LD	B,0
-	LD	(IX+-11),B	; spill
-	LD	B,(IX+-9)	; unspill
-	LD	HL,(_playerMoney)
 	LD	A,(_playerMoney+3)
 	LD	E,A
-	LD	(IX+-9),B	; spill
-	LD	B,(IX+-11)	; unspill
-	LD	A,B
-	LD	B,(IX+-9)	; unspill
+	LD	BC,HL
+	XOR	A,A
+	LD	HL,(_playerMoney)
 	CALL	__lcmpu
 	JR	C,L_25
 ;  144					playerMoney -= itemPrices[shopCurrent + shopPage];
-.LINE 144
-
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -3279,39 +2274,26 @@ L_30:
 	ADD	HL,BC
 	LD	BC,(HL)
 	CALL	__stoiu
-	LD	BC,HL
-	LD	(IX+-9),B	; spill
-	LD	B,0
-	LD	(IX+-10),B	; spill
-	LD	B,(IX+-9)	; unspill
-	LD	HL,(_playerMoney)
 	LD	A,(_playerMoney+3)
 	LD	E,A
-	LD	(IX+-9),B	; spill
-	LD	B,(IX+-10)	; unspill
-	LD	A,B
-	LD	B,(IX+-9)	; unspill
+	LD	BC,HL
+	XOR	A,A
+	LD	HL,(_playerMoney)
 	CALL	__lsub
 	LD	(_playerMoney),HL
-	LD	A,E
-	LD	(_playerMoney+3),A
 ;  145					playerItems[shopCurrent + shopPage]++;
-.LINE 145
-
-	LD	BC,(IX+-8)
 	LD	HL,_playerItems
+	LD	A,E
+	LD	BC,(IX+-8)
 	ADD	HL,BC
+	LD	(_playerMoney+3),A
 	LD	(IX+-5),HL
-	LD	IY,(IX+-5)
 	LD	A,(HL)
 	INC	A
-	LD	(IY),A
+	LD	HL,(IX+-5)
+	LD	(HL),A
 ;  146				}
-.LINE 146
-
 ;  147				while (kb_Data[1] & kb_2nd) { kb_Scan(); }
-.LINE 147
-
 	JR	L_25
 L_26:
 	CALL	_kb_Scan
@@ -3320,27 +2302,19 @@ L_25:
 	AND	A,32
 	JR	NZ,L_26
 ;  148				goto reloadshop;
-.LINE 148
-
 	JR	L_3
 ;  149			}
 ;  150		}
 L_31:
-.LINE 150
-
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_32
 ;  151		gfx_SetDrawBuffer();
-.LINE 151
-
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;  152	}
-.LINE 152
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3368,11 +2342,10 @@ L_31:
 ;shopCurrent                           IX-1      1   variable
 
 
-; Stack Frame Size: 17 (bytes)
+; Stack Frame Size: 14 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "items_ItemShop",152,"_items_ItemShop"
 	SEGMENT STRSECT
 L__2:
 	DB	">"
@@ -3396,51 +2369,10 @@ L__16:
 ;  153	
 ;  154	bool items_UseItem(uint8_t index) {
 _items_UseItem:
-.DEFINE "_items_UseItem"
-
-.VALUE _items_UseItem
-
-.CLASS 2
-
-.TYPE 76
-
-.ENDEF
-
-.BEGFUNC "items_UseItem",154,"_items_UseItem"
-
-.LINE 154
-
-.DEFINE "index"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "itemName"
-
-.CLASS 65
-
-.VALUE -41
-
-.DIM 20
-
-.TYPE 98
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	LEA	HL,IX+-74
-	LD	SP,HL
+	LD	HL,-74
+	CALL	__frameset
 ;  155		char itemName[20];
 ;  156		if (index < 4 || playerItems[index] == 0) {
-.LINE 156
-
 	LD	A,(IX+6)
 	CP	A,4
 	JR	C,L_37
@@ -3455,17 +2387,11 @@ _items_UseItem:
 	JR	NZ,L_38
 L_37:
 ;  157			return false;
-.LINE 157
-
 	XOR	A,A
 	JR	L_76
 ;  158		}
 L_38:
-.LINE 158
-
 ;  159		i = menu_PokemonMenu(false);
-.LINE 159
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_menu_PokemonMenu
@@ -3476,8 +2402,6 @@ L_38:
 	INC	HL
 	LD	(HL),B
 ;  160		if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
-.LINE 160
-
 	LD	HL,(_i)
 	CALL	__scmpzero
 	JR	Z,L_41
@@ -3499,17 +2423,11 @@ L_38:
 	JR	NZ,L_42
 L_41:
 ;  161			return false;
-.LINE 161
-
 	XOR	A,A
 	JR	L_76
 ;  162		}
 L_42:
-.LINE 162
-
 ;  163		i -= 1;
-.LINE 163
-
 	LD	IY,(_i)
 	LEA	BC,IY+-1
 	LD	HL,_i
@@ -3517,22 +2435,16 @@ L_42:
 	INC	HL
 	LD	(HL),B
 ;  164		if (index < 8) {
-.LINE 164
-
 	LD	A,(IX+6)
 	CP	A,8
 	JR	NC,L_65
 ;  165			playerItems[index]--;
-.LINE 165
-
 	LD	HL,(IX+-3)
-	LD	IY,(IX+-3)
 	LD	A,(HL)
 	DEC	A
-	LD	(IY),A
+	LD	HL,(IX+-3)
+	LD	(HL),A
 ;  166			HealHp(i, healAmounts[index - 4]);
-.LINE 166
-
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3543,10 +2455,10 @@ L_42:
 	ADD	HL,HL
 	LD	BC,_healAmounts
 	ADD	HL,BC
-	LD	BC,(HL)
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,(HL)
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealHp
@@ -3554,94 +2466,76 @@ L_42:
 	POP	BC
 ;  167		}
 ;  168		else if (index < 10) {
-.LINE 168
-
 	JR	L_74
 L_65:
 	LD	A,(IX+6)
 	CP	A,10
 	JR	NC,L_63
 ;  169			playerItems[index]--;
-.LINE 169
-
 	LD	HL,(IX+-3)
-	LD	IY,(IX+-3)
 	LD	A,(HL)
 	DEC	A
-	LD	(IY),A
+	LD	HL,(IX+-3)
+	LD	(HL),A
 ;  170			HealStatus(i, 0);
-.LINE 170
-
-	LD	BC,0
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,0
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
 ;  171			HealStatus(i, 1);
-.LINE 171
-
-	LD	BC,1
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,1
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
 ;  172			HealStatus(i, 2);
-.LINE 172
-
-	LD	BC,2
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,2
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
 ;  173			HealStatus(i, 3);
-.LINE 173
-
-	LD	BC,3
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,3
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
 ;  174			HealStatus(i, 4);
-.LINE 174
-
-	LD	BC,4
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,4
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
 	POP	BC
 	POP	BC
 ;  175			if (index == 9) {
-.LINE 175
-
 	LD	A,(IX+6)
 	CP	A,9
 	JR	NZ,L_74
 ;  176				HealHp(i, 1000);
-.LINE 176
-
-	LD	BC,1000
-	PUSH	BC
 	LD	A,(_i)
 	LD	C,A
+	LD	DE,1000
+	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealHp
@@ -3650,30 +2544,24 @@ L_65:
 ;  177			}
 ;  178		}
 ;  179		else if (index < 15) {
-.LINE 179
-
 	JR	L_74
 L_63:
 	LD	A,(IX+6)
 	CP	A,15
 	JR	NC,L_61
 ;  180			playerItems[index]--;
-.LINE 180
-
 	LD	HL,(IX+-3)
-	LD	IY,(IX+-3)
 	LD	A,(HL)
 	DEC	A
-	LD	(IY),A
+	LD	HL,(IX+-3)
+	LD	(HL),A
 ;  181			HealStatus(i, index-10);
-.LINE 181
-
 	LD	A,(IX+6)
 	SUB	A,10
 	LD	C,A
+	LD	A,(_i)
 	LD	B,0
 	PUSH	BC
-	LD	A,(_i)
 	LD	C,A
 	PUSH	BC
 	CALL	_HealStatus
@@ -3681,16 +2569,12 @@ L_63:
 	POP	BC
 ;  182		}
 ;  183		else if (index < 20) {
-.LINE 183
-
 	JR	L_74
 L_61:
 	LD	A,(IX+6)
 	CP	A,20
 	JR	NC,L_74
 ;  184			sprintf(str, "%s has evolved", data_pokemon[party[i].id].name);
-.LINE 184
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -3712,19 +2596,16 @@ L_61:
 	LD	BC,_str
 	PUSH	BC
 	CALL	_sprintf
-	POP	BC
-	POP	BC
-	POP	BC
 ;  185			if (data_pokemon[party[i].id].evolvelevel == index + 86) {
-.LINE 185
-
 	LD	BC,(_i)
 	CALL	__stoiu
+	POP	BC
+	POP	BC
+	POP	BC
 	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-6),HL
 	LD	BC,_party
-	LD	HL,(IX+-6)
 	ADD	HL,BC
 	LD	(IX+-21),HL
 	LD	IY,(IX+-21)
@@ -3743,15 +2624,13 @@ L_61:
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
+	OR	A,A
 	LD	IY,HL
 	LEA	DE,IY+86
 	LD	HL,BC
-	OR	A,A
 	SBC	HL,DE
 	JR	NZ,L_56
 ;  186				party[i].id = data_pokemon[party[i].id].evolveid;
-.LINE 186
-
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3770,8 +2649,6 @@ L_61:
 	LD	(IY+0),A
 ;  187			}
 ;  188			else if (data_pokemon[party[i].id].evolvelevel == 106) {
-.LINE 188
-
 	JR	L_58
 L_56:
 	LD	IY,(IX+-21)
@@ -3787,14 +2664,10 @@ L_56:
 	CP	A,106
 	JR	NZ,L_54
 ;  189				if (index = 19) {
-.LINE 189
-
 	LD	(IX+6),19
 ;  190					party[i].id += 1;
-.LINE 190
-
-	LD	BC,_party
 	LD	HL,(IX+-6)
+	LD	BC,_party
 	ADD	HL,BC
 	LD	(IX+-47),HL
 	LD	IY,(IX+-47)
@@ -3803,56 +2676,24 @@ L_56:
 	LD	(IY+0),A
 ;  191				}
 ;  192				else if (index = 17) {
-.LINE 192
-
 	JR	L_58
 ;  193					party[i].id += 2;
-.LINE 193
-
 ;  194				}
 ;  195				else if (index = 15) {
-.LINE 195
-
 ;  196					party[i].id += 3;
-.LINE 196
-
-	LD	BC,(_i)
-	CALL	__stoiu
-	LD	A,34
-	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-53),HL
-	LD	IY,(IX+-53)
-	LD	A,(IY+0)
-	ADD	A,3
-	LD	(IY+0),A
 ;  197				}
 ;  198				else {
-.LINE 198
-
-	JR	L_58
 ;  199					return false;
-.LINE 199
-
 ;  200				}
 ;  201			}
 ;  202			else {
 L_54:
-.LINE 202
-
 ;  203				return false;
-.LINE 203
-
 	XOR	A,A
 	JR	L_76
 ;  204			}
 L_58:
-.LINE 204
-
 ;  205			playerItems[index]--;
-.LINE 205
-
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3860,38 +2701,28 @@ L_58:
 	ADD	HL,BC
 	LD	(IX+-56),HL
 	LD	IY,(IX+-56)
-	LD	A,(HL)
-	DEC	A
-	LD	(IY),A
 ;  206			text_Display(str, false);
-.LINE 206
-
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
+	LD	A,(HL)
+	DEC	A
+	LD	(IY),A
 	CALL	_text_Display
 	POP	BC
 	POP	BC
 ;  207			return true;
-.LINE 207
-
 	LD	A,1
 	JR	L_76
 ;  208		}
 L_74:
-.LINE 208
-
 ;  209	
 ;  210		if (index >= 20) {
-.LINE 210
-
 	LD	A,(IX+6)
 	CP	A,20
 	JR	C,L_75
 ;  211			if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
-.LINE 211
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -3940,8 +2771,6 @@ L_74:
 	JR	NZ,L_72
 L_71:
 ;  212				sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
-.LINE 212
-
 	LD	IY,(IX+-18)
 	PEA	IY+0
 	LD	BC,L__38
@@ -3953,8 +2782,6 @@ L_71:
 	POP	BC
 	POP	BC
 ;  213				text_Display(str, false);
-.LINE 213
-
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -3963,8 +2790,6 @@ L_71:
 	POP	BC
 	POP	BC
 ;  214				switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
-.LINE 214
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -3975,8 +2800,11 @@ L_71:
 	LD	IY,(IX+-62)
 	LEA	BC,IY+1
 	LD	(IX+-59),BC
-	LD	BC,0
-	PUSH	BC
+	LD	BC,_data_moves
+	LD	DE,_data_moves
+	OR	A,A
+	SBC	HL,HL
+	PUSH	HL
 	LD	IY,(IX+-59)
 	LEA	HL,IY+3
 	LD	A,(HL)
@@ -3984,7 +2812,6 @@ L_71:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,_data_moves
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
@@ -3995,7 +2822,7 @@ L_71:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	ADD	HL,BC
+	ADD	HL,DE
 	LD	IY,HL
 	PEA	IY+0
 	LD	HL,(IX+-59)
@@ -4023,8 +2850,7 @@ L_71:
 	POP	BC
 	POP	BC
 	POP	BC
-	CALL	__seqcaseD
-	JP	(HL)
+	CALL	__seqcase
 L__39:
 	DW	4
 	DW	1
@@ -4042,11 +2868,7 @@ L__39:
 ;  215				{
 ;  216				case 1:
 L_67:
-.LINE 216
-
 ;  217					party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
-.LINE 217
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -4075,16 +2897,10 @@ L_67:
 	LD	IY,(IX+-65)
 	LD	(IY+1),A
 ;  218					break;
-.LINE 218
-
 	JR	L_75
 ;  219				case 2:
 L_68:
-.LINE 219
-
 ;  220					party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
-.LINE 220
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -4109,20 +2925,16 @@ L_68:
 	LD	IY,BC
 	LEA	HL,IY+34
 	ADD	HL,DE
-	LD	IY,(IX+-68)
 	LD	A,(HL)
-	LD	(IY+2),A
+	LD	IY,(IX+-68)
+	LEA	HL,IY+1
+	INC	HL
+	LD	(HL),A
 ;  221					break;
-.LINE 221
-
 	JR	L_75
 ;  222				case 3:
 L_69:
-.LINE 222
-
 ;  223					party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
-.LINE 223
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -4147,20 +2959,15 @@ L_69:
 	LD	IY,BC
 	LEA	HL,IY+34
 	ADD	HL,DE
-	LD	IY,(IX+-71)
 	LD	A,(HL)
-	LD	(IY+3),A
+	LD	IY,(IX+-71)
+	LEA	HL,IY+3
+	LD	(HL),A
 ;  224					break;
-.LINE 224
-
 	JR	L_75
 ;  225				case 4:
 L_70:
-.LINE 225
-
 ;  226					party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
-.LINE 226
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -4185,22 +2992,17 @@ L_70:
 	LD	IY,BC
 	LEA	HL,IY+34
 	ADD	HL,DE
-	LD	IY,(IX+-74)
 	LD	A,(HL)
-	LD	(IY+4),A
+	LD	IY,(IX+-74)
+	LEA	HL,IY+4
+	LD	(HL),A
 ;  227					break;
-.LINE 227
-
 	JR	L_75
 ;  228				}
 ;  229			}
 ;  230			else {
 L_72:
-.LINE 230
-
 ;  231				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
-.LINE 231
-
 	LD	IY,(IX+-9)
 	PEA	IY+0
 	LD	IY,(IX+-12)
@@ -4222,8 +3024,6 @@ L_72:
 	POP	BC
 	POP	BC
 ;  232				text_Display(str, false);
-.LINE 232
-
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -4232,20 +3032,14 @@ L_72:
 	POP	BC
 	POP	BC
 ;  233				return false;
-.LINE 233
-
 	XOR	A,A
 	JR	L_76
 ;  234			}
 ;  235		}
 L_75:
-.LINE 235
-
 ;  236	
 ;  237	
 ;  238		items_IndexToName(&itemName, index);
-.LINE 238
-
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
@@ -4254,8 +3048,6 @@ L_75:
 	POP	BC
 	POP	BC
 ;  239		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
-.LINE 239
-
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -4283,8 +3075,6 @@ L_75:
 	POP	BC
 	POP	BC
 ;  240		text_Display(str, true);
-.LINE 240
-
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -4293,13 +3083,9 @@ L_75:
 	POP	BC
 	POP	BC
 ;  241		return true;
-.LINE 241
-
 	LD	A,1
 ;  242	}
 L_76:
-.LINE 242
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4336,7 +3122,6 @@ L_76:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "items_UseItem",242,"_items_UseItem"
 	SEGMENT STRSECT
 L__32:
 	DB	"%s has evolved"
@@ -4354,48 +3139,9 @@ L__41:
 ;  243	
 ;  244	void HealHp(uint8_t index, uint16_t amount) {
 _HealHp:
-.DEFINE "_HealHp"
-
-.VALUE _HealHp
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "HealHp",244,"_HealHp"
-
-.LINE 244
-
-.DEFINE "index"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "amount"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 13
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	LEA	HL,IX+-30
-	LD	SP,HL
+	LD	HL,-36
+	CALL	__frameset
 ;  245		party[index].currenthealth += amount;
-.LINE 245
-
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4403,7 +3149,6 @@ _HealHp:
 	CALL	__imul_b
 	LD	(IX+-6),HL
 	LD	BC,_party
-	LD	HL,(IX+-6)
 	ADD	HL,BC
 	LD	(IX+-3),HL
 	LD	BC,(IX+9)
@@ -4414,10 +3159,8 @@ _HealHp:
 	LD	(IY+13),C
 	LD	(IY+14),B
 ;  246		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
-.LINE 246
-
-	LD	BC,_party
 	LD	HL,(IX+-6)
+	LD	BC,_party
 	ADD	HL,BC
 	LD	IY,0
 	ADD	IY,SP
@@ -4425,10 +3168,10 @@ _HealHp:
 	LD	SP,IY
 	LD	IY,0
 	ADD	IY,SP
-	LD	DE,IY
-	LD	BC,34
-	LDIR	
 	PEA	IX+-18
+	LD	BC,34
+	LD	DE,IY
+	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
 	ADD	IY,SP
@@ -4440,8 +3183,6 @@ _HealHp:
 	SBC.SIS	HL,BC
 	JR	NC,L_78
 ;  247			party[index].currenthealth = stats_CalculateStats(party[index]).health;
-.LINE 247
-
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -4451,27 +3192,26 @@ _HealHp:
 	LD	SP,IY
 	LD	IY,0
 	ADD	IY,SP
+	PEA	IX+-30
 	LD	DE,IY
 	LD	BC,34
 	LDIR	
-	PEA	IX+-30
 	CALL	_stats_CalculateStats
 	LD	IY,39
+	LD	(IX+-36),HL	; spill
 	ADD	IY,SP
 	LD	SP,IY
-	LD	IY,HL
-	LD	BC,_party
 	LD	HL,(IX+-6)
+	LD	BC,_party
 	ADD	HL,BC
-	LD	BC,(IY)
 	LD	IY,HL
+	LD	HL,(IX+-36)	; unspill
+	LD	BC,(HL)
 	LD	(IY+13),C
 	LD	(IY+14),B
 ;  248		}
 ;  249	}
 L_78:
-.LINE 249
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4486,53 +3226,14 @@ L_78:
 ;index                                 IX+6      1   parameter
 
 
-; Stack Frame Size: 42 (bytes)
+; Stack Frame Size: 48 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "HealHp",249,"_HealHp"
 ;  250	void HealStatus(uint8_t index, uint8_t type) {
 _HealStatus:
-.DEFINE "_HealStatus"
-
-.VALUE _HealStatus
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "HealStatus",250,"_HealStatus"
-
-.LINE 250
-
-.DEFINE "index"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "type"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 12
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
+	CALL	__frameset0
 ;  251		party[index].currentstatus = 0;
-.LINE 251
-
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4543,8 +3244,6 @@ _HealStatus:
 	LD	IY,HL
 	LD	(IY+15),0
 ;  252	}
-.LINE 252
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -4561,7 +3260,6 @@ _HealStatus:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "HealStatus",252,"_HealStatus"
 	XREF _menu_PokemonMenu:ROM
 	XREF _map_DrawInformationBar:ROM
 	XREF _stats_CalculateStats:ROM
@@ -4586,8 +3284,10 @@ _HealStatus:
 	XREF __lcmpu:ROM
 	XREF __lsub:ROM
 	XREF __stoiu:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
 	XREF __scmpzero:ROM
-	XREF __seqcaseD:ROM
+	XREF __seqcase:ROM
 	XREF __imul_b:ROM
 	XDEF _HealStatus
 	XDEF _HealHp

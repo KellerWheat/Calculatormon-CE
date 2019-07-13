@@ -678,9 +678,11 @@ void menu_ItemShop(gfx_sprite_t *shopSprite) {
 		gfx_TransparentSprite_NoClip(mapcursorsmall, 47, 61 + 14 * cursorState);
 
 		for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < 20; itemIndex++) {
-			gfx_PrintStringXY(itemNames[itemIndex], 60, 64 + 14 * (itemIndex - menuState));
+			gfx_PrintStringXY(itemNames[itemIndex], 60, 63 + 14 * (itemIndex - menuState));
 			sprintf(str, "%u", playerItems[itemIndex]);
-			gfx_PrintStringXY(str, 172, 65 + 14 * (itemIndex - menuState));
+			gfx_PrintStringXY(str, 172, 63 + 14 * (itemIndex - menuState));
+			sprintf(str, "%u$", itemPrices[itemIndex]);
+			gfx_PrintStringXY(str, 204, 63 + 14 * (itemIndex - menuState));
 		}
 
 		gfx_SwapDraw();
@@ -714,9 +716,8 @@ void menu_ItemShop(gfx_sprite_t *shopSprite) {
 			Wait(10);
 		}
 		else {
-			Wait(20);
+			Wait(15);
 		}
 		
 	}
-	gfx_SwapDraw();
 }

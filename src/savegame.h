@@ -14,6 +14,7 @@ extern uint16_t lastPlayerY;
 extern struct pokemonData party[36];
 extern uint16_t currentZone;
 extern bool indoors;
+extern bool surfing;
 extern uint8_t currentBuilding;
 extern uint32_t playerMoney;
 extern uint8_t playerItems[185];

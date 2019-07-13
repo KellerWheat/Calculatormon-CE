@@ -21,6 +21,7 @@ uint16_t lastPlayerY = 0;
 struct pokemonData party[36];
 uint16_t currentZone = 0;
 bool indoors = false;
+bool surfing = false;
 uint8_t currentBuilding = 0;
 uint32_t playerMoney = 1000;
 uint8_t playerItems[185] = {0};
@@ -29,6 +30,7 @@ bool defeatedTrainersIndoors[16][16] = { {0} };
 bool takenGifts[256] = { 0 };
 uint8_t badgeCount = 0;
 uint8_t pokedex[151] = { 0 };
+
 
 
 void save_Save(void) {

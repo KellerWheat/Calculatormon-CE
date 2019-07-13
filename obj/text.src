@@ -1,431 +1,16 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\TEXT.C"
 	.assume ADL=1
-.DEBUG "C"
-	SEGMENT CODE
-.BEGREC "NONAME0",6
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "rem"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME0"
-.BEGREC "NONAME1",8
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 5
-.ENDEF
-.DEFINE "rem"
-.VALUE 4
-.CLASS 8
-.TYPE 5
-.ENDEF
-.ENDREC "NONAME1"
-.BEGREC "header",6
-.DEFINE "s"
-.VALUE 0
-.CLASS 11
-.TAG "NONAME2"
-.TYPE 8
-.ENDEF
-.DEFINE "x"
-.VALUE 0
-.CLASS 11
-.TYPE 2
-.ENDEF
-.ENDREC "header"
-.BEGREC "NONAME2",6
-.DEFINE "ptr"
-.VALUE 0
-.CLASS 8
-.TAG "header"
-.TYPE 40
-.ENDEF
-.DEFINE "size"
-.VALUE 3
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME2"
-.BEGREC "NONAME3",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME3"
-.BEGREC "NONAME4",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME4"
-.BEGREC "NONAME5",6
-.DEFINE "x"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "y"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME5"
-.BEGREC "NONAME6",12
-.DEFINE "xmin"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymin"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "xmax"
-.VALUE 6
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymax"
-.VALUE 9
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME6"
-.BEGREC "NONAME7",18
-.DEFINE "map"
-.VALUE 0
-.CLASS 8
-.TYPE 44
-.ENDEF
-.DEFINE "tiles"
-.VALUE 3
-.CLASS 8
-.TAG "NONAME3"
-.TYPE 296
-.ENDEF
-.DEFINE "tile_height"
-.VALUE 6
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "tile_width"
-.VALUE 7
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_height"
-.VALUE 8
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_width"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_width"
-.VALUE 10
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_height"
-.VALUE 11
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 12
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "width"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "y_loc"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "x_loc"
-.VALUE 15
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME7"
-.BEGREC "fmt_type",19
-.DEFINE "status"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "flags"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "size"
-.VALUE 2
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "chr"
-.VALUE 3
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "type"
-.VALUE 4
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "field_width"
-.VALUE 5
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "precision"
-.VALUE 6
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "set_begin"
-.VALUE 7
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "set_end"
-.VALUE 10
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "pad_whole"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_pre_fract"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_post_fract"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_at"
-.VALUE 16
-.CLASS 8
-.TYPE 34
-.ENDEF
-.ENDREC "fmt_type"
-.BEGREC "flt_info",12
-.DEFINE "flags"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "digits"
-.VALUE 2
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.ENDREC "flt_info"
-.BEGREC "NONAME8",9
-.DEFINE "sign"
-.VALUE 0
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "mant"
-.VALUE 2
-.CLASS 8
-.DIM 7
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME8"
-.BEGREC "NONAME9",18
-.DEFINE "real"
-.VALUE 0
-.CLASS 8
-.TAG "NONAME8"
-.TYPE 8
-.ENDEF
-.DEFINE "imag"
-.VALUE 9
-.CLASS 8
-.TAG "NONAME8"
-.TYPE 8
-.ENDEF
-.ENDREC "NONAME9"
-.BEGREC "NONAME10",11
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME8"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME10"
-.BEGREC "NONAME11",20
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME9"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME11"
-.BEGREC "NONAME12",11
-.DEFINE "cols"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "rows"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME8"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME12"
-.BEGREC "NONAME13",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME13"
-.BEGREC "NONAME14",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME14"
-.BEGREC "NONAME15",3
-.DEFINE "size"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME15"
-.BEGREC "__stdio_file",1
-.DEFINE "slot"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "__stdio_file"
 	SEGMENT TEXT
 _delaytime:
 	DB	50
-.DEFINE "delaytime"
-.ALIAS "_delaytime"
-.CLASS 84
-.VALUE _delaytime
-.TYPE 12
-.ENDEF
 	SEGMENT BSS
 _textBoxSprite1:
 	DS	3
-.DEFINE "textBoxSprite1"
-.ALIAS "_textBoxSprite1"
-.CLASS 83
-.VALUE _textBoxSprite1
-.TAG "NONAME3"
-.TYPE 40
-.ENDEF
 _textBoxSprite2:
 	DS	3
-.DEFINE "textBoxSprite2"
-.ALIAS "_textBoxSprite2"
-.CLASS 83
-.VALUE _textBoxSprite2
-.TAG "NONAME3"
-.TYPE 40
-.ENDEF
 ;    1	#include <graphx.h>
 ;    2	#include <string.h>
 ;    3	#include <keypadc.h>
@@ -451,87 +36,20 @@ _textBoxSprite2:
 ;   22	/* canSkip determines whether holding down 2nd before the text box pops up can do anything */
 ;   23	void text_Display(char text[], bool canSkip) {
 _text_Display:
-.DEFINE "_text_Display"
-
-.VALUE _text_Display
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "text_Display",23,"_text_Display"
-
-.LINE 23
-
-.DEFINE "text"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "canSkip"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "newText1"
-
-.CLASS 65
-
-.VALUE -50
-
-.DIM 50
-
-.TYPE 98
-
-.ENDEF
-
-.DEFINE "newText2"
-
-.CLASS 65
-
-.VALUE -100
-
-.DIM 50
-
-.TYPE 98
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	LEA	HL,IX+-100
-	LD	SP,HL
+	LD	HL,-100
+	CALL	__frameset
 ;   24		char newText1[50] = "";
-.LINE 24
-
 	LEA	DE,IX+-50
 	LD	HL,_0temp0
 	LD	BC,50
 	LDIR	
 ;   25		char newText2[50] = "";
-.LINE 25
-
 	LEA	DE,IX+-100
 	LD	HL,_1temp1
 	LD	BC,50
 	LDIR	
 ;   26	
 ;   27		if (strlen(text) > 32) {
-.LINE 27
-
 	LD	BC,(IX+6)
 	PUSH	BC
 	CALL	_strlen
@@ -542,8 +60,6 @@ _text_Display:
 	SBC	HL,BC
 	JR	NC,L_3
 ;   28			strncpy(newText1, text, 32);
-.LINE 28
-
 	LD	BC,32
 	PUSH	BC
 	LD	BC,(IX+6)
@@ -554,8 +70,6 @@ _text_Display:
 	POP	BC
 	POP	BC
 ;   29			strncpy(newText2, text + 32, (strlen(text) - 32));
-.LINE 29
-
 	LD	BC,(IX+6)
 	PUSH	BC
 	CALL	_strlen
@@ -573,13 +87,9 @@ _text_Display:
 	POP	BC
 ;   30		}
 ;   31		else {
-.LINE 31
-
 	JR	L_4
 L_3:
 ;   32			strncpy(newText1, text, strlen(text));
-.LINE 32
-
 	LD	BC,(IX+6)
 	PUSH	BC
 	CALL	_strlen
@@ -594,25 +104,17 @@ L_3:
 	POP	BC
 ;   33		}
 L_4:
-.LINE 33
-
 ;   34		gfx_Blit(gfx_screen);
-.LINE 34
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
 ;   35		text_DrawTextBox();
-.LINE 35
-
 	CALL	_text_DrawTextBox
 ;   36		
 ;   37		
 ;   38	
 ;   39		gfx_PrintStringXY(newText1, 30, 190);
-.LINE 39
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,30
@@ -623,8 +125,6 @@ L_4:
 	POP	BC
 	POP	BC
 ;   40		gfx_PrintStringXY(newText2, 30, 205);
-.LINE 40
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,30
@@ -636,31 +136,21 @@ L_4:
 	POP	BC
 ;   41	
 ;   42		gfx_SwapDraw();
-.LINE 42
-
 	CALL	_gfx_SwapDraw
 ;   43	
 ;   44		Wait(10);
-.LINE 44
-
 	LD	BC,10
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;   45	
 ;   46		kb_Scan();
-.LINE 46
-
 	CALL	_kb_Scan
 ;   47		if (!canSkip) {
-.LINE 47
-
 	LD	A,(IX+9)
 	OR	A,A
 	JR	NZ,L_12
 ;   48			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 48
-
 	JR	L_6
 L_7:
 	CALL	_kb_Scan
@@ -673,11 +163,7 @@ L_6:
 	JR	NZ,L_7
 ;   49		}
 L_12:
-.LINE 49
-
 ;   50		if (canSkip && (kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
-.LINE 50
-
 	LD	A,(IX+9)
 	OR	A,A
 	JR	Z,L_10
@@ -690,28 +176,18 @@ L_10:
 	JR	Z,L_14
 L_11:
 ;   51			Wait(delaytime);
-.LINE 51
-
 	LD	BC,50
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;   52		}
-.LINE 52
-
 ;   53		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-.LINE 53
-
 	JR	L_14
 L_15:
 ;   54			kb_Scan();
-.LINE 54
-
 	CALL	_kb_Scan
 ;   55		}
 L_14:
-.LINE 55
-
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_17
@@ -720,8 +196,6 @@ L_14:
 	JR	Z,L_15
 ;   56	}
 L_17:
-.LINE 56
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -749,7 +223,6 @@ L_17:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "text_Display",56,"_text_Display"
 	SEGMENT TEXT
 _0temp0:
 	DB	0
@@ -856,87 +329,23 @@ _1temp1:
 	SEGMENT CODE
 ;   57	int text_AskQuestion2(char text1[], char text2[], bool canSkip) {
 _text_AskQuestion2:
-.DEFINE "_text_AskQuestion2"
-
-.VALUE _text_AskQuestion2
-
-.CLASS 2
-
-.TYPE 68
-
-.ENDEF
-
-.BEGFUNC "text_AskQuestion2",57,"_text_AskQuestion2"
-
-.LINE 57
-
-.DEFINE "text1"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text2"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "canSkip"
-
-.CLASS 65
-
-.VALUE 12
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "tv1"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 2
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	DEC	SP
+	LD	HL,-1
+	CALL	__frameset
 ;   58		int8_t tv1, tv2;
 ;   59		tv1 = 1;
-.LINE 59
-
 	LD	(IX+-1),1
 ;   60		tv2 = 1;
 ;   61	
 ;   62	
 ;   63		gfx_Blit(gfx_screen);
-.LINE 63
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
 ;   64		text_DrawTextBox();
-.LINE 64
-
 	CALL	_text_DrawTextBox
 ;   65	
 ;   66		gfx_PrintStringXY(">", 25, 190);
-.LINE 66
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,25
@@ -948,8 +357,6 @@ _text_AskQuestion2:
 	POP	BC
 	POP	BC
 ;   67		gfx_PrintStringXY(text1, 35, 190);
-.LINE 67
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,35
@@ -961,8 +368,6 @@ _text_AskQuestion2:
 	POP	BC
 	POP	BC
 ;   68		gfx_PrintStringXY(text2, 35, 205);
-.LINE 68
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,35
@@ -975,30 +380,20 @@ _text_AskQuestion2:
 	POP	BC
 ;   69	
 ;   70		gfx_SwapDraw();
-.LINE 70
-
 	CALL	_gfx_SwapDraw
 ;   71		gfx_SetDrawScreen();
-.LINE 71
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;   72	
 ;   73		kb_Scan();
-.LINE 73
-
 	CALL	_kb_Scan
 ;   74		if (!canSkip) {
-.LINE 74
-
 	LD	A,(IX+12)
 	OR	A,A
 	JR	NZ,L_25
 ;   75			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 75
-
 	JR	L_19
 L_20:
 	CALL	_kb_Scan
@@ -1011,11 +406,7 @@ L_19:
 	JR	NZ,L_20
 ;   76		}
 L_25:
-.LINE 76
-
 ;   77		if (canSkip && (kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
-.LINE 77
-
 	LD	A,(IX+12)
 	OR	A,A
 	JR	Z,L_23
@@ -1028,32 +419,20 @@ L_23:
 	JR	Z,L_26
 L_24:
 ;   78			Wait(delaytime);
-.LINE 78
-
 	LD	BC,50
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;   79		}
 L_26:
-.LINE 79
-
 ;   80		kb_Scan();
-.LINE 80
-
 	CALL	_kb_Scan
 ;   81		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-.LINE 81
-
 	JR	L_35
 L_36:
 ;   82			kb_Scan();
-.LINE 82
-
 	CALL	_kb_Scan
 ;   83			if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Left)) {
-.LINE 83
-
 	LD	A,(16056350)
 	AND	A,1
 	JR	NZ,L_34
@@ -1068,32 +447,20 @@ L_36:
 	JR	Z,L_35
 L_34:
 ;   84				if (tv1 == 1) {
-.LINE 84
-
 	LD	A,(IX+-1)
 	CP	A,1
 	JR	NZ,L_32
 ;   85					tv1 = 2;
-.LINE 85
-
 	LD	(IX+-1),2
 ;   86				}
 ;   87				else {
-.LINE 87
-
 	JR	L_33
 L_32:
 ;   88					tv1 = 1;
-.LINE 88
-
 	LD	(IX+-1),1
 ;   89				}
 L_33:
-.LINE 89
-
 ;   90				gfx_FillRectangle(24, 185, 10, 45);
-.LINE 90
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -1108,8 +475,6 @@ L_33:
 	POP	BC
 	POP	BC
 ;   91				gfx_PrintStringXY(">", 25, 160 + 20 * tv1);
-.LINE 91
-
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -1127,8 +492,6 @@ L_33:
 	POP	BC
 	POP	BC
 ;   92				Wait(20);
-.LINE 92
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
@@ -1136,8 +499,6 @@ L_33:
 ;   93			}
 ;   94		}
 L_35:
-.LINE 94
-
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_38
@@ -1146,35 +507,23 @@ L_35:
 	JR	Z,L_36
 L_38:
 ;   95		if (kb_Data[6] & kb_Clear) {
-.LINE 95
-
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_39
 ;   96			tv1 = 0;
-.LINE 96
-
 	LD	(IX+-1),0
 ;   97		}
 L_39:
-.LINE 97
-
 ;   98		gfx_SetDrawBuffer();
-.LINE 98
-
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;   99		return tv1;
-.LINE 99
-
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
 ;  100	}
-.LINE 100
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1200,7 +549,6 @@ L_39:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "text_AskQuestion2",100,"_text_AskQuestion2"
 	SEGMENT STRSECT
 L__10:
 	DB	">"
@@ -1211,122 +559,23 @@ L__22:
 	SEGMENT CODE
 ;  101	int text_AskQuestion4(char text1[], char text2[], char text3[], char text4[], bool canSkip) {
 _text_AskQuestion4:
-.DEFINE "_text_AskQuestion4"
-
-.VALUE _text_AskQuestion4
-
-.CLASS 2
-
-.TYPE 68
-
-.ENDEF
-
-.BEGFUNC "text_AskQuestion4",101,"_text_AskQuestion4"
-
-.LINE 101
-
-.DEFINE "text1"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text2"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text3"
-
-.CLASS 65
-
-.VALUE 12
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text4"
-
-.CLASS 65
-
-.VALUE 15
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "canSkip"
-
-.CLASS 65
-
-.VALUE 18
-
-.TYPE 12
-
-.ENDEF
-
-.DEFINE "tv1"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 2
-
-.ENDEF
-
-.DEFINE "tv2"
-
-.CLASS 65
-
-.VALUE -2
-
-.TYPE 2
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	PUSH	BC
-	PUSH	BC
-	DEC	SP
-	DEC	SP
+	LD	HL,-8
+	CALL	__frameset
 ;  102		int8_t tv1, tv2;
 ;  103		tv1 = 0;
-.LINE 103
-
 	LD	(IX+-1),0
 ;  104		tv2 = 0;
-.LINE 104
-
 	LD	(IX+-2),0
 ;  105	
 ;  106		gfx_Blit(gfx_screen);
-.LINE 106
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
 ;  107		text_DrawTextBox();
-.LINE 107
-
 	CALL	_text_DrawTextBox
 ;  108	
 ;  109		gfx_PrintStringXY(">", 25, 190);
-.LINE 109
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,25
@@ -1338,8 +587,6 @@ _text_AskQuestion4:
 	POP	BC
 	POP	BC
 ;  110		gfx_PrintStringXY(text1, 35, 190);
-.LINE 110
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,35
@@ -1351,8 +598,6 @@ _text_AskQuestion4:
 	POP	BC
 	POP	BC
 ;  111		gfx_PrintStringXY(text2, 35, 205);
-.LINE 111
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,35
@@ -1364,8 +609,6 @@ _text_AskQuestion4:
 	POP	BC
 	POP	BC
 ;  112		gfx_PrintStringXY(text3, 165, 190);
-.LINE 112
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,165
@@ -1377,8 +620,6 @@ _text_AskQuestion4:
 	POP	BC
 	POP	BC
 ;  113		gfx_PrintStringXY(text4, 165, 205);
-.LINE 113
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,165
@@ -1391,30 +632,20 @@ _text_AskQuestion4:
 	POP	BC
 ;  114	
 ;  115		gfx_SwapDraw();
-.LINE 115
-
 	CALL	_gfx_SwapDraw
 ;  116		gfx_SetDrawScreen();
-.LINE 116
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;  117	
 ;  118		kb_Scan();
-.LINE 118
-
 	CALL	_kb_Scan
 ;  119		if (!canSkip) {
-.LINE 119
-
 	LD	A,(IX+18)
 	OR	A,A
 	JR	NZ,L_48
 ;  120			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 120
-
 	JR	L_42
 L_43:
 	CALL	_kb_Scan
@@ -1427,11 +658,7 @@ L_42:
 	JR	NZ,L_43
 ;  121		}
 L_48:
-.LINE 121
-
 ;  122		if (canSkip && (kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
-.LINE 122
-
 	LD	A,(IX+18)
 	OR	A,A
 	JR	Z,L_46
@@ -1444,32 +671,20 @@ L_46:
 	JR	Z,L_49
 L_47:
 ;  123			Wait(delaytime);
-.LINE 123
-
 	LD	BC,50
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;  124		}
 L_49:
-.LINE 124
-
 ;  125		kb_Scan();
-.LINE 125
-
 	CALL	_kb_Scan
 ;  126		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-.LINE 126
-
 	JR	L_64
 L_65:
 ;  127			kb_Scan();
-.LINE 127
-
 	CALL	_kb_Scan
 ;  128			if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
-.LINE 128
-
 	LD	A,(16056350)
 	AND	A,1
 	JR	NZ,L_56
@@ -1478,8 +693,6 @@ L_65:
 	JR	Z,L_63
 L_56:
 ;  129				tv1 = !tv1;
-.LINE 129
-
 	LD	A,(IX+-1)
 	OR	A,A
 	JR	NZ,L_53
@@ -1493,8 +706,6 @@ L_54:
 	LD	A,(IX+-8)
 	LD	(IX+-1),A
 ;  130				gfx_FillRectangle(24, 185, 10, 45);
-.LINE 130
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -1509,8 +720,6 @@ L_54:
 	POP	BC
 	POP	BC
 ;  131				gfx_FillRectangle(154, 185, 10, 45);
-.LINE 131
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -1525,8 +734,6 @@ L_54:
 	POP	BC
 	POP	BC
 ;  132				gfx_PrintStringXY(">", 25 + tv2 * 130, 190 + 15 * tv1);
-.LINE 132
-
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -1550,19 +757,13 @@ L_54:
 	POP	BC
 	POP	BC
 ;  133				Wait(20);
-.LINE 133
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
 	POP	BC
 ;  134			}
 L_63:
-.LINE 134
-
 ;  135			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
-.LINE 135
-
 	LD	A,(16056350)
 	AND	A,4
 	JR	NZ,L_62
@@ -1571,8 +772,6 @@ L_63:
 	JR	Z,L_64
 L_62:
 ;  136				tv2 = !tv2;
-.LINE 136
-
 	LD	A,(IX+-2)
 	OR	A,A
 	JR	NZ,L_59
@@ -1586,8 +785,6 @@ L_60:
 	LD	A,(IX+-5)
 	LD	(IX+-2),A
 ;  137				gfx_FillRectangle(24, 185, 10, 45);
-.LINE 137
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -1602,8 +799,6 @@ L_60:
 	POP	BC
 	POP	BC
 ;  138				gfx_FillRectangle(154, 185, 10, 45);
-.LINE 138
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -1618,8 +813,6 @@ L_60:
 	POP	BC
 	POP	BC
 ;  139				gfx_PrintStringXY(">", 25 + tv2 * 130, 190 + 15 * tv1);
-.LINE 139
-
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -1643,8 +836,6 @@ L_60:
 	POP	BC
 	POP	BC
 ;  140				Wait(20);
-.LINE 140
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
@@ -1652,8 +843,6 @@ L_60:
 ;  141			}
 ;  142		}
 L_64:
-.LINE 142
-
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_72
@@ -1662,20 +851,14 @@ L_64:
 	JR	Z,L_65
 L_72:
 ;  143		if (kb_Data[6] & kb_Clear) {
-.LINE 143
-
 	LD	A,(16056348)
 	AND	A,64
 	JR	Z,L_73
 ;  144			if (!canSkip) {
-.LINE 144
-
 	LD	A,(IX+18)
 	OR	A,A
 	JR	NZ,L_70
 ;  145				while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 145
-
 	JR	L_67
 L_68:
 	CALL	_kb_Scan
@@ -1688,28 +871,18 @@ L_67:
 	JR	NZ,L_68
 ;  146			}
 L_70:
-.LINE 146
-
-;  147			return(0);
-.LINE 147
-
 	OR	A,A
+;  147			return(0);
 	SBC	HL,HL
 	JR	L_74
 ;  148		}
 L_73:
-.LINE 148
-
 ;  149		gfx_SetDrawBuffer();
-.LINE 149
-
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;  150		return (tv1 + 1 + 2 * (tv2));
-.LINE 150
-
 	LD	A,(IX+-2)
 	SEXT	HL
 	LD	L,(IX+-2)
@@ -1724,8 +897,6 @@ L_73:
 	ADD	HL,BC
 ;  151	}
 L_74:
-.LINE 151
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -1756,7 +927,6 @@ L_74:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "text_AskQuestion4",151,"_text_AskQuestion4"
 	SEGMENT STRSECT
 L__27:
 	DB	">"
@@ -1770,129 +940,23 @@ L__41:
 	SEGMENT CODE
 ;  152	int text_AskQuestion6(char text1[], char text2[], char text3[], char text4[], char text5[], char text6[]) {
 _text_AskQuestion6:
-.DEFINE "_text_AskQuestion6"
-
-.VALUE _text_AskQuestion6
-
-.CLASS 2
-
-.TYPE 68
-
-.ENDEF
-
-.BEGFUNC "text_AskQuestion6",152,"_text_AskQuestion6"
-
-.LINE 152
-
-.DEFINE "text1"
-
-.CLASS 65
-
-.VALUE 6
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text2"
-
-.CLASS 65
-
-.VALUE 9
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text3"
-
-.CLASS 65
-
-.VALUE 12
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text4"
-
-.CLASS 65
-
-.VALUE 15
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text5"
-
-.CLASS 65
-
-.VALUE 18
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "text6"
-
-.CLASS 65
-
-.VALUE 21
-
-.TYPE 34
-
-.ENDEF
-
-.DEFINE "tv1"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 2
-
-.ENDEF
-
-.DEFINE "tv2"
-
-.CLASS 65
-
-.VALUE -2
-
-.TYPE 2
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	PUSH	BC
+	LD	HL,-3
+	CALL	__frameset
 ;  153		int8_t tv1, tv2;
 ;  154		tv1 = 0;
-.LINE 154
-
 	LD	(IX+-1),0
 ;  155		tv2 = 0;
-.LINE 155
-
 	LD	(IX+-2),0
 ;  156		
 ;  157		gfx_Blit(gfx_screen);
-.LINE 157
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_Blit
 	POP	BC
 ;  158		text_DrawTextBox();
-.LINE 158
-
 	CALL	_text_DrawTextBox
 ;  159	
 ;  160		gfx_PrintStringXY(">", 25, 160);
-.LINE 160
-
 	LD	BC,160
 	PUSH	BC
 	LD	BC,25
@@ -1904,8 +968,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  161		gfx_PrintStringXY(text1, 35, 190);
-.LINE 161
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,35
@@ -1917,8 +979,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  162		gfx_PrintStringXY(text2, 35, 205);
-.LINE 162
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,35
@@ -1930,8 +990,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  163		gfx_PrintStringXY(text3, 35, 220);
-.LINE 163
-
 	LD	BC,220
 	PUSH	BC
 	LD	BC,35
@@ -1943,8 +1001,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  164		gfx_PrintStringXY(text4, 165, 190);
-.LINE 164
-
 	LD	BC,190
 	PUSH	BC
 	LD	BC,165
@@ -1956,8 +1012,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  165		gfx_PrintStringXY(text5, 165, 205);
-.LINE 165
-
 	LD	BC,205
 	PUSH	BC
 	LD	BC,165
@@ -1969,8 +1023,6 @@ _text_AskQuestion6:
 	POP	BC
 	POP	BC
 ;  166		gfx_PrintStringXY(text6, 165, 220);
-.LINE 166
-
 	LD	BC,220
 	PUSH	BC
 	LD	BC,165
@@ -1983,20 +1035,14 @@ _text_AskQuestion6:
 	POP	BC
 ;  167	
 ;  168		gfx_SwapDraw();
-.LINE 168
-
 	CALL	_gfx_SwapDraw
 ;  169		gfx_SetDrawScreen();
-.LINE 169
-
 	LD	BC,0
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;  170	
 ;  171		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 171
-
 	JR	L_76
 L_77:
 	CALL	_kb_Scan
@@ -2008,21 +1054,13 @@ L_76:
 	AND	A,64
 	JR	NZ,L_77
 ;  172		kb_Scan();
-.LINE 172
-
 	CALL	_kb_Scan
 ;  173		while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-.LINE 173
-
 	JR	L_100
 L_101:
 ;  174			kb_Scan();
-.LINE 174
-
 	CALL	_kb_Scan
 ;  175			if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up) || (kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
-.LINE 175
-
 	LD	A,(16056350)
 	AND	A,1
 	LD	(IX+-3),A
@@ -2039,8 +1077,6 @@ L_101:
 	JR	Z,L_100
 L_99:
 ;  176				if ((kb_Data[7] & kb_Up) && tv1 > 0) {
-.LINE 176
-
 	LD	A,(16056350)
 	AND	A,8
 	JR	Z,L_89
@@ -2048,16 +1084,10 @@ L_99:
 	CP	A,(IX+-1)
 	JP	P,L_89
 ;  177					tv1--;
-.LINE 177
-
 	DEC	(IX+-1)
 ;  178				}
 L_89:
-.LINE 178
-
 ;  179				if ((kb_Data[7] & kb_Down) && tv1 < 2) {
-.LINE 179
-
 	LD	A,(IX+-3)
 	OR	A,A
 	JR	Z,L_93
@@ -2065,16 +1095,10 @@ L_89:
 	CP	A,2
 	JP	P,L_93
 ;  180					tv1++;
-.LINE 180
-
 	INC	(IX+-1)
 ;  181				}
 L_93:
-.LINE 181
-
 ;  182				if ((kb_Data[7] & kb_Left) && tv2 > 0) {
-.LINE 182
-
 	LD	A,(16056350)
 	AND	A,2
 	JR	Z,L_97
@@ -2082,16 +1106,10 @@ L_93:
 	CP	A,(IX+-2)
 	JP	P,L_97
 ;  183					tv2--;
-.LINE 183
-
 	DEC	(IX+-2)
 ;  184				}
 L_97:
-.LINE 184
-
 ;  185				if ((kb_Data[7] & kb_Right) && tv2 < 1) {
-.LINE 185
-
 	LD	A,(16056350)
 	AND	A,4
 	JR	Z,L_98
@@ -2099,16 +1117,10 @@ L_97:
 	CP	A,1
 	JP	P,L_98
 ;  186					tv2++;
-.LINE 186
-
 	INC	(IX+-2)
 ;  187				}
 L_98:
-.LINE 187
-
 ;  188				gfx_FillRectangle(24, 185, 10, 45);
-.LINE 188
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2123,8 +1135,6 @@ L_98:
 	POP	BC
 	POP	BC
 ;  189				gfx_FillRectangle(154, 185, 10, 45);
-.LINE 189
-
 	LD	BC,45
 	PUSH	BC
 	LD	BC,10
@@ -2139,8 +1149,6 @@ L_98:
 	POP	BC
 	POP	BC
 ;  190				gfx_PrintStringXY(">", 25 + tv2 * 130, 190 + 15 * tv1);
-.LINE 190
-
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
@@ -2164,8 +1172,6 @@ L_98:
 	POP	BC
 	POP	BC
 ;  191				Wait(20);
-.LINE 191
-
 	LD	BC,20
 	PUSH	BC
 	CALL	_Wait
@@ -2173,8 +1179,6 @@ L_98:
 ;  192			}
 ;  193		}
 L_100:
-.LINE 193
-
 	LD	A,(16056338)
 	AND	A,32
 	JR	NZ,L_107
@@ -2183,16 +1187,12 @@ L_100:
 	JR	Z,L_101
 L_107:
 ;  194		if (kb_Data[6] & kb_Clear) {
-.LINE 194
-
 	LD	A,(16056348)
 	AND	A,64
 	JR	NZ,L_103
 	JR	L_108
 ;  195			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
 L_104:
-.LINE 195
-
 	CALL	_kb_Scan
 L_103:
 	LD	A,(16056338)
@@ -2201,26 +1201,18 @@ L_103:
 	LD	A,(16056348)
 	AND	A,64
 	JR	NZ,L_104
-;  196			return(0);
-.LINE 196
-
 	OR	A,A
+;  196			return(0);
 	SBC	HL,HL
 	JR	L_113
 ;  197		}
 L_108:
-.LINE 197
-
 ;  198		gfx_SetDrawBuffer();
-.LINE 198
-
 	LD	BC,1
 	PUSH	BC
 	CALL	_gfx_SetDraw
 	POP	BC
 ;  199		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-.LINE 199
-
 	JR	L_110
 L_111:
 	CALL	_kb_Scan
@@ -2232,8 +1224,6 @@ L_110:
 	AND	A,64
 	JR	NZ,L_111
 ;  200		return (tv1 + 1 + 3 * tv2);
-.LINE 200
-
 	LD	A,(IX+-2)
 	SEXT	HL
 	LD	L,(IX+-2)
@@ -2250,8 +1240,6 @@ L_110:
 	ADD	HL,BC
 ;  201	}
 L_113:
-.LINE 201
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2282,7 +1270,6 @@ L_113:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "text_AskQuestion6",201,"_text_AskQuestion6"
 	SEGMENT STRSECT
 L__49:
 	DB	">"
@@ -2293,24 +1280,7 @@ L__64:
 	SEGMENT CODE
 ;  202	void text_DrawTextBox(void) {
 _text_DrawTextBox:
-.DEFINE "_text_DrawTextBox"
-
-.VALUE _text_DrawTextBox
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "text_DrawTextBox",202,"_text_DrawTextBox"
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
 ;  203		gfx_SetColor(colors[0]);	
-.LINE 203
-
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
@@ -2318,8 +1288,6 @@ _text_DrawTextBox:
 	CALL	_gfx_SetColor
 	POP	BC
 ;  204		gfx_TransparentSprite(textBoxSprite1, 0, 176);
-.LINE 204
-
 	LD	BC,176
 	PUSH	BC
 	LD	BC,0
@@ -2331,8 +1299,6 @@ _text_DrawTextBox:
 	POP	BC
 	POP	BC
 ;  205		gfx_TransparentSprite(textBoxSprite2, 160, 176);
-.LINE 205
-
 	LD	BC,176
 	PUSH	BC
 	LD	BC,160
@@ -2344,10 +1310,6 @@ _text_DrawTextBox:
 	POP	BC
 	POP	BC
 ;  206	}
-.LINE 206
-
-	LD	SP,IX
-	POP	IX
 	RET	
 
 
@@ -2364,7 +1326,6 @@ _text_DrawTextBox:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "text_DrawTextBox",206,"_text_DrawTextBox"
 	SEGMENT DATA
 _text_status2:
 	DB	97
@@ -2479,14 +1440,6 @@ _text_status2:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "text_status2"
-.ALIAS "_text_status2"
-.CLASS 69
-.VALUE _text_status2
-.DIM 7
-.DIM 16
-.TYPE 866
-.ENDEF
 _text_movecategories:
 	DB	80
 	DB	104
@@ -2668,14 +1621,6 @@ _text_movecategories:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "text_movecategories"
-.ALIAS "_text_movecategories"
-.CLASS 69
-.VALUE _text_movecategories
-.DIM 18
-.DIM 10
-.TYPE 866
-.ENDEF
 	XREF _colors:ROM
 	XREF _Wait:ROM
 	XREF _kb_Scan:ROM
@@ -2688,6 +1633,7 @@ _text_movecategories:
 	XREF _gfx_SetDraw:ROM
 	XREF _gfx_FillRectangle:ROM
 	XREF _gfx_SetColor:ROM
+	XREF __frameset:ROM
 	XREF __imul_b:ROM
 	XDEF _text_movecategories
 	XDEF _text_status2

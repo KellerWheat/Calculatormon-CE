@@ -2,12 +2,17 @@ opened convpng.ini
 
 --- map_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [230] indices.
+built palette with [231] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0x8318
-32:
+49:
  mapcursorsmall : 100.00%
+ grassoverlay1 : 100.00%
+ grassoverlay2 : 100.00%
+ grassoverlay3 : 100.00%
+ animatedwater1 : 100.00%
+ animatedwater2 : 100.00%
  maptextbox1 : 100.00% (10242 > 180 bytes)
  maptextbox2 : 100.00% (10242 > 179 bytes)
  pausemenu : 100.00% (10754 > 66 bytes)
@@ -18,20 +23,32 @@ transparent color : 0x8318
  player03 : 100.00% (322 > 140 bytes)
  player04 : 100.00% (322 > 135 bytes)
  player05 : 100.00% (322 > 130 bytes)
- player06 : 100.00% (322 > 153 bytes)
+ player06 : 100.00% (322 > 152 bytes)
  player07 : 100.00% (322 > 149 bytes)
  player08 : 100.00% (322 > 147 bytes)
- player09 : 100.00% (322 > 148 bytes)
- player10 : 100.00% (322 > 143 bytes)
+ player09 : 100.00% (322 > 147 bytes)
+ player10 : 100.00% (322 > 142 bytes)
  player11 : 100.00% (322 > 146 bytes)
- player12 : 100.00% (574 > 195 bytes)
- player13 : 100.00% (574 > 195 bytes)
- player14 : 100.00% (574 > 196 bytes)
- player15 : 100.00% (574 > 199 bytes)
- player16 : 100.00% (522 > 191 bytes)
- player17 : 100.00% (574 > 194 bytes)
- player18 : 100.00% (522 > 190 bytes)
- player19 : 100.00% (574 > 194 bytes)
+ player12 : 100.00% (322 > 131 bytes)
+ player13 : 100.00% (322 > 127 bytes)
+ player14 : 100.00% (322 > 139 bytes)
+ player15 : 100.00% (322 > 134 bytes)
+ player16 : 100.00% (322 > 130 bytes)
+ player17 : 100.00% (322 > 145 bytes)
+ player18 : 100.00% (322 > 130 bytes)
+ player19 : 100.00% (322 > 130 bytes)
+ player20 : 100.00% (322 > 129 bytes)
+ player21 : 100.00% (322 > 142 bytes)
+ player22 : 100.00% (322 > 136 bytes)
+ player23 : 100.00% (322 > 134 bytes)
+ player24 : 100.00% (574 > 195 bytes)
+ player25 : 100.00% (574 > 195 bytes)
+ player26 : 100.00% (574 > 196 bytes)
+ player27 : 100.00% (574 > 199 bytes)
+ player28 : 100.00% (522 > 191 bytes)
+ player29 : 100.00% (574 > 194 bytes)
+ player30 : 100.00% (522 > 190 bytes)
+ player31 : 100.00% (574 > 194 bytes)
  enemy00 : 100.00% (322 > 140 bytes)
  enemy01 : 100.00% (322 > 142 bytes)
  enemy02 : 100.00% (322 > 156 bytes)
@@ -45,7 +62,7 @@ transparent color : 0x8318
  outdoortileset_tile_5_compressed (258 > 110 bytes)
  outdoortileset_tile_6_compressed (258 > 115 bytes)
  outdoortileset_tile_7_compressed (258 > 73 bytes)
- outdoortileset_tile_8_compressed (258 > 84 bytes)
+ outdoortileset_tile_8_compressed (258 > 83 bytes)
  outdoortileset_tile_9_compressed (258 > 95 bytes)
  outdoortileset_tile_10_compressed (258 > 98 bytes)
  outdoortileset_tile_11_compressed (258 > 96 bytes)
@@ -60,7 +77,7 @@ transparent color : 0x8318
  outdoortileset_tile_20_compressed (258 > 52 bytes)
  outdoortileset_tile_21_compressed (258 > 65 bytes)
  outdoortileset_tile_22_compressed (258 > 65 bytes)
- outdoortileset_tile_23_compressed (258 > 60 bytes)
+ outdoortileset_tile_23_compressed (258 > 59 bytes)
  outdoortileset_tile_24_compressed (258 > 90 bytes)
  outdoortileset_tile_25_compressed (258 > 108 bytes)
  outdoortileset_tile_26_compressed (258 > 111 bytes)
@@ -77,9 +94,9 @@ transparent color : 0x8318
  outdoortileset_tile_37_compressed (258 > 126 bytes)
  outdoortileset_tile_38_compressed (258 > 122 bytes)
  outdoortileset_tile_39_compressed (258 > 75 bytes)
- outdoortileset_tile_40_compressed (258 > 93 bytes)
- outdoortileset_tile_41_compressed (258 > 95 bytes)
- outdoortileset_tile_42_compressed (258 > 96 bytes)
+ outdoortileset_tile_40_compressed (258 > 92 bytes)
+ outdoortileset_tile_41_compressed (258 > 94 bytes)
+ outdoortileset_tile_42_compressed (258 > 95 bytes)
  outdoortileset_tile_43_compressed (258 > 81 bytes)
  outdoortileset_tile_44_compressed (258 > 96 bytes)
  outdoortileset_tile_45_compressed (258 > 53 bytes)
@@ -94,7 +111,7 @@ transparent color : 0x8318
  outdoortileset_tile_54_compressed (258 > 97 bytes)
  outdoortileset_tile_55_compressed (258 > 17 bytes)
  outdoortileset_tile_56_compressed (258 > 85 bytes)
- outdoortileset_tile_57_compressed (258 > 96 bytes)
+ outdoortileset_tile_57_compressed (258 > 94 bytes)
  outdoortileset_tile_58_compressed (258 > 96 bytes)
  outdoortileset_tile_59_compressed (258 > 17 bytes)
  outdoortileset_tile_60_compressed (258 > 98 bytes)
@@ -143,11 +160,11 @@ transparent color : 0x8318
  outdoortileset_tile_103_compressed (258 > 64 bytes)
  outdoortileset_tile_104_compressed (258 > 77 bytes)
  outdoortileset_tile_105_compressed (258 > 101 bytes)
- outdoortileset_tile_106_compressed (258 > 49 bytes)
+ outdoortileset_tile_106_compressed (258 > 50 bytes)
  outdoortileset_tile_107_compressed (258 > 25 bytes)
  outdoortileset_tile_108_compressed (258 > 30 bytes)
  outdoortileset_tile_109_compressed (258 > 30 bytes)
- outdoortileset_tile_110_compressed (258 > 46 bytes)
+ outdoortileset_tile_110_compressed (258 > 47 bytes)
  outdoortileset_tile_111_compressed (258 > 9 bytes)
  outdoortileset_tile_112_compressed (258 > 97 bytes)
  outdoortileset_tile_113_compressed (258 > 74 bytes)
@@ -160,10 +177,10 @@ transparent color : 0x8318
  outdoortileset_tile_120_compressed (258 > 94 bytes)
  outdoortileset_tile_121_compressed (258 > 50 bytes)
  outdoortileset_tile_122_compressed (258 > 48 bytes)
- outdoortileset_tile_123_compressed (258 > 72 bytes)
+ outdoortileset_tile_123_compressed (258 > 73 bytes)
  outdoortileset_tile_124_compressed (258 > 61 bytes)
  outdoortileset_tile_125_compressed (258 > 64 bytes)
- outdoortileset_tile_126_compressed (258 > 43 bytes)
+ outdoortileset_tile_126_compressed (258 > 42 bytes)
  outdoortileset_tile_127_compressed (258 > 9 bytes)
  indoortileset : 100.00%
  indoortileset_tile_0_compressed (258 > 151 bytes)
@@ -1134,6 +1151,18 @@ exporting appvar: PKMNSD4.8xv
  player17
  player18
  player19
+ player20
+ player21
+ player22
+ player23
+ player24
+ player25
+ player26
+ player27
+ player28
+ player29
+ player30
+ player31
  enemy00
  enemy01
  enemy02
@@ -1339,7 +1368,7 @@ exporting appvar: PKMNSD6.8xv
  i150
  i151
 
-converted in 11 s
+converted in 14 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 

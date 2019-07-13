@@ -1,782 +1,8 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\SAVEGAME.C"
 	.assume ADL=1
-.DEBUG "C"
-	SEGMENT CODE
-.BEGREC "NONAME0",6
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "rem"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME0"
-.BEGREC "NONAME1",8
-.DEFINE "quot"
-.VALUE 0
-.CLASS 8
-.TYPE 5
-.ENDEF
-.DEFINE "rem"
-.VALUE 4
-.CLASS 8
-.TYPE 5
-.ENDEF
-.ENDREC "NONAME1"
-.BEGREC "header",6
-.DEFINE "s"
-.VALUE 0
-.CLASS 11
-.TAG "NONAME2"
-.TYPE 8
-.ENDEF
-.DEFINE "x"
-.VALUE 0
-.CLASS 11
-.TYPE 2
-.ENDEF
-.ENDREC "header"
-.BEGREC "NONAME2",6
-.DEFINE "ptr"
-.VALUE 0
-.CLASS 8
-.TAG "header"
-.TYPE 40
-.ENDEF
-.DEFINE "size"
-.VALUE 3
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME2"
-.BEGREC "fmt_type",19
-.DEFINE "status"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "flags"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "size"
-.VALUE 2
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "chr"
-.VALUE 3
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "type"
-.VALUE 4
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "field_width"
-.VALUE 5
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "precision"
-.VALUE 6
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "set_begin"
-.VALUE 7
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "set_end"
-.VALUE 10
-.CLASS 8
-.TYPE 34
-.ENDEF
-.DEFINE "pad_whole"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_pre_fract"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_post_fract"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "pad_at"
-.VALUE 16
-.CLASS 8
-.TYPE 34
-.ENDEF
-.ENDREC "fmt_type"
-.BEGREC "flt_info",12
-.DEFINE "flags"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "digits"
-.VALUE 2
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.ENDREC "flt_info"
-.BEGREC "NONAME3",9
-.DEFINE "sign"
-.VALUE 0
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "exp"
-.VALUE 1
-.CLASS 8
-.TYPE 2
-.ENDEF
-.DEFINE "mant"
-.VALUE 2
-.CLASS 8
-.DIM 7
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME3"
-.BEGREC "NONAME4",18
-.DEFINE "real"
-.VALUE 0
-.CLASS 8
-.TAG "NONAME3"
-.TYPE 8
-.ENDEF
-.DEFINE "imag"
-.VALUE 9
-.CLASS 8
-.TAG "NONAME3"
-.TYPE 8
-.ENDEF
-.ENDREC "NONAME4"
-.BEGREC "NONAME5",11
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME3"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME5"
-.BEGREC "NONAME6",20
-.DEFINE "dim"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME4"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME6"
-.BEGREC "NONAME7",11
-.DEFINE "cols"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "rows"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "items"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TAG "NONAME3"
-.TYPE 104
-.ENDEF
-.ENDREC "NONAME7"
-.BEGREC "NONAME8",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME8"
-.BEGREC "NONAME9",3
-.DEFINE "len"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 98
-.ENDEF
-.ENDREC "NONAME9"
-.BEGREC "NONAME10",3
-.DEFINE "size"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME10"
-.BEGREC "__stdio_file",1
-.DEFINE "slot"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "__stdio_file"
-.BEGREC "NONAME11",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME11"
-.BEGREC "NONAME12",3
-.DEFINE "width"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 1
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "data"
-.VALUE 2
-.CLASS 8
-.DIM 1
-.TYPE 108
-.ENDEF
-.ENDREC "NONAME12"
-.BEGREC "NONAME13",6
-.DEFINE "x"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "y"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME13"
-.BEGREC "NONAME14",12
-.DEFINE "xmin"
-.VALUE 0
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymin"
-.VALUE 3
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "xmax"
-.VALUE 6
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "ymax"
-.VALUE 9
-.CLASS 8
-.TYPE 4
-.ENDEF
-.ENDREC "NONAME14"
-.BEGREC "NONAME15",18
-.DEFINE "map"
-.VALUE 0
-.CLASS 8
-.TYPE 44
-.ENDEF
-.DEFINE "tiles"
-.VALUE 3
-.CLASS 8
-.TAG "NONAME11"
-.TYPE 296
-.ENDEF
-.DEFINE "tile_height"
-.VALUE 6
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "tile_width"
-.VALUE 7
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_height"
-.VALUE 8
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "draw_width"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_width"
-.VALUE 10
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type_height"
-.VALUE 11
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "height"
-.VALUE 12
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "width"
-.VALUE 13
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "y_loc"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "x_loc"
-.VALUE 15
-.CLASS 8
-.TYPE 14
-.ENDEF
-.ENDREC "NONAME15"
-.BEGREC "pokemonData",34
-.DEFINE "id"
-.VALUE 0
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "moves"
-.VALUE 1
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "pp"
-.VALUE 5
-.CLASS 8
-.DIM 4
-.TYPE 108
-.ENDEF
-.DEFINE "level"
-.VALUE 9
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xp"
-.VALUE 10
-.CLASS 8
-.TYPE 4
-.ENDEF
-.DEFINE "currenthealth"
-.VALUE 13
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "currentstatus"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthIV"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "attackIV"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "defenceIV"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialattackIV"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "specialdefenceIV"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "speedIV"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "healthEV"
-.VALUE 22
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attackEV"
-.VALUE 24
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defenceEV"
-.VALUE 26
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattackEV"
-.VALUE 28
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefenceEV"
-.VALUE 30
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speedEV"
-.VALUE 32
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonData"
-.BEGREC "pokemonType",51
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 16
-.TYPE 98
-.ENDEF
-.DEFINE "element1"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "element2"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basehealth"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "baseattack"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basedefence"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialattack"
-.VALUE 21
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespecialdefence"
-.VALUE 22
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "basespeed"
-.VALUE 23
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "movelevels"
-.VALUE 24
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "moveids"
-.VALUE 34
-.CLASS 8
-.DIM 10
-.TYPE 108
-.ENDEF
-.DEFINE "evolvelevel"
-.VALUE 44
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolveid"
-.VALUE 45
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "evolvesfrom"
-.VALUE 46
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "xpdrop"
-.VALUE 47
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "xptype"
-.VALUE 49
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "catchrate"
-.VALUE 50
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "pokemonType"
-.BEGREC "pokemonStats",12
-.DEFINE "health"
-.VALUE 0
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "attack"
-.VALUE 2
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "defence"
-.VALUE 4
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialattack"
-.VALUE 6
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "specialdefence"
-.VALUE 8
-.CLASS 8
-.TYPE 13
-.ENDEF
-.DEFINE "speed"
-.VALUE 10
-.CLASS 8
-.TYPE 13
-.ENDEF
-.ENDREC "pokemonStats"
-.BEGREC "move",21
-.DEFINE "name"
-.VALUE 0
-.CLASS 8
-.DIM 14
-.TYPE 98
-.ENDEF
-.DEFINE "element"
-.VALUE 14
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "type"
-.VALUE 15
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "power"
-.VALUE 16
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "accuracy"
-.VALUE 17
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "uses"
-.VALUE 18
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statustype"
-.VALUE 19
-.CLASS 8
-.TYPE 12
-.ENDEF
-.DEFINE "statuschance"
-.VALUE 20
-.CLASS 8
-.TYPE 12
-.ENDEF
-.ENDREC "move"
-.BEGREC "zoneData",640
-.DEFINE "spawnids"
-.VALUE 0
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnminlevels"
-.VALUE 80
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "spawnmaxlevels"
-.VALUE 160
-.CLASS 8
-.DIM 5
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "exitzone"
-.VALUE 240
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exitx"
-.VALUE 256
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "exity"
-.VALUE 272
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorzones"
-.VALUE 288
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doorx"
-.VALUE 304
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doory"
-.VALUE 320
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc1"
-.VALUE 336
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "doornpc2"
-.VALUE 352
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerspawnids"
-.VALUE 368
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerspawnlevels"
-.VALUE 464
-.CLASS 8
-.DIM 6
-.DIM 16
-.TYPE 876
-.ENDEF
-.DEFINE "trainerx"
-.VALUE 560
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainery"
-.VALUE 576
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerdir"
-.VALUE 592
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "data_trainerText"
-.VALUE 608
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.DEFINE "trainerreward"
-.VALUE 624
-.CLASS 8
-.DIM 16
-.TYPE 108
-.ENDEF
-.ENDREC "zoneData"
 	SEGMENT DATA
 _appVarName:
 	DB	80
@@ -787,117 +13,38 @@ _appVarName:
 	DB	86
 	DB	32
 	DB	0
-.DEFINE "appVarName"
-.ALIAS "_appVarName"
-.CLASS 69
-.VALUE _appVarName
-.DIM 8
-.TYPE 98
-.ENDEF
 	SEGMENT TEXT
 _version:
 	DW	1
 	DB	0
-.DEFINE "version"
-.ALIAS "_version"
-.CLASS 84
-.VALUE _version
-.TYPE 4
-.ENDEF
 	SEGMENT DATA
 _readVersion:
 	DW	0
 	DB	0
-.DEFINE "readVersion"
-.ALIAS "_readVersion"
-.CLASS 69
-.VALUE _readVersion
-.TYPE 4
-.ENDEF
 _newGame:
 	DB	1
-.DEFINE "newGame"
-.ALIAS "_newGame"
-.CLASS 69
-.VALUE _newGame
-.TYPE 12
-.ENDEF
 _playerX:
 	DW	464
-.DEFINE "playerX"
-.ALIAS "_playerX"
-.CLASS 69
-.VALUE _playerX
-.TYPE 13
-.ENDEF
 _playerY:
 	DW	128
-.DEFINE "playerY"
-.ALIAS "_playerY"
-.CLASS 69
-.VALUE _playerY
-.TYPE 13
-.ENDEF
 _lastPlayerX:
 	DW	0
-.DEFINE "lastPlayerX"
-.ALIAS "_lastPlayerX"
-.CLASS 69
-.VALUE _lastPlayerX
-.TYPE 13
-.ENDEF
 _lastPlayerY:
 	DW	0
-.DEFINE "lastPlayerY"
-.ALIAS "_lastPlayerY"
-.CLASS 69
-.VALUE _lastPlayerY
-.TYPE 13
-.ENDEF
 	SEGMENT BSS
 _party:
 	DS	1224
-.DEFINE "party"
-.ALIAS "_party"
-.CLASS 83
-.VALUE _party
-.DIM 36
-.TAG "pokemonData"
-.TYPE 104
-.ENDEF
 	SEGMENT DATA
 _currentZone:
 	DW	0
-.DEFINE "currentZone"
-.ALIAS "_currentZone"
-.CLASS 69
-.VALUE _currentZone
-.TYPE 13
-.ENDEF
 _indoors:
 	DB	0
-.DEFINE "indoors"
-.ALIAS "_indoors"
-.CLASS 69
-.VALUE _indoors
-.TYPE 12
-.ENDEF
+_surfing:
+	DB	0
 _currentBuilding:
 	DB	0
-.DEFINE "currentBuilding"
-.ALIAS "_currentBuilding"
-.CLASS 69
-.VALUE _currentBuilding
-.TYPE 12
-.ENDEF
 _playerMoney:
 	DL	1000
-.DEFINE "playerMoney"
-.ALIAS "_playerMoney"
-.CLASS 69
-.VALUE _playerMoney
-.TYPE 15
-.ENDEF
 _playerItems:
 	DB	0
 	DB	0
@@ -1084,13 +231,6 @@ _playerItems:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "playerItems"
-.ALIAS "_playerItems"
-.CLASS 69
-.VALUE _playerItems
-.DIM 185
-.TYPE 108
-.ENDEF
 _defeatedTrainers:
 	DB	0
 	DB	0
@@ -1348,14 +488,6 @@ _defeatedTrainers:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "defeatedTrainers"
-.ALIAS "_defeatedTrainers"
-.CLASS 69
-.VALUE _defeatedTrainers
-.DIM 16
-.DIM 16
-.TYPE 876
-.ENDEF
 _defeatedTrainersIndoors:
 	DB	0
 	DB	0
@@ -1613,14 +745,6 @@ _defeatedTrainersIndoors:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "defeatedTrainersIndoors"
-.ALIAS "_defeatedTrainersIndoors"
-.CLASS 69
-.VALUE _defeatedTrainersIndoors
-.DIM 16
-.DIM 16
-.TYPE 876
-.ENDEF
 _takenGifts:
 	DB	0
 	DB	0
@@ -1878,21 +1002,8 @@ _takenGifts:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "takenGifts"
-.ALIAS "_takenGifts"
-.CLASS 69
-.VALUE _takenGifts
-.DIM 256
-.TYPE 108
-.ENDEF
 _badgeCount:
 	DB	0
-.DEFINE "badgeCount"
-.ALIAS "_badgeCount"
-.CLASS 69
-.VALUE _badgeCount
-.TYPE 12
-.ENDEF
 _pokedex:
 	DB	0
 	DB	0
@@ -2045,13 +1156,6 @@ _pokedex:
 	DB	0
 	DB	0
 	DB	0
-.DEFINE "pokedex"
-.ALIAS "_pokedex"
-.CLASS 69
-.VALUE _pokedex
-.DIM 151
-.TYPE 108
-.ENDEF
 ;    1	#include <stddef.h>
 ;    2	#include <stdlib.h>
 ;    3	#include <string.h>
@@ -2075,57 +1179,29 @@ _pokedex:
 ;   21	struct pokemonData party[36];
 ;   22	uint16_t currentZone = 0;
 ;   23	bool indoors = false;
-;   24	uint8_t currentBuilding = 0;
-;   25	uint32_t playerMoney = 1000;
-;   26	uint8_t playerItems[185] = {0};
-;   27	bool defeatedTrainers[16][16] = { {0} };
-;   28	bool defeatedTrainersIndoors[16][16] = { {0} };
-;   29	bool takenGifts[256] = { 0 };
-;   30	uint8_t badgeCount = 0;
-;   31	uint8_t pokedex[151] = { 0 };
+;   24	bool surfing = false;
+;   25	uint8_t currentBuilding = 0;
+;   26	uint32_t playerMoney = 1000;
+;   27	uint8_t playerItems[185] = {0};
+;   28	bool defeatedTrainers[16][16] = { {0} };
+;   29	bool defeatedTrainersIndoors[16][16] = { {0} };
+;   30	bool takenGifts[256] = { 0 };
+;   31	uint8_t badgeCount = 0;
+;   32	uint8_t pokedex[151] = { 0 };
 	SEGMENT CODE
-;   32	
 ;   33	
-;   34	void save_Save(void) {
+;   34	
+;   35	
+;   36	void save_Save(void) {
 _save_Save:
-.DEFINE "_save_Save"
-
-.VALUE _save_Save
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "save_Save",34,"_save_Save"
-
-.LINE 34
-
-.DEFINE "save"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 12
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	DEC	SP
-;   35		ti_var_t save;
-;   36	
-;   37		ti_CloseAll();
-.LINE 37
-
-	CALL	_ti_CloseAll
+	LD	HL,-1
+	CALL	__frameset
+;   37		ti_var_t save;
 ;   38	
-;   39		save = ti_Open(appVarName, "w");
-.LINE 39
-
+;   39		ti_CloseAll();
+	CALL	_ti_CloseAll
+;   40	
+;   41		save = ti_Open(appVarName, "w");
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,_appVarName
@@ -2134,15 +1210,11 @@ _save_Save:
 	POP	BC
 	POP	BC
 	LD	(IX+-1),A
-;   40	
-;   41		if (save) {
-.LINE 41
-
+;   42	
+;   43		if (save) {
 	OR	A,A
 	JR	Z,L_0
-;   42			if (ti_Write(&version, sizeof(version), 1, save) != 1) {
-.LINE 42
-
+;   44			if (ti_Write(&version, sizeof(version), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2161,11 +1233,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   43				goto err;
-;   44			}
-;   45			if (ti_Write(&newGame, sizeof(newGame), 1, save) != 1) {
-.LINE 45
-
+;   45				goto err;
+;   46			}
+;   47			if (ti_Write(&newGame, sizeof(newGame), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2183,11 +1253,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   46				goto err;
-;   47			}
-;   48			if (ti_Write(&playerX, sizeof(playerX), 1, save) != 1) {
-.LINE 48
-
+;   48				goto err;
+;   49			}
+;   50			if (ti_Write(&playerX, sizeof(playerX), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2206,11 +1274,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   49				goto err;
-;   50			}
-;   51			if (ti_Write(&playerY, sizeof(playerY), 1, save) != 1) {
-.LINE 51
-
+;   51				goto err;
+;   52			}
+;   53			if (ti_Write(&playerY, sizeof(playerY), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2229,11 +1295,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   52				goto err;
-;   53			}
-;   54			if (ti_Write(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
-.LINE 54
-
+;   54				goto err;
+;   55			}
+;   56			if (ti_Write(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2252,11 +1316,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   55				goto err;
-;   56			}
-;   57			if (ti_Write(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
-.LINE 57
-
+;   57				goto err;
+;   58			}
+;   59			if (ti_Write(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2275,11 +1337,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   58				goto err;
-;   59			}
-;   60			if (ti_Write(&party, sizeof(party), 1, save) != 1) {
-.LINE 60
-
+;   60				goto err;
+;   61			}
+;   62			if (ti_Write(&party, sizeof(party), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2298,11 +1358,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   61				goto err;
-;   62			}
-;   63			if (ti_Write(&currentZone, sizeof(currentZone), 1, save) != 1) {
-.LINE 63
-
+;   63				goto err;
+;   64			}
+;   65			if (ti_Write(&currentZone, sizeof(currentZone), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2321,11 +1379,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   64				goto err;
-;   65			}
-;   66			if (ti_Write(&indoors, sizeof(indoors), 1, save) != 1) {
-.LINE 66
-
+;   66				goto err;
+;   67			}
+;   68			if (ti_Write(&indoors, sizeof(indoors), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2343,11 +1399,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   67				goto err;
-;   68			}
-;   69			if (ti_Write(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
-.LINE 69
-
+;   69				goto err;
+;   70			}
+;   71			if (ti_Write(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2365,11 +1419,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   70				goto err;
-;   71			}
-;   72			if (ti_Write(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
-.LINE 72
-
+;   72				goto err;
+;   73			}
+;   74			if (ti_Write(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2388,11 +1440,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   73				goto err;
-;   74			}
-;   75			if (ti_Write(&playerItems, sizeof(playerItems), 1, save) != 1) {
-.LINE 75
-
+;   75				goto err;
+;   76			}
+;   77			if (ti_Write(&playerItems, sizeof(playerItems), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2411,11 +1461,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   76				goto err;
-;   77			}
-;   78			if (ti_Write(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
-.LINE 78
-
+;   78				goto err;
+;   79			}
+;   80			if (ti_Write(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2434,11 +1482,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   79				goto err;
-;   80			}
-;   81			if (ti_Write(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
-.LINE 81
-
+;   81				goto err;
+;   82			}
+;   83			if (ti_Write(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2457,11 +1503,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   82				goto err;
-;   83			}
-;   84			if (ti_Write(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
-.LINE 84
-
+;   84				goto err;
+;   85			}
+;   86			if (ti_Write(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2480,11 +1524,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   85				goto err;
-;   86			}
-;   87			if (ti_Write(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
-.LINE 87
-
+;   87				goto err;
+;   88			}
+;   89			if (ti_Write(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2502,11 +1544,9 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   88				goto err;
-;   89			}
-;   90			if (ti_Write(&pokedex, sizeof(pokedex), 1, save) != 1) {
-.LINE 90
-
+;   90				goto err;
+;   91			}
+;   92			if (ti_Write(&pokedex, sizeof(pokedex), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2525,21 +1565,13 @@ _save_Save:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_0
-;   91				goto err;
-;   92			}
-;   93		}
-;   94		else {
-.LINE 94
-
-;   95			goto err;
-.LINE 95
-
-;   96		}
-.LINE 96
-
-;   97		ti_SetArchiveStatus(true, save);
-.LINE 97
-
+;   93				goto err;
+;   94			}
+;   95		}
+;   96		else {
+;   97			goto err;
+;   98		}
+;   99		ti_SetArchiveStatus(true, save);
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2548,13 +1580,9 @@ _save_Save:
 	CALL	_ti_SetArchiveStatus
 	POP	BC
 	POP	BC
-;   98		ti_CloseAll();
-.LINE 98
-
+;  100		ti_CloseAll();
 	CALL	_ti_CloseAll
-;   99		text_Display("Your progress has been saved", true);
-.LINE 99
-
+;  101		text_Display("Your progress has been saved", true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,L__19
@@ -2562,27 +1590,19 @@ _save_Save:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  100		return;
-.LINE 100
-
+;  102		return;
 	JR	L_37
 L_0:
-;  101	
-;  102	err:
-;  103		ti_Delete(appVarName);
-.LINE 103
-
+;  103	
+;  104	err:
+;  105		ti_Delete(appVarName);
 	LD	BC,_appVarName
 	PUSH	BC
 	CALL	_ti_Delete
 	POP	BC
-;  104		ti_CloseAll();
-.LINE 104
-
+;  106		ti_CloseAll();
 	CALL	_ti_CloseAll
-;  105		text_Display("SAVE FAILED", false);
-.LINE 105
-
+;  107		text_Display("SAVE FAILED", false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__20
@@ -2590,10 +1610,8 @@ L_0:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  106	}
+;  108	}
 L_37:
-.LINE 106
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -2632,7 +1650,6 @@ L_37:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "save_Save",106,"_save_Save"
 	SEGMENT STRSECT
 L__0:
 	DB	"w"
@@ -2644,47 +1661,17 @@ L__20:
 	DB	"SAVE FAILED"
 	DB	0
 	SEGMENT CODE
-;  107	
-;  108	void save_Load(void) {
+;  109	
+;  110	void save_Load(void) {
 _save_Load:
-.DEFINE "_save_Load"
-
-.VALUE _save_Load
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "save_Load",108,"_save_Load"
-
-.LINE 108
-
-.DEFINE "save"
-
-.CLASS 65
-
-.VALUE -1
-
-.TYPE 12
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	DEC	SP
-;  109		ti_var_t save;
-;  110	
-;  111		ti_CloseAll();
-.LINE 111
-
-	CALL	_ti_CloseAll
+	LD	HL,-1
+	CALL	__frameset
+;  111		ti_var_t save;
 ;  112	
-;  113		save = ti_Open(appVarName, "r");
-.LINE 113
-
+;  113		ti_CloseAll();
+	CALL	_ti_CloseAll
+;  114	
+;  115		save = ti_Open(appVarName, "r");
 	LD	BC,L__22
 	PUSH	BC
 	LD	BC,_appVarName
@@ -2693,15 +1680,11 @@ _save_Load:
 	POP	BC
 	POP	BC
 	LD	(IX+-1),A
-;  114	
-;  115		if (save) {
-.LINE 115
-
+;  116	
+;  117		if (save) {
 	OR	A,A
 	JR	Z,L_38
-;  116			if (ti_Read(&readVersion, sizeof(readVersion), 1, save) != 1) {
-.LINE 116
-
+;  118			if (ti_Read(&readVersion, sizeof(readVersion), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2720,20 +1703,16 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  117				goto err;
-;  118			}
-;  119			if (version != readVersion) {
-.LINE 119
-
+;  119				goto err;
+;  120			}
+;  121			if (version != readVersion) {
 	LD	HL,(_readVersion)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  120				goto err; /* do not load if wrong version */
-;  121			}
-;  122			if (ti_Read(&newGame, sizeof(newGame), 1, save) != 1) {
-.LINE 122
-
+;  122				goto err; /* do not load if wrong version */
+;  123			}
+;  124			if (ti_Read(&newGame, sizeof(newGame), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2751,11 +1730,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  123				goto err;
-;  124			}
-;  125			if (ti_Read(&playerX, sizeof(playerX), 1, save) != 1) {
-.LINE 125
-
+;  125				goto err;
+;  126			}
+;  127			if (ti_Read(&playerX, sizeof(playerX), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2774,11 +1751,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  126				goto err;
-;  127			}
-;  128			if (ti_Read(&playerY, sizeof(playerY), 1, save) != 1) {
-.LINE 128
-
+;  128				goto err;
+;  129			}
+;  130			if (ti_Read(&playerY, sizeof(playerY), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2797,11 +1772,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  129				goto err;
-;  130			}
-;  131			if (ti_Read(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
-.LINE 131
-
+;  131				goto err;
+;  132			}
+;  133			if (ti_Read(&lastPlayerX, sizeof(lastPlayerX), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2820,11 +1793,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  132				goto err;
-;  133			}
-;  134			if (ti_Read(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
-.LINE 134
-
+;  134				goto err;
+;  135			}
+;  136			if (ti_Read(&lastPlayerY, sizeof(lastPlayerY), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2843,11 +1814,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  135				goto err;
-;  136			}
-;  137			if (ti_Read(&party, sizeof(party), 1, save) != 1) {
-.LINE 137
-
+;  137				goto err;
+;  138			}
+;  139			if (ti_Read(&party, sizeof(party), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2866,11 +1835,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  138				goto err;
-;  139			}
-;  140			if (ti_Read(&currentZone, sizeof(currentZone), 1, save) != 1) {
-.LINE 140
-
+;  140				goto err;
+;  141			}
+;  142			if (ti_Read(&currentZone, sizeof(currentZone), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2889,11 +1856,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  141				goto err;
-;  142			}
-;  143			if (ti_Read(&indoors, sizeof(indoors), 1, save) != 1) {
-.LINE 143
-
+;  143				goto err;
+;  144			}
+;  145			if (ti_Read(&indoors, sizeof(indoors), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2911,11 +1876,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  144				goto err;
-;  145			}
-;  146			if (ti_Read(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
-.LINE 146
-
+;  146				goto err;
+;  147			}
+;  148			if (ti_Read(&currentBuilding, sizeof(currentBuilding), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2933,11 +1896,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  147				goto err;
-;  148			}
-;  149			if (ti_Read(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
-.LINE 149
-
+;  149				goto err;
+;  150			}
+;  151			if (ti_Read(&playerMoney, sizeof(playerMoney), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2956,11 +1917,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  150				goto err;
-;  151			}
-;  152			if (ti_Read(&playerItems, sizeof(playerItems), 1, save) != 1) {
-.LINE 152
-
+;  152				goto err;
+;  153			}
+;  154			if (ti_Read(&playerItems, sizeof(playerItems), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -2979,11 +1938,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  153				goto err;
-;  154			}
-;  155			if (ti_Read(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
-.LINE 155
-
+;  155				goto err;
+;  156			}
+;  157			if (ti_Read(&defeatedTrainers, sizeof(defeatedTrainers), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3002,11 +1959,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  156				goto err;
-;  157			}
-;  158			if (ti_Read(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
-.LINE 158
-
+;  158				goto err;
+;  159			}
+;  160			if (ti_Read(&defeatedTrainersIndoors, sizeof(defeatedTrainersIndoors), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3025,11 +1980,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  159				goto err;
-;  160			}
-;  161			if (ti_Read(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
-.LINE 161
-
+;  161				goto err;
+;  162			}
+;  163			if (ti_Read(&takenGifts, sizeof(takenGifts), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3048,11 +2001,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  162				goto err;
-;  163			}
-;  164			if (ti_Read(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
-.LINE 164
-
+;  164				goto err;
+;  165			}
+;  166			if (ti_Read(&badgeCount, sizeof(badgeCount), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3070,11 +2021,9 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  165				goto err;
-;  166			}
-;  167			if (ti_Read(&pokedex, sizeof(pokedex), 1, save) != 1) {
-.LINE 167
-
+;  167				goto err;
+;  168			}
+;  169			if (ti_Read(&pokedex, sizeof(pokedex), 1, save) != 1) {
 	LD	C,(IX+-1)
 	LD	B,0
 	PUSH	BC
@@ -3093,37 +2042,23 @@ _save_Load:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_38
-;  168				goto err;
-;  169			}
-;  170		}
-;  171		else {
-.LINE 171
-
-;  172			goto err;
-.LINE 172
-
-;  173		}
-.LINE 173
-
-;  174		ti_CloseAll();
-.LINE 174
-
+;  170				goto err;
+;  171			}
+;  172		}
+;  173		else {
+;  174			goto err;
+;  175		}
+;  176		ti_CloseAll();
 	CALL	_ti_CloseAll
-;  175		return;
-.LINE 175
-
+;  177		return;
 	JR	L_77
 L_38:
-;  176	
-;  177	err:
-;  178		ti_CloseAll();
-.LINE 178
-
+;  178	
+;  179	err:
+;  180		ti_CloseAll();
 	CALL	_ti_CloseAll
-;  179	}
+;  181	}
 L_77:
-.LINE 179
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3159,58 +2094,25 @@ L_77:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "save_Load",179,"_save_Load"
 	SEGMENT STRSECT
 L__22:
 	DB	"r"
 	DB	0
 	SEGMENT CODE
-;  180	
-;  181	
-;  182	void save_SelectSave(void) {
+;  182	
+;  183	
+;  184	void save_SelectSave(void) {
 _save_SelectSave:
-.DEFINE "_save_SelectSave"
-
-.VALUE _save_SelectSave
-
-.CLASS 2
-
-.TYPE 65
-
-.ENDEF
-
-.BEGFUNC "save_SelectSave",182,"_save_SelectSave"
-
-.LINE 182
-
-.DEFINE "answer"
-
-.CLASS 65
-
-.VALUE -3
-
-.TYPE 4
-
-.ENDEF
-
-	PUSH	IX
-	LD	IX,0
-	ADD	IX,SP
-	PUSH	BC
-;  183		int answer;
-;  184		answer = 0;
-.LINE 184
-
+	LD	HL,-3
+	CALL	__frameset
+;  185		int answer;
+;  186		answer = 0;
 	LD	BC,0
 	LD	(IX+-3),BC
-;  185		while (answer == 0) {
-.LINE 185
-
+;  187		while (answer == 0) {
 	JR	L_78
 L_79:
-;  186			answer = text_AskQuestion2("Save Slot 1", "Save Slot 2", false);
-.LINE 186
-
+;  188			answer = text_AskQuestion2("Save Slot 1", "Save Slot 2", false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,L__43
@@ -3222,24 +2124,18 @@ L_79:
 	POP	BC
 	POP	BC
 	LD	(IX+-3),HL
-;  187		}
+;  189		}
 L_78:
-.LINE 187
-
 	LD	HL,(IX+-3)
 	CALL	__icmpzero
 	JR	Z,L_79
-;  188		if(answer == 1){
-.LINE 188
-
+;  190		if(answer == 1){
 	LD	BC,1
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_83
-;  189			strcpy(appVarName, "PKMNSV1");
-.LINE 189
-
+;  191			strcpy(appVarName, "PKMNSV1");
 	LD	BC,L__47
 	PUSH	BC
 	LD	BC,_appVarName
@@ -3247,21 +2143,15 @@ L_78:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  190		}
+;  192		}
 L_83:
-.LINE 190
-
-;  191		if (answer == 2) {
-.LINE 191
-
+;  193		if (answer == 2) {
 	LD	BC,2
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_84
-;  192			strcpy(appVarName, "PKMNSV2");
-.LINE 192
-
+;  194			strcpy(appVarName, "PKMNSV2");
 	LD	BC,L__49
 	PUSH	BC
 	LD	BC,_appVarName
@@ -3269,10 +2159,8 @@ L_83:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  193		}
+;  195		}
 L_84:
-.LINE 194
-
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3290,7 +2178,6 @@ L_84:
 ;       Spill Code: 0 (instruction)
 
 
-.ENDFUNC "save_SelectSave",194,"_save_SelectSave"
 	SEGMENT STRSECT
 L__43:
 	DB	"Save Slot 2"
@@ -3313,6 +2200,7 @@ L__49:
 	XREF _ti_Open:ROM
 	XREF _ti_CloseAll:ROM
 	XREF _strcpy:ROM
+	XREF __frameset:ROM
 	XREF __icmpzero:ROM
 	XDEF _save_SelectSave
 	XDEF _save_Load
@@ -3325,6 +2213,7 @@ L__49:
 	XDEF _playerItems
 	XDEF _playerMoney
 	XDEF _currentBuilding
+	XDEF _surfing
 	XDEF _indoors
 	XDEF _currentZone
 	XDEF _party

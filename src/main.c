@@ -44,7 +44,6 @@
 uint8_t gameState = 0;
 
 void main(void) {
-	int colorIndex;
 	/* Seed RNG */
 	unsigned seed = rtc_Time();
 
@@ -64,8 +63,17 @@ void main(void) {
 	map_Initialize();
 	battle_Initialize();
 
-	FindColors();
+#ifndef NDEBUG
+	debugging = true;
+#else
+	debugging = false;
+#endif
 
+	if (debugging) {
+		FindColors();
+	}
+
+	surfing = false;
 	map_Setup();
 
 	if (newGame) {
