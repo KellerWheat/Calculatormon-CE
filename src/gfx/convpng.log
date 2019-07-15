@@ -2,11 +2,11 @@ opened convpng.ini
 
 --- map_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [231] indices.
+built palette with [234] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0x8318
-49:
+53:
  mapcursorsmall : 100.00%
  grassoverlay1 : 100.00%
  grassoverlay2 : 100.00%
@@ -23,11 +23,11 @@ transparent color : 0x8318
  player03 : 100.00% (322 > 140 bytes)
  player04 : 100.00% (322 > 135 bytes)
  player05 : 100.00% (322 > 130 bytes)
- player06 : 100.00% (322 > 152 bytes)
+ player06 : 100.00% (322 > 153 bytes)
  player07 : 100.00% (322 > 149 bytes)
  player08 : 100.00% (322 > 147 bytes)
- player09 : 100.00% (322 > 147 bytes)
- player10 : 100.00% (322 > 142 bytes)
+ player09 : 100.00% (322 > 148 bytes)
+ player10 : 100.00% (322 > 143 bytes)
  player11 : 100.00% (322 > 146 bytes)
  player12 : 100.00% (322 > 131 bytes)
  player13 : 100.00% (322 > 127 bytes)
@@ -53,6 +53,10 @@ transparent color : 0x8318
  enemy01 : 100.00% (322 > 142 bytes)
  enemy02 : 100.00% (322 > 156 bytes)
  enemy03 : 100.00% (322 > 149 bytes)
+ enemy04 : 100.00% (322 > 147 bytes)
+ enemy05 : 100.00% (322 > 149 bytes)
+ enemy06 : 100.00% (322 > 162 bytes)
+ enemy07 : 100.00% (322 > 152 bytes)
  outdoortileset : 100.00%
  outdoortileset_tile_0_compressed (258 > 19 bytes)
  outdoortileset_tile_1_compressed (258 > 32 bytes)
@@ -62,13 +66,13 @@ transparent color : 0x8318
  outdoortileset_tile_5_compressed (258 > 110 bytes)
  outdoortileset_tile_6_compressed (258 > 115 bytes)
  outdoortileset_tile_7_compressed (258 > 73 bytes)
- outdoortileset_tile_8_compressed (258 > 83 bytes)
+ outdoortileset_tile_8_compressed (258 > 82 bytes)
  outdoortileset_tile_9_compressed (258 > 95 bytes)
  outdoortileset_tile_10_compressed (258 > 98 bytes)
  outdoortileset_tile_11_compressed (258 > 96 bytes)
- outdoortileset_tile_12_compressed (258 > 103 bytes)
- outdoortileset_tile_13_compressed (258 > 71 bytes)
- outdoortileset_tile_14_compressed (258 > 105 bytes)
+ outdoortileset_tile_12_compressed (258 > 101 bytes)
+ outdoortileset_tile_13_compressed (258 > 70 bytes)
+ outdoortileset_tile_14_compressed (258 > 103 bytes)
  outdoortileset_tile_15_compressed (258 > 9 bytes)
  outdoortileset_tile_16_compressed (258 > 20 bytes)
  outdoortileset_tile_17_compressed (258 > 30 bytes)
@@ -77,8 +81,8 @@ transparent color : 0x8318
  outdoortileset_tile_20_compressed (258 > 52 bytes)
  outdoortileset_tile_21_compressed (258 > 65 bytes)
  outdoortileset_tile_22_compressed (258 > 65 bytes)
- outdoortileset_tile_23_compressed (258 > 59 bytes)
- outdoortileset_tile_24_compressed (258 > 90 bytes)
+ outdoortileset_tile_23_compressed (258 > 58 bytes)
+ outdoortileset_tile_24_compressed (258 > 88 bytes)
  outdoortileset_tile_25_compressed (258 > 108 bytes)
  outdoortileset_tile_26_compressed (258 > 111 bytes)
  outdoortileset_tile_27_compressed (258 > 94 bytes)
@@ -93,12 +97,12 @@ transparent color : 0x8318
  outdoortileset_tile_36_compressed (258 > 45 bytes)
  outdoortileset_tile_37_compressed (258 > 126 bytes)
  outdoortileset_tile_38_compressed (258 > 122 bytes)
- outdoortileset_tile_39_compressed (258 > 75 bytes)
- outdoortileset_tile_40_compressed (258 > 92 bytes)
+ outdoortileset_tile_39_compressed (258 > 73 bytes)
+ outdoortileset_tile_40_compressed (258 > 93 bytes)
  outdoortileset_tile_41_compressed (258 > 94 bytes)
  outdoortileset_tile_42_compressed (258 > 95 bytes)
  outdoortileset_tile_43_compressed (258 > 81 bytes)
- outdoortileset_tile_44_compressed (258 > 96 bytes)
+ outdoortileset_tile_44_compressed (258 > 95 bytes)
  outdoortileset_tile_45_compressed (258 > 53 bytes)
  outdoortileset_tile_46_compressed (258 > 101 bytes)
  outdoortileset_tile_47_compressed (258 > 9 bytes)
@@ -111,8 +115,8 @@ transparent color : 0x8318
  outdoortileset_tile_54_compressed (258 > 97 bytes)
  outdoortileset_tile_55_compressed (258 > 17 bytes)
  outdoortileset_tile_56_compressed (258 > 85 bytes)
- outdoortileset_tile_57_compressed (258 > 94 bytes)
- outdoortileset_tile_58_compressed (258 > 96 bytes)
+ outdoortileset_tile_57_compressed (258 > 95 bytes)
+ outdoortileset_tile_58_compressed (258 > 95 bytes)
  outdoortileset_tile_59_compressed (258 > 17 bytes)
  outdoortileset_tile_60_compressed (258 > 98 bytes)
  outdoortileset_tile_61_compressed (258 > 97 bytes)
@@ -177,10 +181,10 @@ transparent color : 0x8318
  outdoortileset_tile_120_compressed (258 > 94 bytes)
  outdoortileset_tile_121_compressed (258 > 50 bytes)
  outdoortileset_tile_122_compressed (258 > 48 bytes)
- outdoortileset_tile_123_compressed (258 > 73 bytes)
+ outdoortileset_tile_123_compressed (258 > 74 bytes)
  outdoortileset_tile_124_compressed (258 > 61 bytes)
  outdoortileset_tile_125_compressed (258 > 64 bytes)
- outdoortileset_tile_126_compressed (258 > 42 bytes)
+ outdoortileset_tile_126_compressed (258 > 43 bytes)
  outdoortileset_tile_127_compressed (258 > 9 bytes)
  indoortileset : 100.00%
  indoortileset_tile_0_compressed (258 > 151 bytes)
@@ -1167,6 +1171,10 @@ exporting appvar: PKMNSD4.8xv
  enemy01
  enemy02
  enemy03
+ enemy04
+ enemy05
+ enemy06
+ enemy07
  maptextbox1
  maptextbox2
  pausemenu
@@ -1368,7 +1376,7 @@ exporting appvar: PKMNSD6.8xv
  i150
  i151
 
-converted in 14 s
+converted in 12 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 

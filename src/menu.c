@@ -54,8 +54,7 @@ void menu_Setup(void) {
 	dbg_SetWatchpoint(&party[0].moves[2], 1);
 	dbg_SetWatchpoint(&party[0].moves[3], 1);
 
-	zx7_Decompress(textBoxSprite1, menutextbox1_compressed);
-	zx7_Decompress(textBoxSprite2, menutextbox2_compressed);
+	textBoxType = 3;
 
 	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	SetColors(1);

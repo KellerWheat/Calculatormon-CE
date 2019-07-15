@@ -25,17 +25,17 @@ char str[100];
 uint16_t i;
 uint16_t e;
 /* Used to run functions when debugging */
-bool debugging;
+bool debugging = false;
 
-#define COLORCOUNT 13
+#define COLORCOUNT 17
 
-/* 0:white, 1:black, 2:poison, 3:burn, 4:paralysis, 5:sleep, 6:frozen, 7:exp, 8:high health, 9:mid health, 10:low health, 11:xpbartext, 12:transparent*/
+
 uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{8,6,221,117,231,155,18,23,126,230,33,230,206,},
-	{9,8,157,24,55,95,0,22,54,179,151,112,0,},
+	{7,6,225,121,102,159,13,26,131,102,14,102,210,13,49,85,54,},
+	{9,8,157,24,55,95,0,22,54,179,151,112,0,115,69,49,14,},
 };
 
 uint8_t colorValues[COLORCOUNT][3] = {
@@ -52,6 +52,10 @@ uint8_t colorValues[COLORCOUNT][3] = {
 	{248,88,56},//10
 	{248,224,0},//11
 	{0,200,200},//12
+	{0,128,255},//13
+	{40,48,48},//14
+	{138,138,200},//15
+	{200,200,216},//16
 };
 
 gfx_sprite_t *typeIcons[17];

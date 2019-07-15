@@ -2369,7 +2369,7 @@ L__16:
 ;  153	
 ;  154	bool items_UseItem(uint8_t index) {
 _items_UseItem:
-	LD	HL,-74
+	LD	HL,-62
 	CALL	__frameset
 ;  155		char itemName[20];
 ;  156		if (index < 4 || playerItems[index] == 0) {
@@ -2868,133 +2868,65 @@ L__39:
 ;  215				{
 ;  216				case 1:
 L_67:
-;  217					party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
+;  217					party[i].moves[0] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-65),HL
-	LD	IY,(IX+-65)
-	LD	A,(IY+0)
-	UEXT	HL
-	LD	L,A
-	LD	A,51
-	CALL	__imul_b
-	LD	BC,_data_pokemon
-	ADD	HL,BC
-	LD	BC,HL
-	LD	A,(IX+6)
-	UEXT	HL
-	LD	L,A
 	LD	IY,HL
-	LEA	DE,IY+-19
-	LD	IY,BC
-	LEA	HL,IY+34
-	ADD	HL,DE
-	LD	A,(HL)
-	LD	IY,(IX+-65)
+	LD	A,(IX+6)
+	SUB	A,19
 	LD	(IY+1),A
 ;  218					break;
 	JR	L_75
 ;  219				case 2:
 L_68:
-;  220					party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
+;  220					party[i].moves[1] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-68),HL
-	LD	IY,(IX+-68)
-	LD	A,(IY+0)
-	UEXT	HL
-	LD	L,A
-	LD	A,51
-	CALL	__imul_b
-	LD	BC,_data_pokemon
-	ADD	HL,BC
-	LD	BC,HL
-	LD	A,(IX+6)
-	UEXT	HL
-	LD	L,A
 	LD	IY,HL
-	LEA	DE,IY+-19
-	LD	IY,BC
-	LEA	HL,IY+34
-	ADD	HL,DE
-	LD	A,(HL)
-	LD	IY,(IX+-68)
 	LEA	HL,IY+1
 	INC	HL
+	LD	A,(IX+6)
+	SUB	A,19
 	LD	(HL),A
 ;  221					break;
 	JR	L_75
 ;  222				case 3:
 L_69:
-;  223					party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
+;  223					party[i].moves[2] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-71),HL
-	LD	IY,(IX+-71)
-	LD	A,(IY+0)
-	UEXT	HL
-	LD	L,A
-	LD	A,51
-	CALL	__imul_b
-	LD	BC,_data_pokemon
-	ADD	HL,BC
-	LD	BC,HL
-	LD	A,(IX+6)
-	UEXT	HL
-	LD	L,A
 	LD	IY,HL
-	LEA	DE,IY+-19
-	LD	IY,BC
-	LEA	HL,IY+34
-	ADD	HL,DE
-	LD	A,(HL)
-	LD	IY,(IX+-71)
 	LEA	HL,IY+3
+	LD	A,(IX+6)
+	SUB	A,19
 	LD	(HL),A
 ;  224					break;
 	JR	L_75
 ;  225				case 4:
 L_70:
-;  226					party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
+;  226					party[i].moves[3] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-74),HL
-	LD	IY,(IX+-74)
-	LD	A,(IY+0)
-	UEXT	HL
-	LD	L,A
-	LD	A,51
-	CALL	__imul_b
-	LD	BC,_data_pokemon
-	ADD	HL,BC
-	LD	BC,HL
-	LD	A,(IX+6)
-	UEXT	HL
-	LD	L,A
 	LD	IY,HL
-	LEA	DE,IY+-19
-	LD	IY,BC
-	LEA	HL,IY+34
-	ADD	HL,DE
-	LD	A,(HL)
-	LD	IY,(IX+-74)
 	LEA	HL,IY+4
+	LD	A,(IX+6)
+	SUB	A,19
 	LD	(HL),A
 ;  227					break;
 	JR	L_75
@@ -3118,7 +3050,7 @@ L_76:
 ;index                                 IX+6      1   parameter
 
 
-; Stack Frame Size: 83 (bytes)
+; Stack Frame Size: 71 (bytes)
 ;       Spill Code: 0 (instruction)
 
 

@@ -136,8 +136,7 @@ void battle_Setup(void) {
 	run = false;
 }
 void SetupBattleGfx(void) {
-	zx7_Decompress(textBoxSprite1, battletextbox1_compressed);
-	zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
+	textBoxType = 1;
 	backgroundSprite = gfx_MallocSprite(160, 88);
 	zx7_Decompress(backgroundSprite, background_compressed);
 	hpBarSprite = gfx_MallocSprite(98, 10);
@@ -387,7 +386,7 @@ int selectMove(void) {
 	tv1 = 0;
 	tv2 = 0;
 
-	zx7_Decompress(textBoxSprite2, battletextbox3_compressed);
+	textBoxType = 2;
 	gfx_Blit(gfx_screen);
 	text_DrawTextBox();
 
@@ -457,7 +456,6 @@ int selectMove(void) {
 			Wait(20);
 		}
 	}
-	zx7_Decompress(textBoxSprite2, battletextbox2_compressed);
 	if (kb_Data[6] & kb_Clear) {
 		return(0);
 	}

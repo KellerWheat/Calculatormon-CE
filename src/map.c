@@ -50,7 +50,7 @@ void DrawEnemies(void);
 /* Loads the tilemap, typemap ,and zonedata for current area */
 void LoadMap(void);
 
-void GrassOverlay(bool part);
+void GrassAnimation(bool part);
 
 const int battlechance = 10; /* Chance for enemy to spawn out of 100 */
 
@@ -67,8 +67,20 @@ uint8_t ty; /* y tile */
 bool running;
 int currentWater;
 
+/* Variables for the leaves that appear when walking through grass */
+bool grassAnimNext = 0;
+int grassAnimState1 = 0;
+int grassAnimState2 = 0;
+int grassAnimX1 = 0;
+int grassAnimY1 = 0;
+int grassAnimX2 = 0;
+int grassAnimY2 = 0;
+
+
 uint8_t nextTile;
+/* Set to 8 when anything is pressed and decreases each frame until 0 */
 uint8_t moveState = 0;
+/* Direction Player is facing */
 uint8_t moveDir = 3;
 uint8_t playerState = 0;
 
@@ -76,9 +88,8 @@ gfx_tilemap_t tilemap;
 
 gfx_sprite_t *mapTiles[128];
 gfx_sprite_t *playerSprites[32];
-gfx_sprite_t *enemySprites[4];
+gfx_sprite_t *enemySprites[8];
 gfx_sprite_t *pokeballSprites[3];
-gfx_sprite_t *pauseMenuSprite;
 
 uint8_t currentTileMap[1920];
 uint8_t currentTypeMap[1920];
@@ -100,8 +111,7 @@ void map_Initialize(void) {
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
 	gfx_SetTextFGColor(colors[1]);
-	zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
-	zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
+	textBoxType = 0;	
 	save_SelectSave();
 	save_Load();
 
@@ -158,7 +168,7 @@ void map_SetupGfx(void) {
 		playerSprites[tileIndex] = gfx_MallocSprite(22, 26);
 		zx7_Decompress(playerSprites[tileIndex], PKMNSD4[0 + tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
 		enemySprites[tileIndex] = gfx_MallocSprite(16, 20);
 		zx7_Decompress(enemySprites[tileIndex], PKMNSD4[32 + tileIndex]);
 	}
@@ -166,10 +176,7 @@ void map_SetupGfx(void) {
 		pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
 		zx7_Decompress(pokeballSprites[tileIndex], pokeball_tiles_compressed[tileIndex]);
 	}
-	pauseMenuSprite = gfx_MallocSprite(112, 96);
-	zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
-	zx7_Decompress(textBoxSprite1, maptextbox1_compressed);
-	zx7_Decompress(textBoxSprite2, maptextbox2_compressed);
+	textBoxType = 0;
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
 	gfx_SetTextScale(1, 1);
@@ -181,12 +188,16 @@ int map_Loop(void) {
 	/* Open Menu */
 	if (kb_Data[6] & kb_Enter) {
 		int menuReturn;
+		gfx_sprite_t *pauseMenuSprite;
 		Wait(20);
 		gfx_Blit(gfx_screen);
 		gfx_Sprite(pauseMenuSprite, 195, 25);
 		map_End();
+		pauseMenuSprite = gfx_MallocSprite(112, 96);
+		zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
 
 		menuReturn = menu_Menu();
+		free(pauseMenuSprite);
 		map_SetupGfx();
 		map_LoadPokeballs();
 		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
@@ -196,21 +207,35 @@ int map_Loop(void) {
 	if ((kb_Data[1] & kb_2nd)) {
 		nextTile = GetNextTile(tx, ty, tilemap.width);
 		if (GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) <= 0x20) {
-			if (moveDir == 1) {
-				playerX += 16;
+			int partyIndex, moveIndex;
+			bool hasUser = false;
+			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+				for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+					if (party[partyIndex].moves[moveIndex] == 141) {
+						hasUser = true;
+						sprintf(str, "%s used Surf", data_pokemon[party[partyIndex].id].name);
+						partyIndex = 6;
+					}
+				}
 			}
-			if (moveDir == 2) {
-				playerX -= 16;
+			if (hasUser) {
+				text_Display(str,true);
+				if (moveDir == 1) {
+					playerX += 16;
+				}
+				if (moveDir == 2) {
+					playerX -= 16;
+				}
+				if (moveDir == 3) {
+					playerY += 16;
+				}
+				if (moveDir == 4) {
+					playerY -= 16;
+				}
+				surfing = true;
+				tx = playerX / 16;
+				ty = playerY / 16;
 			}
-			if (moveDir == 3) {
-				playerY += 16;
-			}
-			if (moveDir == 4) {
-				playerY -= 16;
-			}
-			surfing = true;
-			tx = playerX / 16;
-			ty = playerY / 16;
 		}
 		if (nextTile == 0x41) {
 			HealParty();
@@ -369,18 +394,17 @@ void map_End(void) {
 	for (tileIndex = 0; tileIndex < 32; tileIndex++) {
 		free(playerSprites[tileIndex]);
 	}
-	for (tileIndex = 0; tileIndex < 4; tileIndex++) {
+	for (tileIndex = 0; tileIndex < 8; tileIndex++) {
 		free(enemySprites[tileIndex]);
 	}
 	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
 		free(pokeballSprites[tileIndex]);
 	}
-	free(pauseMenuSprite);
+	
 }
 
 void map_Draw(void) {
 	/* Move Screen and Redraw */
-
 	if (indoors) {
 		screenX = 0;
 		screenY = 0;
@@ -406,52 +430,67 @@ void map_Draw(void) {
 		screenY = Clamp(playerY - 112, 0, MAX_Y);
 
 		gfx_Tilemap(&tilemap, screenX, screenY);
-		
 
-		if (moveDir == 4) {
-			GrassOverlay(1);
+
+		GrassAnimation(0);
+
+		gfx_TransparentSprite_NoClip(playerSprites[(24 * surfing) + (12 * running) + (moveDir - 1) * (3 - surfing) + playerState], playerX - screenX - 8, playerY - screenY + 4);
+
+		/* Draw overlay if player is in grass */
+		if (currentTileMap[tx + (moveDir == 1) - (moveDir == 2) + (ty + (moveDir == 3) - (moveDir == 4)) * OUTDOORWIDTH] == 2) {
+			/* Always draw grass overlay if moving sideways*/
+			if (moveDir <= 2 && moveState > 0) {
+				gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
+			}
+			/* Only draw the overlay at the end if moving vertically */
+			else if (moveState == 1 || moveState == 2) {
+				gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
+			}
+			if (moveState == 2) {
+				if (grassAnimNext) {
+					grassAnimState1 = 10;
+					grassAnimX1 = (tx + (moveDir == 1) - (moveDir == 2)) * 16;
+					grassAnimY1 = (ty + (moveDir == 3) - (moveDir == 4)) * 16;
+				}
+				else {
+					grassAnimState2 = 10;
+					grassAnimX2 = (tx + (moveDir == 1) - (moveDir == 2)) * 16;
+					grassAnimY2 = (ty + (moveDir == 3) - (moveDir == 4)) * 16;
+				}
+				grassAnimNext = !grassAnimNext;
+			}
 		}
-		if (moveDir == 3) {
-			GrassOverlay(0);
+		if (!(moveDir == 3 && moveState != 0) && currentTileMap[tx + ty * OUTDOORWIDTH] == 2) {
+			gfx_TransparentSprite_NoClip(grassoverlay1, tx * 16 - screenX - 8, ty * 16 - screenY + 18);
 		}
-		gfx_TransparentSprite_NoClip(playerSprites[(24*surfing) + (12*running) + (moveDir - 1) * (3 - surfing) + playerState], playerX - screenX - 8, playerY - screenY + 4);
-		if (moveDir != 3) {
-			GrassOverlay(0);
-		}
-		if (moveDir != 4) {
-			GrassOverlay(1);
-		}
-		
+		GrassAnimation(1);
+
 	}
 	DrawEnemies();
 	map_DrawInformationBar();
 }
-void GrassOverlay(bool part) {
-	if (!part &&currentTileMap[tx + ty * OUTDOORWIDTH] == 2) {
-		if (moveState > 4) {
-			if (moveState > 6) {
-				gfx_TransparentSprite_NoClip(grassoverlay3, tx * 16 - screenX - 8, ty * 16 - screenY + 13);
+void GrassAnimation(bool part) {
+	if (grassAnimState1 > 0) {
+		if ((moveDir == 3 && ty == grassAnimY1 / 16) == part) {
+			if (grassAnimState1 > 5) {
+				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX1 - screenX - 8, grassAnimY1 - screenY + 13);
 			}
 			else {
-				gfx_TransparentSprite_NoClip(grassoverlay2, tx * 16 - screenX - 8, ty * 16 - screenY + 14);
+				gfx_TransparentSprite_NoClip(grassoverlay2, grassAnimX1 - screenX - 8, grassAnimY1 - screenY + 14);
 			}
 		}
-		else {
-			gfx_TransparentSprite_NoClip(grassoverlay1, tx * 16 - screenX - 8, ty * 16 - screenY + 18);
-		}
+		grassAnimState1--;
 	}
-	if (part && currentTileMap[tx + (moveDir == 1) - (moveDir == 2) + (ty + (moveDir == 3) - (moveDir == 4)) * OUTDOORWIDTH] == 2) {
-		if (moveState > 0 && moveState <= 5) {
-			if (moveState > 2) {
-				gfx_TransparentSprite_NoClip(grassoverlay3, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 13);
+	if (grassAnimState2 > 0) {
+		if ((moveDir == 3 && ty == grassAnimY2 / 16) == part) {
+			if (grassAnimState2 > 5) {
+				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX2 - screenX - 8, grassAnimY2 - screenY + 13);
 			}
 			else {
-				gfx_TransparentSprite_NoClip(grassoverlay2, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 14);
+				gfx_TransparentSprite_NoClip(grassoverlay2, grassAnimX2 - screenX - 8, grassAnimY2 - screenY + 14);
 			}
 		}
-		else {
-			gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
-		}
+		grassAnimState2--;
 	}
 }
 

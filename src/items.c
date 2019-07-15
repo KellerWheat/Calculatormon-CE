@@ -214,16 +214,16 @@ bool items_UseItem(uint8_t index) {
 			switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
 			{
 			case 1:
-				party[i].moves[0] = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[0] = index - 19;
 				break;
 			case 2:
-				party[i].moves[1] = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[1] = index - 19;
 				break;
 			case 3:
-				party[i].moves[2] = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[2] = index - 19;
 				break;
 			case 4:
-				party[i].moves[3] = data_pokemon[party[i].id].moveids[index - 19];
+				party[i].moves[3] = index - 19;
 				break;
 			}
 		}

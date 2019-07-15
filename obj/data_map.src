@@ -1447,34 +1447,34 @@ _data_npcText:
 	DB	0
 	DB	0
 	DB	84
-	DB	104
-	DB	101
-	DB	114
-	DB	101
-	DB	32
 	DB	97
-	DB	114
+	DB	107
 	DB	101
-	DB	32
-	DB	110
-	DB	111
-	DB	32
-	DB	72
-	DB	77
-	DB	115
-	DB	32
-	DB	105
-	DB	110
 	DB	32
 	DB	116
 	DB	104
 	DB	105
 	DB	115
 	DB	32
-	DB	103
-	DB	97
-	DB	109
-	DB	101
+	DB	72
+	DB	77
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
 	DB	0
 	DB	0
 	DB	0
@@ -2068,7 +2068,7 @@ _data_npcReward:
 	DB	2
 	DB	0
 	DB	27
-	DB	46
+	DB	161
 	DB	13
 	DB	12
 	DB	0
@@ -2098,7 +2098,7 @@ _data_npcReward:
 ;    6		"Fight Me","I found Zubats","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",
 ;    7	};
 ;    8	char data_npcText[32][32] = {
-;    9		"Hello","Gym 1","Gym 2","Gym 3","Gym 4","Gym 5","Gym 6","Gym 7","Gym 8","Elite Four","Take This Item","The first gym is south of here.","This might be useful","There are no HMs in this game","This is useful","This is useful","","","","","","","","","","","","","","","","",
+;    9		"Hello","Gym 1","Gym 2","Gym 3","Gym 4","Gym 5","Gym 6","Gym 7","Gym 8","Elite Four","Take This Item","The first gym is south of here.","This might be useful","Take this HM","This is useful","This is useful","","","","","","","","","","","","","","","","",
 ;   10	};
 ;   11	uint8_t data_npcReward[32] = {
 	END

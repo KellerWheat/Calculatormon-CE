@@ -6,11 +6,10 @@
 	SEGMENT TEXT
 _delaytime:
 	DB	50
-	SEGMENT BSS
-_textBoxSprite1:
-	DS	3
-_textBoxSprite2:
-	DS	3
+	SEGMENT DATA
+_textBoxType:
+	DW	0
+	DB	0
 ;    1	#include <graphx.h>
 ;    2	#include <string.h>
 ;    3	#include <keypadc.h>
@@ -26,8 +25,8 @@ _textBoxSprite2:
 ;   13	/* If holding down second, the time to pause before moving to next text */
 ;   14	const uint8_t delaytime = 50;
 ;   15	
-;   16	gfx_sprite_t *textBoxSprite1;
-;   17	gfx_sprite_t *textBoxSprite2;
+;   16	
+;   17	int textBoxType = 0;
 	SEGMENT CODE
 ;   18	
 ;   19	/* Text Functions */
@@ -1280,52 +1279,866 @@ L__64:
 	SEGMENT CODE
 ;  202	void text_DrawTextBox(void) {
 _text_DrawTextBox:
-;  203		gfx_SetColor(colors[0]);	
+	LD	HL,-48
+	CALL	__frameset
+;  203		if (textBoxType == 0) {
+	LD	HL,(_textBoxType)
+	CALL	__icmpzero
+	JR	NZ,L_120
+;  204			int points[16] = { 4,188,  12,180,  307,180,  315,188,  315,227,  307,235,  12,235,  4,227,};
+	LEA	DE,IX+-48
+	LD	HL,_2temp114
+	LD	BC,48
+;  205			gfx_SetColor(colors[13]);
+	LD	IY,_colors
+	LDIR	
+	LD	C,(IY+13)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  206			gfx_Polygon_NoClip(points, 8);
+	LD	BC,8
+	PUSH	BC
+	PEA	IX+-48
+	CALL	_gfx_Polygon_NoClip
+	POP	BC
+	POP	BC
+;  207			gfx_SetColor(colors[0]);
 	LD	A,(_colors)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  204		gfx_TransparentSprite(textBoxSprite1, 0, 176);
+;  208			gfx_FillTriangle_NoClip(5, 188, 12, 181, 12, 188);
+	LD	BC,188
+	PUSH	BC
+	LD	BC,12
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,12
+	PUSH	BC
+	LD	BC,188
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_FillTriangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  209			gfx_FillTriangle_NoClip(314, 188, 307, 181, 307, 188);
+	LD	BC,188
+	PUSH	BC
+	LD	BC,307
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,307
+	PUSH	BC
+	LD	BC,188
+	PUSH	BC
+	LD	BC,314
+	PUSH	BC
+	CALL	_gfx_FillTriangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  210			gfx_FillTriangle_NoClip(5, 227, 12, 234, 12, 227);
+	LD	BC,227
+	PUSH	BC
+	LD	BC,12
+	PUSH	BC
+	LD	BC,234
+	PUSH	BC
+	LD	BC,12
+	PUSH	BC
+	LD	BC,227
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_FillTriangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  211			gfx_FillTriangle_NoClip(314, 227, 307, 234, 307, 227);
+	LD	BC,227
+	PUSH	BC
+	LD	BC,307
+	PUSH	BC
+	LD	BC,234
+	PUSH	BC
+	LD	BC,307
+	PUSH	BC
+	LD	BC,227
+	PUSH	BC
+	LD	BC,314
+	PUSH	BC
+	CALL	_gfx_FillTriangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  212			gfx_FillRectangle_NoClip(12, 181, 296, 54);
+	LD	BC,54
+	PUSH	BC
+	LD	BC,296
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,12
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  213			gfx_FillRectangle_NoClip(5, 188, 8, 40);
+	LD	BC,40
+	PUSH	BC
+	LD	BC,8
+	PUSH	BC
+	LD	BC,188
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  214			gfx_FillRectangle_NoClip(307, 188, 8, 40);
+	LD	BC,40
+	PUSH	BC
+	LD	BC,8
+	PUSH	BC
+	LD	BC,188
+	PUSH	BC
+	LD	BC,307
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  215	
+;  216		}
+;  217		else if (textBoxType == 1) {
+	JR	L_121
+L_120:
+	LD	BC,1
+	LD	HL,(_textBoxType)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_118
+;  218			gfx_SetColor(colors[14]);
+	LD	HL,_colors+14
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  219			gfx_Rectangle_NoClip(0, 176, 320, 64);
+	LD	BC,64
+	PUSH	BC
+	LD	BC,320
+	PUSH	BC
 	LD	BC,176
 	PUSH	BC
 	LD	BC,0
 	PUSH	BC
-	LD	BC,(_textBoxSprite1)
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  220			gfx_Rectangle_NoClip(1, 177, 318, 62);
+	LD	BC,62
 	PUSH	BC
-	CALL	_gfx_TransparentSprite
+	LD	BC,318
+	PUSH	BC
+	LD	BC,177
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
 	POP	BC
 	POP	BC
 	POP	BC
-;  205		gfx_TransparentSprite(textBoxSprite2, 160, 176);
+	POP	BC
+;  221			gfx_Rectangle_NoClip(2, 178, 316, 60);
+	LD	BC,60
+	PUSH	BC
+	LD	BC,316
+	PUSH	BC
+	LD	BC,178
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  222			gfx_SetColor(colors[15]);
+	LD	HL,_colors+15
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  223			gfx_Rectangle_NoClip(3, 179, 314, 58);
+	LD	BC,58
+	PUSH	BC
+	LD	BC,314
+	PUSH	BC
+	LD	BC,179
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  224			gfx_Rectangle_NoClip(4, 180, 312, 56);
+	LD	BC,56
+	PUSH	BC
+	LD	BC,312
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  225			gfx_Rectangle_NoClip(5, 181, 310, 54);
+	LD	BC,54
+	PUSH	BC
+	LD	BC,310
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  226			gfx_SetColor(colors[16]);
+	LD	HL,_colors+16
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  227			gfx_Rectangle_NoClip(6, 182, 308, 52);
+	LD	BC,52
+	PUSH	BC
+	LD	BC,308
+	PUSH	BC
+	LD	BC,182
+	PUSH	BC
+	LD	BC,6
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  228			gfx_Rectangle_NoClip(7, 183, 306, 50);
+	LD	BC,50
+	PUSH	BC
+	LD	BC,306
+	PUSH	BC
+	LD	BC,183
+	PUSH	BC
+	LD	BC,7
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  229			gfx_SetColor(colors[0]);
+	LD	A,(_colors)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  230			gfx_FillRectangle_NoClip(8, 184, 304, 48);
+	LD	BC,48
+	PUSH	BC
+	LD	BC,304
+	PUSH	BC
+	LD	BC,184
+	PUSH	BC
+	LD	BC,8
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  231		}
+;  232		else if (textBoxType == 2) {
+	JR	L_121
+L_118:
+	LD	BC,2
+	LD	HL,(_textBoxType)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_116
+;  233			gfx_SetColor(colors[14]);
+	LD	HL,_colors+14
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  234			gfx_Rectangle_NoClip(0, 176, 255, 64);
+	LD	BC,64
+	PUSH	BC
+	LD	BC,255
+	PUSH	BC
 	LD	BC,176
 	PUSH	BC
-	LD	BC,160
+	LD	BC,0
 	PUSH	BC
-	LD	BC,(_textBoxSprite2)
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  235			gfx_Rectangle_NoClip(1, 177, 253, 62);
+	LD	BC,62
 	PUSH	BC
-	CALL	_gfx_TransparentSprite
+	LD	BC,253
+	PUSH	BC
+	LD	BC,177
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
 	POP	BC
 	POP	BC
 	POP	BC
-;  206	}
+	POP	BC
+;  236			gfx_Rectangle_NoClip(2, 178, 251, 60);
+	LD	BC,60
+	PUSH	BC
+	LD	BC,251
+	PUSH	BC
+	LD	BC,178
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  237			gfx_SetColor(colors[15]);
+	LD	HL,_colors+15
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  238			gfx_Rectangle_NoClip(3, 179, 149, 58);
+	LD	BC,58
+	PUSH	BC
+	LD	BC,149
+	PUSH	BC
+	LD	BC,179
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  239			gfx_Rectangle_NoClip(4, 180, 147, 56);
+	LD	BC,56
+	PUSH	BC
+	LD	BC,147
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  240			gfx_Rectangle_NoClip(5, 181, 145, 54);
+	LD	BC,54
+	PUSH	BC
+	LD	BC,145
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  241			gfx_SetColor(colors[16]);
+	LD	HL,_colors+16
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  242			gfx_Rectangle_NoClip(6, 182, 143, 52);
+	LD	BC,52
+	PUSH	BC
+	LD	BC,143
+	PUSH	BC
+	LD	BC,182
+	PUSH	BC
+	LD	BC,6
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  243			gfx_Rectangle_NoClip(7, 183, 141, 50);
+	LD	BC,50
+	PUSH	BC
+	LD	BC,141
+	PUSH	BC
+	LD	BC,183
+	PUSH	BC
+	LD	BC,7
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  244			gfx_SetColor(colors[0]);
+	LD	A,(_colors)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  245			gfx_FillRectangle_NoClip(8, 184, 139, 48);
+	LD	BC,48
+	PUSH	BC
+	LD	BC,139
+	PUSH	BC
+	LD	BC,184
+	PUSH	BC
+	LD	BC,8
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  246	
+;  247			gfx_SetColor(colors[14]);
+	LD	HL,_colors+14
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  248			gfx_Rectangle_NoClip(255, 176, 66, 64);
+	LD	BC,64
+	PUSH	BC
+	LD	BC,66
+	PUSH	BC
+	LD	BC,176
+	PUSH	BC
+	LD	BC,255
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  249			gfx_Rectangle_NoClip(256, 177, 64, 62);
+	LD	BC,62
+	PUSH	BC
+	LD	BC,64
+	PUSH	BC
+	LD	BC,177
+	PUSH	BC
+	LD	BC,256
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  250			gfx_Rectangle_NoClip(257, 178, 62, 60);
+	LD	BC,60
+	PUSH	BC
+	LD	BC,62
+	PUSH	BC
+	LD	BC,178
+	PUSH	BC
+	LD	BC,257
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  251			gfx_SetColor(colors[15]);
+	LD	HL,_colors+15
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  252			gfx_Rectangle_NoClip(258, 179, 60, 58);
+	LD	BC,58
+	PUSH	BC
+	LD	BC,60
+	PUSH	BC
+	LD	BC,179
+	PUSH	BC
+	LD	BC,258
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  253			gfx_Rectangle_NoClip(259, 180, 58, 56);
+	LD	BC,56
+	PUSH	BC
+	LD	BC,58
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,259
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  254			gfx_Rectangle_NoClip(260, 181, 56, 54);
+	LD	BC,54
+	PUSH	BC
+	LD	BC,56
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,260
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  255			gfx_SetColor(colors[16]);
+	LD	HL,_colors+16
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  256			gfx_Rectangle_NoClip(261, 182, 54, 52);
+	LD	BC,52
+	PUSH	BC
+	LD	BC,54
+	PUSH	BC
+	LD	BC,182
+	PUSH	BC
+	LD	BC,261
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  257			gfx_Rectangle_NoClip(262, 183, 52, 50);
+	LD	BC,50
+	PUSH	BC
+	LD	BC,52
+	PUSH	BC
+	LD	BC,183
+	PUSH	BC
+	LD	BC,262
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  258			gfx_SetColor(colors[0]);
+	LD	A,(_colors)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  259			gfx_FillRectangle_NoClip(263, 184, 50, 48);
+	LD	BC,48
+	PUSH	BC
+	LD	BC,50
+	PUSH	BC
+	LD	BC,184
+	PUSH	BC
+	LD	BC,263
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  260		}
+;  261		else {
+	JR	L_121
+L_116:
+;  262			gfx_SetColor(colors[14]);
+	LD	HL,_colors+14
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  263			gfx_Rectangle_NoClip(0, 176, 320, 64);
+	LD	BC,64
+	PUSH	BC
+	LD	BC,320
+	PUSH	BC
+	LD	BC,176
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  264			gfx_Rectangle_NoClip(1, 177, 318, 62);
+	LD	BC,62
+	PUSH	BC
+	LD	BC,318
+	PUSH	BC
+	LD	BC,177
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  265			gfx_Rectangle_NoClip(2, 178, 316, 60);
+	LD	BC,60
+	PUSH	BC
+	LD	BC,316
+	PUSH	BC
+	LD	BC,178
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  266			gfx_SetColor(colors[15]);
+	LD	HL,_colors+15
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  267			gfx_Rectangle_NoClip(3, 179, 314, 58);
+	LD	BC,58
+	PUSH	BC
+	LD	BC,314
+	PUSH	BC
+	LD	BC,179
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  268			gfx_Rectangle_NoClip(4, 180, 312, 56);
+	LD	BC,56
+	PUSH	BC
+	LD	BC,312
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  269			gfx_Rectangle_NoClip(5, 181, 310, 54);
+	LD	BC,54
+	PUSH	BC
+	LD	BC,310
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  270			gfx_SetColor(colors[16]);
+	LD	HL,_colors+16
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  271			gfx_Rectangle_NoClip(6, 182, 308, 52);
+	LD	BC,52
+	PUSH	BC
+	LD	BC,308
+	PUSH	BC
+	LD	BC,182
+	PUSH	BC
+	LD	BC,6
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  272			gfx_Rectangle_NoClip(7, 183, 306, 50);
+	LD	BC,50
+	PUSH	BC
+	LD	BC,306
+	PUSH	BC
+	LD	BC,183
+	PUSH	BC
+	LD	BC,7
+	PUSH	BC
+	CALL	_gfx_Rectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  273			gfx_SetColor(colors[0]);
+	LD	A,(_colors)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  274			gfx_FillRectangle_NoClip(8, 184, 304, 48);
+	LD	BC,48
+	PUSH	BC
+	LD	BC,304
+	PUSH	BC
+	LD	BC,184
+	PUSH	BC
+	LD	BC,8
+	PUSH	BC
+	CALL	_gfx_FillRectangle_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  275		}
+L_121:
+;  276		gfx_SetColor(colors[0]);
+	LD	A,(_colors)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  277	}
+	LD	SP,IX
+	POP	IX
 	RET	
 
 
 ;**************************** _text_DrawTextBox ***************************
 ;Name                         Addr/Register   Size   Type
-;_textBoxSprite2                     STATIC      3   variable
-;_textBoxSprite1                     STATIC      3   variable
-;_gfx_TransparentSprite              IMPORT  -----   function
+;_gfx_Rectangle_NoClip               IMPORT  -----   function
+;_gfx_FillRectangle_NoClip           IMPORT  -----   function
+;_gfx_FillTriangle_NoClip            IMPORT  -----   function
+;_gfx_Polygon_NoClip                 IMPORT  -----   function
 ;_colors                             IMPORT  unknown variable
 ;_gfx_SetColor                       IMPORT  -----   function
+;_2temp114                           STATIC     48   variable
+;_textBoxType                        STATIC      3   variable
+;points                               IX-48     48   variable
 
 
-; Stack Frame Size: 6 (bytes)
+; Stack Frame Size: 54 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
+	SEGMENT TEXT
+_2temp114:
+	DW	4
+	DB	0
+	DW	188
+	DB	0
+	DW	12
+	DB	0
+	DW	180
+	DB	0
+	DW	307
+	DB	0
+	DW	180
+	DB	0
+	DW	315
+	DB	0
+	DW	188
+	DB	0
+	DW	315
+	DB	0
+	DW	227
+	DB	0
+	DW	307
+	DB	0
+	DW	235
+	DB	0
+	DW	12
+	DB	0
+	DW	235
+	DB	0
+	DW	4
+	DB	0
+	DW	227
+	DB	0
 	SEGMENT DATA
 _text_status2:
 	DB	97
@@ -1626,14 +2439,18 @@ _text_movecategories:
 	XREF _kb_Scan:ROM
 	XREF _strlen:ROM
 	XREF _strncpy:ROM
-	XREF _gfx_TransparentSprite:ROM
 	XREF _gfx_PrintStringXY:ROM
 	XREF _gfx_Blit:ROM
 	XREF _gfx_SwapDraw:ROM
 	XREF _gfx_SetDraw:ROM
+	XREF _gfx_FillTriangle_NoClip:ROM
+	XREF _gfx_Polygon_NoClip:ROM
+	XREF _gfx_FillRectangle_NoClip:ROM
 	XREF _gfx_FillRectangle:ROM
+	XREF _gfx_Rectangle_NoClip:ROM
 	XREF _gfx_SetColor:ROM
 	XREF __frameset:ROM
+	XREF __icmpzero:ROM
 	XREF __imul_b:ROM
 	XDEF _text_movecategories
 	XDEF _text_status2
@@ -1642,12 +2459,11 @@ _text_movecategories:
 	XDEF _text_AskQuestion4
 	XDEF _text_AskQuestion2
 	XDEF _text_Display
-	XDEF _textBoxSprite2
-	XDEF _textBoxSprite1
+	XDEF _textBoxType
 	XDEF _delaytime
-;  207	
-;  208	
-;  209	/* Text Varaibles*/
-;  210	
-;  211	char text_status2[7][16] = { "attack","defence","special attack","special defence","speed","accuracy","evasiveness" };
+;  278	
+;  279	
+;  280	/* Text Varaibles*/
+;  281	
+;  282	char text_status2[7][16] = { "attack","defence","special attack","special defence","speed","accuracy","evasiveness" };
 	END

@@ -6,9 +6,9 @@
 
 #include <stdbool.h>
 
-#define PKMNSD4_num 43
+#define PKMNSD4_num 47
 
-extern uint8_t *PKMNSD4[43];
+extern uint8_t *PKMNSD4[47];
 #define player00_width 16
 #define player00_height 20
 #define player00_compressed ((gfx_sprite_t*)PKMNSD4[0])
@@ -117,18 +117,30 @@ extern uint8_t *PKMNSD4[43];
 #define enemy03_width 16
 #define enemy03_height 20
 #define enemy03_compressed ((gfx_sprite_t*)PKMNSD4[35])
+#define enemy04_width 16
+#define enemy04_height 20
+#define enemy04_compressed ((gfx_sprite_t*)PKMNSD4[36])
+#define enemy05_width 16
+#define enemy05_height 20
+#define enemy05_compressed ((gfx_sprite_t*)PKMNSD4[37])
+#define enemy06_width 16
+#define enemy06_height 20
+#define enemy06_compressed ((gfx_sprite_t*)PKMNSD4[38])
+#define enemy07_width 16
+#define enemy07_height 20
+#define enemy07_compressed ((gfx_sprite_t*)PKMNSD4[39])
 #define maptextbox1_width 160
 #define maptextbox1_height 64
-#define maptextbox1_compressed ((gfx_sprite_t*)PKMNSD4[36])
+#define maptextbox1_compressed ((gfx_sprite_t*)PKMNSD4[40])
 #define maptextbox2_width 160
 #define maptextbox2_height 64
-#define maptextbox2_compressed ((gfx_sprite_t*)PKMNSD4[37])
+#define maptextbox2_compressed ((gfx_sprite_t*)PKMNSD4[41])
 #define pausemenu_width 112
 #define pausemenu_height 96
-#define pausemenu_compressed ((gfx_sprite_t*)PKMNSD4[38])
+#define pausemenu_compressed ((gfx_sprite_t*)PKMNSD4[42])
 #define pokeball_width 48
 #define pokeball_height 16
-#define pokeball_compressed ((gfx_sprite_t*)PKMNSD4[39])
+#define pokeball_compressed ((gfx_sprite_t*)PKMNSD4[43])
 #define pokeball_tiles_num 3
 extern uint8_t *pokeball_tiles_compressed[3];
 #define pokeball_tile_0_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[0])
@@ -136,7 +148,7 @@ extern uint8_t *pokeball_tiles_compressed[3];
 #define pokeball_tile_2_compressed ((gfx_sprite_t*)pokeball_tiles_compressed[2])
 #define outdoortileset_width 256
 #define outdoortileset_height 128
-#define outdoortileset_compressed ((gfx_sprite_t*)PKMNSD4[40])
+#define outdoortileset_compressed ((gfx_sprite_t*)PKMNSD4[44])
 #define outdoortileset_tiles_num 128
 extern uint8_t *outdoortileset_tiles_compressed[128];
 #define outdoortileset_tile_0_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[0])
@@ -269,7 +281,7 @@ extern uint8_t *outdoortileset_tiles_compressed[128];
 #define outdoortileset_tile_127_compressed ((gfx_sprite_t*)outdoortileset_tiles_compressed[127])
 #define indoortileset_width 256
 #define indoortileset_height 128
-#define indoortileset_compressed ((gfx_sprite_t*)PKMNSD4[41])
+#define indoortileset_compressed ((gfx_sprite_t*)PKMNSD4[45])
 #define indoortileset_tiles_num 128
 extern uint8_t *indoortileset_tiles_compressed[128];
 #define indoortileset_tile_0_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[0])
@@ -400,8 +412,8 @@ extern uint8_t *indoortileset_tiles_compressed[128];
 #define indoortileset_tile_125_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[125])
 #define indoortileset_tile_126_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[126])
 #define indoortileset_tile_127_compressed ((gfx_sprite_t*)indoortileset_tiles_compressed[127])
-#define sizeof_map_gfx_pal 462
-#define map_gfx_pal ((uint16_t*)PKMNSD4[42])
+#define sizeof_map_gfx_pal 468
+#define map_gfx_pal ((uint16_t*)PKMNSD4[46])
 bool PKMNSD4_init(void);
 
 #endif

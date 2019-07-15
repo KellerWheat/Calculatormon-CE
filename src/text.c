@@ -13,8 +13,8 @@
 /* If holding down second, the time to pause before moving to next text */
 const uint8_t delaytime = 50;
 
-gfx_sprite_t *textBoxSprite1;
-gfx_sprite_t *textBoxSprite2;
+
+int textBoxType = 0;
 
 /* Text Functions */
 
@@ -200,9 +200,80 @@ int text_AskQuestion6(char text1[], char text2[], char text3[], char text4[], ch
 	return (tv1 + 1 + 3 * tv2);
 }
 void text_DrawTextBox(void) {
-	gfx_SetColor(colors[0]);	
-	gfx_TransparentSprite(textBoxSprite1, 0, 176);
-	gfx_TransparentSprite(textBoxSprite2, 160, 176);
+	if (textBoxType == 0) {
+		int points[16] = { 4,188,  12,180,  307,180,  315,188,  315,227,  307,235,  12,235,  4,227,};
+		gfx_SetColor(colors[13]);
+		gfx_Polygon_NoClip(points, 8);
+		gfx_SetColor(colors[0]);
+		gfx_FillTriangle_NoClip(5, 188, 12, 181, 12, 188);
+		gfx_FillTriangle_NoClip(314, 188, 307, 181, 307, 188);
+		gfx_FillTriangle_NoClip(5, 227, 12, 234, 12, 227);
+		gfx_FillTriangle_NoClip(314, 227, 307, 234, 307, 227);
+		gfx_FillRectangle_NoClip(12, 181, 296, 54);
+		gfx_FillRectangle_NoClip(5, 188, 8, 40);
+		gfx_FillRectangle_NoClip(307, 188, 8, 40);
+
+	}
+	else if (textBoxType == 1) {
+		gfx_SetColor(colors[14]);
+		gfx_Rectangle_NoClip(0, 176, 320, 64);
+		gfx_Rectangle_NoClip(1, 177, 318, 62);
+		gfx_Rectangle_NoClip(2, 178, 316, 60);
+		gfx_SetColor(colors[15]);
+		gfx_Rectangle_NoClip(3, 179, 314, 58);
+		gfx_Rectangle_NoClip(4, 180, 312, 56);
+		gfx_Rectangle_NoClip(5, 181, 310, 54);
+		gfx_SetColor(colors[16]);
+		gfx_Rectangle_NoClip(6, 182, 308, 52);
+		gfx_Rectangle_NoClip(7, 183, 306, 50);
+		gfx_SetColor(colors[0]);
+		gfx_FillRectangle_NoClip(8, 184, 304, 48);
+	}
+	else if (textBoxType == 2) {
+		gfx_SetColor(colors[14]);
+		gfx_Rectangle_NoClip(0, 176, 255, 64);
+		gfx_Rectangle_NoClip(1, 177, 253, 62);
+		gfx_Rectangle_NoClip(2, 178, 251, 60);
+		gfx_SetColor(colors[15]);
+		gfx_Rectangle_NoClip(3, 179, 149, 58);
+		gfx_Rectangle_NoClip(4, 180, 147, 56);
+		gfx_Rectangle_NoClip(5, 181, 145, 54);
+		gfx_SetColor(colors[16]);
+		gfx_Rectangle_NoClip(6, 182, 143, 52);
+		gfx_Rectangle_NoClip(7, 183, 141, 50);
+		gfx_SetColor(colors[0]);
+		gfx_FillRectangle_NoClip(8, 184, 139, 48);
+
+		gfx_SetColor(colors[14]);
+		gfx_Rectangle_NoClip(255, 176, 66, 64);
+		gfx_Rectangle_NoClip(256, 177, 64, 62);
+		gfx_Rectangle_NoClip(257, 178, 62, 60);
+		gfx_SetColor(colors[15]);
+		gfx_Rectangle_NoClip(258, 179, 60, 58);
+		gfx_Rectangle_NoClip(259, 180, 58, 56);
+		gfx_Rectangle_NoClip(260, 181, 56, 54);
+		gfx_SetColor(colors[16]);
+		gfx_Rectangle_NoClip(261, 182, 54, 52);
+		gfx_Rectangle_NoClip(262, 183, 52, 50);
+		gfx_SetColor(colors[0]);
+		gfx_FillRectangle_NoClip(263, 184, 50, 48);
+	}
+	else {
+		gfx_SetColor(colors[14]);
+		gfx_Rectangle_NoClip(0, 176, 320, 64);
+		gfx_Rectangle_NoClip(1, 177, 318, 62);
+		gfx_Rectangle_NoClip(2, 178, 316, 60);
+		gfx_SetColor(colors[15]);
+		gfx_Rectangle_NoClip(3, 179, 314, 58);
+		gfx_Rectangle_NoClip(4, 180, 312, 56);
+		gfx_Rectangle_NoClip(5, 181, 310, 54);
+		gfx_SetColor(colors[16]);
+		gfx_Rectangle_NoClip(6, 182, 308, 52);
+		gfx_Rectangle_NoClip(7, 183, 306, 50);
+		gfx_SetColor(colors[0]);
+		gfx_FillRectangle_NoClip(8, 184, 304, 48);
+	}
+	gfx_SetColor(colors[0]);
 }
 
 

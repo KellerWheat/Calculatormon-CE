@@ -10,8 +10,7 @@ int text_AskQuestion6(char text1[], char text2[], char text3[], char text4[], ch
 
 void text_DrawTextBox(void);
 
-extern gfx_sprite_t *textBoxSprite1;
-extern gfx_sprite_t *textBoxSprite2;
+extern int textBoxType;
 extern char text_status2[7][16];
 extern char text_movecategories[18][10];
 

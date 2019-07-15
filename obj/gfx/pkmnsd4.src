@@ -12,48 +12,52 @@ _PKMNSD4:
 	DW24	537
 	DW24	672
 	DW24	802
-	DW24	954
-	DW24	1103
-	DW24	1250
-	DW24	1397
-	DW24	1539
-	DW24	1685
-	DW24	1816
-	DW24	1943
-	DW24	2082
-	DW24	2216
-	DW24	2346
-	DW24	2491
-	DW24	2621
-	DW24	2751
-	DW24	2880
-	DW24	3022
-	DW24	3158
-	DW24	3292
-	DW24	3487
-	DW24	3682
-	DW24	3878
-	DW24	4077
-	DW24	4268
-	DW24	4462
-	DW24	4652
-	DW24	4846
-	DW24	4986
-	DW24	5128
-	DW24	5284
-	DW24	5433
-	DW24	5613
-	DW24	5792
-	DW24	5858
-	DW24	5997
-	DW24	13758
-	DW24	17123
+	DW24	955
+	DW24	1104
+	DW24	1251
+	DW24	1399
+	DW24	1542
+	DW24	1688
+	DW24	1819
+	DW24	1946
+	DW24	2085
+	DW24	2219
+	DW24	2349
+	DW24	2494
+	DW24	2624
+	DW24	2754
+	DW24	2883
+	DW24	3025
+	DW24	3161
+	DW24	3295
+	DW24	3490
+	DW24	3685
+	DW24	3881
+	DW24	4080
+	DW24	4271
+	DW24	4465
+	DW24	4655
+	DW24	4849
+	DW24	4989
+	DW24	5131
+	DW24	5287
+	DW24	5436
+	DW24	5583
+	DW24	5732
+	DW24	5894
+	DW24	6046
+	DW24	6226
+	DW24	6405
+	DW24	6471
+	DW24	6610
+	DW24	14362
+	DW24	17727
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD4.h"
 ;    4	
 ;    5	#include <fileioc.h>
-;    6	uint8_t *PKMNSD4[43] = {
+;    6	uint8_t *PKMNSD4[47] = {
 	SEGMENT CODE
 ;    7	 (uint8_t*)0,
 ;    8	 (uint8_t*)138,
@@ -62,55 +66,59 @@ _PKMNSD4:
 ;   11	 (uint8_t*)537,
 ;   12	 (uint8_t*)672,
 ;   13	 (uint8_t*)802,
-;   14	 (uint8_t*)954,
-;   15	 (uint8_t*)1103,
-;   16	 (uint8_t*)1250,
-;   17	 (uint8_t*)1397,
-;   18	 (uint8_t*)1539,
-;   19	 (uint8_t*)1685,
-;   20	 (uint8_t*)1816,
-;   21	 (uint8_t*)1943,
-;   22	 (uint8_t*)2082,
-;   23	 (uint8_t*)2216,
-;   24	 (uint8_t*)2346,
-;   25	 (uint8_t*)2491,
-;   26	 (uint8_t*)2621,
-;   27	 (uint8_t*)2751,
-;   28	 (uint8_t*)2880,
-;   29	 (uint8_t*)3022,
-;   30	 (uint8_t*)3158,
-;   31	 (uint8_t*)3292,
-;   32	 (uint8_t*)3487,
-;   33	 (uint8_t*)3682,
-;   34	 (uint8_t*)3878,
-;   35	 (uint8_t*)4077,
-;   36	 (uint8_t*)4268,
-;   37	 (uint8_t*)4462,
-;   38	 (uint8_t*)4652,
-;   39	 (uint8_t*)4846,
-;   40	 (uint8_t*)4986,
-;   41	 (uint8_t*)5128,
-;   42	 (uint8_t*)5284,
-;   43	 (uint8_t*)5433,
-;   44	 (uint8_t*)5613,
-;   45	 (uint8_t*)5792,
-;   46	 (uint8_t*)5858,
-;   47	 (uint8_t*)5997,
-;   48	 (uint8_t*)13758,
-;   49	 (uint8_t*)17123,
-;   50	};
-;   51	
-;   52	bool PKMNSD4_init(void) {
-_PKMNSD4_init:
-	LD	HL,-19
-	CALL	__frameset
-;   53	    unsigned int data, i;
-;   54	    ti_var_t appvar;
+;   14	 (uint8_t*)955,
+;   15	 (uint8_t*)1104,
+;   16	 (uint8_t*)1251,
+;   17	 (uint8_t*)1399,
+;   18	 (uint8_t*)1542,
+;   19	 (uint8_t*)1688,
+;   20	 (uint8_t*)1819,
+;   21	 (uint8_t*)1946,
+;   22	 (uint8_t*)2085,
+;   23	 (uint8_t*)2219,
+;   24	 (uint8_t*)2349,
+;   25	 (uint8_t*)2494,
+;   26	 (uint8_t*)2624,
+;   27	 (uint8_t*)2754,
+;   28	 (uint8_t*)2883,
+;   29	 (uint8_t*)3025,
+;   30	 (uint8_t*)3161,
+;   31	 (uint8_t*)3295,
+;   32	 (uint8_t*)3490,
+;   33	 (uint8_t*)3685,
+;   34	 (uint8_t*)3881,
+;   35	 (uint8_t*)4080,
+;   36	 (uint8_t*)4271,
+;   37	 (uint8_t*)4465,
+;   38	 (uint8_t*)4655,
+;   39	 (uint8_t*)4849,
+;   40	 (uint8_t*)4989,
+;   41	 (uint8_t*)5131,
+;   42	 (uint8_t*)5287,
+;   43	 (uint8_t*)5436,
+;   44	 (uint8_t*)5583,
+;   45	 (uint8_t*)5732,
+;   46	 (uint8_t*)5894,
+;   47	 (uint8_t*)6046,
+;   48	 (uint8_t*)6226,
+;   49	 (uint8_t*)6405,
+;   50	 (uint8_t*)6471,
+;   51	 (uint8_t*)6610,
+;   52	 (uint8_t*)14362,
+;   53	 (uint8_t*)17727,
+;   54	};
 ;   55	
-;   56	    ti_CloseAll();
+;   56	bool PKMNSD4_init(void) {
+_PKMNSD4_init:
+	LD	HL,-37
+	CALL	__frameset
+;   57	    unsigned int data, i;
+;   58	    ti_var_t appvar;
+;   59	
+;   60	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   57	
-;   58	    appvar = ti_Open("PKMNSD4", "r");
+;   61	
+;   62	    appvar = ti_Open("PKMNSD4", "r");
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -119,7 +127,7 @@ _PKMNSD4_init:
 	POP	BC
 	POP	BC
 	LD	(IX+-7),A
-;   59	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD4[0];
+;   63	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD4[0];
 	LD	C,(IX+-7)
 	LD	B,0
 	PUSH	BC
@@ -129,12 +137,12 @@ _PKMNSD4_init:
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-6),HL
-;   60	    for (i = 0; i < PKMNSD4_num; i++) {
+;   64	    for (i = 0; i < PKMNSD4_num; i++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
-;   61	        PKMNSD4[i] += data;
+;   65	        PKMNSD4[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -150,22 +158,30 @@ L_1:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   62	    }
+;   66	    }
 L_3:
-	LD	BC,43
+	LD	BC,47
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_1
-;   63	
-;   64	    ti_CloseAll();
+;   67	
+;   68	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   65	
-;   66	    data = (unsigned int)PKMNSD4[39] - (unsigned int)pokeball_tiles_compressed[0];
+;   69	
+;   70	    data = (unsigned int)PKMNSD4[43] - (unsigned int)pokeball_tiles_compressed[0];
 	LD	BC,(_pokeball_tiles_compressed)
-;   67	    for (i = 0; i < pokeball_tiles_num; i++) {
+;   71	    for (i = 0; i < pokeball_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+117
+	LD	(IX+-34),DE	; spill
+	LD	DE,129
+	LD	(IX+-37),DE	; spill
+	LD	DE,(IX+-34)	; unspill
+	LD	HL,_PKMNSD4
+	LD	(IX+-34),DE	; spill
+	LD	DE,(IX+-37)	; unspill
+	ADD	HL,DE
+	LD	DE,(IX+-34)	; unspill
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -173,7 +189,7 @@ L_3:
 	LD	(IX+-3),DE
 	JR	L_8
 L_6:
-;   68	        pokeball_tiles_compressed[i] += data;
+;   72	        pokeball_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -189,19 +205,27 @@ L_6:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   69	    }
+;   73	    }
 L_8:
 	LD	BC,3
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_6
-;   70	
-;   71	    data = (unsigned int)PKMNSD4[40] - (unsigned int)outdoortileset_tiles_compressed[0];
+;   74	
+;   75	    data = (unsigned int)PKMNSD4[44] - (unsigned int)outdoortileset_tiles_compressed[0];
 	LD	BC,(_outdoortileset_tiles_compressed)
-;   72	    for (i = 0; i < outdoortileset_tiles_num; i++) {
+;   76	    for (i = 0; i < outdoortileset_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+120
+	LD	(IX+-28),DE	; spill
+	LD	DE,132
+	LD	(IX+-31),DE	; spill
+	LD	DE,(IX+-28)	; unspill
+	LD	HL,_PKMNSD4
+	LD	(IX+-28),DE	; spill
+	LD	DE,(IX+-31)	; unspill
+	ADD	HL,DE
+	LD	DE,(IX+-28)	; unspill
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -209,7 +233,7 @@ L_8:
 	LD	(IX+-3),DE
 	JR	L_13
 L_11:
-;   73	        outdoortileset_tiles_compressed[i] += data;
+;   77	        outdoortileset_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -225,19 +249,27 @@ L_11:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   74	    }
+;   78	    }
 L_13:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_11
-;   75	
-;   76	    data = (unsigned int)PKMNSD4[41] - (unsigned int)indoortileset_tiles_compressed[0];
+;   79	
+;   80	    data = (unsigned int)PKMNSD4[45] - (unsigned int)indoortileset_tiles_compressed[0];
 	LD	BC,(_indoortileset_tiles_compressed)
-;   77	    for (i = 0; i < indoortileset_tiles_num; i++) {
+;   81	    for (i = 0; i < indoortileset_tiles_num; i++) {
 	LD	DE,0
-	LD	HL,_PKMNSD4+123
+	LD	(IX+-22),DE	; spill
+	LD	DE,135
+	LD	(IX+-25),DE	; spill
+	LD	DE,(IX+-22)	; unspill
+	LD	HL,_PKMNSD4
+	LD	(IX+-22),DE	; spill
+	LD	DE,(IX+-25)	; unspill
+	ADD	HL,DE
+	LD	DE,(IX+-22)	; unspill
 	LD	HL,(HL)
 	OR	A,A
 	SBC	HL,BC
@@ -245,7 +277,7 @@ L_13:
 	LD	(IX+-3),DE
 	JR	L_18
 L_16:
-;   78	        indoortileset_tiles_compressed[i] += data;
+;   82	        indoortileset_tiles_compressed[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -261,17 +293,17 @@ L_16:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   79	    }
+;   83	    }
 L_18:
 	LD	BC,128
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_16
-;   80	
-;   81	    return (bool)appvar;
+;   84	
+;   85	    return (bool)appvar;
 	LD	A,(IX+-7)
-;   82	}
+;   86	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -282,7 +314,7 @@ L_18:
 ;_indoortileset_tiles_compressed      IMPORT    384   variable
 ;_outdoortileset_tiles_compressed      IMPORT    384   variable
 ;_pokeball_tiles_compressed          IMPORT      9   variable
-;_PKMNSD4                            STATIC    129   variable
+;_PKMNSD4                            STATIC    141   variable
 ;_ti_GetDataPtr                      IMPORT  -----   function
 ;_ti_Open                            IMPORT  -----   function
 ;_ti_CloseAll                        IMPORT  -----   function
@@ -291,7 +323,7 @@ L_18:
 ;i                                     IX-3      3   variable
 
 
-; Stack Frame Size: 25 (bytes)
+; Stack Frame Size: 43 (bytes)
 ;       Spill Code: 0 (instruction)
 
 

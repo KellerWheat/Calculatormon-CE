@@ -57,17 +57,9 @@ void main(void) {
 
 	srand(seed);
 
-	textBoxSprite1 = gfx_MallocSprite(160, 64);
-	textBoxSprite2 = gfx_MallocSprite(160, 64);
-
 	map_Initialize();
 	battle_Initialize();
 
-#ifndef NDEBUG
-	debugging = true;
-#else
-	debugging = false;
-#endif
 
 	if (debugging) {
 		FindColors();
@@ -102,13 +94,19 @@ void main(void) {
 	}
 
 	map_LoadPokeballs();
+
+
 	do {
 		kb_Scan();
 		if (gameState == 0) {
 			gameState = map_Loop();
+			
 			if (gameState == 1) {
 				map_End();
 				battle_Setup();
+			}
+			if (gameState == 2) {
+				map_End();
 			}
 		}
 		else if (gameState == 1) {
@@ -117,13 +115,13 @@ void main(void) {
 				battle_End();
 				map_Setup();
 			}
+			if (gameState == 2) {
+				battle_End();
+			}
 		}
 	} while (gameState < 2);
 
 	map_End();
-	battle_End();
-	free(textBoxSprite1);
-	free(textBoxSprite2);
 
 
 	gfx_End();

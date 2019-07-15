@@ -84,84 +84,57 @@ _main:
 	CALL	_srand
 	POP	BC
 ;   59	
-;   60		textBoxSprite1 = gfx_MallocSprite(160, 64);
-	LD	BC,_malloc
-	PUSH	BC
-	LD	BC,64
-	PUSH	BC
-	LD	BC,160
-	PUSH	BC
-	CALL	_gfx_AllocSprite
-	POP	BC
-	POP	BC
-	POP	BC
-;   61		textBoxSprite2 = gfx_MallocSprite(160, 64);
-	LD	BC,_malloc
-	PUSH	BC
-	LD	BC,64
-	PUSH	BC
-	LD	BC,160
-	PUSH	BC
-	LD	(_textBoxSprite1),HL
-	CALL	_gfx_AllocSprite
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	(_textBoxSprite2),HL
-;   62	
-;   63		map_Initialize();
+;   60		map_Initialize();
 	CALL	_map_Initialize
-;   64		battle_Initialize();
+;   61		battle_Initialize();
 	CALL	_battle_Initialize
-;   65	
-;   66	#ifndef NDEBUG
-;   67		debugging = true;
-;   68	#else
-;   69		debugging = false;
-	XOR	A,A
-	LD	(_debugging),A
-;   70	#endif
-;   71	
-;   72		if (debugging) {
-;   73			FindColors();
-;   74		}
-;   75	
-;   76		surfing = false;
+;   62	
+;   63	
+;   64		if (debugging) {
+	LD	A,(_debugging)
+	OR	A,A
+	JR	Z,L_1
+;   65			FindColors();
+	CALL	_FindColors
+;   66		}
+L_1:
+;   67	
+;   68		surfing = false;
 	XOR	A,A
 	LD	(_surfing),A
-;   77		map_Setup();
+;   69		map_Setup();
 	CALL	_map_Setup
-;   78	
-;   79		if (newGame) {
+;   70	
+;   71		if (newGame) {
 	LD	A,(_newGame)
 	OR	A,A
 	JR	Z,L_20
-;   80			uint8_t starter = 0;
+;   72			uint8_t starter = 0;
 	LD	(IX+-1),0
-;   81			newGame = false;
-;   82			text_Display("Choose Starter", false);
+;   73			newGame = false;
+;   74			text_Display("Choose Starter", false);
 	LD	BC,0
 	PUSH	BC
-	LD	BC,L__1
+	LD	BC,L__2
 	PUSH	BC
 	XOR	A,A
 	LD	(_newGame),A
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;   83			while (starter == 0) {
+;   75			while (starter == 0) {
 	JR	L_2
 L_3:
-;   84				starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
+;   76				starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
 	LD	BC,0
-	PUSH	BC
-	LD	BC,L__2
 	PUSH	BC
 	LD	BC,L__3
 	PUSH	BC
 	LD	BC,L__4
 	PUSH	BC
 	LD	BC,L__5
+	PUSH	BC
+	LD	BC,L__6
 	PUSH	BC
 	CALL	_text_AskQuestion4
 	POP	BC
@@ -170,16 +143,16 @@ L_3:
 	POP	BC
 	POP	BC
 	LD	(IX+-1),L
-;   85			}
+;   77			}
 L_2:
 	LD	A,(IX+-1)
 	OR	A,A
 	JR	Z,L_3
-;   86			if (starter == 4) {
+;   78			if (starter == 4) {
 	LD	A,(IX+-1)
 	CP	A,4
 	JR	NZ,L_5
-;   87				party[0] = stats_NewCharacter(137, 5);
+;   79				party[0] = stats_NewCharacter(137, 5);
 	LD	BC,5
 	PUSH	BC
 	LD	BC,137
@@ -192,11 +165,11 @@ L_2:
 	LD	DE,_party
 	LD	BC,34
 	LDIR	
-;   88			}
-;   89			else {
+;   80			}
+;   81			else {
 	JR	L_12
 L_5:
-;   90				party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
+;   82				party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
 	LD	BC,5
 	PUSH	BC
 	LD	B,(IX+-1)
@@ -214,44 +187,44 @@ L_5:
 	LD	DE,_party
 	LD	BC,34
 	LDIR	
-;   91			}
+;   83			}
 L_12:
-;   92			for (starter = 0; starter < 185; starter++) {
+;   84			for (starter = 0; starter < 185; starter++) {
 	LD	(IX+-1),0
 	JR	L_11
 L_9:
-;   93				if (rand() % 2) {
+;   85				if (rand() % 2) {
 	CALL	_rand
 	LD	BC,2
 	CALL	__irems
 	CALL	__icmpzero
 	JR	Z,L_10
-;   94					playerItems[starter] = 1;
+;   86					playerItems[starter] = 1;
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
 	LD	BC,_playerItems
 	ADD	HL,BC
 	LD	(HL),1
-;   95				}
-;   96			}
+;   87				}
+;   88			}
 L_10:
 	INC	(IX+-1)
 L_11:
 	LD	A,(IX+-1)
 	CP	A,185
 	JR	C,L_9
-;   97			for (starter = 1; starter < 36; starter++) {
+;   89			for (starter = 1; starter < 36; starter++) {
 	LD	(IX+-1),1
 	JR	L_17
 L_15:
-;   98				if (rand() % 2) {
+;   90				if (rand() % 2) {
 	CALL	_rand
 	LD	BC,2
 	CALL	__irems
 	CALL	__icmpzero
 	JR	Z,L_16
-;   99					party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
+;   91					party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
 	CALL	_rand
 	LD	BC,101
 	CALL	__irems
@@ -281,82 +254,89 @@ L_15:
 	LD	HL,IY
 	LD	BC,34
 	LDIR	
-;  100				}
-;  101			}
+;   92				}
+;   93			}
 L_16:
 	INC	(IX+-1)
 L_17:
 	LD	A,(IX+-1)
 	CP	A,36
 	JR	C,L_15
-;  102		}
+;   94		}
 L_20:
-;  103	
-;  104		map_LoadPokeballs();
+;   95	
+;   96		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;  105		do {
-L_26:
-;  106			kb_Scan();
+;   97	
+;   98	
+;   99		do {
+L_30:
+;  100			kb_Scan();
 	CALL	_kb_Scan
-;  107			if (gameState == 0) {
+;  101			if (gameState == 0) {
 	LD	A,(_gameState)
 	OR	A,A
-	JR	NZ,L_25
-;  108				gameState = map_Loop();
+	JR	NZ,L_29
+;  102				gameState = map_Loop();
 	CALL	_map_Loop
 	LD	A,L
-;  109				if (gameState == 1) {
+;  103				
+;  104				if (gameState == 1) {
 	CP	A,1
 	LD	(_gameState),A
-	JR	NZ,L_27
-;  110					map_End();
+	JR	NZ,L_23
+;  105					map_End();
 	CALL	_map_End
-;  111					battle_Setup();
+;  106					battle_Setup();
 	CALL	_battle_Setup
-;  112				}
-;  113			}
-;  114			else if (gameState == 1) {
-	JR	L_27
-L_25:
+;  107				}
+L_23:
+;  108				if (gameState == 2) {
+	LD	A,(_gameState)
+	CP	A,2
+	JR	NZ,L_31
+;  109					map_End();
+	CALL	_map_End
+;  110				}
+;  111			}
+;  112			else if (gameState == 1) {
+	JR	L_31
+L_29:
 	LD	A,(_gameState)
 	CP	A,1
-	JR	NZ,L_27
-;  115				gameState = battle_Loop();
+	JR	NZ,L_31
+;  113				gameState = battle_Loop();
 	CALL	_battle_Loop
 	LD	A,L
 	LD	(_gameState),A
-;  116				if (gameState == 0) {
+;  114				if (gameState == 0) {
 	OR	A,A
-	JR	NZ,L_27
-;  117					battle_End();
+	JR	NZ,L_26
+;  115					battle_End();
 	CALL	_battle_End
-;  118					map_Setup();
+;  116					map_Setup();
 	CALL	_map_Setup
-;  119				}
-;  120			}
-;  121		} while (gameState < 2);
-L_27:
+;  117				}
+L_26:
+;  118				if (gameState == 2) {
 	LD	A,(_gameState)
 	CP	A,2
-	JR	C,L_26
-;  122	
-;  123		map_End();
-	CALL	_map_End
-;  124		battle_End();
+	JR	NZ,L_31
+;  119					battle_End();
 	CALL	_battle_End
-;  125		free(textBoxSprite1);
-	LD	BC,(_textBoxSprite1)
-	PUSH	BC
-	CALL	_free
-	POP	BC
-;  126		free(textBoxSprite2);
-	LD	BC,(_textBoxSprite2)
-	PUSH	BC
-	CALL	_free
-	POP	BC
-;  127	
-;  128	
-;  129		gfx_End();
+;  120				}
+;  121			}
+;  122		} while (gameState < 2);
+L_31:
+	LD	A,(_gameState)
+	CP	A,2
+	JR	C,L_30
+;  123	
+;  124		map_End();
+	CALL	_map_End
+;  125	
+;  126	
+;  127		gfx_End();
 	CALL	_gfx_End
 	LD	SP,IX
 	POP	IX
@@ -366,7 +346,6 @@ L_27:
 ;**************************** _main ***************************
 ;Name                         Addr/Register   Size   Type
 ;_gfx_End                            IMPORT  -----   function
-;_free                               IMPORT  -----   function
 ;_battle_End                         IMPORT  -----   function
 ;_battle_Loop                        IMPORT  -----   function
 ;_battle_Setup                       IMPORT  -----   function
@@ -384,13 +363,10 @@ L_27:
 ;_newGame                            IMPORT      1   variable
 ;_map_Setup                          IMPORT  -----   function
 ;_surfing                            IMPORT      1   variable
+;_FindColors                         IMPORT  -----   function
 ;_debugging                          IMPORT      1   variable
 ;_battle_Initialize                  IMPORT  -----   function
 ;_map_Initialize                     IMPORT  -----   function
-;_textBoxSprite2                     IMPORT      3   variable
-;_textBoxSprite1                     IMPORT      3   variable
-;_malloc                             IMPORT  -----   function
-;_gfx_AllocSprite                    IMPORT  -----   function
 ;_srand                              IMPORT  -----   function
 ;_gfx_SetMonospaceFont               IMPORT  -----   function
 ;_gfx_SetDraw                        IMPORT  -----   function
@@ -404,19 +380,19 @@ L_27:
 
 
 	SEGMENT STRSECT
-L__1:
+L__2:
 	DB	"Choose Starter"
 	DB	0
-L__2:
+L__3:
 	DB	" "
 	DB	0
-L__3:
+L__4:
 	DB	"Squirtle"
 	DB	0
-L__4:
+L__5:
 	DB	"Charmander"
 	DB	0
-L__5:
+L__6:
 	DB	"Bulbasaur"
 	DB	0
 	XREF _battle_End:ROM
@@ -434,20 +410,16 @@ L__5:
 	XREF _party:ROM
 	XREF _newGame:ROM
 	XREF _debugging:ROM
-	XREF _textBoxSprite2:ROM
-	XREF _textBoxSprite1:ROM
+	XREF _FindColors:ROM
 	XREF _text_AskQuestion4:ROM
 	XREF _text_Display:ROM
 	XREF _gfx_SetMonospaceFont:ROM
 	XREF _gfx_SetDraw:ROM
 	XREF _gfx_End:ROM
 	XREF _gfx_Begin:ROM
-	XREF _gfx_AllocSprite:ROM
 	XREF _kb_Scan:ROM
 	XREF _rand:ROM
 	XREF _srand:ROM
-	XREF _free:ROM
-	XREF _malloc:ROM
 	XREF __irems:ROM
 	XREF __frameset:ROM
 	XREF __icmpzero:ROM
