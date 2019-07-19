@@ -1662,10 +1662,10 @@ L_118:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  238			gfx_Rectangle_NoClip(3, 179, 149, 58);
+;  238			gfx_Rectangle_NoClip(3, 179, 249, 58);
 	LD	BC,58
 	PUSH	BC
-	LD	BC,149
+	LD	BC,249
 	PUSH	BC
 	LD	BC,179
 	PUSH	BC
@@ -1676,10 +1676,10 @@ L_118:
 	POP	BC
 	POP	BC
 	POP	BC
-;  239			gfx_Rectangle_NoClip(4, 180, 147, 56);
+;  239			gfx_Rectangle_NoClip(4, 180, 247, 56);
 	LD	BC,56
 	PUSH	BC
-	LD	BC,147
+	LD	BC,247
 	PUSH	BC
 	LD	BC,180
 	PUSH	BC
@@ -1690,10 +1690,10 @@ L_118:
 	POP	BC
 	POP	BC
 	POP	BC
-;  240			gfx_Rectangle_NoClip(5, 181, 145, 54);
+;  240			gfx_Rectangle_NoClip(5, 181, 245, 54);
 	LD	BC,54
 	PUSH	BC
-	LD	BC,145
+	LD	BC,245
 	PUSH	BC
 	LD	BC,181
 	PUSH	BC
@@ -1711,10 +1711,10 @@ L_118:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  242			gfx_Rectangle_NoClip(6, 182, 143, 52);
+;  242			gfx_Rectangle_NoClip(6, 182, 243, 52);
 	LD	BC,52
 	PUSH	BC
-	LD	BC,143
+	LD	BC,243
 	PUSH	BC
 	LD	BC,182
 	PUSH	BC
@@ -1725,10 +1725,10 @@ L_118:
 	POP	BC
 	POP	BC
 	POP	BC
-;  243			gfx_Rectangle_NoClip(7, 183, 141, 50);
+;  243			gfx_Rectangle_NoClip(7, 183, 241, 50);
 	LD	BC,50
 	PUSH	BC
-	LD	BC,141
+	LD	BC,241
 	PUSH	BC
 	LD	BC,183
 	PUSH	BC
@@ -1746,10 +1746,10 @@ L_118:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  245			gfx_FillRectangle_NoClip(8, 184, 139, 48);
+;  245			gfx_FillRectangle_NoClip(8, 184, 239, 48);
 	LD	BC,48
 	PUSH	BC
-	LD	BC,139
+	LD	BC,239
 	PUSH	BC
 	LD	BC,184
 	PUSH	BC

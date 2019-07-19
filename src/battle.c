@@ -457,9 +457,11 @@ int selectMove(void) {
 		}
 	}
 	if (kb_Data[6] & kb_Clear) {
+		textBoxType = 1;
 		return(0);
 	}
 	gfx_SetDrawBuffer();
+	textBoxType = 1;
 	return (tv1 + 1 + 2 * (tv2));
 }
 
@@ -522,8 +524,7 @@ void redrawcharacters(void) {
 	}
 	gfx_FillRectangle(58, 42, healthRatio, 6);
 	if (enemyparty[currentenemy].currentstatus > 0) {
-		
-		gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus-1], 18, 41);
+		gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus - 1], 18, 41);
 	}
 
 	gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);

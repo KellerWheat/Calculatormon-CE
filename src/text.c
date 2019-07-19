@@ -235,14 +235,14 @@ void text_DrawTextBox(void) {
 		gfx_Rectangle_NoClip(1, 177, 253, 62);
 		gfx_Rectangle_NoClip(2, 178, 251, 60);
 		gfx_SetColor(colors[15]);
-		gfx_Rectangle_NoClip(3, 179, 149, 58);
-		gfx_Rectangle_NoClip(4, 180, 147, 56);
-		gfx_Rectangle_NoClip(5, 181, 145, 54);
+		gfx_Rectangle_NoClip(3, 179, 249, 58);
+		gfx_Rectangle_NoClip(4, 180, 247, 56);
+		gfx_Rectangle_NoClip(5, 181, 245, 54);
 		gfx_SetColor(colors[16]);
-		gfx_Rectangle_NoClip(6, 182, 143, 52);
-		gfx_Rectangle_NoClip(7, 183, 141, 50);
+		gfx_Rectangle_NoClip(6, 182, 243, 52);
+		gfx_Rectangle_NoClip(7, 183, 241, 50);
 		gfx_SetColor(colors[0]);
-		gfx_FillRectangle_NoClip(8, 184, 139, 48);
+		gfx_FillRectangle_NoClip(8, 184, 239, 48);
 
 		gfx_SetColor(colors[14]);
 		gfx_Rectangle_NoClip(255, 176, 66, 64);

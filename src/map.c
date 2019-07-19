@@ -64,8 +64,9 @@ int32_t screenY = 0;
 
 uint8_t tx; /* x tile */
 uint8_t ty; /* y tile */
-bool running;
-int currentWater;
+bool running = false;
+bool currentRun = 0;
+int currentWater = 0;
 
 /* Variables for the leaves that appear when walking through grass */
 bool grassAnimNext = 0;
@@ -191,10 +192,10 @@ int map_Loop(void) {
 		gfx_sprite_t *pauseMenuSprite;
 		Wait(20);
 		gfx_Blit(gfx_screen);
-		gfx_Sprite(pauseMenuSprite, 195, 25);
 		map_End();
 		pauseMenuSprite = gfx_MallocSprite(112, 96);
 		zx7_Decompress(pauseMenuSprite, pausemenu_compressed);
+		gfx_Sprite(pauseMenuSprite, 195, 25);
 
 		menuReturn = menu_Menu();
 		free(pauseMenuSprite);
@@ -236,8 +237,11 @@ int map_Loop(void) {
 				tx = playerX / 16;
 				ty = playerY / 16;
 			}
+			else {
+				text_Display("A Pokemon with Surf could bring you across this water", true);
+			}
 		}
-		if (nextTile == 0x41) {
+		else if (nextTile == 0x41) {
 			HealParty();
 		}
 		else if (nextTile == 0x42) {
@@ -261,6 +265,86 @@ int map_Loop(void) {
 		else if (nextTile == 0x45) {
 			TalkToNpc2();
 		}
+		else if (nextTile == 0x46) {
+			int partyIndex, moveIndex;
+			bool hasUser = false;
+			int oldTile;
+			int tempTile;
+			int newTile = 0;
+			oldTile = tx + ty * OUTDOORWIDTH;
+			if (moveDir == 1) {
+				oldTile = (tx + 1) + (ty)* OUTDOORWIDTH;
+				newTile = (tx + 2) + (ty)* OUTDOORWIDTH;
+			}
+			if (moveDir == 2) {
+				oldTile = (tx - 1) + (ty)* OUTDOORWIDTH;
+				newTile = (tx - 2) + (ty)* OUTDOORWIDTH;
+			}
+			if (moveDir == 3) {
+				oldTile = (tx)+(ty + 1)* OUTDOORWIDTH;
+				newTile = (tx)+(ty + 2)* OUTDOORWIDTH;
+			}
+			if (moveDir == 4) {
+				oldTile = (tx)+(ty - 1)* OUTDOORWIDTH;
+				newTile = (tx)+(ty - 2)* OUTDOORWIDTH;
+			}
+			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+				for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+					if (party[partyIndex].moves[moveIndex] == 133) {
+						hasUser = true;
+						sprintf(str, "%s used Strength", data_pokemon[party[partyIndex].id].name);
+						partyIndex = 6;
+					}
+				}
+			}
+			if (hasUser && currentTypeMap[newTile] == 0) {
+				text_Display(str, true);
+				tempTile = currentTileMap[oldTile];
+				currentTileMap[oldTile] = currentTileMap[newTile];
+				currentTileMap[newTile] = tempTile;
+				tempTile = currentTypeMap[oldTile];
+				currentTypeMap[oldTile] = currentTypeMap[newTile];
+				currentTypeMap[newTile] = tempTile;
+			}
+			else if (currentTypeMap[newTile] == 0) {
+				text_Display("This boulder could be moved by a strong Pokemon", true);
+			}
+		}
+		else if (nextTile == 0x47) {
+			int partyIndex, moveIndex;
+			bool hasUser = false;
+			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
+				for (moveIndex = 0; moveIndex < 4; moveIndex++) {
+					if (party[partyIndex].moves[moveIndex] == 26) {
+						hasUser = true;
+						sprintf(str, "%s used Cut", data_pokemon[party[partyIndex].id].name);
+						partyIndex = 6;
+					}
+				}
+			}
+			if (hasUser) {
+				text_Display(str, true);
+				if (moveDir == 1) {
+					currentTypeMap[(tx + 1) + (ty)* OUTDOORWIDTH] = 0;
+					currentTileMap[(tx + 1) + (ty)* OUTDOORWIDTH] = 0;
+				}
+				if (moveDir == 2) {
+					currentTypeMap[(tx - 1) + (ty)* OUTDOORWIDTH] = 0;
+					currentTileMap[(tx - 1) + (ty)* OUTDOORWIDTH] = 0;
+				}
+				if (moveDir == 3) {
+					currentTypeMap[(tx)+(ty + 1)* OUTDOORWIDTH] = 0;
+					currentTileMap[(tx)+(ty + 1)* OUTDOORWIDTH] = 0;
+				}
+				if (moveDir == 4) {
+					currentTypeMap[(tx)+(ty - 1)* OUTDOORWIDTH] = 0;
+					currentTileMap[(tx)+(ty - 1)* OUTDOORWIDTH] = 0;
+				}
+			}
+			else {
+				text_Display("This tree could be cut down", true);
+			}
+		}
 		else if (nextTile >= 0x50 && nextTile < 0x60) {
 			EnterDoor(nextTile - 80);
 		}
@@ -276,9 +360,10 @@ int map_Loop(void) {
 	}
 	/* If moving */
 	if (moveState > 0) {
-		Wait(2);
+		Wait(1);
 		moveState--;
 		if (running) {
+			Wait(1);
 			moveState--;
 		}
 		if (moveDir == 1) {
@@ -301,6 +386,15 @@ int map_Loop(void) {
 				playerState = 0;
 			}
 		}
+		else if (running){
+			if (moveState > 3) {
+				playerState = 1 + currentRun;
+			}
+			else {
+				playerState = 0;
+			}
+
+		}
 		else {
 			if (moveState > 5) {
 				playerState = 1;
@@ -317,6 +411,7 @@ int map_Loop(void) {
 		}
 
 		if (moveState == 0) {
+			currentRun = !currentRun;
 			/* Arrive At Tile*/
 			tx = playerX / 16;
 			ty = playerY / 16;
@@ -333,7 +428,7 @@ int map_Loop(void) {
 			else if (nextTile == 0x01) {
 				ExitBuilding();
 			}
-			else if (surfing && !(nextTile >= 0x1A && nextTile <= 0x20)) {
+			else if (surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
 				surfing = false;
 			}
 			else if (nextTile >= 0x20 && nextTile < 0x30) {
@@ -364,7 +459,7 @@ int map_Loop(void) {
 		}
 		
 		if (kb_Data[7]) {
-			if (GetNextTile(tx, ty, tilemap.width) < 64 && !(!surfing && GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) <= 0x20)) {
+			if (GetNextTile(tx, ty, tilemap.width) < 64 && !(!surfing && GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) < 0x20)) {
 				moveState = 8;
 			}
 			if (GetNextTile(tx, ty, tilemap.width) >= 112 && GetNextTile(tx, ty, tilemap.width) < 120) {
@@ -443,10 +538,10 @@ void map_Draw(void) {
 				gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
 			}
 			/* Only draw the overlay at the end if moving vertically */
-			else if (moveState == 1 || moveState == 2) {
+			else if (moveState == 1) {
 				gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
 			}
-			if (moveState == 2) {
+			if (moveState == 1) {
 				if (grassAnimNext) {
 					grassAnimState1 = 10;
 					grassAnimX1 = (tx + (moveDir == 1) - (moveDir == 2)) * 16;
@@ -471,7 +566,7 @@ void map_Draw(void) {
 }
 void GrassAnimation(bool part) {
 	if (grassAnimState1 > 0) {
-		if ((moveDir == 3 && ty == grassAnimY1 / 16) == part) {
+		if ((moveDir == 3 && moveState != 0 && ty == grassAnimY1 / 16) != part) {
 			if (grassAnimState1 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX1 - screenX - 8, grassAnimY1 - screenY + 13);
 			}
@@ -482,7 +577,7 @@ void GrassAnimation(bool part) {
 		grassAnimState1--;
 	}
 	if (grassAnimState2 > 0) {
-		if ((moveDir == 3 && ty == grassAnimY2 / 16) == part) {
+		if ((moveDir == 3 && moveState != 0 && ty == grassAnimY2 / 16) != part) {
 			if (grassAnimState2 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX2 - screenX - 8, grassAnimY2 - screenY + 13);
 			}
