@@ -68,31 +68,6 @@ void main(void) {
 	surfing = false;
 	map_Setup();
 
-	if (newGame) {
-		uint8_t starter = 0;
-		newGame = false;
-		text_Display("Choose Starter", false);
-		while (starter == 0) {
-			starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
-		}
-		if (starter == 4) {
-			party[0] = stats_NewCharacter(137, 5);
-		}
-		else {
-			party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
-		}
-		for (starter = 0; starter < 185; starter++) {
-			if (rand() % 2) {
-				playerItems[starter] = 1;
-			}
-		}
-		for (starter = 1; starter < 36; starter++) {
-			if (rand() % 2) {
-				party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
-			}
-		}
-	}
-
 	map_LoadPokeballs();
 
 

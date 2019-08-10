@@ -6,103 +6,93 @@
 	SEGMENT DATA
 _PKMNSD5:
 	DW24	0
-	DW24	72
-	DW24	146
-	DW24	297
-	DW24	447
-	DW24	688
-	DW24	767
-	DW24	839
-	DW24	915
-	DW24	996
-	DW24	1080
-	DW24	1146
-	DW24	1229
-	DW24	1335
-	DW24	1428
-	DW24	1529
-	DW24	1623
-	DW24	1686
-	DW24	1760
+	DW24	79
+	DW24	151
+	DW24	227
+	DW24	308
+	DW24	392
+	DW24	458
+	DW24	541
+	DW24	647
+	DW24	740
+	DW24	841
+	DW24	935
+	DW24	998
+	DW24	1072
+	DW24	1161
+	DW24	1250
+	DW24	1323
+	DW24	1416
+	DW24	1460
+	DW24	1501
+	DW24	1537
+	DW24	1578
+	DW24	1618
+	DW24	1670
+	DW24	1722
+	DW24	1780
 	DW24	1849
-	DW24	1938
-	DW24	2011
-	DW24	2104
-	DW24	2148
-	DW24	2184
-	DW24	2225
-	DW24	2266
-	DW24	2306
-	DW24	2358
-	DW24	2410
-	DW24	2468
-	DW24	2537
-	DW24	2631
-	DW24	3449
-	DW24	4581
-	DW24	5055
-	DW24	5854
-	DW24	6897
-	DW24	6957
+	DW24	1943
+	DW24	2759
+	DW24	3934
+	DW24	4408
+	DW24	5207
+	DW24	6331
+	DW24	6391
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>
 ;    3	#include "PKMNSD5.h"
 ;    4	
 ;    5	#include <fileioc.h>
-;    6	uint8_t *PKMNSD5[39] = {
+;    6	uint8_t *PKMNSD5[34] = {
 	SEGMENT CODE
 ;    7	 (uint8_t*)0,
-;    8	 (uint8_t*)72,
-;    9	 (uint8_t*)146,
-;   10	 (uint8_t*)297,
-;   11	 (uint8_t*)447,
-;   12	 (uint8_t*)688,
-;   13	 (uint8_t*)767,
-;   14	 (uint8_t*)839,
-;   15	 (uint8_t*)915,
-;   16	 (uint8_t*)996,
-;   17	 (uint8_t*)1080,
-;   18	 (uint8_t*)1146,
-;   19	 (uint8_t*)1229,
-;   20	 (uint8_t*)1335,
-;   21	 (uint8_t*)1428,
-;   22	 (uint8_t*)1529,
-;   23	 (uint8_t*)1623,
-;   24	 (uint8_t*)1686,
-;   25	 (uint8_t*)1760,
-;   26	 (uint8_t*)1849,
-;   27	 (uint8_t*)1938,
-;   28	 (uint8_t*)2011,
-;   29	 (uint8_t*)2104,
-;   30	 (uint8_t*)2148,
-;   31	 (uint8_t*)2184,
-;   32	 (uint8_t*)2225,
-;   33	 (uint8_t*)2266,
-;   34	 (uint8_t*)2306,
-;   35	 (uint8_t*)2358,
-;   36	 (uint8_t*)2410,
-;   37	 (uint8_t*)2468,
-;   38	 (uint8_t*)2537,
-;   39	 (uint8_t*)2631,
-;   40	 (uint8_t*)3449,
-;   41	 (uint8_t*)4581,
-;   42	 (uint8_t*)5055,
-;   43	 (uint8_t*)5854,
-;   44	 (uint8_t*)6897,
-;   45	 (uint8_t*)6957,
-;   46	};
-;   47	
-;   48	bool PKMNSD5_init(void) {
+;    8	 (uint8_t*)79,
+;    9	 (uint8_t*)151,
+;   10	 (uint8_t*)227,
+;   11	 (uint8_t*)308,
+;   12	 (uint8_t*)392,
+;   13	 (uint8_t*)458,
+;   14	 (uint8_t*)541,
+;   15	 (uint8_t*)647,
+;   16	 (uint8_t*)740,
+;   17	 (uint8_t*)841,
+;   18	 (uint8_t*)935,
+;   19	 (uint8_t*)998,
+;   20	 (uint8_t*)1072,
+;   21	 (uint8_t*)1161,
+;   22	 (uint8_t*)1250,
+;   23	 (uint8_t*)1323,
+;   24	 (uint8_t*)1416,
+;   25	 (uint8_t*)1460,
+;   26	 (uint8_t*)1501,
+;   27	 (uint8_t*)1537,
+;   28	 (uint8_t*)1578,
+;   29	 (uint8_t*)1618,
+;   30	 (uint8_t*)1670,
+;   31	 (uint8_t*)1722,
+;   32	 (uint8_t*)1780,
+;   33	 (uint8_t*)1849,
+;   34	 (uint8_t*)1943,
+;   35	 (uint8_t*)2759,
+;   36	 (uint8_t*)3934,
+;   37	 (uint8_t*)4408,
+;   38	 (uint8_t*)5207,
+;   39	 (uint8_t*)6331,
+;   40	 (uint8_t*)6391,
+;   41	};
+;   42	
+;   43	bool PKMNSD5_init(void) {
 _PKMNSD5_init:
 	LD	HL,-10
 	CALL	__frameset
-;   49	    unsigned int data, i;
-;   50	    ti_var_t appvar;
-;   51	
-;   52	    ti_CloseAll();
+;   44	    unsigned int data, i;
+;   45	    ti_var_t appvar;
+;   46	
+;   47	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   53	
-;   54	    appvar = ti_Open("PKMNSD5", "r");
+;   48	
+;   49	    appvar = ti_Open("PKMNSD5", "r");
 	LD	BC,L__0
 	PUSH	BC
 	LD	BC,L__1
@@ -111,7 +101,7 @@ _PKMNSD5_init:
 	POP	BC
 	POP	BC
 	LD	(IX+-4),A
-;   55	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD5[0];
+;   50	    data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)PKMNSD5[0];
 	LD	C,(IX+-4)
 	LD	B,0
 	PUSH	BC
@@ -121,12 +111,12 @@ _PKMNSD5_init:
 	OR	A,A
 	SBC	HL,BC
 	LD	(IX+-7),HL
-;   56	    for (i = 0; i < PKMNSD5_num; i++) {
+;   51	    for (i = 0; i < PKMNSD5_num; i++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_3
 L_1:
-;   57	        PKMNSD5[i] += data;
+;   52	        PKMNSD5[i] += data;
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -142,20 +132,20 @@ L_1:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   58	    }
+;   53	    }
 L_3:
-	LD	BC,39
+	LD	BC,34
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_1
-;   59	
-;   60	    ti_CloseAll();
+;   54	
+;   55	    ti_CloseAll();
 	CALL	_ti_CloseAll
-;   61	
-;   62	    return (bool)appvar;
+;   56	
+;   57	    return (bool)appvar;
 	LD	A,(IX+-4)
-;   63	}
+;   58	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -163,7 +153,7 @@ L_3:
 
 ;**************************** _PKMNSD5_init ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD5                            STATIC    117   variable
+;_PKMNSD5                            STATIC    102   variable
 ;_ti_GetDataPtr                      IMPORT  -----   function
 ;_ti_Open                            IMPORT  -----   function
 ;_ti_CloseAll                        IMPORT  -----   function

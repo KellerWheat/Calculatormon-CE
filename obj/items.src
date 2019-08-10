@@ -2369,7 +2369,7 @@ L__16:
 ;  153	
 ;  154	bool items_UseItem(uint8_t index) {
 _items_UseItem:
-	LD	HL,-62
+	LD	HL,-86
 	CALL	__frameset
 ;  155		char itemName[20];
 ;  156		if (index < 4 || playerItems[index] == 0) {
@@ -2412,12 +2412,12 @@ L_38:
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-15),HL
-	LD	IY,(IX+-15)
+	LD	(IX+-21),HL
+	LD	IY,(IX+-21)
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_41
-	LD	IY,(IX+-15)
+	LD	IY,(IX+-21)
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	NZ,L_42
@@ -2607,8 +2607,8 @@ L_61:
 	LD	(IX+-6),HL
 	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-21),HL
-	LD	IY,(IX+-21)
+	LD	(IX+-18),HL
+	LD	IY,(IX+-18)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -2651,7 +2651,7 @@ L_61:
 ;  188			else if (data_pokemon[party[i].id].evolvelevel == 106) {
 	JR	L_58
 L_56:
-	LD	IY,(IX+-21)
+	LD	IY,(IX+-18)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -2740,7 +2740,7 @@ L_74:
 	LD	BC,_data_moves
 	ADD	HL,BC
 	LD	(IX+-9),HL
-	LD	(IX+-18),HL
+	LD	(IX+-15),HL
 	LD	IY,(IX+-12)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -2755,7 +2755,7 @@ L_74:
 	CP	A,(IY+14)
 	JR	Z,L_71
 	LD	BC,(IX+-9)
-	LD	(IX+-18),BC
+	LD	(IX+-15),BC
 	LD	IY,(IX+-12)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -2771,7 +2771,7 @@ L_74:
 	JR	NZ,L_72
 L_71:
 ;  212				sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
-	LD	IY,(IX+-18)
+	LD	IY,(IX+-15)
 	PEA	IY+0
 	LD	BC,L__38
 	PUSH	BC
@@ -2875,66 +2875,136 @@ L_67:
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	IY,HL
+	LD	(IX+-65),HL
 	LD	A,(IX+6)
 	SUB	A,19
+	LD	IY,(IX+-65)
 	LD	(IY+1),A
-;  218					break;
+;  218					party[i].pp[0] = data_moves[party[i].moves[0]].uses;
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	LD	A,21
+	CALL	__imul_b
+	LD	BC,_data_moves
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+18)
+	LD	IY,(IX+-65)
+	LD	(IY+5),A
+;  219					break;
 	JR	L_75
-;  219				case 2:
+;  220				case 2:
 L_68:
-;  220					party[i].moves[1] = index - 19;
+;  221					party[i].moves[1] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	IY,HL
+	LD	(IX+-68),HL
+	LD	IY,(IX+-68)
 	LEA	HL,IY+1
 	INC	HL
 	LD	A,(IX+6)
 	SUB	A,19
 	LD	(HL),A
-;  221					break;
-	JR	L_75
-;  222				case 3:
-L_69:
-;  223					party[i].moves[2] = index - 19;
-	LD	BC,(_i)
-	CALL	__stoiu
-	LD	A,34
+;  222					party[i].pp[1] = data_moves[party[i].moves[1]].uses;
+	LEA	HL,IY+1
+	INC	HL
+	LD	A,(HL)
+	LEA	HL,IY+5
+	LD	(IX+-80),HL	; spill
+	UEXT	HL
+	LD	L,A
+	LD	A,21
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	IY,HL
-	LEA	HL,IY+3
-	LD	A,(IX+6)
-	SUB	A,19
+	LD	(IX+-77),HL	; spill
+	LD	HL,(IX+-80)	; unspill
+	INC	HL
+	LD	(IX+-80),HL	; spill
+	LD	IY,(IX+-77)
+	LD	A,(IY+18)
+	LD	HL,(IX+-80)	; unspill
 	LD	(HL),A
-;  224					break;
+;  223					break;
 	JR	L_75
-;  225				case 4:
-L_70:
-;  226					party[i].moves[3] = index - 19;
+;  224				case 3:
+L_69:
+;  225					party[i].moves[2] = index - 19;
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,_party
 	ADD	HL,BC
-	LD	IY,HL
-	LEA	HL,IY+4
+	LD	(IX+-71),HL
+	LD	IY,(IX+-71)
 	LD	A,(IX+6)
 	SUB	A,19
+	LEA	HL,IY+3
+	LD	(HL),A
+;  226					party[i].pp[2] = data_moves[party[i].moves[2]].uses;
+	LEA	HL,IY+3
+	LD	(IX+-77),HL	; spill
+	LEA	HL,IY+7
+	LD	(IX+-86),HL	; spill
+	LD	HL,(IX+-77)	; unspill
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	A,21
+	CALL	__imul_b
+	LD	BC,_data_moves
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+18)
+	LD	HL,(IX+-86)	; unspill
 	LD	(HL),A
 ;  227					break;
 	JR	L_75
-;  228				}
-;  229			}
-;  230			else {
+;  228				case 4:
+L_70:
+;  229					party[i].moves[3] = index - 19;
+	LD	BC,(_i)
+	CALL	__stoiu
+	LD	A,34
+	CALL	__imul_b
+	LD	BC,_party
+	ADD	HL,BC
+	LD	(IX+-74),HL
+	LD	IY,(IX+-74)
+	LD	A,(IX+6)
+	SUB	A,19
+	LEA	HL,IY+4
+	LD	(HL),A
+;  230					party[i].pp[3] = data_moves[party[i].moves[3]].uses;
+	LEA	HL,IY+4
+	LD	(IX+-77),HL	; spill
+	LEA	HL,IY+8
+	LD	(IX+-83),HL	; spill
+	LD	HL,(IX+-77)	; unspill
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	A,21
+	CALL	__imul_b
+	LD	BC,_data_moves
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+18)
+	LD	HL,(IX+-83)	; unspill
+	LD	(HL),A
+;  231					break;
+	JR	L_75
+;  232				}
+;  233			}
+;  234			else {
 L_72:
-;  231				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
+;  235				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
 	LD	IY,(IX+-9)
 	PEA	IY+0
 	LD	IY,(IX+-12)
@@ -2955,7 +3025,7 @@ L_72:
 	POP	BC
 	POP	BC
 	POP	BC
-;  232				text_Display(str, false);
+;  236				text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
@@ -2963,15 +3033,15 @@ L_72:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  233				return false;
+;  237				return false;
 	XOR	A,A
 	JR	L_76
-;  234			}
-;  235		}
+;  238			}
+;  239		}
 L_75:
-;  236	
-;  237	
-;  238		items_IndexToName(&itemName, index);
+;  240	
+;  241	
+;  242		items_IndexToName(&itemName, index);
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
@@ -2979,7 +3049,7 @@ L_75:
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  239		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
+;  243		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
@@ -3006,7 +3076,7 @@ L_75:
 	POP	BC
 	POP	BC
 	POP	BC
-;  240		text_Display(str, true);
+;  244		text_Display(str, true);
 	LD	BC,1
 	PUSH	BC
 	LD	BC,_str
@@ -3014,9 +3084,9 @@ L_75:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  241		return true;
+;  245		return true;
 	LD	A,1
-;  242	}
+;  246	}
 L_76:
 	LD	SP,IX
 	POP	IX
@@ -3040,9 +3110,9 @@ L_76:
 ;_menu_PokemonMenu                   IMPORT  -----   function
 ;_playerItems                        IMPORT    185   variable
 ;itemName                             IX-41     20   variable
-;G_7                                  IX-21      3   variable
-;G_12                                 IX-18      3   variable
-;G_1                                  IX-15      3   variable
+;G_1                                  IX-21      3   variable
+;G_7                                  IX-18      3   variable
+;G_12                                 IX-15      3   variable
 ;G_9                                  IX-12      3   variable
 ;G_11                                  IX-9      3   variable
 ;G_5                                   IX-6      3   variable
@@ -3050,8 +3120,8 @@ L_76:
 ;index                                 IX+6      1   parameter
 
 
-; Stack Frame Size: 71 (bytes)
-;       Spill Code: 0 (instruction)
+; Stack Frame Size: 95 (bytes)
+;       Spill Code: -1 (instruction)
 
 
 	SEGMENT STRSECT
@@ -3068,12 +3138,12 @@ L__41:
 	DB	"Used a %s on %s"
 	DB	0
 	SEGMENT CODE
-;  243	
-;  244	void HealHp(uint8_t index, uint16_t amount) {
+;  247	
+;  248	void HealHp(uint8_t index, uint16_t amount) {
 _HealHp:
 	LD	HL,-36
 	CALL	__frameset
-;  245		party[index].currenthealth += amount;
+;  249		party[index].currenthealth += amount;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3090,7 +3160,7 @@ _HealHp:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  246		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
+;  250		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
 	LD	HL,(IX+-6)
 	LD	BC,_party
 	ADD	HL,BC
@@ -3114,7 +3184,7 @@ _HealHp:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	NC,L_78
-;  247			party[index].currenthealth = stats_CalculateStats(party[index]).health;
+;  251			party[index].currenthealth = stats_CalculateStats(party[index]).health;
 	LD	BC,_party
 	LD	HL,(IX+-6)
 	ADD	HL,BC
@@ -3141,8 +3211,8 @@ _HealHp:
 	LD	BC,(HL)
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  248		}
-;  249	}
+;  252		}
+;  253	}
 L_78:
 	LD	SP,IX
 	POP	IX
@@ -3159,13 +3229,13 @@ L_78:
 
 
 ; Stack Frame Size: 48 (bytes)
-;       Spill Code: 0 (instruction)
+;       Spill Code: -1 (instruction)
 
 
-;  250	void HealStatus(uint8_t index, uint8_t type) {
+;  254	void HealStatus(uint8_t index, uint8_t type) {
 _HealStatus:
 	CALL	__frameset0
-;  251		party[index].currentstatus = 0;
+;  255		party[index].currentstatus = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -3175,7 +3245,7 @@ _HealStatus:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+15),0
-;  252	}
+;  256	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -3189,7 +3259,7 @@ _HealStatus:
 
 
 ; Stack Frame Size: 12 (bytes)
-;       Spill Code: 0 (instruction)
+;       Spill Code: -1 (instruction)
 
 
 	XREF _menu_PokemonMenu:ROM

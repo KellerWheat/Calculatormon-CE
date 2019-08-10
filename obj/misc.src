@@ -32,40 +32,40 @@ _colors:
 	DB	0
 	DB	0
 _colorSets:
-	DB	7
-	DB	6
-	DB	225
-	DB	121
-	DB	102
-	DB	159
-	DB	13
-	DB	26
-	DB	131
-	DB	102
-	DB	14
-	DB	102
-	DB	210
-	DB	13
-	DB	49
-	DB	85
-	DB	54
-	DB	9
 	DB	8
-	DB	157
-	DB	24
-	DB	55
-	DB	95
+	DB	1
+	DB	232
+	DB	148
+	DB	130
+	DB	185
 	DB	0
-	DB	22
-	DB	54
-	DB	179
-	DB	151
-	DB	112
+	DB	44
+	DB	108
+	DB	130
+	DB	26
+	DB	130
 	DB	0
-	DB	115
+	DB	201
 	DB	69
-	DB	49
-	DB	14
+	DB	102
+	DB	74
+	DB	22
+	DB	7
+	DB	218
+	DB	23
+	DB	45
+	DB	87
+	DB	0
+	DB	20
+	DB	44
+	DB	176
+	DB	150
+	DB	110
+	DB	0
+	DB	112
+	DB	4
+	DB	86
+	DB	11
 _colorValues:
 	DB	247
 	DB	247
@@ -161,8 +161,8 @@ _categoryIcons:
 ;   34	
 ;   35	
 ;   36	uint8_t colorSets[2][COLORCOUNT] = {
-;   37		{7,6,225,121,102,159,13,26,131,102,14,102,210,13,49,85,54,},
-;   38		{9,8,157,24,55,95,0,22,54,179,151,112,0,115,69,49,14,},
+;   37		{8,1,232,148,130,185,0,44,108,130,26,130,0,201,69,102,74,},
+;   38		{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
 ;   39	};
 ;   40	
 ;   41	uint8_t colorValues[COLORCOUNT][3] = {
@@ -310,10 +310,8 @@ _FindColors:
 ;   86		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
-	LD	BC,138
-	LD	HL,_PKMNSD4
-	ADD	HL,BC
-	LD	BC,468
+	LD	HL,_PKMNSD4+15
+	LD	BC,474
 	PUSH	BC
 	LD	BC,(HL)
 	PUSH	BC
@@ -326,7 +324,7 @@ _FindColors:
 ;   88		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
-	LD	HL,_PKMNSD5+114
+	LD	HL,_PKMNSD5+99
 	LD	BC,512
 	PUSH	BC
 	LD	BC,(HL)
@@ -343,9 +341,9 @@ _FindColors:
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_FindBestColors                     IMPORT  -----   function
-;_PKMNSD4                            IMPORT    141   variable
+;_PKMNSD4                            IMPORT     18   variable
 ;_gfx_SetPalette                     IMPORT  -----   function
 
 
@@ -754,20 +752,18 @@ L_30:
 	LD	DE,_typeIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  131			zx7_Decompress(typeIcons[iconIndex], PKMNSD5[5 + iconIndex]);
-	LD	IY,(IX+-3)
-	LEA	HL,IY+5
-	LD	BC,HL
-	ADD	HL,HL
-	ADD	HL,BC
-	LD	BC,_PKMNSD5
-	ADD	HL,BC
-	LD	BC,(HL)
-	PUSH	BC
+;  131			zx7_Decompress(typeIcons[iconIndex], PKMNSD5[iconIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
 	ADD	HL,BC
+	LD	BC,HL
+	LD	HL,BC
+	LD	DE,_PKMNSD5
+	ADD	HL,DE
+	LD	DE,(HL)
+	PUSH	DE
+	LD	HL,BC
 	LD	BC,_typeIcons
 	ADD	HL,BC
 	LD	BC,(HL)
@@ -810,9 +806,9 @@ L_34:
 	LD	DE,_statusIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  135			zx7_Decompress(statusIcons[iconIndex], PKMNSD5[22 + iconIndex]);
+;  135			zx7_Decompress(statusIcons[iconIndex], PKMNSD5[17 + iconIndex]);
 	LD	IY,(IX+-3)
-	LEA	HL,IY+22
+	LEA	HL,IY+17
 	LD	BC,HL
 	ADD	HL,HL
 	ADD	HL,BC
@@ -866,9 +862,9 @@ L_39:
 	LD	DE,_categoryIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  139			zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[27 + iconIndex]);
+;  139			zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[22 + iconIndex]);
 	LD	IY,(IX+-3)
-	LEA	HL,IY+27
+	LEA	HL,IY+22
 	LD	BC,HL
 	ADD	HL,HL
 	ADD	HL,BC
@@ -908,7 +904,7 @@ L_41:
 ;Name                         Addr/Register   Size   Type
 ;_categoryIcons                      STATIC      9   variable
 ;_statusIcons                        STATIC     15   variable
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_typeIcons                          STATIC     51   variable
 ;_malloc                             IMPORT  -----   function

@@ -7,72 +7,72 @@
 _menucursorsmall_data:
 	DB	7
 	DB	10
-	DB	5
-	DB	5
-	DB	5
+	DB	4
+	DB	4
+	DB	4
 	DB	0
 	DB	0
 	DB	0
 	DB	0
-	DB	5
-	DB	94
-	DB	5
-	DB	5
+	DB	4
+	DB	183
+	DB	4
+	DB	4
 	DB	0
 	DB	0
 	DB	0
-	DB	5
-	DB	94
-	DB	94
-	DB	5
-	DB	5
+	DB	4
+	DB	183
+	DB	183
+	DB	4
+	DB	4
 	DB	0
 	DB	0
-	DB	5
-	DB	94
-	DB	94
-	DB	94
-	DB	5
-	DB	5
+	DB	4
+	DB	183
+	DB	183
+	DB	183
+	DB	4
+	DB	4
 	DB	0
-	DB	5
-	DB	94
-	DB	94
-	DB	94
-	DB	94
-	DB	5
-	DB	5
-	DB	5
-	DB	94
-	DB	94
-	DB	94
-	DB	94
-	DB	5
-	DB	5
-	DB	5
-	DB	94
-	DB	94
-	DB	94
-	DB	5
-	DB	5
+	DB	4
+	DB	183
+	DB	183
+	DB	183
+	DB	183
+	DB	4
+	DB	4
+	DB	4
+	DB	183
+	DB	183
+	DB	183
+	DB	183
+	DB	4
+	DB	4
+	DB	4
+	DB	183
+	DB	183
+	DB	183
+	DB	4
+	DB	4
 	DB	0
-	DB	5
-	DB	94
-	DB	94
-	DB	5
-	DB	5
-	DB	0
-	DB	0
-	DB	5
-	DB	94
-	DB	5
-	DB	5
+	DB	4
+	DB	183
+	DB	183
+	DB	4
+	DB	4
 	DB	0
 	DB	0
+	DB	4
+	DB	183
+	DB	4
+	DB	4
 	DB	0
-	DB	5
-	DB	5
-	DB	5
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	4
 	DB	0
 	DB	0
 	DB	0

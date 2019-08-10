@@ -14,11 +14,12 @@ Setting_SizeX = 48
 Setting_SizeY = 40
 Setting_BSizeX = 21
 Setting_BSizeY = 15
-tilesetname = 'tileset.png'
+tilesetname = 'outdoortileset'
 indoortilesetname = 'indoortileset.png'
-dataCount = 40
-trainerTextCount = 32
-npcCount = 32
+dataCount = 42
+textCount = 32
+tilesetCount = 32
+mapCount = 32
 
 #------------
 #Current Data
@@ -36,6 +37,10 @@ paintMode = 0
 numberToPaint = 0
 paintWidth = 1
 paintHeight = 1
+txtemp = 0
+tytemp = 0
+copyingMap = False
+copyingTypeMap = False
 
 #-------------
 #Start Tkinter
@@ -50,50 +55,32 @@ root.wm_state('zoomed')
 #---------------------------
 
 
-trainerText = np.array(["                                "])
-npcText = np.array(["                                "])
-npcReward = np.array([0])
+text = np.array(["                                "])
+tileSets = np.array([0])
 
-trainerText[0] = ""
-npcText[0] = ""
+text[0] = ""
 
-if(os.path.isfile("trainertext.npy")):
-    trainerText = np.load('trainertext.npy')
-if(os.path.isfile("npctext.npy")):
-    npcText = np.load('npctext.npy')
-if(os.path.isfile("npcrewards.npy")):    
-    npcReward = np.load('npcrewards.npy')
+if(os.path.isfile("text.npy")):
+    text = np.load('text.npy')
+if(os.path.isfile("tilesets.npy")):    
+    tileSets = np.load('tilesets.npy')
 
-trainerText = np.resize(trainerText, (trainerTextCount))
-npcText = np.resize(npcText, (npcCount))
-npcReward = np.resize(npcReward, (npcCount))
+text = np.resize(text, (textCount))
+tileSets = np.resize(tileSets, mapCount)
 
-currentTrainer = IntVar()
-currentNpc = IntVar()
-Var_TrainerText = StringVar()
-Var_NpcText = StringVar()
-Var_NpcReward = IntVar()
-Var_TrainerText.set(trainerText[0])
-Var_NpcText.set(npcText[0])
-Var_NpcReward.set(npcReward[0])
 
-def UpdateTrainer(new):
-    trainerText[currentTrainer.get()] = Var_TrainerText.get()
-    currentTrainer.set(new)
-    Var_TrainerText.set(trainerText[currentTrainer.get()])
-    np.save('trainertext.npy', trainerText)
+currentText = IntVar()
+Var_Text = StringVar()
+Var_Text.set(text[0])
 
-def UpdateNpc(new):
-    npcText[currentNpc.get()] = Var_NpcText.get()
-    npcReward[currentNpc.get()] = Var_NpcReward.get()
-    currentNpc.set(new)
-    Var_NpcText.set(npcText[currentNpc.get()])
-    Var_NpcReward.set(npcReward[currentNpc.get()])
-    np.save('npctext.npy',npcText)
-    np.save('npcrewards.npy',npcReward)
 
-UpdateTrainer(0)
-UpdateNpc(0)
+def UpdateText(new):
+    text[currentText.get()] = Var_Text.get()
+    currentText.set(new)
+    Var_Text.set(text[currentText.get()])
+    np.save('text.npy', text)
+
+UpdateText(0)
 
 
 #---------
@@ -105,7 +92,7 @@ def SetupTileMap():
     if(Var_IsBuilding.get()==1):
         tileset = Image.open(indoortilesetname)
     else:
-        tileset = Image.open(tilesetname)
+        tileset = Image.open(tilesetname + str(tileSets[Var_MapIndex.get()]) + ".png")
     tilesetimage = pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode)
     tilex,tiley = tileset.size
     tilex=int(tilex/16)
@@ -147,6 +134,7 @@ def ChangeMap():
         typemap = np.array([0]*(sizeX*sizeX))
     if(os.path.isfile("zonedata" + fileName)):
         zonedata = np.load("zonedata" + fileName)
+        zonedata.resize(dataCount * 16)
     else:
         zonedata = np.array([0]*(dataCount * 16))
 
@@ -158,23 +146,18 @@ def ChangeMap():
     SetupTileMap()
 
 def CopyAll():
-    UpdateTrainer(currentTrainer.get())
-    UpdateNpc(currentNpc.get())
-    text = ""
-    text += "char data_trainerText["+str(trainerTextCount)+"][32] = {\n\t"
-    for i in range(0,trainerTextCount):
-        text += '"'+trainerText[i]+'",'
-    text += "\n};\n"
-    text += "char data_npcText["+str(npcCount)+"][32] = {\n\t"
-    for i in range(0,npcCount):
-        text += '"'+npcText[i]+'",'
-    text += "\n};\n"
-    text += "uint8_t data_npcReward["+str(npcCount)+"] = {\n\t"
-    for i in range(0,npcCount):
-        text += str(npcReward[i])+','
-    text += "\n};\n"
+    UpdateText(currentText.get())
+    copytext = ""
+    copytext += "char data_text["+str(textCount)+"][32] = {\n\t"
+    for i in range(0,textCount):
+        copytext += '"'+text[i]+'",'
+    copytext += "\n};\n"
+    copytext += "uint8_t data_tileSets["+str(mapCount)+"] = {\n\t"
+    for i in range(0,mapCount):
+        copytext += str(tileSets[i])+','
+    copytext += "\n};\n"
     
-    pyperclip.copy(text)
+    pyperclip.copy(copytext)
 
 def ExportFile():
     output0 = np.array([])
@@ -249,7 +232,7 @@ ChangeMap()
 #Display Map
 #-----------
 
-TypeNames = [' ','BE','C','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','N1','N2','R','T','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','B0','B1','B2','B3','B4','B5','B6','B7','B8','B9','BA','BB','BC','BD','BE','BF',]
+TypeNames = [' ','BE','C','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','L','ST','R','T','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','N0','N1','N2','N3','N4','N5','N6','N7','N8','N9','NA','NB','NC','ND','NE','NF','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N']
 
 SetupTileMap()
 
@@ -264,14 +247,18 @@ pygame.display.flip()
 tilefont = pygame.font.SysFont('comicsansms', 10)
 infofont = pygame.font.SysFont('comicsansms', 30)
 def draw():
-    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode
+    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode, copyingMap, copyingTypeMap
     events = pygame.event.get()
     
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LSHIFT]:
         shift=True
     else:
-        shift=False 
+        shift=False
+    if keys[pygame.K_LCTRL]:
+        ctrl=True
+    else:
+        ctrl=False
     
     screen.fill(pygame.Color(240,240,240))
     mouse = pygame.mouse.get_pos()
@@ -284,21 +271,30 @@ def draw():
             if editMode == 0:
                 for x in range(0,paintWidth):
                     for y in range(0,paintHeight):
-                        tilemap[tx+x+sizeX*(ty+y)] = numberToPaint+x+16*y
-                        
-            else:
+                        if copyingMap:
+                            if ctrl:
+                                if not copyingTypeMap:
+                                    tilemap[tx+x+sizeX*(ty+y)] = tilemap[numberToPaint+x+sizeX*y]
+                                else:
+                                    typemap[tx+x+sizeX*(ty+y)] = typemap[numberToPaint+x+sizeX*y] 
+                        else:
+                            tilemap[tx+x+sizeX*(ty+y)] = numberToPaint+x+16*y       
+            elif numberToPaint != 256:
                 typemap[tx+sizeX*ty] = numberToPaint
     
     for x in range(sizeX):
         for y in range(sizeY):
             screen.blit(tiles[tilemap[x+sizeX*y]],(16*x,16*y))
-            if editMode > 0:
-                  mpdisplay = tilefont.render(TypeNames[typemap[x+sizeX*y]], True, (0, 0, 0))#str(format(typemap[x+sizeX*y], '02X')), True, (0, 0, 0))
-                  screen.blit(mpdisplay,(16*x,16*y))
+            if editMode > 0 or (copyingMap and copyingTypeMap):
+                mpdisplay = tilefont.render(TypeNames[typemap[x+sizeX*y]], True, (0, 0, 0))#str(format(typemap[x+sizeX*y], '02X')), True, (0, 0, 0))
+                screen.blit(mpdisplay,(16*x,16*y))
     if editMode == 0:
-        screen.blit(tilesetimage,((sizeX*16)+16,112))
-        pygame.draw.rect(screen,(0,0,160),(((sizeX*16)+16+(numberToPaint % 16)*16),(112+int(numberToPaint/16)*16),16*paintWidth,16*paintHeight),1)
-        if(tx > (sizeX) and ty > 6 and ty < 15):
+        if(not copyingMap):
+            screen.blit(tilesetimage,((sizeX*16)+16,112))
+            pygame.draw.rect(screen,(0,0,160),(((sizeX*16)+16+(numberToPaint % 16)*16),(112+int(numberToPaint/16)*16),16*paintWidth,16*paintHeight),1)
+        else:
+            pygame.draw.rect(screen,(0,0,160),(((numberToPaint % sizeX)*16),(int(numberToPaint/sizeX)*16),16*paintWidth,16*paintHeight),1)
+        if(tx > (sizeX) and ty > 6 and ty < 15 and not copyingMap):
             if pygame.mouse.get_pressed()[0]:
                 if(shift):
                     paintWidth = 1+tx-txtemp
@@ -309,6 +305,19 @@ def draw():
                     paintHeight = 1
                     txtemp = tx
                     tytemp = ty
+        if(tx >= 0 and tx < sizeX and ty >= 0 and ty < sizeY and copyingMap and not ctrl):
+            if pygame.mouse.get_pressed()[0]:
+                if(shift):
+                    paintWidth = 1+tx-txtemp
+                    paintHeight = 1+ty-tytemp   
+                else:
+                    print(numberToPaint)
+                    numberToPaint = (tx)+(sizeX*(ty))
+                    paintWidth = 1
+                    paintHeight = 1
+                    txtemp = tx
+                    tytemp = ty
+        
         
 
     pygame.display.flip()
@@ -319,14 +328,15 @@ def draw():
 
 
 
-ModeList = ["Tiles","Ground Types","Grass","Exit","Trainer View","Door","Trainer","Need Badges"]
-TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","NPC1 (indoors)","NPC2 (indoors)","Rock", "Tree"]
-TypeNumbers = [0,1,64,65,66,67,68,69,70,71]
+ModeList = ["Tiles","Ground Types","Grass","Exit","Door","Text","Trainer"]
+TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","Lab","Starter","Rock", "Tree","Rival"]
+TypeNumbers = [0,1,64,65,66,67,68,69,70,71,72]
 def CalculateNumberToPaint():
     global editMode, numberToPaint, paintWidth, paintHeight
     Frame_ChangeNumber.grid_forget()
     Frame_ChangeType.grid_forget()
-    for i in range(0,4):
+    Frame_CopyMap.grid_forget()
+    for i in range(0,5):
         DataFrames[i].grid_forget()
     if(editMode>1):
         Frame_ChangeNumber.grid(row=0,column=1)
@@ -334,6 +344,9 @@ def CalculateNumberToPaint():
         numberToPaint = 0
         paintWidth = 1
         paintHeight = 1
+        copyingMap = False
+        copyingTypeMap = False
+        Frame_CopyMap.grid(row=1,column=0,sticky=N)
     if(editMode==1):
         Frame_ChangeType.grid(row=0,column=1)
         for i in range(0, len(TypeList)):
@@ -346,16 +359,14 @@ def CalculateNumberToPaint():
         numberToPaint = 32 + Var_Number.get()
         DataFrames[1].grid(row=1,column=0,sticky=N)
     if(editMode==4):
-        numberToPaint = 48 + Var_Number.get()
-        DataFrames[3].grid(row=1,column=0,sticky=N)
-    if(editMode==5):
         numberToPaint = 80 + Var_Number.get()
         DataFrames[2].grid(row=1,column=0,sticky=N)
-    if(editMode==6):
-        numberToPaint = 96 + Var_Number.get()
-        DataFrames[3].grid(row=1,column=0,sticky=N)
-    if(editMode==7):
+    if(editMode==5):
         numberToPaint = 112 + Var_Number.get()
+        DataFrames[3].grid(row=1,column=0,sticky=N)
+    if(editMode==6):
+        numberToPaint = 256
+        DataFrames[4].grid(row=1,column=0,sticky=N)
 
 def ChangeMode(value):
     global editMode
@@ -401,6 +412,28 @@ OptionMenu_ChangeType = OptionMenu(Frame_ChangeType,Var_Type,*TypeList, command=
 
 Frame_OptionHolder.grid(row=0,column=0)
 
+def ToggleCopyMap():
+    global copyingMap, copyingTypeMap,numberToPaint, paintWidth, paintHeight
+    if not copyingMap:
+        copyingMap = True
+        copyingTypeMap = False
+    else:
+        if not copyingTypeMap:
+            copyingTypeMap = True
+            copyingMap = True
+        else:
+            copyingTypeMap = False
+            copyingMap = False
+    numberToPaint = 0
+    paintWidth = 1
+    paintHeight = 1
+    
+Frame_CopyMap = Frame(Frame_DataEditor)
+Button_ToggleCopyMap = Button(Frame_CopyMap,command=ToggleCopyMap,text="Toggle Copying Map").grid(row=0,column=1)
+
+Frame_CopyMap.grid(row=1,column=0,sticky=N)
+
+
 #------------
 #Data Editing
 #------------
@@ -412,11 +445,15 @@ ExitVars = []
 for i in range(0,3):
     ExitVars.append(IntVar())
 DoorVars = []
-for i in range(0,5):
+for i in range(0,3):
     DoorVars.append(IntVar())
+TextVars = []
+for i in range(0,1):
+    TextVars.append(IntVar())
 TrainerVars = []
-for i in range(0,17):
+for i in range(0,20):
     TrainerVars.append(IntVar())
+
 
 def LoadVars():
     global zonedata
@@ -424,10 +461,13 @@ def LoadVars():
         GrassVars[i].set(zonedata[((0+i)*16) + Var_Number.get()])
     for i in range(0,3):
         ExitVars[i].set(zonedata[((15+i)*16) + Var_Number.get()])
-    for i in range(0,5):
+    for i in range(0,3):
         DoorVars[i].set(zonedata[((18+i)*16) + Var_Number.get()])
-    for i in range(0,17):
-        TrainerVars[i].set(zonedata[((23+i)*16) + Var_Number.get()])
+    for i in range(0,1):
+        TextVars[i].set(zonedata[((21+i)*16) + Var_Number.get()])
+    for i in range(0,20):
+        TrainerVars[i].set(zonedata[((22+i)*16) + Var_Number.get()])
+
 
 def SaveVars():
     global zonedata
@@ -435,10 +475,13 @@ def SaveVars():
         zonedata[((0+i)*16) + Var_Number.get()] = GrassVars[i].get()
     for i in range(0,3):
         zonedata[((15+i)*16) + Var_Number.get()] = ExitVars[i].get()
-    for i in range(0,5):
+    for i in range(0,3):
         zonedata[((18+i)*16) + Var_Number.get()] = DoorVars[i].get()
-    for i in range(0,17):
-        zonedata[((23+i)*16) + Var_Number.get()] = TrainerVars[i].get()
+    for i in range(0,1):
+        zonedata[((21+i)*16) + Var_Number.get()] = TextVars[i].get()
+    for i in range(0,20):
+        zonedata[((22+i)*16) + Var_Number.get()] = TrainerVars[i].get()
+
 
 def SwitchNumber(newNumber):
     SaveVars()
@@ -448,7 +491,7 @@ def SwitchNumber(newNumber):
 LoadVars()
 
 DataFrames = []
-for i in range(0,4):
+for i in range(0,5):
     DataFrames.append(Frame(Frame_DataEditor))
     
 
@@ -484,35 +527,42 @@ Label(DataFrames[2],text="X Pos").grid(row=0,column=1)
 Entry(DataFrames[2],textvariable=DoorVars[1]).grid(row=1,column=1)
 Label(DataFrames[2],text="Y Pos").grid(row=0,column=2)
 Entry(DataFrames[2],textvariable=DoorVars[2]).grid(row=1,column=2)
-Label(DataFrames[2],text="NPC 1").grid(row=0,column=3)
-Entry(DataFrames[2],textvariable=DoorVars[3]).grid(row=1,column=3)
-Label(DataFrames[2],text="NPC 2").grid(row=0,column=4)
-Entry(DataFrames[2],textvariable=DoorVars[4]).grid(row=1,column=4)
 
-Label(DataFrames[3],text="Trainer Pokemon Ids").grid(row=0,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[0]).grid(row=1,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[1]).grid(row=2,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[2]).grid(row=3,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[3]).grid(row=4,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[4]).grid(row=5,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[5]).grid(row=6,column=0)
-Label(DataFrames[3],text="Levels").grid(row=0,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[6]).grid(row=1,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[7]).grid(row=2,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[8]).grid(row=3,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[9]).grid(row=4,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[10]).grid(row=5,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[11]).grid(row=6,column=1)
-Label(DataFrames[3],text="X Pos").grid(row=7,column=0)
-Entry(DataFrames[3],textvariable=TrainerVars[12]).grid(row=8,column=0)
-Label(DataFrames[3],text="Y Pos").grid(row=7,column=1)
-Entry(DataFrames[3],textvariable=TrainerVars[13]).grid(row=8,column=1)
-Label(DataFrames[3],text="Direction(1=R 2=L 3=D 4=U)").grid(row=9,column=0,columnspan=2)
-Entry(DataFrames[3],textvariable=TrainerVars[14]).grid(row=10,column=0,columnspan=2)
-Label(DataFrames[3],text="Text ID").grid(row=11,column=0,columnspan=2)
-Entry(DataFrames[3],textvariable=TrainerVars[15]).grid(row=12,column=0,columnspan=2)
-Label(DataFrames[3],text="Reward").grid(row=13,column=0,columnspan=2)
-Entry(DataFrames[3],textvariable=TrainerVars[16]).grid(row=14,column=0,columnspan=2)
+Label(DataFrames[3],text="Text ID").grid(row=0,column=0)
+Entry(DataFrames[3],textvariable=TextVars[0]).grid(row=0,column=1)
+
+Label(DataFrames[4],text="Trainer Pokemon Ids").grid(row=0,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[0]).grid(row=1,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[1]).grid(row=2,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[2]).grid(row=3,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[3]).grid(row=4,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[4]).grid(row=5,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[5]).grid(row=6,column=0)
+Label(DataFrames[4],text="Levels").grid(row=0,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[6]).grid(row=1,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[7]).grid(row=2,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[8]).grid(row=3,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[9]).grid(row=4,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[10]).grid(row=5,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[11]).grid(row=6,column=1)
+Label(DataFrames[4],text="X Pos").grid(row=7,column=0)
+Entry(DataFrames[4],textvariable=TrainerVars[12]).grid(row=8,column=0)
+Label(DataFrames[4],text="Y Pos").grid(row=7,column=1)
+Entry(DataFrames[4],textvariable=TrainerVars[13]).grid(row=8,column=1)
+Label(DataFrames[4],text="Direction(1=R 2=L 3=D 4=U)").grid(row=9,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[14]).grid(row=10,column=0,columnspan=2)
+Label(DataFrames[4],text="Trainer Appearance").grid(row=11,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[15]).grid(row=12,column=0,columnspan=2)
+Label(DataFrames[4],text="Trainer Type").grid(row=13,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[16]).grid(row=14,column=0,columnspan=2)
+Label(DataFrames[4],text="Move Pattern").grid(row=15,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[17]).grid(row=16,column=0,columnspan=2)
+Label(DataFrames[4],text="Text ID").grid(row=17,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[18]).grid(row=18,column=0,columnspan=2)
+Label(DataFrames[4],text="Reward").grid(row=19,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[19]).grid(row=20,column=0,columnspan=2)
+
+
 
 #-----
 #Tools
@@ -559,49 +609,46 @@ Button(Canvas_SetMap,text="Convert Item to ID",command=itemid).grid(row=19,colum
 #Trainer:
 
 Canvas_SetMap.grid_rowconfigure(20, minsize=20)
-def DecreaseTrainer():
-    if(currentTrainer.get()-1==-1):
-        UpdateTrainer(trainerTextCount-1)
+def DecreaseText():
+    if(currentText.get()-1==-1):
+        UpdateText(textCount-1)
     else:
-        UpdateTrainer(currentTrainer.get()-1)
-def IncreaseTrainer():
-    if(currentTrainer.get()+1==trainerTextCount):
-        UpdateTrainer(0)
+        UpdateText(currentText.get()-1)
+def IncreaseText():
+    if(currentText.get()+1==textCount):
+        UpdateText(0)
     else:
-        UpdateTrainer(currentTrainer.get()+1)
+        UpdateText(currentText.get()+1)
 
-Label(Canvas_SetMap,text="Trainer Text").grid(row=21,column=0)
-Frame_ChangeTrainer = Frame(Canvas_SetMap)
-Button(Frame_ChangeTrainer,command=DecreaseTrainer,text="-").grid(row=0,column=0)
-Label(Frame_ChangeTrainer,textvariable=currentTrainer).grid(row=0,column=1)
-Button(Frame_ChangeTrainer,command=IncreaseTrainer,text="+").grid(row=0,column=2)
-Frame_ChangeTrainer.grid(row=22,column=0)
+Label(Canvas_SetMap,text="Text").grid(row=21,column=0)
+Frame_ChangeText = Frame(Canvas_SetMap)
+Button(Frame_ChangeText,command=DecreaseText,text="-").grid(row=0,column=0)
+Label(Frame_ChangeText,textvariable=currentText).grid(row=0,column=1)
+Button(Frame_ChangeText,command=IncreaseText,text="+").grid(row=0,column=2)
+Frame_ChangeText.grid(row=22,column=0)
 
-Entry(Canvas_SetMap,textvar=Var_TrainerText).grid(row=23,column=0)
+Entry(Canvas_SetMap,textvar=Var_Text).grid(row=23,column=0)
 
-#Trainer:
+#TileSet
 
-Canvas_SetMap.grid_rowconfigure(24, minsize=20)
-def DecreaseNpc():
-    if(currentNpc.get()-1==-1):
-        UpdateNpc(npcCount-1)
+def DecreaseTS():
+    if(tileSets[Var_MapIndex.get()]-1==-1):
+        tileSets[Var_MapIndex.get()] = 0
     else:
-        UpdateNpc(currentNpc.get()-1)
-def IncreaseNpc():
-    if(currentNpc.get()+1==npcCount):
-        UpdateNpc(0)
+        tileSets[Var_MapIndex.get()] -= 1
+    SetupTileMap()
+def IncreaseTS():
+    if(tileSets[Var_MapIndex.get()]+1==tilesetCount):
+        tileSets[Var_MapIndex.get()] = tilesetCount
     else:
-        UpdateNpc(currentNpc.get()+1)
+        tileSets[Var_MapIndex.get()] += 1
+    SetupTileMap()
 
-Label(Canvas_SetMap,text="Npc Text/Reward").grid(row=25,column=0)
-Frame_ChangeNpc = Frame(Canvas_SetMap)
-Button(Frame_ChangeNpc,command=DecreaseNpc,text="-").grid(row=0,column=0)
-Label(Frame_ChangeNpc,textvariable=currentNpc).grid(row=0,column=1)
-Button(Frame_ChangeNpc,command=IncreaseNpc,text="+").grid(row=0,column=2)
-Frame_ChangeNpc.grid(row=26,column=0)
-
-Entry(Canvas_SetMap,textvar=Var_NpcText).grid(row=27,column=0)
-Entry(Canvas_SetMap,textvar=Var_NpcReward).grid(row=28,column=0)
+Label(Canvas_SetMap,text="TileSet (Outdooor)").grid(row=24,column=0)
+Frame_ChangeTS = Frame(Canvas_SetMap)
+Button(Frame_ChangeTS,command=DecreaseTS,text="-").grid(row=0,column=0)
+Button(Frame_ChangeTS,command=IncreaseTS,text="+").grid(row=0,column=1)
+Frame_ChangeTS.grid(row=25,column=0)
 
 #----
 #Loop
@@ -619,8 +666,8 @@ while running:
     draw()
     root.update()
 
-UpdateTrainer(currentTrainer.get())#saves
-UpdateNpc(currentNpc.get())#saves
+UpdateText(currentText.get())#saves
+np.save('tilesets.npy', tileSets)
 pygame.quit()
 root.destroy()
 sys.exit()

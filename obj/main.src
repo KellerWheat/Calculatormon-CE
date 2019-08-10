@@ -54,12 +54,12 @@ _gameState:
 ;   45	
 ;   46	void main(void) {
 _main:
-	LD	HL,-106
+	LD	HL,-3
 	CALL	__frameset
 ;   47		/* Seed RNG */
 ;   48		unsigned seed = rtc_Time();
 	LD	BC,(15925316)
-	LD	(IX+-4),BC
+	LD	(IX+-3),BC
 ;   49	
 ;   50		/* Setup gfx */
 ;   51		dbg_ClearConsole();
@@ -79,7 +79,7 @@ _main:
 ;   56		/* Game */
 ;   57	
 ;   58		srand(seed);
-	LD	BC,(IX+-4)
+	LD	BC,(IX+-3)
 	PUSH	BC
 	CALL	_srand
 	POP	BC
@@ -105,238 +105,78 @@ L_1:
 ;   69		map_Setup();
 	CALL	_map_Setup
 ;   70	
-;   71		if (newGame) {
-	LD	A,(_newGame)
-	OR	A,A
-	JR	Z,L_20
-;   72			uint8_t starter = 0;
-	LD	(IX+-1),0
-;   73			newGame = false;
-;   74			text_Display("Choose Starter", false);
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__2
-	PUSH	BC
-	XOR	A,A
-	LD	(_newGame),A
-	CALL	_text_Display
-	POP	BC
-	POP	BC
-;   75			while (starter == 0) {
-	JR	L_2
-L_3:
-;   76				starter = text_AskQuestion4("Bulbasaur", "Charmander", "Squirtle", " ", false);
-	LD	BC,0
-	PUSH	BC
-	LD	BC,L__3
-	PUSH	BC
-	LD	BC,L__4
-	PUSH	BC
-	LD	BC,L__5
-	PUSH	BC
-	LD	BC,L__6
-	PUSH	BC
-	CALL	_text_AskQuestion4
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	(IX+-1),L
-;   77			}
-L_2:
-	LD	A,(IX+-1)
-	OR	A,A
-	JR	Z,L_3
-;   78			if (starter == 4) {
-	LD	A,(IX+-1)
-	CP	A,4
-	JR	NZ,L_5
-;   79				party[0] = stats_NewCharacter(137, 5);
-	LD	BC,5
-	PUSH	BC
-	LD	BC,137
-	PUSH	BC
-	PEA	IX+-38
-	CALL	_stats_NewCharacter
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	DE,_party
-	LD	BC,34
-	LDIR	
-;   80			}
-;   81			else {
-	JR	L_12
-L_5:
-;   82				party[0] = stats_NewCharacter(1 + ((starter - 1) * 3), 5);
-	LD	BC,5
-	PUSH	BC
-	LD	B,(IX+-1)
-	DEC	B
-	LD	C,3
-	MLT	BC
-	INC	C
-	LD	B,0
-	PUSH	BC
-	PEA	IX+-72
-	CALL	_stats_NewCharacter
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	DE,_party
-	LD	BC,34
-	LDIR	
-;   83			}
-L_12:
-;   84			for (starter = 0; starter < 185; starter++) {
-	LD	(IX+-1),0
-	JR	L_11
-L_9:
-;   85				if (rand() % 2) {
-	CALL	_rand
-	LD	BC,2
-	CALL	__irems
-	CALL	__icmpzero
-	JR	Z,L_10
-;   86					playerItems[starter] = 1;
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	BC,_playerItems
-	ADD	HL,BC
-	LD	(HL),1
-;   87				}
-;   88			}
-L_10:
-	INC	(IX+-1)
-L_11:
-	LD	A,(IX+-1)
-	CP	A,185
-	JR	C,L_9
-;   89			for (starter = 1; starter < 36; starter++) {
-	LD	(IX+-1),1
-	JR	L_17
-L_15:
-;   90				if (rand() % 2) {
-	CALL	_rand
-	LD	BC,2
-	CALL	__irems
-	CALL	__icmpzero
-	JR	Z,L_16
-;   91					party[starter] = stats_NewCharacter(rand() % 152, rand() % 101);
-	CALL	_rand
-	LD	BC,101
-	CALL	__irems
-	LD	C,L
-	LD	B,0
-	PUSH	BC
-	CALL	_rand
-	LD	BC,152
-	CALL	__irems
-	LD	C,L
-	LD	B,0
-	PUSH	BC
-	PEA	IX+-106
-	CALL	_stats_NewCharacter
-	LD	IY,HL
-	POP	BC
-	POP	BC
-	POP	BC
-	LD	A,(IX+-1)
-	UEXT	HL
-	LD	L,A
-	LD	A,34
-	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	DE,HL
-	LD	HL,IY
-	LD	BC,34
-	LDIR	
-;   92				}
-;   93			}
-L_16:
-	INC	(IX+-1)
-L_17:
-	LD	A,(IX+-1)
-	CP	A,36
-	JR	C,L_15
-;   94		}
-L_20:
-;   95	
-;   96		map_LoadPokeballs();
+;   71		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
-;   97	
-;   98	
-;   99		do {
-L_30:
-;  100			kb_Scan();
+;   72	
+;   73	
+;   74		do {
+L_11:
+;   75			kb_Scan();
 	CALL	_kb_Scan
-;  101			if (gameState == 0) {
+;   76			if (gameState == 0) {
 	LD	A,(_gameState)
 	OR	A,A
-	JR	NZ,L_29
-;  102				gameState = map_Loop();
+	JR	NZ,L_10
+;   77				gameState = map_Loop();
 	CALL	_map_Loop
 	LD	A,L
-;  103				
-;  104				if (gameState == 1) {
+;   78				
+;   79				if (gameState == 1) {
 	CP	A,1
 	LD	(_gameState),A
-	JR	NZ,L_23
-;  105					map_End();
+	JR	NZ,L_4
+;   80					map_End();
 	CALL	_map_End
-;  106					battle_Setup();
+;   81					battle_Setup();
 	CALL	_battle_Setup
-;  107				}
-L_23:
-;  108				if (gameState == 2) {
+;   82				}
+L_4:
+;   83				if (gameState == 2) {
 	LD	A,(_gameState)
 	CP	A,2
-	JR	NZ,L_31
-;  109					map_End();
+	JR	NZ,L_12
+;   84					map_End();
 	CALL	_map_End
-;  110				}
-;  111			}
-;  112			else if (gameState == 1) {
-	JR	L_31
-L_29:
+;   85				}
+;   86			}
+;   87			else if (gameState == 1) {
+	JR	L_12
+L_10:
 	LD	A,(_gameState)
 	CP	A,1
-	JR	NZ,L_31
-;  113				gameState = battle_Loop();
+	JR	NZ,L_12
+;   88				gameState = battle_Loop();
 	CALL	_battle_Loop
 	LD	A,L
 	LD	(_gameState),A
-;  114				if (gameState == 0) {
+;   89				if (gameState == 0) {
 	OR	A,A
-	JR	NZ,L_26
-;  115					battle_End();
+	JR	NZ,L_7
+;   90					battle_End();
 	CALL	_battle_End
-;  116					map_Setup();
+;   91					map_Setup();
 	CALL	_map_Setup
-;  117				}
-L_26:
-;  118				if (gameState == 2) {
+;   92				}
+L_7:
+;   93				if (gameState == 2) {
 	LD	A,(_gameState)
 	CP	A,2
-	JR	NZ,L_31
-;  119					battle_End();
+	JR	NZ,L_12
+;   94					battle_End();
 	CALL	_battle_End
-;  120				}
-;  121			}
-;  122		} while (gameState < 2);
-L_31:
+;   95				}
+;   96			}
+;   97		} while (gameState < 2);
+L_12:
 	LD	A,(_gameState)
 	CP	A,2
-	JR	C,L_30
-;  123	
-;  124		map_End();
+	JR	C,L_11
+;   98	
+;   99		map_End();
 	CALL	_map_End
-;  125	
-;  126	
-;  127		gfx_End();
+;  100	
+;  101	
+;  102		gfx_End();
 	CALL	_gfx_End
 	LD	SP,IX
 	POP	IX
@@ -354,13 +194,6 @@ L_31:
 ;_gameState                          STATIC      1   variable
 ;_kb_Scan                            IMPORT  -----   function
 ;_map_LoadPokeballs                  IMPORT  -----   function
-;_playerItems                        IMPORT    185   variable
-;_rand                               IMPORT  -----   function
-;_party                              IMPORT   1224   variable
-;_stats_NewCharacter                 IMPORT  -----   function
-;_text_AskQuestion4                  IMPORT  -----   function
-;_text_Display                       IMPORT  -----   function
-;_newGame                            IMPORT      1   variable
 ;_map_Setup                          IMPORT  -----   function
 ;_surfing                            IMPORT      1   variable
 ;_FindColors                         IMPORT  -----   function
@@ -371,30 +204,13 @@ L_31:
 ;_gfx_SetMonospaceFont               IMPORT  -----   function
 ;_gfx_SetDraw                        IMPORT  -----   function
 ;_gfx_Begin                          IMPORT  -----   function
-;seed                                  IX-4      3   variable
-;starter                               IX-1      1   variable
+;seed                                  IX-3      3   variable
 
 
-; Stack Frame Size: 112 (bytes)
+; Stack Frame Size: 9 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
-	SEGMENT STRSECT
-L__2:
-	DB	"Choose Starter"
-	DB	0
-L__3:
-	DB	" "
-	DB	0
-L__4:
-	DB	"Squirtle"
-	DB	0
-L__5:
-	DB	"Charmander"
-	DB	0
-L__6:
-	DB	"Bulbasaur"
-	DB	0
 	XREF _battle_End:ROM
 	XREF _battle_Loop:ROM
 	XREF _battle_Setup:ROM
@@ -404,26 +220,16 @@ L__6:
 	XREF _map_Loop:ROM
 	XREF _map_Setup:ROM
 	XREF _map_Initialize:ROM
-	XREF _stats_NewCharacter:ROM
-	XREF _playerItems:ROM
 	XREF _surfing:ROM
-	XREF _party:ROM
-	XREF _newGame:ROM
 	XREF _debugging:ROM
 	XREF _FindColors:ROM
-	XREF _text_AskQuestion4:ROM
-	XREF _text_Display:ROM
 	XREF _gfx_SetMonospaceFont:ROM
 	XREF _gfx_SetDraw:ROM
 	XREF _gfx_End:ROM
 	XREF _gfx_Begin:ROM
 	XREF _kb_Scan:ROM
-	XREF _rand:ROM
 	XREF _srand:ROM
-	XREF __irems:ROM
 	XREF __frameset:ROM
-	XREF __icmpzero:ROM
-	XREF __imul_b:ROM
 	XDEF _main
 	XDEF _gameState
 	END

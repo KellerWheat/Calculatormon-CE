@@ -14,6 +14,7 @@ const int version = 1;
 int readVersion = 0;
 
 bool newGame = true;
+uint8_t rivalPokemon = 0;
 uint16_t playerX = 29*16;
 uint16_t playerY = 8*16;
 uint16_t lastPlayerX = 0;
@@ -27,7 +28,8 @@ uint32_t playerMoney = 1000;
 uint8_t playerItems[185] = {0};
 bool defeatedTrainers[16][16] = { {0} };
 bool defeatedTrainersIndoors[16][16] = { {0} };
-bool takenGifts[256] = { 0 };
+bool takenGifts[16][16] = { 0 };
+bool takenGiftsIndoors[16][16] = { 0 };
 uint8_t badgeCount = 0;
 uint8_t pokedex[151] = { 0 };
 

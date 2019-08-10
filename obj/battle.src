@@ -459,7 +459,7 @@ _SetupBattleGfx:
 ;  141		zx7_Decompress(backgroundSprite, background_compressed);
 	LD	IY,_PKMNSD5
 	LD	(_backgroundSprite),HL
-	LD	BC,(IY+108)
+	LD	BC,(IY+93)
 	PUSH	BC
 	LD	BC,(_backgroundSprite)
 	PUSH	BC
@@ -480,7 +480,7 @@ _SetupBattleGfx:
 ;  143		zx7_Decompress(hpBarSprite, hpbar_compressed);
 	LD	IY,_PKMNSD5
 	LD	(_hpBarSprite),HL
-	LD	BC,(IY+111)
+	LD	BC,(IY+96)
 	PUSH	BC
 	LD	BC,(_hpBarSprite)
 	PUSH	BC
@@ -640,7 +640,7 @@ L_14:
 ;  165		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	LD	BC,0
 	PUSH	BC
-	LD	HL,_PKMNSD5+114
+	LD	HL,_PKMNSD5+99
 	LD	BC,512
 	PUSH	BC
 	LD	BC,(HL)
@@ -701,7 +701,7 @@ L_14:
 ;_enemySprite                        STATIC      3   variable
 ;_playerSprite                       STATIC      3   variable
 ;_hpBarSprite                        STATIC      3   variable
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_backgroundSprite                   STATIC      3   variable
 ;_malloc                             IMPORT  -----   function

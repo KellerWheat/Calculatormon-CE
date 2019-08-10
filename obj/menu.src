@@ -81,7 +81,7 @@ _menu_Setup:
 ;   59		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	LD	DE,0
 	PUSH	DE
-	LD	HL,_PKMNSD5+114
+	LD	HL,_PKMNSD5+99
 	LD	(_textBoxType),BC
 	LD	BC,512
 	PUSH	BC
@@ -111,7 +111,7 @@ _menu_Setup:
 ;Name                         Addr/Register   Size   Type
 ;_gfx_SetTextFGColor                 IMPORT  -----   function
 ;_SetColors                          IMPORT  -----   function
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_gfx_SetPalette                     IMPORT  -----   function
 ;_textBoxType                        IMPORT      3   variable
 
@@ -531,7 +531,7 @@ _menu_PokemonMenu:
 ;  149		zx7_Decompress(backgroundSprite, pokemonlist_compressed);
 	LD	IY,_PKMNSD5
 	LD	(IX+-22),HL
-	LD	BC,(IY+90)
+	LD	BC,(IY+75)
 	PUSH	BC
 	LD	BC,(IX+-19)
 	PUSH	BC
@@ -539,7 +539,7 @@ _menu_PokemonMenu:
 	POP	BC
 	POP	BC
 ;  150		zx7_Decompress(pokemonSprite, menupokemon_compressed);
-	LD	HL,_PKMNSD5+93
+	LD	HL,_PKMNSD5+78
 	LD	BC,(HL)
 	PUSH	BC
 	LD	BC,(IX+-22)
@@ -1285,7 +1285,7 @@ L_83:
 ;_gfx_SetDraw                        IMPORT  -----   function
 ;_menu_Setup                         IMPORT  -----   function
 ;_MallocIcons                        IMPORT  -----   function
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_malloc                             IMPORT  -----   function
 ;_gfx_AllocSprite                    IMPORT  -----   function
@@ -1398,7 +1398,7 @@ L_151:
 	JR	NZ,L_119
 ;  266				gfx_sprite_t *pokemonSprite;
 ;  267				zx7_Decompress(backgroundSprite, infoscreen1_compressed);
-	LD	HL,_PKMNSD5+99
+	LD	HL,_PKMNSD5+84
 	LD	BC,(HL)
 	PUSH	BC
 	LD	BC,(IX+-42)
@@ -2039,7 +2039,7 @@ L_119:
 ;  317				zx7_Decompress(backgroundSprite, infoscreen2_compressed);
 	LD	IY,_PKMNSD5
 	LDIR	
-	LD	BC,(IY+102)
+	LD	BC,(IY+87)
 	PUSH	BC
 	LD	BC,(IX+-42)
 	PUSH	BC
@@ -2997,7 +2997,7 @@ L_150:
 ;_party                              IMPORT   1224   variable
 ;_gfx_SetTextScale                   IMPORT  -----   function
 ;_gfx_ScaledSprite_NoClip            IMPORT  -----   function
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_kb_Scan                            IMPORT  -----   function
 ;_Wait                               IMPORT  -----   function
@@ -3281,7 +3281,7 @@ L_165:
 ;  436		zx7_Decompress(backgroundSprite, bag_compressed);
 	LD	IY,_PKMNSD5
 	LD	(IX+-24),HL
-	LD	BC,(IY+96)
+	LD	BC,(IY+81)
 	PUSH	BC
 	LD	BC,(IX+-24)
 	PUSH	BC
@@ -4102,7 +4102,7 @@ L_240:
 ;_colors                             IMPORT  unknown variable
 ;_gfx_FillScreen                     IMPORT  -----   function
 ;_menu_Setup                         IMPORT  -----   function
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_malloc                             IMPORT  -----   function
 ;_gfx_AllocSprite                    IMPORT  -----   function
@@ -4260,7 +4260,7 @@ _menu_Box:
 ;  570		zx7_Decompress(backgroundSprite, pc_compressed);
 	LD	IY,_PKMNSD5
 	LD	(IX+-17),HL
-	LD	BC,(IY+105)
+	LD	BC,(IY+90)
 	PUSH	BC
 	LD	BC,(IX+-17)
 	PUSH	BC
@@ -5251,7 +5251,7 @@ L_293:
 ;_PKMNSD0                            IMPORT    240   variable
 ;_party                              IMPORT   1224   variable
 ;_PKMNSD6                            IMPORT    456   variable
-;_PKMNSD5                            IMPORT    117   variable
+;_PKMNSD5                            IMPORT    102   variable
 ;_zx7_Decompress                     IMPORT  -----   function
 ;_malloc                             IMPORT  -----   function
 ;_gfx_AllocSprite                    IMPORT  -----   function

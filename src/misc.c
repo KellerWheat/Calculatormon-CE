@@ -34,8 +34,8 @@ uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{7,6,225,121,102,159,13,26,131,102,14,102,210,13,49,85,54,},
-	{9,8,157,24,55,95,0,22,54,179,151,112,0,115,69,49,14,},
+	{8,1,232,148,130,185,0,44,108,130,26,130,0,201,69,102,74,},
+	{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
 };
 
 uint8_t colorValues[COLORCOUNT][3] = {
@@ -128,15 +128,15 @@ void MallocIcons(void) {
 	int iconIndex;
 	for (iconIndex = 0; iconIndex < 17; iconIndex++) {
 		typeIcons[iconIndex] = gfx_MallocSprite(32, 12);
-		zx7_Decompress(typeIcons[iconIndex], PKMNSD5[5 + iconIndex]);
+		zx7_Decompress(typeIcons[iconIndex], PKMNSD5[iconIndex]);
 	}
 	for (iconIndex = 0; iconIndex < 5; iconIndex++) {
 		statusIcons[iconIndex] = gfx_MallocSprite(20, 8);
-		zx7_Decompress(statusIcons[iconIndex], PKMNSD5[22 + iconIndex]);
+		zx7_Decompress(statusIcons[iconIndex], PKMNSD5[17 + iconIndex]);
 	}
 	for (iconIndex = 0; iconIndex < 3; iconIndex++) {
 		categoryIcons[iconIndex] = gfx_MallocSprite(32, 14);
-		zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[27 + iconIndex]);
+		zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[22 + iconIndex]);
 	}
 }
 void FreeIcons(void) {

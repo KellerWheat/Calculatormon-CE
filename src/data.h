@@ -73,21 +73,26 @@ struct zoneData {
 	uint8_t spawnids[5][16];
 	uint8_t spawnminlevels[5][16];
 	uint8_t spawnmaxlevels[5][16];
+
 	uint8_t exitzone[16];
 	uint8_t exitx[16];
 	uint8_t exity[16];
+
 	uint8_t doorzones[16];
 	uint8_t doorx[16];
 	uint8_t doory[16];
-	uint8_t doornpc1[16];
-	uint8_t doornpc2[16];
+
+	uint8_t textIds[16];
 
 	uint8_t trainerspawnids[6][16];
 	uint8_t trainerspawnlevels[6][16];
 	uint8_t trainerx[16];
 	uint8_t trainery[16];
 	uint8_t trainerdir[16];
-	uint8_t data_trainerText[16];
+	uint8_t trainerskin[16];
+	uint8_t trainertype[16];
+	uint8_t trainermovement[16];
+	uint8_t trainertext[16];
 	uint8_t trainerreward[16];//Reward is an item (number is one more than actual id)
 };
 
@@ -99,9 +104,8 @@ extern char data_moveDescriptions[][78];
 extern uint8_t elements[18][18];
 extern int xpPerLevel[4][101];
 
-extern char data_trainerText[][32];
-extern char data_npcText[][32];
-extern uint8_t data_npcReward[];
+extern char data_text[][32];
+extern uint8_t data_tileSets[32];
 
 #endif
 
