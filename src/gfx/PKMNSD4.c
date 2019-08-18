@@ -3,13 +3,14 @@
 #include "PKMNSD4.h"
 
 #include <fileioc.h>
-uint8_t *PKMNSD4[6] = {
+uint8_t *PKMNSD4[7] = {
  (uint8_t*)0,
  (uint8_t*)66,
  (uint8_t*)205,
- (uint8_t*)8840,
- (uint8_t*)15995,
- (uint8_t*)19360,
+ (uint8_t*)8833,
+ (uint8_t*)15981,
+ (uint8_t*)23330,
+ (uint8_t*)29871,
 };
 
 bool PKMNSD4_init(void) {
@@ -41,7 +42,12 @@ bool PKMNSD4_init(void) {
         outdoortileset1_tiles_compressed[i] += data;
     }
 
-    data = (unsigned int)PKMNSD4[4] - (unsigned int)indoortileset_tiles_compressed[0];
+    data = (unsigned int)PKMNSD4[4] - (unsigned int)outdoortileset2_tiles_compressed[0];
+    for (i = 0; i < outdoortileset2_tiles_num; i++) {
+        outdoortileset2_tiles_compressed[i] += data;
+    }
+
+    data = (unsigned int)PKMNSD4[5] - (unsigned int)indoortileset_tiles_compressed[0];
     for (i = 0; i < indoortileset_tiles_num; i++) {
         indoortileset_tiles_compressed[i] += data;
     }

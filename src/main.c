@@ -65,10 +65,10 @@ void main(void) {
 		FindColors();
 	}
 
-	surfing = false;
 	map_Setup();
 
 	map_LoadPokeballs();
+
 
 
 	do {

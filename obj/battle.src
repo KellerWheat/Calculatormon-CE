@@ -295,11 +295,11 @@ _battle_Setup:
 	LD	(IX+-3),BC
 	JR	L_6
 L_4:
-;  115			if (party[pokemonIndex].currenthealth != 0 && party[pokemonIndex].id != 0) {
+;  115			if (currentSave.party[pokemonIndex].currenthealth != 0 && currentSave.party[pokemonIndex].id != 0) {
 	LD	HL,(IX+-3)
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-6),HL
 	LD	IY,(IX+-6)
@@ -362,7 +362,7 @@ L_6:
 	LD	DE,_stats
 	LD	BC,12
 	LDIR	
-;  128		stats[1] = stats_CalculateStats(party[0]);
+;  128		stats[1] = stats_CalculateStats(currentSave.party[0]);
 	LD	IY,0
 	ADD	IY,SP
 	LEA	IY,IY+-36
@@ -372,7 +372,7 @@ L_6:
 	ADD	HL,SP
 	PEA	IX+-30
 	LD	DE,HL
-	LD	HL,_party
+	LD	HL,_currentSave+10
 	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -429,7 +429,7 @@ L_6:
 ;_battleMenuState1                   STATIC      1   variable
 ;_SetupBattleGfx                     IMPORT  -----   function
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;G_0                                   IX-6      3   variable
 ;pokemonIndex                          IX-3      3   variable
 
@@ -510,20 +510,20 @@ _SetupBattleGfx:
 	POP	BC
 	LD	(_enemySprite),HL
 ;  146	
-;  147		if (party[currentplayer].id < 80) {
+;  147		if (currentSave.party[currentplayer].id < 80) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-3),HL
 	LD	IY,(IX+-3)
 	LD	A,(IY+0)
 	CP	A,80
 	JR	NC,L_10
-;  148			zx7_Decompress(playerSprite, PKMNSD2[party[currentplayer].id]);
+;  148			zx7_Decompress(playerSprite, PKMNSD2[currentSave.party[currentplayer].id]);
 	LD	IY,(IX+-3)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -544,7 +544,7 @@ _SetupBattleGfx:
 ;  150		else {
 	JR	L_13
 L_10:
-;  151			zx7_Decompress(playerSprite, PKMNSD3[party[currentplayer].id - 80]);
+;  151			zx7_Decompress(playerSprite, PKMNSD3[currentSave.party[currentplayer].id - 80]);
 	LD	IY,(IX+-3)
 	LD	A,(IY+0)
 	UEXT	HL
@@ -697,7 +697,7 @@ L_14:
 ;_PKMNSD3                            IMPORT    216   variable
 ;_PKMNSD2                            IMPORT    240   variable
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_enemySprite                        STATIC      3   variable
 ;_playerSprite                       STATIC      3   variable
 ;_hpBarSprite                        STATIC      3   variable
@@ -717,19 +717,24 @@ L_14:
 
 ;  171	int battle_Loop(void) {
 _battle_Loop:
-	LD	HL,-9
+	LD	HL,-21
 	CALL	__frameset
 ;  172		/* Battle */
 ;  173		redrawcharacters();
 	CALL	_redrawcharacters
 ;  174		/* Switch to a new poketmon or lose battle if health is 0 */
-;  175		if (party[currentplayer].currenthealth == 0) {
+;  175		if (currentSave.party[currentplayer].currenthealth == 0) {
+	LD	BC,_currentSave+10
+	LD	(IX+-3),BC
+	LD	(IX+-15),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	HL,(IY+13)
@@ -764,17 +769,20 @@ _battle_Loop:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_18
-;  181				party[currentplayer] = originalpokemon[true];
-	LD	BC,_originalpokemon+34
+;  181				currentSave.party[currentplayer] = originalpokemon[true];
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	DE,_party
-	ADD	HL,DE
+	LD	BC,(IX+-3)
+	ADD	HL,BC
 	LD	DE,HL
-	LD	HL,BC
+	LD	HL,_originalpokemon+34
 	LD	BC,34
 	LDIR	
 ;  182			}
@@ -785,13 +793,15 @@ L_18:
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_19
-;  184				data_pokemon[party[currentplayer].id].element1 = 1;
+;  184				data_pokemon[currentSave.party[currentplayer].id].element1 = 1;
+	LD	BC,(IX+-15)
+	LD	(IX+-6),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-6)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -814,19 +824,26 @@ L_19:
 ;  188			while (i < 6) {
 	JR	L_24
 L_25:
-;  189				if (party[i].currenthealth != 0 && party[i].id != 0) {
+;  189				if (currentSave.party[i].currenthealth != 0 && currentSave.party[i].id != 0) {
+	LD	BC,(IX+-6)
+	LD	(IX+-9),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	(IX+-18),HL
+	LD	BC,(IX+-9)
 	ADD	HL,BC
-	LD	(IX+-3),HL
-	LD	IY,(IX+-3)
+	LD	IY,HL
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	Z,L_23
-	LD	IY,(IX+-3)
+	LD	BC,(IX+-9)
+	LD	(IX+-6),BC
+	LD	BC,(IX+-18)
+	LD	HL,(IX+-9)
+	ADD	HL,BC
+	LD	IY,HL
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_23
@@ -961,12 +978,12 @@ L_37:
 	CALL	__imul_b
 	LD	BC,_enemyparty
 	ADD	HL,BC
-	LD	(IX+-6),HL
-	LD	IY,(IX+-6)
+	LD	(IX+-12),HL
+	LD	IY,(IX+-12)
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	Z,L_35
-	LD	IY,(IX+-6)
+	LD	IY,(IX+-12)
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_35
@@ -998,18 +1015,18 @@ L_36:
 	SBC.SIS	HL,BC
 	JR	C,L_37
 ;  222	
-;  223			playerMoney += payday;
+;  223			currentSave.playerMoney += payday;
 	LD	BC,(_payday)
 	CALL	__stoiu
-	LD	A,(_playerMoney+3)
+	LD	A,(_currentSave+1242)
 	LD	E,A
 	LD	BC,HL
 	XOR	A,A
-	LD	HL,(_playerMoney)
+	LD	HL,(_currentSave+1239)
 	CALL	__ladd
-	LD	(_playerMoney),HL
+	LD	(_currentSave+1239),HL
 	LD	A,E
-	LD	(_playerMoney+3),A
+	LD	(_currentSave+1242),A
 ;  224			map_WinFight(wild, enemyparty[0].level * 40);
 	LD	A,(_enemyparty+9)
 	LD	C,A
@@ -1090,7 +1107,7 @@ L__28:
 	CALL	__stoiu
 	LD	IY,(_currentStatusPointer)
 	LD	A,(IY)
-	LD	(IX+-9),HL
+	LD	(IX+-21),HL
 	UEXT	HL
 	LD	L,A
 	OR	A,A
@@ -1109,7 +1126,7 @@ L__31:
 	ADD	HL,HL
 	ADD	HL,BC
 	LD	BC,HL
-	LD	HL,(IX+-9)
+	LD	HL,(IX+-21)
 	INC	BC
 	CALL	__idivs
 	LD	BC,HL
@@ -1276,7 +1293,6 @@ L_62:
 ;_wild                               STATIC      1   variable
 ;_map_WinFight                       IMPORT  -----   function
 ;_payday                             STATIC      2   variable
-;_playerMoney                        IMPORT      4   variable
 ;_addxp                              IMPORT  -----   function
 ;_enemyname                          STATIC     20   variable
 ;_currentenemy                       STATIC      1   variable
@@ -1294,13 +1310,17 @@ L_62:
 ;_playername                         STATIC     20   variable
 ;_sprintf                            IMPORT  -----   function
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_redrawcharacters                   IMPORT  -----   function
+;G_14                                 IX-18      3   variable
+;G_11                                 IX-15      3   variable
+;G_15                                 IX-12      3   variable
+;G_13                                  IX-9      3   variable
 ;G_12                                  IX-6      3   variable
 ;G_10                                  IX-3      3   variable
 
 
-; Stack Frame Size: 15 (bytes)
+; Stack Frame Size: 27 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
@@ -1500,7 +1520,7 @@ L_72:
 ;  285	
 ;  286	bool playerturn() {
 _playerturn:
-	LD	HL,-24
+	LD	HL,-30
 	CALL	__frameset
 ;  287		if (attackturns[true] > 0) {
 	LD	HL,_attackturns
@@ -1608,25 +1628,25 @@ L_80:
 	LD	(HL),B
 ;  307				SetupBattleGfx();
 	CALL	_SetupBattleGfx
-;  308				if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
+;  308				if (i != 0 && (i - 1) != currentplayer && currentSave.party[i - 1].id != 0) {
 	LD	HL,(_i)
 	CALL	__scmpzero
 	JR	Z,L_84
 	LD	BC,(_i)
 	CALL	__stoiu
 	DEC	HL
-	LD	(IX+-15),HL
+	LD	(IX+-18),HL
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	OR	A,A
-	LD	BC,(IX+-15)
+	LD	BC,(IX+-18)
 	SBC	HL,BC
 	JR	Z,L_84
 	LD	HL,34
-	LD	BC,(IX+-15)
+	LD	BC,(IX+-18)
 	CALL	__imulu
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -1718,26 +1738,28 @@ L_109:
 ;  335			int selectedMove;
 ;  336			selectedMove = selectMove();
 	CALL	_selectMove
-	LD	(IX+-12),HL
+	LD	(IX+-15),HL
 ;  337			battleMenuState1 = 0;
 	XOR	A,A
 	LD	(_battleMenuState1),A
 ;  338			/* Checks if the move can be used */
-;  339			if (selectedMove == 0 || party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
-	LD	HL,(IX+-12)
+;  339			if (selectedMove == 0 || currentSave.party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
+	LD	HL,(IX+-15)
 	CALL	__icmpzero
 	JR	Z,L_95
+	LD	BC,_currentSave+10
+	LD	(IX+-12),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-9),HL
-	LD	BC,(IX+-12)
+	LD	BC,(IX+-15)
 	DEC	BC
 	LD	(IX+-6),BC
-	LD	HL,(IX+-9)
-	LD	BC,_party
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-12)
 	ADD	HL,BC
 	LD	IY,HL
 	LEA	HL,IY+5
@@ -1752,7 +1774,7 @@ L_109:
 	UEXT	HL
 	LD	L,A
 	OR	A,A
-	LD	BC,(IX+-12)
+	LD	BC,(IX+-15)
 	SBC	HL,BC
 	JR	NZ,L_96
 L_95:
@@ -1761,27 +1783,33 @@ L_95:
 	JR	L_111
 ;  341			}
 L_96:
-;  342			chosenmove[true] = party[currentplayer].moves[selectedMove - 1];
-	LD	BC,_party
-	LD	HL,(IX+-9)
+;  342			chosenmove[true] = currentSave.party[currentplayer].moves[selectedMove - 1];
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-12)
 	ADD	HL,BC
-	LD	(IX+-21),HL
-	LD	IY,(IX+-21)
+	LD	(IX+-24),HL
+	LD	IY,(IX+-24)
 	LEA	HL,IY+1
 	LD	BC,(IX+-6)
 	ADD	HL,BC
 	LD	IY,_chosenmove
 	LD	A,(HL)
 	LD	(IY+1),A
-;  343			party[currentplayer].pp[selectedMove - 1]--;
-	LD	IY,(IX+-21)
-	LEA	HL,IY+5
+;  343			currentSave.party[currentplayer].pp[selectedMove - 1]--;
+	LD	IY,(IX+-24)
+	LEA	BC,IY+5
+	LD	HL,BC
 	LD	BC,(IX+-6)
 	ADD	HL,BC
-	LD	(IX+-18),HL
-	LD	A,(HL)
-	LD	BC,(IX+-6)
+	LD	(IX+-21),HL
+	LD	IY,(IX+-21)
+	LD	A,(IY)
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-12)
+	ADD	HL,BC
+	LD	IY,HL
 	LEA	HL,IY+5
+	LD	BC,(IX+-6)
 	ADD	HL,BC
 	DEC	A
 	LD	(HL),A
@@ -1851,19 +1879,23 @@ L_105:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  359				playerItems[chosenItem]--;
+;  359				currentSave.playerItems[chosenItem]--;
+	LD	BC,_currentSave+1243
+	LD	(IX+-30),BC
 	LD	BC,(IX+-3)
-	LD	HL,_playerItems
+	LD	HL,(IX+-30)
 	ADD	HL,BC
-	LD	(IX+-24),HL
-	LD	A,(HL)
+	LD	(IX+-27),HL
+	LD	IY,(IX+-27)
+	LD	BC,(IX+-3)
+	LD	HL,(IX+-30)
+	ADD	HL,BC
+	LD	A,(IY)
 	DEC	A
-	LD	IY,(IX+-24)
 ;  360				chosenmove[true] = 0;
-	LD	HL,_chosenmove
-	INC	HL
-	LD	(IY),A
-	LD	(HL),0
+	LD	IY,_chosenmove
+	LD	(HL),A
+	LD	(IY+1),0
 ;  361				if (capture(chosenItem + 1)) {
 	LD	C,(IX+-3)
 	INC	C
@@ -1944,7 +1976,6 @@ L_111:
 ;_enemyparty                         STATIC    204   variable
 ;_map_WinFight                       IMPORT  -----   function
 ;_capture                            IMPORT  -----   function
-;_playerItems                        IMPORT    185   variable
 ;_str                                IMPORT    100   variable
 ;_itemNames                          IMPORT    320   variable
 ;_sprintf                            IMPORT  -----   function
@@ -1958,7 +1989,7 @@ L_111:
 ;_wild                               STATIC      1   variable
 ;_redrawcharacters                   IMPORT  -----   function
 ;_resetstatus                        IMPORT  -----   function
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_currentplayer                      STATIC      1   variable
 ;_SetupBattleGfx                     IMPORT  -----   function
 ;_menu_PokemonMenu                   IMPORT  -----   function
@@ -1969,14 +2000,15 @@ L_111:
 ;_chosenmove                         STATIC      2   variable
 ;_lastmove                           STATIC      2   variable
 ;_attackturns                        STATIC      2   variable
-;G_14                                 IX-15      3   variable
-;selectedMove                         IX-12      3   variable
-;G_15                                  IX-9      3   variable
-;G_16                                  IX-6      3   variable
+;G_17                                 IX-18      3   variable
+;selectedMove                         IX-15      3   variable
+;G_18                                 IX-12      3   variable
+;G_19                                  IX-9      3   variable
+;G_20                                  IX-6      3   variable
 ;chosenItem                            IX-3      3   variable
 
 
-; Stack Frame Size: 30 (bytes)
+; Stack Frame Size: 36 (bytes)
 ;       Spill Code: -1 (instruction)
 
 
@@ -2006,13 +2038,13 @@ L__65:
 ;  383	
 ;  384	int selectMove(void) {
 _selectMove:
-	LD	HL,-26
+	LD	HL,-44
 	CALL	__frameset
 ;  385		int8_t tv1, tv2, iconIndex;
 ;  386		tv1 = 0;
 	LD	(IX+-1),0
 ;  387		tv2 = 0;
-	LD	(IX+-2),0
+	LD	(IX+-5),0
 ;  388	
 ;  389		textBoxType = 2;
 ;  390		gfx_Blit(gfx_screen);
@@ -2038,13 +2070,19 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  396		gfx_PrintStringXY(data_moves[party[currentplayer].moves[0]].name, 25, 190);
+;  396		gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[0]].name, 25, 190);
+	LD	BC,_currentSave+10
+	LD	(IX+-4),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,190
+	PUSH	BC
+	LD	BC,25
+	PUSH	BC
+	LD	BC,(IX+-4)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+1)
@@ -2052,25 +2090,25 @@ _selectMove:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,190
-	PUSH	BC
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,25
-	PUSH	BC
 	LD	IY,HL
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  397		gfx_PrintStringXY(data_moves[party[currentplayer].moves[1]].name, 25, 205);
+;  397		gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[1]].name, 25, 205);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,205
+	PUSH	BC
+	LD	BC,25
+	PUSH	BC
+	LD	BC,(IX+-4)
 	ADD	HL,BC
 	LD	IY,HL
 	LEA	HL,IY+1
@@ -2080,25 +2118,25 @@ _selectMove:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,205
-	PUSH	BC
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,25
-	PUSH	BC
 	LD	IY,HL
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  398		gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
+;  398		gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[2]].name, 145, 190);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,190
+	PUSH	BC
+	LD	BC,145
+	PUSH	BC
+	LD	BC,(IX+-4)
 	ADD	HL,BC
 	LD	IY,HL
 	LEA	HL,IY+3
@@ -2107,25 +2145,25 @@ _selectMove:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,190
-	PUSH	BC
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,145
-	PUSH	BC
 	LD	IY,HL
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  399		gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
+;  399		gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[3]].name, 145, 205);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,205
+	PUSH	BC
+	LD	BC,145
+	PUSH	BC
+	LD	BC,(IX+-4)
 	ADD	HL,BC
 	LD	IY,HL
 	LEA	HL,IY+4
@@ -2134,12 +2172,8 @@ _selectMove:
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,205
-	PUSH	BC
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,145
-	PUSH	BC
 	LD	IY,HL
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
@@ -2147,29 +2181,27 @@ _selectMove:
 	POP	BC
 	POP	BC
 ;  400	
-;  401		if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+;  401		if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-4)
 	ADD	HL,BC
-	LD	IY,HL
-	LEA	BC,IY+1
-	LD	(IX+-14),BC
-	LD	HL,BC
-	LD	A,(HL)
+	LD	(IX+-8),HL
+	LD	IY,(IX+-8)
+	LD	A,(IY+1)
 	OR	A,A
 	JR	Z,L_113
-;  402			gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  402			gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
 	LD	DE,271
 	PUSH	DE
-	LD	HL,(IX+-14)
-	LD	A,(HL)
+	LD	IY,(IX+-8)
+	LD	A,(IY+1)
 	UEXT	HL
 	LD	L,A
 	LD	A,21
@@ -2191,16 +2223,17 @@ _selectMove:
 	POP	BC
 	POP	BC
 	POP	BC
-;  403			sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  403			sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-4)
 	ADD	HL,BC
-	LD	(IX+-20),HL
-	LD	IY,(IX+-20)
+	LD	(IX+-32),HL
+	LD	(IX+-29),HL
+	LD	IY,(IX+-29)
 	LD	A,(IY+1)
 	UEXT	HL
 	LD	L,A
@@ -2213,7 +2246,7 @@ _selectMove:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	IY,(IX+-20)
+	LD	IY,(IX+-29)
 	LD	A,(IY+5)
 	UEXT	HL
 	LD	L,A
@@ -2333,9 +2366,9 @@ L_121:
 	LD	BC,190
 	ADD	HL,BC
 	PUSH	HL
-	LD	A,(IX+-2)
+	LD	A,(IX+-5)
 	SEXT	HL
-	LD	L,(IX+-2)
+	LD	L,(IX+-5)
 	LD	A,120
 	CALL	__imul_b
 	LD	IY,HL
@@ -2362,39 +2395,41 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  430				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
-	LD	A,(IX+-2)
+;  430				if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+	LD	BC,_currentSave+10
+	LD	(IX+-14),BC
+	LD	A,(IX+-5)
 	SEXT	HL
-	LD	L,(IX+-2)
+	LD	L,(IX+-5)
 	ADD	HL,HL
-	LD	(IX+-5),HL
+	LD	(IX+-11),HL
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-14)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
-	LD	BC,(IX+-5)
+	LD	BC,(IX+-11)
 	ADD	HL,BC
 	LD	BC,HL
 	LEA	HL,IY+1
 	ADD	HL,BC
-	LD	(IX+-11),HL
+	LD	(IX+-23),HL
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_123
-;  431					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  431					gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
 	LD	DE,271
 	PUSH	DE
-	LD	HL,(IX+-11)
+	LD	HL,(IX+-23)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2417,22 +2452,23 @@ L_121:
 	POP	BC
 	POP	BC
 	POP	BC
-;  432					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  432					sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-14)
 	ADD	HL,BC
-	LD	(IX+-23),HL
+	LD	(IX+-38),HL
+	LD	(IX+-35),HL
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
-	LD	BC,(IX+-5)
+	LD	BC,(IX+-11)
 	ADD	HL,BC
 	LD	BC,HL
-	LD	IY,(IX+-23)
+	LD	IY,(IX+-35)
 	LEA	HL,IY+1
 	LD	DE,BC
 	ADD	HL,DE
@@ -2448,7 +2484,7 @@ L_121:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	IY,(IX+-23)
+	LD	IY,(IX+-35)
 	LEA	HL,IY+5
 	ADD	HL,BC
 	LD	A,(HL)
@@ -2494,17 +2530,17 @@ L_132:
 	JR	Z,L_133
 L_131:
 ;  439				if (tv2 == 1) {
-	LD	A,(IX+-2)
+	LD	A,(IX+-5)
 	CP	A,1
 	JR	NZ,L_127
 ;  440					tv2 = 0;
-	LD	(IX+-2),0
+	LD	(IX+-5),0
 ;  441				}
 ;  442				else {
 	JR	L_128
 L_127:
 ;  443					tv2 = 1;
-	LD	(IX+-2),1
+	LD	(IX+-5),1
 ;  444				}
 L_128:
 ;  445				gfx_FillRectangle(14, 185, 10, 45);
@@ -2544,9 +2580,9 @@ L_128:
 	LD	BC,190
 	ADD	HL,BC
 	PUSH	HL
-	LD	A,(IX+-2)
+	LD	A,(IX+-5)
 	SEXT	HL
-	LD	L,(IX+-2)
+	LD	L,(IX+-5)
 	LD	A,120
 	CALL	__imul_b
 	LD	IY,HL
@@ -2573,39 +2609,41 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  450				if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
-	LD	A,(IX+-2)
+;  450				if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+	LD	BC,_currentSave+10
+	LD	(IX+-20),BC
+	LD	A,(IX+-5)
 	SEXT	HL
-	LD	L,(IX+-2)
+	LD	L,(IX+-5)
 	ADD	HL,HL
-	LD	(IX+-8),HL
+	LD	(IX+-17),HL
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-20)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
-	LD	BC,(IX+-8)
+	LD	BC,(IX+-17)
 	ADD	HL,BC
 	LD	BC,HL
 	LEA	HL,IY+1
 	ADD	HL,BC
-	LD	(IX+-17),HL
+	LD	(IX+-26),HL
 	LD	A,(HL)
 	OR	A,A
 	JR	Z,L_130
-;  451					gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+;  451					gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
 	LD	BC,_data_moves
 	LD	DE,193
 	PUSH	DE
 	LD	DE,271
 	PUSH	DE
-	LD	HL,(IX+-17)
+	LD	HL,(IX+-26)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2628,22 +2666,23 @@ L_128:
 	POP	BC
 	POP	BC
 	POP	BC
-;  452					sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+;  452					sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-20)
 	ADD	HL,BC
-	LD	(IX+-26),HL
+	LD	(IX+-44),HL
+	LD	(IX+-41),HL
 	LD	A,(IX+-1)
 	SEXT	HL
 	LD	L,(IX+-1)
-	LD	BC,(IX+-8)
+	LD	BC,(IX+-17)
 	ADD	HL,BC
 	LD	BC,HL
-	LD	IY,(IX+-26)
+	LD	IY,(IX+-41)
 	LEA	HL,IY+1
 	LD	DE,BC
 	ADD	HL,DE
@@ -2659,7 +2698,7 @@ L_128:
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
-	LD	IY,(IX+-26)
+	LD	IY,(IX+-41)
 	LEA	HL,IY+5
 	ADD	HL,BC
 	LD	A,(HL)
@@ -2726,9 +2765,9 @@ L_137:
 	LD	BC,1
 	LD	(_textBoxType),BC
 ;  465		return (tv1 + 1 + 2 * (tv2));
-	LD	A,(IX+-2)
+	LD	A,(IX+-5)
 	SEXT	HL
-	LD	L,(IX+-2)
+	LD	L,(IX+-5)
 	ADD	HL,HL
 	LD	DE,HL
 	LD	A,(IX+-1)
@@ -2757,22 +2796,25 @@ L_138:
 ;_typeIcons                          IMPORT     51   variable
 ;_gfx_Sprite                         IMPORT  -----   function
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
 ;_data_moves                         IMPORT  unknown variable
+;_currentSave                        IMPORT   2604   variable
 ;_gfx_PrintStringXY                  IMPORT  -----   function
 ;_text_DrawTextBox                   IMPORT  -----   function
 ;_gfx_Blit                           IMPORT  -----   function
 ;_textBoxType                        IMPORT      3   variable
-;G_21                                 IX-17      3   variable
-;G_18                                 IX-14      3   variable
-;G_19                                 IX-11      3   variable
-;G_22                                  IX-8      3   variable
-;G_20                                  IX-5      3   variable
-;tv2                                   IX-2      1   variable
+;G_31                                 IX-26      3   variable
+;G_28                                 IX-23      3   variable
+;G_32                                 IX-20      3   variable
+;G_33                                 IX-17      3   variable
+;G_29                                 IX-14      3   variable
+;G_30                                 IX-11      3   variable
+;G_25                                  IX-8      3   variable
+;tv2                                   IX-5      1   variable
+;G_21                                  IX-4      3   variable
 ;tv1                                   IX-1      1   variable
 
 
-; Stack Frame Size: 32 (bytes)
+; Stack Frame Size: 50 (bytes)
 ;       Spill Code: -1 (instruction)
 
 
@@ -3003,10 +3045,10 @@ L_158:
 ;_chosenmove                         STATIC      2   variable
 ;_lastmove                           STATIC      2   variable
 ;_attackturns                        STATIC      2   variable
-;G_27                                 IX-12      3   variable
-;G_26                                  IX-9      3   variable
-;G_25                                  IX-6      3   variable
-;G_24                                  IX-3      3   variable
+;G_38                                 IX-12      3   variable
+;G_37                                  IX-9      3   variable
+;G_36                                  IX-6      3   variable
+;G_35                                  IX-3      3   variable
 
 
 ; Stack Frame Size: 18 (bytes)
@@ -3015,7 +3057,7 @@ L_158:
 
 ;  502	void redrawcharacters(void) {
 _redrawcharacters:
-	LD	HL,-9
+	LD	HL,-12
 	CALL	__frameset
 ;  503		int statusIndex, healthRatio;
 ;  504		gfx_SetColor(colors[1]);
@@ -3168,7 +3210,7 @@ _redrawcharacters:
 	POP	BC
 	POP	BC
 	POP	BC
-	LD	(IX+-3),HL
+	LD	(IX+-6),HL
 	LD	BC,HL
 	LD	HL,34
 	SBC	HL,BC
@@ -3183,7 +3225,7 @@ _redrawcharacters:
 ;  520		}else if (healthRatio > 14) {
 	JR	L_163
 L_162:
-	LD	BC,(IX+-3)
+	LD	BC,(IX+-6)
 	LD	HL,14
 	OR	A,A
 	SBC	HL,BC
@@ -3211,7 +3253,7 @@ L_163:
 ;  525		gfx_FillRectangle(58, 42, healthRatio, 6);
 	LD	BC,6
 	PUSH	BC
-	LD	BC,(IX+-3)
+	LD	BC,(IX+-6)
 	PUSH	BC
 	LD	BC,42
 	PUSH	BC
@@ -3230,8 +3272,8 @@ L_163:
 	CALL	__imul_b
 	LD	BC,_enemyparty
 	ADD	HL,BC
-	LD	(IX+-9),HL
-	LD	IY,(IX+-9)
+	LD	(IX+-12),HL
+	LD	IY,(IX+-12)
 	XOR	A,A
 	CP	A,(IY+15)
 	JR	NC,L_165
@@ -3240,7 +3282,7 @@ L_163:
 	PUSH	BC
 	LD	BC,18
 	PUSH	BC
-	LD	IY,(IX+-9)
+	LD	IY,(IX+-12)
 	LD	A,(IY+15)
 	UEXT	HL
 	LD	L,A
@@ -3259,13 +3301,19 @@ L_163:
 ;  528		}
 L_165:
 ;  529	
-;  530		gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
+;  530		gfx_PrintStringXY(data_pokemon[currentSave.party[currentplayer].id].name, 181, 129);
+	LD	BC,_currentSave+10
+	LD	(IX+-3),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,129
+	PUSH	BC
+	LD	BC,181
+	PUSH	BC
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -3273,25 +3321,21 @@ L_165:
 	LD	L,A
 	LD	A,51
 	CALL	__imul_b
-	LD	BC,129
-	PUSH	BC
 	LD	BC,_data_pokemon
 	ADD	HL,BC
-	LD	BC,181
-	PUSH	BC
 	LD	IY,HL
 	PEA	IY+0
 	CALL	_gfx_PrintStringXY
 	POP	BC
 	POP	BC
 	POP	BC
-;  531		sprintf(str, "Lv%u", party[currentplayer].level);
+;  531		sprintf(str, "Lv%u", currentSave.party[currentplayer].level);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+9)
@@ -3328,13 +3372,13 @@ L_165:
 	POP	BC
 	POP	BC
 	POP	BC
-;  534		healthRatio = (party[currentplayer].currenthealth * 78) / stats[1].health;
+;  534		healthRatio = (currentSave.party[currentplayer].currenthealth * 78) / stats[1].health;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	BC,(IY+13)
@@ -3348,7 +3392,7 @@ L_165:
 	LD	BC,HL
 	LD	HL,DE
 	CALL	__idivs
-	LD	(IX+-3),HL
+	LD	(IX+-6),HL
 ;  535		if (healthRatio > 34) {
 	LD	BC,HL
 	LD	HL,34
@@ -3367,7 +3411,7 @@ L_165:
 ;  538		else if (healthRatio > 14) {
 	JR	L_170
 L_169:
-	LD	BC,(IX+-3)
+	LD	BC,(IX+-6)
 	LD	HL,14
 	OR	A,A
 	SBC	HL,BC
@@ -3396,7 +3440,7 @@ L_170:
 ;  544		gfx_FillRectangle(222, 142, healthRatio, 6);
 	LD	BC,6
 	PUSH	BC
-	LD	BC,(IX+-3)
+	LD	BC,(IX+-6)
 	PUSH	BC
 	LD	BC,142
 	PUSH	BC
@@ -3408,7 +3452,7 @@ L_170:
 	POP	BC
 	POP	BC
 ;  545		
-;  546		sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
+;  546		sprintf(str, "%u/%u", currentSave.party[currentplayer].currenthealth, stats[1].health);
 	LD	IY,_stats
 	LD	BC,(IY+12)
 	CALL	__stoiu
@@ -3418,7 +3462,7 @@ L_170:
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	BC,(IY+13)
@@ -3470,13 +3514,13 @@ L_170:
 	PUSH	BC
 	CALL	_gfx_SetColor
 	POP	BC
-;  552		if (party[currentplayer].level < 100) {
+;  552		if (currentSave.party[currentplayer].level < 100) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+9)
@@ -3500,25 +3544,25 @@ L_170:
 	POP	BC
 ;  554		}
 L_173:
-;  555		if (party[currentplayer].currentstatus > 0) {
+;  555		if (currentSave.party[currentplayer].currentstatus > 0) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-6),HL
-	LD	IY,(IX+-6)
+	LD	(IX+-9),HL
+	LD	IY,(IX+-9)
 	XOR	A,A
 	CP	A,(IY+15)
 	JR	NC,L_174
-;  556			gfx_TransparentSprite_NoClip(statusIcons[party[currentplayer].currentstatus - 1], 182, 141);
+;  556			gfx_TransparentSprite_NoClip(statusIcons[currentSave.party[currentplayer].currentstatus - 1], 182, 141);
 	LD	BC,141
 	PUSH	BC
 	LD	BC,182
 	PUSH	BC
-	LD	IY,(IX+-6)
+	LD	IY,(IX+-9)
 	LD	A,(IY+15)
 	UEXT	HL
 	LD	L,A
@@ -3566,7 +3610,7 @@ L_174:
 ;_CalculateXpPercent                 IMPORT  -----   function
 ;_gfx_SetTextFGColor                 IMPORT  -----   function
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_statusIcons                        IMPORT     15   variable
 ;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
 ;_gfx_FillRectangle                  IMPORT  -----   function
@@ -3587,12 +3631,13 @@ L_174:
 ;_text_DrawTextBox                   IMPORT  -----   function
 ;_colors                             IMPORT  unknown variable
 ;_gfx_SetColor                       IMPORT  -----   function
-;G_29                                  IX-9      3   variable
-;G_31                                  IX-6      3   variable
-;healthRatio                           IX-3      3   variable
+;G_40                                 IX-12      3   variable
+;G_47                                  IX-9      3   variable
+;healthRatio                           IX-6      3   variable
+;G_41                                  IX-3      3   variable
 
 
-; Stack Frame Size: 15 (bytes)
+; Stack Frame Size: 18 (bytes)
 ;       Spill Code: -1 (instruction)
 
 
@@ -3616,19 +3661,19 @@ _CalculateXpPercent:
 	LD	HL,-21
 	CALL	__frameset
 ;  565		int cXp, sXp, mXp;
-;  566		cXp = party[currentplayer].xp;
+;  566		cXp = currentSave.party[currentplayer].xp;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-15),HL
 	LD	IY,(IX+-15)
 	LD	BC,(IY+10)
 	LD	(IX+-6),BC
-;  567		sXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level];
+;  567		sXp = xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level];
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -3658,7 +3703,7 @@ _CalculateXpPercent:
 	ADD	HL,BC
 	LD	BC,(HL)
 	LD	(IX+-3),BC
-;  568		mXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1];
+;  568		mXp = xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level + 1];
 	LD	A,(IY+49)
 	UEXT	HL
 	LD	L,A
@@ -3704,7 +3749,7 @@ _CalculateXpPercent:
 ;Name                         Addr/Register   Size   Type
 ;_xpPerLevel                         IMPORT   1212   variable
 ;_data_pokemon                       IMPORT  unknown variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_currentplayer                      STATIC      1   variable
 ;mXp                                   IX-9      3   variable
 ;cXp                                   IX-6      3   variable
@@ -3819,13 +3864,19 @@ _attack:
 	CALL	_strcpy
 	POP	BC
 	POP	BC
-;  605			userlevel = party[currentplayer].level;
+;  605			userlevel = currentSave.party[currentplayer].level;
+	LD	HL,_currentSave+10
+	LD	BC,-411
+	CALL	__istix
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
+	LD	BC,IX
+	LD	IY,-411
+	ADD	IY,BC
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IY)
 	ADD	HL,BC
 	LD	BC,-408
 	CALL	__istix
@@ -3849,7 +3900,7 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-108),A
-;  607			userelement1 = data_pokemon[party[currentplayer].id].element1;
+;  607			userelement1 = data_pokemon[currentSave.party[currentplayer].id].element1;
 	LD	BC,-408
 	CALL	__ildix
 	LD	IY,HL
@@ -3868,7 +3919,7 @@ _attack:
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-109),A
-;  608			userelement2 = data_pokemon[party[currentplayer].id].element2;
+;  608			userelement2 = data_pokemon[currentSave.party[currentplayer].id].element2;
 	LD	BC,-405
 	CALL	__ildix
 	LD	IY,HL
@@ -3934,30 +3985,36 @@ L_181:
 	CALL	__imul_b
 	LD	BC,_enemyparty
 	ADD	HL,BC
-	LD	BC,-420
+	LD	BC,-426
 	CALL	__istix
-	LD	BC,-420
+	LD	BC,-426
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-23),A
-;  617			nonuserlevel = party[currentplayer].level;
+;  617			nonuserlevel = currentSave.party[currentplayer].level;
+	LD	HL,_currentSave+10
+	LD	BC,-420
+	CALL	__istix
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
+	LD	BC,IX
+	LD	IY,-420
+	ADD	IY,BC
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IY)
 	ADD	HL,BC
-	LD	BC,-414
+	LD	BC,-417
 	CALL	__istix
-	LD	BC,-414
+	LD	BC,-417
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+9)
 	LD	(IX+-108),A
 ;  618			userelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
-	LD	BC,-420
+	LD	BC,-426
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -3968,21 +4025,21 @@ L_181:
 	CALL	__imulu
 	LD	BC,_data_pokemon
 	ADD	HL,BC
-	LD	BC,-417
+	LD	BC,-423
 	CALL	__istix
-	LD	BC,-417
+	LD	BC,-423
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-109),A
 ;  619			userelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
-	LD	BC,-417
+	LD	BC,-423
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
 	LD	(IX+-110),A
-;  620			nonuserelement1 = data_pokemon[party[currentplayer].id].element1;
-	LD	BC,-414
+;  620			nonuserelement1 = data_pokemon[currentSave.party[currentplayer].id].element1;
+	LD	BC,-417
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -3993,15 +4050,15 @@ L_181:
 	CALL	__imulu
 	LD	BC,_data_pokemon
 	ADD	HL,BC
-	LD	BC,-411
+	LD	BC,-414
 	CALL	__istix
-	LD	BC,-411
+	LD	BC,-414
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+16)
 	LD	(IX+-64),A
-;  621			nonuserelement2 = data_pokemon[party[currentplayer].id].element2;
-	LD	BC,-411
+;  621			nonuserelement2 = data_pokemon[currentSave.party[currentplayer].id].element2;
+	LD	BC,-414
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+17)
@@ -4050,9 +4107,9 @@ L_185:
 	CALL	__imul_b
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,-296
+	LD	BC,-293
 	CALL	__istix
-	LD	BC,-296
+	LD	BC,-293
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+15)
@@ -4103,9 +4160,9 @@ L_191:
 	CALL	__imul_b
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,-299
+	LD	BC,-296
 	CALL	__istix
-	LD	BC,-299
+	LD	BC,-296
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+15)
@@ -4142,16 +4199,16 @@ L_191:
 	OR	A,A
 	JR	NZ,L_187
 	LD	HL,1
-	LD	BC,-308
+	LD	BC,-305
 	CALL	__istix
 	JR	L_188
 L_187:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-308
+	LD	BC,-305
 	CALL	__istix
 L_188:
-	LD	HL,-308
+	LD	HL,-305
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -4177,10 +4234,10 @@ L_192:
 	LD	A,21
 	CALL	__imul_b
 	LD	(IX+-74),HL
-	LD	BC,-305
+	LD	BC,-302
 	CALL	__istix
 	LD	HL,(IX+-74)
-	LD	BC,-302
+	LD	BC,-299
 	CALL	__istix
 	LD	HL,(IX+-74)
 	LD	BC,_data_moves
@@ -4194,18 +4251,18 @@ L_192:
 	OR	A,A
 	JR	NZ,L_194
 	LD	HL,1
-	LD	BC,-311
+	LD	BC,-308
 	CALL	__istix
 	JR	L_195
 L_194:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-311
+	LD	BC,-308
 	CALL	__istix
 L_195:
 	LD	BC,IX
 	LD	DE,_lastmove
-	LD	HL,-311
+	LD	HL,-308
 	ADD	HL,BC
 	LD	HL,(HL)
 	ADD	HL,DE
@@ -4245,7 +4302,7 @@ L_203:
 	LD	BC,_attackturns
 	ADD	HL,BC
 	LD	(IX+-113),HL
-	LD	BC,-314
+	LD	BC,-311
 	CALL	__istix
 	LD	HL,(IX+-113)
 	LD	A,(HL)
@@ -4264,14 +4321,14 @@ L_203:
 ;  651			}
 L_201:
 ;  652			attackturns[player]--;
-	LD	BC,-314
+	LD	BC,-311
 	CALL	__ildix
-	LD	BC,-423
+	LD	BC,-429
 	CALL	__istix
-	LD	BC,-423
+	LD	BC,-429
 	CALL	__ildix
 	LD	IY,HL
-	LD	BC,-423
+	LD	BC,-429
 	CALL	__ildix
 	LD	A,(IY)
 	DEC	A
@@ -4573,7 +4630,7 @@ L_226:
 L_230:
 ;  697		if (*currentStatusPointer[player] == 4) {
 	LD	HL,(IX+-54)
-	LD	BC,-341
+	LD	BC,-338
 	CALL	__istix
 	LD	HL,(IX+-54)
 	LD	HL,(HL)
@@ -4592,7 +4649,7 @@ L_230:
 	JR	NZ,L_228
 ;  699				*currentStatusPointer[player] = 0;
 	LD	HL,(IX+-54)
-	LD	BC,-341
+	LD	BC,-338
 ;  700				sprintf(str, "%s woke up", username);
 	LD	IY,IX
 	LD	DE,-376
@@ -4651,10 +4708,10 @@ L_228:
 ;  708		}
 L_234:
 ;  709		if (*currentStatusPointer[player] == 5) {
-	LD	BC,-341
+	LD	BC,-338
 	CALL	__ildix
 	LD	(IX+-101),HL
-	LD	BC,-344
+	LD	BC,-341
 	CALL	__istix
 	LD	HL,(IX+-101)
 	LD	HL,(HL)
@@ -4673,7 +4730,7 @@ L_234:
 	JR	NZ,L_232
 ;  711				*currentStatusPointer[player] = 0;
 	LD	HL,(IX+-101)
-	LD	BC,-344
+	LD	BC,-341
 ;  712				sprintf(str, "%s thawed out", username);
 	LD	IY,IX
 	LD	DE,-376
@@ -4789,7 +4846,7 @@ L_239:
 ;  729	
 ;  730		sprintf(str, "%s used %s", username, data_moves[move].name);
 	LD	HL,(IX+-26)
-	LD	BC,-353
+	LD	BC,-350
 	CALL	__istix
 	LD	IY,(IX+-26)
 	PEA	IY+0
@@ -4821,16 +4878,16 @@ L_239:
 	OR	A,A
 	JR	NZ,L_241
 	LD	HL,1
-	LD	BC,-317
+	LD	BC,-314
 	CALL	__istix
 	JR	L_242
 L_241:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-317
+	LD	BC,-314
 	CALL	__istix
 L_242:
-	LD	HL,-317
+	LD	HL,-314
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -4843,22 +4900,22 @@ L_242:
 	OR	A,A
 	JR	NZ,L_245
 	LD	HL,1
-	LD	BC,-320
+	LD	BC,-317
 	CALL	__istix
 	JR	L_246
 L_245:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-320
+	LD	BC,-317
 	CALL	__istix
 L_246:
 	LD	HL,(IX+-26)
-	LD	BC,-353
+	LD	BC,-350
 	CALL	__istix
 	LD	DE,(IX+-26)
-	LD	BC,-356
+	LD	BC,-353
 	LEA	IY,IX+-128
-	LD	(IY+-39),DE
+	LD	(IY+-36),DE
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -4894,7 +4951,7 @@ L_246:
 	LD	HL,(IY)
 	CALL	__imuls
 	LD	DE,HL
-	LD	BC,-320
+	LD	BC,-317
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,7
@@ -4963,7 +5020,7 @@ L_251:
 	POP	BC
 	POP	BC
 ;  735			if (data_moves[move].statustype == 25) {
-	LD	BC,-353
+	LD	BC,-350
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
@@ -4993,7 +5050,7 @@ L_251:
 ;  739		}
 L_254:
 ;  740		if (!(*currentStatusPointer[player] == 4) && data_moves[move].statustype == 26) {
-	LD	BC,-344
+	LD	BC,-341
 	CALL	__ildix
 	LD	HL,(HL)
 	LD	A,(HL)
@@ -5005,7 +5062,7 @@ L_254:
 	JR	Z,L_256
 	LD	BC,(IX+-26)
 	LEA	IY,IX+-128
-	LD	(IY+-39),BC
+	LD	(IY+-36),BC
 	LD	IY,(IX+-26)
 	LD	A,(IY+19)
 	CP	A,26
@@ -5022,7 +5079,7 @@ L_254:
 L_256:
 ;  743		if (data_moves[move].statustype == 22) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-39)
+	LD	BC,(IY+-36)
 	LD	(IY+-6),BC
 	LD	IY,(IY+-6)
 	LD	A,(IY+19)
@@ -5057,14 +5114,14 @@ L_259:
 	LD	BC,(IX+-125)
 	LD	(IX+-3),BC
 	LEA	IY,IX+-128
-	LD	(IY+-48),BC
+	LD	(IY+-45),BC
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,2
 	JR	C,L_448
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
-	LD	(IY+-48),BC
+	LD	(IY+-45),BC
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,19
@@ -5072,7 +5129,7 @@ L_259:
 L_448:
 ;  755			if (data_moves[move].type == 0) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-48)
+	LD	BC,(IY+-45)
 	LD	(IX+-29),BC
 	LD	IY,(IX+-29)
 	LD	A,(IY+15)
@@ -5083,26 +5140,26 @@ L_448:
 	OR	A,A
 	JR	NZ,L_262
 	LD	HL,1
-	LD	BC,-323
+	LD	BC,-320
 	CALL	__istix
 	JR	L_263
 L_262:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-323
+	LD	BC,-320
 	CALL	__istix
 L_263:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_266
 	LD	HL,1
-	LD	BC,-326
+	LD	BC,-323
 	CALL	__istix
 	JR	L_267
 L_266:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-326
+	LD	BC,-323
 	CALL	__istix
 L_267:
 	LD	BC,(IX+-10)
@@ -5138,7 +5195,7 @@ L_267:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-503	; spill
+	LD	BC,-512	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5154,7 +5211,7 @@ L_267:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-503	; unspill
+	LD	BC,-512	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5168,7 +5225,7 @@ L_267:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-506	; spill
+	LD	BC,-515	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5189,24 +5246,24 @@ L_267:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-506	; unspill
+	LD	BC,-515	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	CALL	__imuls
 	LD	DE,HL
-	LD	BC,-326
+	LD	BC,-323
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,7
@@ -5224,11 +5281,11 @@ L_267:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-509	; spill
+	LD	BC,-518	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-323
+	LD	BC,-320
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,12
@@ -5240,7 +5297,7 @@ L_267:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-509	; unspill
+	LD	BC,-518	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5279,26 +5336,26 @@ L_292:
 	OR	A,A
 	JR	NZ,L_270
 	LD	HL,1
-	LD	BC,-329
+	LD	BC,-326
 	CALL	__istix
 	JR	L_271
 L_270:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-329
+	LD	BC,-326
 	CALL	__istix
 L_271:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_274
 	LD	HL,1
-	LD	BC,-332
+	LD	BC,-329
 	CALL	__istix
 	JR	L_275
 L_274:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-332
+	LD	BC,-329
 	CALL	__istix
 L_275:
 	LD	BC,(IX+-35)
@@ -5335,7 +5392,7 @@ L_275:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-494	; spill
+	LD	BC,-503	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5351,7 +5408,7 @@ L_275:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-494	; unspill
+	LD	BC,-503	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5365,7 +5422,7 @@ L_275:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-497	; spill
+	LD	BC,-506	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5386,24 +5443,24 @@ L_275:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-497	; unspill
+	LD	BC,-506	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	CALL	__imuls
 	LD	DE,HL
-	LD	BC,-332
+	LD	BC,-329
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,7
@@ -5422,11 +5479,11 @@ L_275:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-500	; spill
+	LD	BC,-509	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-329
+	LD	BC,-326
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,12
@@ -5438,7 +5495,7 @@ L_275:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-500	; unspill
+	LD	BC,-509	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5468,39 +5525,39 @@ L_290:
 	OR	A,A
 	JR	NZ,L_278
 	LD	HL,1
-	LD	BC,-335
+	LD	BC,-332
 	CALL	__istix
 	JR	L_279
 L_278:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-335
+	LD	BC,-332
 	CALL	__istix
 L_279:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_282
 	LD	HL,1
-	LD	BC,-338
+	LD	BC,-335
 	CALL	__istix
 	JR	L_283
 L_282:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-338
+	LD	BC,-335
 	CALL	__istix
 L_283:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_286
 	LD	HL,1
-	LD	BC,-347
+	LD	BC,-344
 	CALL	__istix
 	JR	L_287
 L_286:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-347
+	LD	BC,-344
 	CALL	__istix
 L_287:
 	LD	BC,(IX+-128)
@@ -5532,7 +5589,7 @@ L_287:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-485	; spill
+	LD	BC,-494	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5548,7 +5605,7 @@ L_287:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-485	; unspill
+	LD	BC,-494	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5559,7 +5616,7 @@ L_287:
 	LD	BC,100
 	CALL	__idivs
 	LD	BC,IX
-	LD	IY,-335
+	LD	IY,-332
 	ADD	IY,BC
 	LD	DE,HL
 	LD	HL,(IY)
@@ -5580,7 +5637,7 @@ L_287:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-488	; spill
+	LD	BC,-497	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -5593,17 +5650,17 @@ L_287:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-488	; unspill
+	LD	BC,-497	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
@@ -5614,7 +5671,7 @@ L_287:
 	LD	HL,DE
 	CALL	__imuls
 	LD	DE,HL
-	LD	BC,-347
+	LD	BC,-344
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,7
@@ -5632,11 +5689,11 @@ L_287:
 	ADD	HL,BC
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-491	; spill
+	LD	BC,-500	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-338
+	LD	BC,-335
 	CALL	__ildix
 	LD	BC,HL
 	LD	HL,12
@@ -5648,7 +5705,7 @@ L_287:
 	CALL	__stoiu
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-491	; unspill
+	LD	BC,-500	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -5689,11 +5746,11 @@ L_293:
 	LD	BC,(IX+-74)
 	LD	(IX+-19),BC
 	LD	HL,BC
-	LD	BC,-426
+	LD	BC,-432
 	LD	DE,_data_moves
 	ADD	HL,DE
 	CALL	__istix
-	LD	BC,-426
+	LD	BC,-432
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+14)
@@ -5718,17 +5775,17 @@ L_293:
 	LD	(IX+-7),HL
 	LD	(IX+-4),E
 ;  766			damage *= elements[data_moves[move].element][nonuserelement2];// /2
-	LD	BC,-426
+	LD	BC,-432
 	CALL	__ildix
 	LD	IY,HL
 	LD	H,(IY+14)
 	PUSH	IY
 	PUSH	BC
-	LD	IY,-470	; spill
+	LD	IY,-482	; spill
 	LD	BC,IX	; spill
 	ADD	IY,BC
 	LD	(IY),H
-	LD	IY,-470	; unspill
+	LD	IY,-482	; unspill
 	LD	BC,IX	; unspill
 	ADD	IY,BC
 	LD	H,(IY)
@@ -5768,7 +5825,7 @@ L_293:
 	LD	A,(IX+-109)
 	PUSH	IY
 	PUSH	BC
-	LD	IY,-470	; unspill
+	LD	IY,-482	; unspill
 	LD	BC,IX	; unspill
 	ADD	IY,BC
 	LD	H,(IY)
@@ -5802,7 +5859,7 @@ L_309:
 	LD	BC,(IX+-77)
 	LD	(IX+-104),BC
 	LEA	IY,IX+-128
-	LD	(IY+-78),BC
+	LD	(IY+-75),BC
 	LD	IY,(IX+-104)
 	LD	A,(IY+19)
 	CP	A,24
@@ -5817,7 +5874,7 @@ L_309:
 	JR	NZ,L_307
 	LD	BC,(IX+-104)
 	LEA	IY,IX+-128
-	LD	(IY+-78),BC
+	LD	(IY+-75),BC
 	LD	IY,(IX+-104)
 	LD	A,(IY+19)
 	CP	A,36
@@ -5827,13 +5884,13 @@ L_307:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_301
-;  775					if (data_pokemon[party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
+;  775					if (data_pokemon[currentSave.party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -6019,13 +6076,13 @@ L_308:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_306
-;  788					if (data_pokemon[party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
+;  788					if (data_pokemon[currentSave.party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -6201,13 +6258,13 @@ L_314:
 	OR	A,A
 	JR	NZ,L_311
 	LD	HL,1
-	LD	BC,-350
+	LD	BC,-347
 	CALL	__istix
 	JR	L_312
 L_311:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-350
+	LD	BC,-347
 	CALL	__istix
 L_312:
 	LD	DE,(IX+-7)
@@ -6222,14 +6279,14 @@ L_312:
 ;  800	
 ;  801			if (data_moves[move].statustype == 21 || data_moves[move].statustype == 26) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-78)
-	LD	(IY+-84),BC
-	LD	IY,(IY+-84)
+	LD	BC,(IY+-75)
+	LD	(IY+-81),BC
+	LD	IY,(IY+-81)
 	LD	A,(IY+19)
 	CP	A,21
 	JR	Z,L_316
 	LEA	IY,IX+-128
-	LD	IY,(IY+-84)
+	LD	IY,(IY+-81)
 	LD	A,(IY+19)
 	CP	A,26
 	JR	NZ,L_318
@@ -6252,10 +6309,10 @@ L_318:
 	LD	BC,(IX+-19)
 	LD	(IX+-74),BC
 	LD	HL,(IX+-19)
-	LD	BC,-305
+	LD	BC,-302
 	CALL	__istix
 	LD	HL,(IX+-19)
-	LD	BC,-302
+	LD	BC,-299
 	CALL	__istix
 	LD	HL,(IX+-19)
 	LD	BC,_data_moves
@@ -6302,9 +6359,9 @@ L_323:
 	LD	BC,_data_moves
 	LD	HL,(IX+-19)
 	ADD	HL,BC
-	LD	BC,-429
+	LD	BC,-435
 	CALL	__istix
-	LD	BC,-429
+	LD	BC,-435
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+14)
@@ -6313,7 +6370,7 @@ L_323:
 	LD	A,18
 	CALL	__imul_b
 	LD	A,(IX+-64)
-	LD	BC,-429
+	LD	BC,-435
 	LD	DE,_elements
 	ADD	HL,DE
 	LD	DE,HL
@@ -6362,9 +6419,9 @@ L_325:
 	LD	BC,_data_moves
 	LD	HL,(IX+-19)
 	ADD	HL,BC
-	LD	BC,-432
+	LD	BC,-438
 	CALL	__istix
-	LD	BC,-432
+	LD	BC,-438
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+14)
@@ -6383,7 +6440,7 @@ L_325:
 	UEXT	HL
 	LD	L,A
 	LD	DE,HL
-	LD	BC,-432
+	LD	BC,-438
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+14)
@@ -6424,16 +6481,17 @@ L_336:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_327
-	LD	BC,1
-	LEA	IY,IX+-128
-	LD	(IY+-18),BC
+	LD	HL,1
+	LD	BC,-356
+	CALL	__istix
 	JR	L_328
 L_327:
-	LD	BC,0
-	LEA	IY,IX+-128
-	LD	(IY+-18),BC
+	OR	A,A
+	SBC	HL,HL
+	LD	BC,-356
+	CALL	__istix
 L_328:
-	LD	HL,-146
+	LD	HL,-356
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -6448,25 +6506,25 @@ L_328:
 	JR	NZ,L_331
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-21),BC
+	LD	(IY+-18),BC
 	JR	L_332
 L_331:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-21),BC
+	LD	(IY+-18),BC
 L_332:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-21)
+	LD	BC,(IY+-18)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
 	ADD	HL,BC
-	LD	BC,-435
+	LD	BC,-441
 	CALL	__istix
-	LD	BC,-435
+	LD	BC,-441
 	CALL	__ildix
 	LD	A,(HL)
-	LD	BC,-435
+	LD	BC,-441
 	CALL	__ildix
 	INC	A
 	LD	(HL),A
@@ -6481,29 +6539,29 @@ L_337:
 L_449:
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
-	LD	(IY+-87),BC
+	LD	(IY+-84),BC
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,2
 	JR	NZ,L_447
 ;  827			if (statmods[player][data_moves[move].statustype] + data_moves[move].power > 12) {
-	LD	BC,-305
+	LD	BC,-302
 	CALL	__ildix
 	LD	(IX+-45),HL
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,-438
+	LD	BC,-444
 	CALL	__istix
 	LD	BC,(IX+-98)
 	LEA	IY,IX+-128
-	LD	(IY+-93),BC
-	LD	BC,-438
+	LD	(IY+-90),BC
+	LD	BC,-444
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	UEXT	HL
 	LD	BC,IX
-	LD	IY,-221
+	LD	IY,-218
 	ADD	IY,BC
 	LD	BC,(IY)
 	LD	L,A
@@ -6512,7 +6570,7 @@ L_449:
 	UEXT	HL
 	LD	L,A
 	LD	DE,HL
-	LD	BC,-438
+	LD	BC,-444
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+16)
@@ -6527,11 +6585,11 @@ L_449:
 ;  828				statmods[player][data_moves[move].statustype] = 12;
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
-	LD	(IY+-87),BC
+	LD	(IY+-84),BC
 	LD	IY,(IX+-3)
 	LD	A,(IY+19)
 	UEXT	HL
-	LD	IY,-221
+	LD	IY,-218
 	LD	BC,IX
 	ADD	IY,BC
 	LD	BC,(IY)
@@ -6546,22 +6604,22 @@ L_339:
 	LD	BC,_data_moves
 	LD	HL,(IX+-45)
 	ADD	HL,BC
-	LD	BC,-444
+	LD	BC,-450
 	CALL	__istix
 	LD	HL,(IX+-60)
-	LD	BC,-356
+	LD	BC,-353
 	CALL	__istix
 	LD	HL,(IX+-60)
 	LD	BC,_statmods
 	ADD	HL,BC
-	LD	BC,-441
+	LD	BC,-447
 	CALL	__istix
-	LD	BC,-444
+	LD	BC,-450
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	UEXT	HL
-	LD	IY,-441
+	LD	IY,-447
 	LD	BC,IX
 	ADD	IY,BC
 	LD	BC,(IY)
@@ -6571,29 +6629,29 @@ L_339:
 	LD	BC,-560	; spill
 	CALL	__istix
 	POP	BC
-	LD	BC,-444
+	LD	BC,-450
 	CALL	__ildix
 	LD	DE,HL
-	LD	BC,-444
+	LD	BC,-450
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	UEXT	HL
-	LD	IY,-441
+	LD	IY,-447
 	LD	BC,IX
 	ADD	IY,BC
 	LD	BC,(IY)
 	LD	L,A
 	ADD	HL,BC
 	PUSH	BC
-	LD	BC,-512	; spill
+	LD	BC,-521	; spill
 	CALL	__istix
 	LD	BC,-560	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	A,(HL)
 	PUSH	BC
-	LD	BC,-512	; unspill
+	LD	BC,-521	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	IY,DE
@@ -6603,7 +6661,7 @@ L_339:
 L_340:
 ;  833			sprintf(str, "%s's %s rose", username, text_status2[data_moves[move].statustype]);
 	LEA	IY,IX+-128
-	LD	IY,(IY+-87)
+	LD	IY,(IY+-84)
 	LD	A,(IY+19)
 	UEXT	HL
 	LD	L,A
@@ -6643,7 +6701,7 @@ L_340:
 L_447:
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
-	LD	(IY+-96),BC
+	LD	(IY+-93),BC
 	LD	IY,(IX+-3)
 	LD	A,(IY+15)
 	CP	A,3
@@ -6654,28 +6712,28 @@ L_447:
 	JR	NZ,L_342
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-24),BC
+	LD	(IY+-21),BC
 	JR	L_343
 L_342:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-24),BC
+	LD	(IY+-21),BC
 L_343:
-	LD	BC,-302
+	LD	BC,-299
 	CALL	__ildix
 	LD	(IX+-48),HL
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,-447
+	LD	BC,-453
 	CALL	__istix
 	LEA	IY,IX+-128
-	LD	BC,(IY+-24)
+	LD	BC,(IY+-21)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
 	ADD	HL,BC
 	LD	DE,HL
-	LD	BC,-447
+	LD	BC,-453
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
@@ -6686,7 +6744,7 @@ L_343:
 	LD	BC,-557	; spill
 	CALL	__istix
 	POP	BC
-	LD	BC,-447
+	LD	BC,-453
 	CALL	__ildix
 	LD	IY,HL
 	PUSH	BC
@@ -6702,17 +6760,17 @@ L_343:
 	JR	NZ,L_346
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-27),BC
+	LD	(IY+-24),BC
 	JR	L_347
 L_346:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-27),BC
+	LD	(IY+-24),BC
 L_347:
 	LD	BC,(IX+-3)
 	LEA	IY,IX+-128
-	LD	(IY+-96),BC
-	LD	BC,(IY+-27)
+	LD	(IY+-93),BC
+	LD	BC,(IY+-24)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
@@ -6734,32 +6792,32 @@ L_354:
 	JR	NZ,L_350
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-30),BC
+	LD	(IY+-27),BC
 	JR	L_351
 L_350:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-30),BC
+	LD	(IY+-27),BC
 L_351:
 	LD	BC,_data_moves
 	LD	HL,(IX+-48)
 	ADD	HL,BC
-	LD	BC,-453
+	LD	BC,-459
 	CALL	__istix
 	LEA	IY,IX+-128
-	LD	BC,(IY+-30)
+	LD	BC,(IY+-27)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
 	ADD	HL,BC
-	LD	BC,-450
+	LD	BC,-456
 	CALL	__istix
-	LD	BC,-453
+	LD	BC,-459
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	UEXT	HL
-	LD	IY,-450
+	LD	IY,-456
 	LD	BC,IX
 	ADD	IY,BC
 	LD	BC,(IY)
@@ -6769,29 +6827,29 @@ L_351:
 	LD	BC,-554	; spill
 	CALL	__istix
 	POP	BC
-	LD	BC,-453
+	LD	BC,-459
 	CALL	__ildix
 	LD	DE,HL
-	LD	BC,-453
+	LD	BC,-459
 	CALL	__ildix
 	LD	IY,HL
 	LD	A,(IY+19)
 	UEXT	HL
-	LD	IY,-450
+	LD	IY,-456
 	LD	BC,IX
 	ADD	IY,BC
 	LD	BC,(IY)
 	LD	L,A
 	ADD	HL,BC
 	PUSH	BC
-	LD	BC,-512	; spill
+	LD	BC,-521	; spill
 	CALL	__istix
 	LD	BC,-554	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	A,(HL)
 	PUSH	BC
-	LD	BC,-512	; unspill
+	LD	BC,-521	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	IY,DE
@@ -6801,7 +6859,7 @@ L_351:
 L_355:
 ;  844			sprintf(str, "%s's %s fell", nonusername, text_status2[data_moves[move].statustype]);
 	LEA	IY,IX+-128
-	LD	IY,(IY+-96)
+	LD	IY,(IY+-93)
 	LD	A,(IY+19)
 	UEXT	HL
 	LD	L,A
@@ -6848,12 +6906,12 @@ L_445:
 	JR	NZ,L_357
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-33),BC
+	LD	(IY+-30),BC
 	JR	L_358
 L_357:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-33),BC
+	LD	(IY+-30),BC
 L_358:
 	LD	IY,(IX+-3)
 	LD	A,(IY+16)
@@ -6861,7 +6919,7 @@ L_358:
 	LD	L,A
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	A,(IY+-33)
+	LD	A,(IY+-30)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -6943,19 +7001,19 @@ L_439:
 	JR	NZ,L_364
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-36),BC
+	LD	(IY+-33),BC
 	JR	L_365
 L_364:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-36),BC
+	LD	(IY+-33),BC
 L_365:
 	LD	A,(IX+-23)
 	UEXT	HL
 	LD	L,A
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	A,(IY+-36)
+	LD	A,(IY+-33)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -6976,12 +7034,12 @@ L_437:
 	JR	NZ,L_368
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-42),BC
+	LD	(IY+-39),BC
 	JR	L_369
 L_368:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-42),BC
+	LD	(IY+-39),BC
 L_369:
 	LD	A,(IX+-23)
 	UEXT	HL
@@ -7028,7 +7086,7 @@ L_369:
 	CALL	__idivs
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	A,(IY+-42)
+	LD	A,(IY+-39)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -7049,27 +7107,27 @@ L_435:
 	JR	NZ,L_372
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-45),BC
+	LD	(IY+-42),BC
 	JR	L_373
 L_372:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-45),BC
+	LD	(IY+-42),BC
 L_373:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_376
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-51),BC
+	LD	(IY+-48),BC
 	JR	L_377
 L_376:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-51),BC
+	LD	(IY+-48),BC
 L_377:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-51)
+	LD	BC,(IY+-48)
 	LD	HL,12
 	CALL	__imulu
 	LD	BC,_stats
@@ -7081,7 +7139,7 @@ L_377:
 	CALL	__idivs
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	A,(IY+-45)
+	LD	A,(IY+-42)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -7193,19 +7251,19 @@ L_429:
 	JR	NZ,L_391
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-54),BC
+	LD	(IY+-51),BC
 	JR	L_392
 L_391:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-54),BC
+	LD	(IY+-51),BC
 L_392:
 	CALL	_rand
 	LD	BC,7
 	CALL	__irems
 	INC	HL
 	INC	HL
-	LD	IY,-182
+	LD	IY,-179
 	LD	BC,IX
 	ADD	IY,BC
 	LD	A,L
@@ -7219,54 +7277,54 @@ L_392:
 	JR	NZ,L_399
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-57),BC
+	LD	(IY+-54),BC
 	JR	L_400
 L_399:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-57),BC
+	LD	(IY+-54),BC
 L_400:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_395
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-60),BC
+	LD	(IY+-57),BC
 	JR	L_396
 L_395:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-60),BC
+	LD	(IY+-57),BC
 L_396:
-	LD	HL,-185
+	LD	HL,-182
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
 	LD	BC,_lastmove
 	ADD	HL,BC
-	LD	IY,-188
+	LD	IY,-185
 	LD	BC,IX
 	ADD	IY,BC
 	PUSH	BC
-	LD	BC,-512	; spill
+	LD	BC,-521	; spill
 	CALL	__istix
 	LD	BC,-551	; spill
 	CALL	__istix
-	LD	BC,-512	; unspill
+	LD	BC,-521	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	HL,(IY)
 	LD	BC,_disabledmove
 	ADD	HL,BC
 	PUSH	BC
-	LD	BC,-512	; spill
+	LD	BC,-521	; spill
 	CALL	__istix
 	LD	BC,-551	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	A,(HL)
 	PUSH	BC
-	LD	BC,-512	; unspill
+	LD	BC,-521	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	(HL),A
@@ -7334,17 +7392,17 @@ L_427:
 	JR	NZ,L_403
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-63),BC
+	LD	(IY+-60),BC
 	JR	L_404
 L_403:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-63),BC
+	LD	(IY+-60),BC
 L_404:
 	LD	BC,800
 	PUSH	BC
 	LEA	IY,IX+-128
-	LD	A,(IY+-63)
+	LD	A,(IY+-60)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -7376,101 +7434,47 @@ L_425:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_409
-;  899				originalpokemon[player] = party[currentplayer];
+;  899				originalpokemon[player] = currentSave.party[currentplayer];
+	LD	DE,IX
+	LD	HL,_currentSave+10
+	LD	BC,-465
+	CALL	__istix
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,HL
-	PUSH	BC
-	PUSH	HL
-	LD	HL,BC
-	LD	BC,-479	; spill
-	CALL	__istix
-	POP	HL
-	POP	BC
-	LD	BC,-479	; unspill
-	PUSH	HL
-	CALL	__ildix
-	LD	BC,HL
-	POP	HL
-	LD	HL,BC
-	LD	A,(IX+6)
-	LD	DE,_party
+	LD	BC,-462
+	LD	IY,-465
+	ADD	IY,DE
+	LD	DE,(IY)
 	ADD	HL,DE
-	LD	DE,HL
-	PUSH	BC
-	PUSH	HL
-	LD	BC,-539	; spill
 	CALL	__istix
-	POP	HL
-	POP	BC
+	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	PUSH	BC
-	PUSH	HL
-	LD	HL,DE
-	LD	BC,-542	; spill
-	CALL	__istix
-	POP	HL
-	POP	BC
+	LD	BC,-462
 	LD	DE,_originalpokemon
-	PUSH	BC
-	PUSH	HL
-	LD	HL,DE	; unspill
-	LD	BC,-545	; spill
-	CALL	__istix
-	POP	HL
-	LD	BC,-542	; unspill
-	PUSH	HL
-	CALL	__ildix
-	POP	HL
-	LD	BC,-545	; unspill
-	PUSH	HL
-	CALL	__ildix
-	LD	DE,HL
-	POP	HL
-	POP	BC
 	ADD	HL,DE
 	LD	DE,HL
-	PUSH	BC
-	PUSH	HL
-	LD	HL,DE
-	LD	BC,-524	; spill
-	CALL	__istix
-	POP	HL
-	LD	BC,-539	; unspill
-	PUSH	HL
 	CALL	__ildix
-	LD	DE,HL
-	POP	HL
-	POP	BC
-	LD	HL,DE
-	PUSH	BC
-	LD	BC,-524	; unspill
-	PUSH	HL
-	CALL	__ildix
-	LD	DE,HL
-	POP	HL
-	POP	BC
 	LD	BC,34
 	LDIR	
-;  900				party[currentplayer] = enemyparty[currentenemy];
+;  900				currentSave.party[currentplayer] = enemyparty[currentenemy];
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
+	LD	BC,-462
 	CALL	__imul_b
-	LD	BC,34
 	LD	DE,_enemyparty
 	ADD	HL,DE
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -7482,50 +7486,20 @@ L_425:
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
-	PUSH	BC
-	PUSH	HL
-	LD	HL,BC
-	LD	BC,-473	; spill
-	CALL	__istix
-	POP	HL
-	POP	BC
-	LD	BC,-479	; unspill
-	PUSH	HL
 	CALL	__ildix
-	LD	BC,HL
-	POP	HL
-	LD	HL,BC
-	LD	BC,-473	; unspill
-	PUSH	HL
-	CALL	__ildix
-	LD	BC,HL
-	POP	HL
-	LD	DE,_party
-	ADD	HL,DE
 	LD	DE,HL
-	PUSH	BC
-	PUSH	HL
-	LD	HL,BC
-	LD	BC,-473	; spill
-	CALL	__istix
-	POP	HL
-	POP	BC
 	LD	BC,-548	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
-	PUSH	HL
-	CALL	__ildix
-	LD	BC,HL
-	POP	HL
+	LD	BC,34
 	LDIR	
 ;  901			}
 ;  902			else {
@@ -7541,11 +7515,11 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-476	; spill
+	LD	BC,-488	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-476	; unspill
+	LD	BC,-488	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
@@ -7557,7 +7531,7 @@ L_409:
 	LD	DE,HL
 	PUSH	BC
 	PUSH	HL
-	LD	BC,-527	; spill
+	LD	BC,-536	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -7568,7 +7542,7 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,DE
-	LD	BC,-530	; spill
+	LD	BC,-539	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -7576,14 +7550,14 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,DE	; unspill
-	LD	BC,-533	; spill
+	LD	BC,-542	; spill
 	CALL	__istix
 	POP	HL
-	LD	BC,-530	; unspill
+	LD	BC,-539	; unspill
 	PUSH	HL
 	CALL	__ildix
 	POP	HL
-	LD	BC,-533	; unspill
+	LD	BC,-542	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	DE,HL
@@ -7594,10 +7568,10 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,DE
-	LD	BC,-524	; spill
+	LD	BC,-533	; spill
 	CALL	__istix
 	POP	HL
-	LD	BC,-527	; unspill
+	LD	BC,-536	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	DE,HL
@@ -7605,7 +7579,7 @@ L_409:
 	POP	BC
 	LD	HL,DE
 	PUSH	BC
-	LD	BC,-524	; unspill
+	LD	BC,-533	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	DE,HL
@@ -7613,19 +7587,19 @@ L_409:
 	POP	BC
 	LD	BC,34
 	LDIR	
-;  904				enemyparty[currentenemy] = party[currentplayer];
+;  904				enemyparty[currentenemy] = currentSave.party[currentplayer];
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
 	LD	BC,34
-	LD	DE,_party
+	LD	DE,_currentSave+10
 	ADD	HL,DE
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
@@ -7633,11 +7607,11 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC	; unspill
-	LD	BC,-536	; spill
+	LD	BC,-545	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
@@ -7645,17 +7619,17 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-476	; unspill
+	LD	BC,-488	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
@@ -7666,17 +7640,17 @@ L_409:
 	PUSH	BC
 	PUSH	HL
 	LD	HL,BC
-	LD	BC,-473	; spill
+	LD	BC,-485	; spill
 	CALL	__istix
 	POP	HL
 	POP	BC
-	LD	BC,-536	; unspill
+	LD	BC,-545	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
 	POP	HL
 	LD	HL,BC
-	LD	BC,-473	; unspill
+	LD	BC,-485	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	BC,HL
@@ -7697,12 +7671,12 @@ L_423:
 	JR	NZ,L_411
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-66),BC
+	LD	(IY+-63),BC
 	JR	L_412
 L_411:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-66),BC
+	LD	(IY+-63),BC
 L_412:
 	LD	A,(IX+6)
 	UEXT	HL
@@ -7715,7 +7689,7 @@ L_412:
 	ADD	HL,HL
 	PUSH	HL
 	LEA	IY,IX+-128
-	LD	A,(IY+-66)
+	LD	A,(IY+-63)
 	LD	C,A
 	LD	B,0
 	PUSH	BC
@@ -7741,7 +7715,7 @@ L_421:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_415
-;  913				data_pokemon[party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
+;  913				data_pokemon[currentSave.party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -7763,7 +7737,7 @@ L_421:
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	DE,_party
+	LD	DE,_currentSave+10
 	ADD	HL,DE
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -7781,13 +7755,13 @@ L_421:
 ;  915			else {
 	JR	L_416
 L_415:
-;  916				data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[party[currentplayer].id].element1;
+;  916				data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[currentSave.party[currentplayer].id].element1;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -7843,8 +7817,8 @@ L_419:
 	LD	BC,_stats
 	ADD	HL,BC
 	LEA	IY,IX+-128
-	LD	(IY+-102),HL
-	LD	IY,(IY+-102)
+	LD	(IY+-99),HL
+	LD	IY,(IY+-99)
 	LD	BC,(IY+0)
 	CALL	__stoiu
 	LD	BC,4
@@ -7863,31 +7837,31 @@ L_419:
 	ADD	HL,HL
 	LD	BC,_substitutehealth
 	ADD	HL,BC
-	LD	BC,-456
+	LD	BC,-468
 	CALL	__istix
 	LEA	IY,IX+-128
-	LD	IY,(IY+-102)
+	LD	IY,(IY+-99)
 	LD	BC,(IY+0)
 	CALL	__stoiu
 	LD	BC,4
 	CALL	__idivs
 	LD	DE,HL
-	LD	BC,-456
+	LD	BC,-468
 	CALL	__ildix
 	LD	IY,HL
-	LD	BC,-456
+	LD	BC,-468
 	CALL	__ildix
 	PUSH	BC
 	PUSH	HL
 	LD	HL,IY
-	LD	BC,-518	; spill
+	LD	BC,-527	; spill
 	CALL	__istix
 	POP	HL
 	PUSH	HL
-	LD	BC,-521	; spill
+	LD	BC,-530	; spill
 	CALL	__istix
 	POP	HL
-	LD	BC,-518	; unspill
+	LD	BC,-527	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -7898,7 +7872,7 @@ L_419:
 	ADD.SIS	HL,BC
 	LD	BC,HL
 	PUSH	BC
-	LD	BC,-521	; unspill
+	LD	BC,-530	; unspill
 	PUSH	HL
 	CALL	__ildix
 	LD	IY,HL
@@ -7944,16 +7918,16 @@ L_584:
 	ADD	HL,BC
 	LD	(IX+-68),HL
 	LEA	IY,IX+-128
-	LD	(IY+-108),HL
+	LD	(IY+-105),HL
 	LD	IY,(IX+-68)
 	LD	A,(IY+15)
 	CP	A,4
 	JR	Z,L_583
 	LD	BC,(IX+-68)
 	LEA	IY,IX+-128
-	LD	(IY+-108),BC
+	LD	(IY+-105),BC
 	LD	BC,(IX+-68)
-	LD	(IY+-114),BC
+	LD	(IY+-111),BC
 	LD	IY,(IX+-68)
 	LD	A,(IY+20)
 	UEXT	HL
@@ -7998,7 +7972,7 @@ L_584:
 L_583:
 ;  928			if (data_moves[move].statustype == 30) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-108)
+	LD	BC,(IY+-105)
 	LD	(IX+-39),BC
 	LD	IY,(IX+-39)
 	LD	A,(IY+19)
@@ -8027,7 +8001,7 @@ L_472:
 ;  934			if (data_moves[move].statustype < 7) {
 	LD	BC,(IX+-39)
 	LEA	IY,IX+-128
-	LD	(IY+-123),BC
+	LD	(IY+-120),BC
 	LD	BC,(IX+-39)
 	LD	(IX+-80),BC
 	LD	IY,(IX+-39)
@@ -8040,14 +8014,14 @@ L_472:
 	JR	NZ,L_455
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-69),BC
+	LD	(IY+-66),BC
 	JR	L_456
 L_455:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-69),BC
+	LD	(IY+-66),BC
 L_456:
-	LD	HL,-197
+	LD	HL,-194
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -8061,19 +8035,19 @@ L_456:
 	JR	NZ,L_459
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-72),BC
+	LD	(IY+-69),BC
 	JR	L_460
 L_459:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-72),BC
+	LD	(IY+-69),BC
 L_460:
 	LD	BC,(IX+-39)
 	LEA	IY,IX+-128
-	LD	(IY+-123),BC
+	LD	(IY+-120),BC
 	LD	BC,(IX+-39)
 	LD	(IX+-80),BC
-	LD	BC,(IY+-72)
+	LD	BC,(IY+-69)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
@@ -8090,7 +8064,7 @@ L_460:
 L_469:
 ;  936					if (data_moves[move].type == 4) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-123)
+	LD	BC,(IY+-120)
 	LD	(IX+-80),BC
 	LD	IY,(IX+-80)
 	LD	A,(IY+15)
@@ -8115,59 +8089,59 @@ L_470:
 	JR	NZ,L_465
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-75),BC
+	LD	(IY+-72),BC
 	JR	L_466
 L_465:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-75),BC
+	LD	(IY+-72),BC
 L_466:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-75)
+	LD	BC,(IY+-72)
 	LD	HL,7
 	CALL	__imulu
 	LD	BC,_statmods
 	ADD	HL,BC
-	LD	BC,-462
+	LD	BC,-474
 	CALL	__istix
 	LD	HL,(IX+-116)
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	BC,-459
+	LD	BC,-471
 	CALL	__istix
-	LD	BC,-459
+	LD	BC,-471
 	CALL	__ildix
 	LD	IY,HL
 	LD	B,(IY+19)
 	LD	A,B
 	UEXT	HL
-	LD	IY,-462
+	LD	IY,-474
 	LD	DE,IX
 	ADD	IY,DE
 	LD	DE,(IY)
 	LD	L,A
 	ADD	HL,DE
 	PUSH	BC
-	LD	BC,-515	; spill
+	LD	BC,-524	; spill
 	CALL	__istix
 	POP	BC
 	LD	A,B
 	UEXT	HL
-	LD	IY,-462
+	LD	IY,-474
 	LD	DE,IX
 	ADD	IY,DE
 	LD	DE,(IY)
 	LD	L,A
 	ADD	HL,DE
 	PUSH	BC
-	LD	BC,-512	; spill
+	LD	BC,-521	; spill
 	CALL	__istix
-	LD	BC,-515	; unspill
+	LD	BC,-524	; unspill
 	CALL	__ildix
 	POP	BC
 	LD	A,(HL)
 	PUSH	BC
-	LD	BC,-512	; unspill
+	LD	BC,-521	; unspill
 	CALL	__ildix
 	POP	BC
 	DEC	A
@@ -8212,7 +8186,7 @@ L_485:
 	LD	BC,(IX+-80)
 	LD	(IX+-83),BC
 	LEA	IY,IX+-128
-	LD	(IY+-126),BC
+	LD	(IY+-123),BC
 	LD	IY,(IX+-83)
 	LD	A,(IY+19)
 	CP	A,7
@@ -8223,15 +8197,15 @@ L_485:
 	JR	NZ,L_474
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-81),BC
+	LD	(IY+-78),BC
 	JR	L_475
 L_474:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-81),BC
+	LD	(IY+-78),BC
 L_475:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-81)
+	LD	BC,(IY+-78)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8246,15 +8220,15 @@ L_475:
 	JR	NZ,L_478
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-90),BC
+	LD	(IY+-87),BC
 	JR	L_479
 L_478:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-90),BC
+	LD	(IY+-87),BC
 L_479:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-90)
+	LD	BC,(IY+-87)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8289,7 +8263,7 @@ L_479:
 L_483:
 	LD	BC,(IX+-83)
 	LEA	IY,IX+-128
-	LD	(IY+-126),BC
+	LD	(IY+-123),BC
 	LD	IY,(IX+-83)
 	LD	A,(IY+15)
 	CP	A,4
@@ -8307,10 +8281,10 @@ L_483:
 L_499:
 ;  956			if (data_moves[move].statustype == 8 || e == 0) {
 	LEA	IY,IX+-128
-	LD	BC,(IY+-126)
+	LD	BC,(IY+-123)
 	LD	(IX+-86),BC
 	LD	HL,BC
-	LD	BC,-260
+	LD	BC,-257
 	CALL	__istix
 	LD	IY,(IX+-86)
 	LD	A,(IY+19)
@@ -8326,15 +8300,15 @@ L_498:
 	JR	NZ,L_488
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-99),BC
+	LD	(IY+-96),BC
 	JR	L_489
 L_488:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-99),BC
+	LD	(IY+-96),BC
 L_489:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-99)
+	LD	BC,(IY+-96)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8349,15 +8323,15 @@ L_489:
 	JR	NZ,L_492
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-105),BC
+	LD	(IY+-102),BC
 	JR	L_493
 L_492:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-105),BC
+	LD	(IY+-102),BC
 L_493:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-105)
+	LD	BC,(IY+-102)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8391,7 +8365,7 @@ L_493:
 	JR	L_513
 L_497:
 	LD	HL,(IX+-86)
-	LD	BC,-260
+	LD	BC,-257
 	CALL	__istix
 	LD	IY,(IX+-86)
 	LD	A,(IY+15)
@@ -8409,10 +8383,10 @@ L_497:
 ;  965			}
 L_513:
 ;  966			if (data_moves[move].statustype == 9 || e == 1) {
-	LD	BC,-260
+	LD	BC,-257
 	CALL	__ildix
 	LD	(IX+-89),HL
-	LD	BC,-266
+	LD	BC,-263
 	CALL	__istix
 	LD	IY,(IX+-89)
 	LD	A,(IY+19)
@@ -8430,15 +8404,15 @@ L_512:
 	JR	NZ,L_502
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-111),BC
+	LD	(IY+-108),BC
 	JR	L_503
 L_502:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-111),BC
+	LD	(IY+-108),BC
 L_503:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-111)
+	LD	BC,(IY+-108)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8453,15 +8427,15 @@ L_503:
 	JR	NZ,L_506
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-117),BC
+	LD	(IY+-114),BC
 	JR	L_507
 L_506:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-117),BC
+	LD	(IY+-114),BC
 L_507:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-117)
+	LD	BC,(IY+-114)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8495,7 +8469,7 @@ L_507:
 	JR	L_526
 L_511:
 	LD	HL,(IX+-89)
-	LD	BC,-266
+	LD	BC,-263
 	CALL	__istix
 	LD	IY,(IX+-89)
 	LD	A,(IY+15)
@@ -8513,10 +8487,10 @@ L_511:
 ;  975			}
 L_526:
 ;  976			if (data_moves[move].statustype == 10) {
-	LD	BC,-266
+	LD	BC,-263
 	CALL	__ildix
 	LD	(IX+-92),HL
-	LD	BC,-272
+	LD	BC,-269
 	CALL	__istix
 	LD	IY,(IX+-92)
 	LD	A,(IY+19)
@@ -8528,15 +8502,15 @@ L_526:
 	JR	NZ,L_515
 	LD	BC,1
 	LEA	IY,IX+-128
-	LD	(IY+-120),BC
+	LD	(IY+-117),BC
 	JR	L_516
 L_515:
 	LD	BC,0
 	LEA	IY,IX+-128
-	LD	(IY+-120),BC
+	LD	(IY+-117),BC
 L_516:
 	LEA	IY,IX+-128
-	LD	BC,(IY+-120)
+	LD	BC,(IY+-117)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8549,18 +8523,17 @@ L_516:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	NZ,L_519
-	LD	HL,1
-	LD	BC,-257
-	CALL	__istix
+	LD	BC,1
+	LEA	IY,IX+-128
+	LD	(IY+-126),BC
 	JR	L_520
 L_519:
-	OR	A,A
-	SBC	HL,HL
-	LD	BC,-257
-	CALL	__istix
+	LD	BC,0
+	LEA	IY,IX+-128
+	LD	(IY+-126),BC
 L_520:
-	CALL	__ildix
-	LD	BC,HL
+	LEA	IY,IX+-128
+	LD	BC,(IY+-126)
 	LD	HL,3
 	CALL	__imulu
 	LD	BC,_currentStatusPointer
@@ -8594,7 +8567,7 @@ L_520:
 	JR	L_540
 L_524:
 	LD	HL,(IX+-92)
-	LD	BC,-272
+	LD	BC,-269
 	CALL	__istix
 	LD	IY,(IX+-92)
 	LD	A,(IY+15)
@@ -8612,10 +8585,10 @@ L_524:
 ;  985			}
 L_540:
 ;  986			if (data_moves[move].statustype == 11 || e == 2) {
-	LD	BC,-272
+	LD	BC,-269
 	CALL	__ildix
 	LD	(IX+-95),HL
-	LD	BC,-278
+	LD	BC,-275
 	CALL	__istix
 	LD	IY,(IX+-95)
 	LD	A,(IY+19)
@@ -8632,13 +8605,13 @@ L_539:
 	OR	A,A
 	JR	NZ,L_529
 	LD	HL,1
-	LD	BC,-263
+	LD	BC,-260
 	CALL	__istix
 	JR	L_530
 L_529:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-263
+	LD	BC,-260
 	CALL	__istix
 L_530:
 	CALL	__ildix
@@ -8656,13 +8629,13 @@ L_530:
 	OR	A,A
 	JR	NZ,L_533
 	LD	HL,1
-	LD	BC,-269
+	LD	BC,-266
 	CALL	__istix
 	JR	L_534
 L_533:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-269
+	LD	BC,-266
 	CALL	__istix
 L_534:
 	CALL	__ildix
@@ -8700,7 +8673,7 @@ L_534:
 	JR	L_546
 L_538:
 	LD	HL,(IX+-95)
-	LD	BC,-278
+	LD	BC,-275
 	CALL	__istix
 	LD	IY,(IX+-95)
 	LD	A,(IY+15)
@@ -8719,7 +8692,7 @@ L_538:
 L_546:
 ;  996	
 ;  997			if (data_moves[move].statustype == 12) {
-	LD	BC,-278
+	LD	BC,-275
 	CALL	__ildix
 	LD	(IX+-16),HL
 	LD	IY,(IX+-16)
@@ -8731,20 +8704,20 @@ L_546:
 	OR	A,A
 	JR	NZ,L_542
 	LD	HL,1
-	LD	BC,-275
+	LD	BC,-272
 	CALL	__istix
 	JR	L_543
 L_542:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-275
+	LD	BC,-272
 	CALL	__istix
 L_543:
 	CALL	_rand
 	LD	BC,4
 	CALL	__irems
 	INC	HL
-	LD	IY,-275
+	LD	IY,-272
 	LD	BC,IX
 	ADD	IY,BC
 	LD	A,L
@@ -8786,16 +8759,16 @@ L_552:
 	OR	A,A
 	JR	NZ,L_548
 	LD	HL,1
-	LD	BC,-281
+	LD	BC,-278
 	CALL	__istix
 	JR	L_549
 L_548:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-281
+	LD	BC,-278
 	CALL	__istix
 L_549:
-	LD	HL,-281
+	LD	HL,-278
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -8836,13 +8809,13 @@ L_558:
 	OR	A,A
 	JR	NZ,L_554
 	LD	HL,1
-	LD	BC,-284
+	LD	BC,-281
 	CALL	__istix
 	JR	L_555
 L_554:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-284
+	LD	BC,-281
 	CALL	__istix
 L_555:
 	CALL	_rand
@@ -8850,7 +8823,7 @@ L_555:
 	CALL	__irems
 	LD	IY,HL
 	LEA	HL,IY+4
-	LD	IY,-284
+	LD	IY,-281
 	LD	BC,IX
 	ADD	IY,BC
 	LD	A,L
@@ -8926,7 +8899,7 @@ L_564:
 L_571:
 ; 1021			if (data_moves[move].statustype == 18 || data_moves[move].statustype == 38) {
 	LD	HL,(IX+-16)
-	LD	BC,-287
+	LD	BC,-284
 	CALL	__istix
 	LD	IY,(IX+-16)
 	LD	A,(IY+19)
@@ -8944,16 +8917,16 @@ L_570:
 	OR	A,A
 	JR	NZ,L_567
 	LD	HL,1
-	LD	BC,-290
+	LD	BC,-287
 	CALL	__istix
 	JR	L_568
 L_567:
 	OR	A,A
 	SBC	HL,HL
-	LD	BC,-290
+	LD	BC,-287
 	CALL	__istix
 L_568:
-	LD	HL,-290
+	LD	HL,-287
 	LD	BC,IX
 	ADD	HL,BC
 	LD	HL,(HL)
@@ -8963,7 +8936,7 @@ L_568:
 ; 1023			}
 L_573:
 ; 1024			if (data_moves[move].statustype == 27) {
-	LD	BC,-287
+	LD	BC,-284
 	CALL	__ildix
 	LD	(IX+-42),HL
 	LD	IY,(IX+-42)
@@ -8985,31 +8958,31 @@ L_577:
 	CP	A,28
 	JR	NZ,L_579
 ; 1028				statmods[player][0]++;
-	LD	BC,-356
+	LD	BC,-353
 	CALL	__ildix
 	LD	BC,_statmods
 	ADD	HL,BC
-	LD	BC,-468
+	LD	BC,-480
 	CALL	__istix
-	LD	BC,-468
+	LD	BC,-480
 	CALL	__ildix
 	LD	A,(HL)
-	LD	BC,-468
+	LD	BC,-480
 	CALL	__ildix
 	INC	A
 ; 1029				statmods[player][1]++;
-	LD	IY,-468
+	LD	IY,-480
 	LD	BC,IX
 	ADD	IY,BC
 	LD	(HL),A
 	LD	HL,(IY)
 	INC	HL
-	LD	BC,-465
+	LD	BC,-477
 	CALL	__istix
-	LD	IY,-468
+	LD	IY,-480
 	LD	BC,IX
 	ADD	IY,BC
-	LD	BC,-465
+	LD	BC,-477
 	CALL	__ildix
 	LD	IY,(IY)
 	LD	A,(HL)
@@ -9034,7 +9007,7 @@ L_582:
 ; 1034			if (data_moves[move].statustype == 35 && player) {
 	LD	BC,(IX+-42)
 	LEA	IY,IX+-128
-	LD	(IY+-114),BC
+	LD	(IY+-111),BC
 	LD	IY,(IX+-42)
 	LD	A,(IY+19)
 	CP	A,35
@@ -9042,14 +9015,14 @@ L_582:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_587
-; 1035				payday += party[currentplayer].level*2;
+; 1035				payday += currentSave.party[currentplayer].level*2;
 	LD	A,(_currentplayer)
 	LD	DE,(_payday)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	C,(IY+9)
@@ -9074,9 +9047,9 @@ L_587:
 	LD	L,A
 	LD	BC,_attackturns
 	ADD	HL,BC
-	LD	BC,-293
+	LD	BC,-290
 	CALL	__istix
-	LD	BC,-293
+	LD	BC,-290
 	CALL	__ildix
 	LD	A,(HL)
 	UEXT	HL
@@ -9086,12 +9059,12 @@ L_587:
 	SBC	HL,BC
 	JR	NZ,L_588
 	LEA	IY,IX+-128
-	LD	IY,(IY+-114)
+	LD	IY,(IY+-111)
 	LD	A,(IY+19)
 	CP	A,32
 	JR	NZ,L_588
 ; 1042			attackturns[player] = 0;
-	LD	BC,-293
+	LD	BC,-290
 	CALL	__ildix
 	LD	(HL),0
 ; 1043			confusedturns[player] = (rand() % 4) + 1;
@@ -9178,137 +9151,137 @@ L_588:
 ;_data_pokemon                       IMPORT  unknown variable
 ;_enemyparty                         STATIC    204   variable
 ;_currentenemy                       STATIC      1   variable
-;_party                              IMPORT   1224   variable
 ;_currentplayer                      STATIC      1   variable
+;_currentSave                        IMPORT   2604   variable
 ;_enemyname                          STATIC     20   variable
 ;_playername                         STATIC     20   variable
 ;_strcpy                             IMPORT  -----   function
 ;_rage                               STATIC      2   variable
 ;nonusername                         IX-396     20   variable
 ;username                            IX-376     20   variable
-;G_146                               IX-356      3   variable
-;G_61                                IX-353      3   variable
-;temp313                             IX-350      3   variable
-;temp288                             IX-347      3   variable
-;G_62                                IX-344      3   variable
-;G_56                                IX-341      3   variable
-;temp284                             IX-338      3   variable
-;temp280                             IX-335      3   variable
-;temp276                             IX-332      3   variable
-;temp272                             IX-329      3   variable
-;temp268                             IX-326      3   variable
-;temp264                             IX-323      3   variable
-;temp247                             IX-320      3   variable
-;temp243                             IX-317      3   variable
-;G_37                                IX-314      3   variable
-;temp196                             IX-311      3   variable
-;temp189                             IX-308      3   variable
-;G_89                                IX-305      3   variable
-;G_97                                IX-302      3   variable
-;G_34                                IX-299      3   variable
-;G_33                                IX-296      3   variable
-;G_150                               IX-293      3   variable
-;temp569                             IX-290      3   variable
-;G_144                               IX-287      3   variable
-;temp556                             IX-284      3   variable
-;temp550                             IX-281      3   variable
-;G_136                               IX-278      3   variable
-;temp544                             IX-275      3   variable
-;G_134                               IX-272      3   variable
-;temp535                             IX-269      3   variable
-;G_132                               IX-266      3   variable
-;temp531                             IX-263      3   variable
-;G_130                               IX-260      3   variable
-;temp521                             IX-257      3   variable
-;G_128                               IX-254      3   variable
-;G_124                               IX-251      3   variable
-;temp517                             IX-248      3   variable
-;temp508                             IX-245      3   variable
-;G_149                               IX-242      3   variable
-;temp504                             IX-239      3   variable
-;G_121                               IX-236      3   variable
-;temp494                             IX-233      3   variable
-;G_119                               IX-230      3   variable
-;temp490                             IX-227      3   variable
-;G_100                               IX-224      3   variable
-;G_91                                IX-221      3   variable
-;temp480                             IX-218      3   variable
-;G_95                                IX-215      3   variable
-;G_84                                IX-212      3   variable
-;temp476                             IX-209      3   variable
-;G_83                                IX-206      3   variable
-;temp467                             IX-203      3   variable
-;temp461                             IX-200      3   variable
-;temp457                             IX-197      3   variable
-;temp413                             IX-194      3   variable
-;temp405                             IX-191      3   variable
-;temp397                             IX-188      3   variable
-;temp401                             IX-185      3   variable
-;temp393                             IX-182      3   variable
-;temp378                             IX-179      3   variable
-;G_68                                IX-176      3   variable
-;temp374                             IX-173      3   variable
-;temp370                             IX-170      3   variable
-;G_64                                IX-167      3   variable
-;temp366                             IX-164      3   variable
-;temp359                             IX-161      3   variable
-;temp352                             IX-158      3   variable
-;temp348                             IX-155      3   variable
-;temp344                             IX-152      3   variable
-;temp333                             IX-149      3   variable
-;temp329                             IX-146      3   variable
-;G_80                                IX-143      3   variable
-;G_81                                IX-140      3   variable
-;G_82                                IX-137      3   variable
-;G_65                                IX-134      3   variable
-;G_76                                IX-131      3   variable
-;G_74                                IX-128      3   variable
-;G_66                                IX-125      3   variable
-;G_46                                IX-122      3   variable
-;G_110                               IX-119      3   variable
-;G_125                               IX-116      3   variable
-;G_36                                IX-113      3   variable
+;temp329                             IX-356      3   variable
+;G_162                               IX-353      3   variable
+;G_77                                IX-350      3   variable
+;temp313                             IX-347      3   variable
+;temp288                             IX-344      3   variable
+;G_78                                IX-341      3   variable
+;G_72                                IX-338      3   variable
+;temp284                             IX-335      3   variable
+;temp280                             IX-332      3   variable
+;temp276                             IX-329      3   variable
+;temp272                             IX-326      3   variable
+;temp268                             IX-323      3   variable
+;temp264                             IX-320      3   variable
+;temp247                             IX-317      3   variable
+;temp243                             IX-314      3   variable
+;G_53                                IX-311      3   variable
+;temp196                             IX-308      3   variable
+;temp189                             IX-305      3   variable
+;G_105                               IX-302      3   variable
+;G_113                               IX-299      3   variable
+;G_50                                IX-296      3   variable
+;G_49                                IX-293      3   variable
+;G_166                               IX-290      3   variable
+;temp569                             IX-287      3   variable
+;G_160                               IX-284      3   variable
+;temp556                             IX-281      3   variable
+;temp550                             IX-278      3   variable
+;G_152                               IX-275      3   variable
+;temp544                             IX-272      3   variable
+;G_150                               IX-269      3   variable
+;temp535                             IX-266      3   variable
+;G_148                               IX-263      3   variable
+;temp531                             IX-260      3   variable
+;G_146                               IX-257      3   variable
+;temp521                             IX-254      3   variable
+;G_144                               IX-251      3   variable
+;G_140                               IX-248      3   variable
+;temp517                             IX-245      3   variable
+;temp508                             IX-242      3   variable
+;G_165                               IX-239      3   variable
+;temp504                             IX-236      3   variable
+;G_137                               IX-233      3   variable
+;temp494                             IX-230      3   variable
+;G_135                               IX-227      3   variable
+;temp490                             IX-224      3   variable
+;G_116                               IX-221      3   variable
+;G_107                               IX-218      3   variable
+;temp480                             IX-215      3   variable
+;G_111                               IX-212      3   variable
+;G_100                               IX-209      3   variable
+;temp476                             IX-206      3   variable
+;G_99                                IX-203      3   variable
+;temp467                             IX-200      3   variable
+;temp461                             IX-197      3   variable
+;temp457                             IX-194      3   variable
+;temp413                             IX-191      3   variable
+;temp405                             IX-188      3   variable
+;temp397                             IX-185      3   variable
+;temp401                             IX-182      3   variable
+;temp393                             IX-179      3   variable
+;temp378                             IX-176      3   variable
+;G_84                                IX-173      3   variable
+;temp374                             IX-170      3   variable
+;temp370                             IX-167      3   variable
+;G_80                                IX-164      3   variable
+;temp366                             IX-161      3   variable
+;temp359                             IX-158      3   variable
+;temp352                             IX-155      3   variable
+;temp348                             IX-152      3   variable
+;temp344                             IX-149      3   variable
+;temp333                             IX-146      3   variable
+;G_96                                IX-143      3   variable
+;G_97                                IX-140      3   variable
+;G_98                                IX-137      3   variable
+;G_81                                IX-134      3   variable
+;G_92                                IX-131      3   variable
+;G_90                                IX-128      3   variable
+;G_82                                IX-125      3   variable
+;G_62                                IX-122      3   variable
+;G_126                               IX-119      3   variable
+;G_141                               IX-116      3   variable
+;G_52                                IX-113      3   variable
 ;userelement2                        IX-110      1   variable
 ;userelement1                        IX-109      1   variable
 ;nonuserlevel                        IX-108      1   variable
-;G_43                                IX-107      3   variable
-;G_78                                IX-104      3   variable
-;G_57                                IX-101      3   variable
-;G_90                                 IX-98      3   variable
-;G_135                                IX-95      3   variable
-;G_133                                IX-92      3   variable
-;G_131                                IX-89      3   variable
-;G_129                                IX-86      3   variable
-;G_127                                IX-83      3   variable
-;G_126                                IX-80      3   variable
-;G_77                                 IX-77      3   variable
-;G_75                                 IX-74      3   variable
-;G_58                                 IX-71      3   variable
-;G_120                                IX-68      3   variable
+;G_59                                IX-107      3   variable
+;G_94                                IX-104      3   variable
+;G_73                                IX-101      3   variable
+;G_106                                IX-98      3   variable
+;G_151                                IX-95      3   variable
+;G_149                                IX-92      3   variable
+;G_147                                IX-89      3   variable
+;G_145                                IX-86      3   variable
+;G_143                                IX-83      3   variable
+;G_142                                IX-80      3   variable
+;G_93                                 IX-77      3   variable
+;G_91                                 IX-74      3   variable
+;G_74                                 IX-71      3   variable
+;G_136                                IX-68      3   variable
 ;nonuserelement2                      IX-65      1   variable
 ;nonuserelement1                      IX-64      1   variable
-;G_47                                 IX-63      3   variable
-;G_94                                 IX-60      3   variable
-;G_111                                IX-57      3   variable
-;G_54                                 IX-54      3   variable
-;G_42                                 IX-51      3   variable
-;G_99                                 IX-48      3   variable
-;G_93                                 IX-45      3   variable
-;G_145                                IX-42      3   variable
-;G_122                                IX-39      3   variable
+;G_63                                 IX-63      3   variable
+;G_110                                IX-60      3   variable
+;G_127                                IX-57      3   variable
+;G_70                                 IX-54      3   variable
+;G_58                                 IX-51      3   variable
+;G_115                                IX-48      3   variable
+;G_109                                IX-45      3   variable
+;G_161                                IX-42      3   variable
+;G_138                                IX-39      3   variable
 ;hitcount                             IX-36      1   variable
-;G_72                                 IX-35      3   variable
-;G_51                                 IX-32      3   variable
-;G_70                                 IX-29      3   variable
-;G_50                                 IX-26      3   variable
+;G_88                                 IX-35      3   variable
+;G_67                                 IX-32      3   variable
+;G_86                                 IX-29      3   variable
+;G_66                                 IX-26      3   variable
 ;userlevel                            IX-23      1   variable
-;G_79                                 IX-22      3   variable
-;G_85                                 IX-19      3   variable
-;G_137                                IX-16      3   variable
-;G_35                                 IX-13      3   variable
-;G_69                                 IX-10      3   variable
+;G_95                                 IX-22      3   variable
+;G_101                                IX-19      3   variable
+;G_153                                IX-16      3   variable
+;G_51                                 IX-13      3   variable
+;G_85                                 IX-10      3   variable
 ;damage                                IX-7      4   variable
-;G_67                                  IX-3      3   variable
+;G_83                                  IX-3      3   variable
 ;move                                  IX+9      1   parameter
 ;player                                IX+6      1   parameter
 
@@ -9812,9 +9785,9 @@ L_610:
 ;_strcpy                             IMPORT  -----   function
 ;name                                 IX-32     20   variable
 ;temp598                              IX-12      3   variable
-;G_151                                 IX-9      3   variable
-;G_153                                 IX-6      3   variable
-;G_152                                 IX-3      3   variable
+;G_167                                 IX-9      3   variable
+;G_169                                 IX-6      3   variable
+;G_168                                 IX-3      3   variable
 ;player                                IX+6      1   parameter
 
 
@@ -9841,7 +9814,7 @@ L__332:
 ; 1094	 */
 ; 1095	void resetstatus(bool player) {
 _resetstatus:
-	LD	HL,-44
+	LD	HL,-47
 	CALL	__frameset
 ; 1096		i = 0;
 	LD	HL,_i
@@ -9935,14 +9908,14 @@ L_622:
 	OR	A,A
 	JR	NZ,L_625
 	LD	BC,1
-	LD	(IX+-5),BC
+	LD	(IX+-17),BC
 	JR	L_626
 L_625:
 	LD	BC,0
-	LD	(IX+-5),BC
+	LD	(IX+-17),BC
 L_626:
 	LD	BC,_lightscreenturns
-	LD	HL,(IX+-5)
+	LD	HL,(IX+-17)
 	ADD	HL,BC
 	LD	(HL),0
 ; 1107		mistturns[player] = 0;
@@ -10060,13 +10033,14 @@ L_630:
 	OR	A,A
 	JR	Z,L_639
 ; 1123			uint8_t pokemonID;
-; 1124			sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
+; 1124			sprintf(playername, "%s", data_pokemon[currentSave.party[currentplayer].id].name);
+	LD	BC,_currentSave+10
+	LD	(IX+-5),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -10086,13 +10060,13 @@ L_630:
 	POP	BC
 	POP	BC
 	POP	BC
-; 1125			stats[1] = stats_CalculateStats(party[currentplayer]);
+; 1125			stats[1] = stats_CalculateStats(currentSave.party[currentplayer]);
+	LD	BC,(IX+-5)
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
 	ADD	HL,BC
 	LD	IY,0
 	ADD	IY,SP
@@ -10101,7 +10075,7 @@ L_630:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-26
+	PEA	IX+-29
 	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -10112,13 +10086,13 @@ L_630:
 	LD	BC,12
 	LDIR	
 ; 1126	
-; 1127			pokemonID = party[currentplayer].id;
+; 1127			pokemonID = currentSave.party[currentplayer].id;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-5)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -10166,20 +10140,20 @@ L_633:
 	POP	BC
 ; 1133			}
 L_634:
-; 1134			currentStatusPointer[1] = &party[currentplayer].currentstatus;
+; 1134			currentStatusPointer[1] = &currentSave.party[currentplayer].currentstatus;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-5)
 	ADD	HL,BC
-	LD	(IX+-41),HL	; spill
-	LD	HL,_currentStatusPointer+3
 	LD	(IX+-44),HL	; spill
-	LD	IY,(IX+-41)
+	LD	HL,_currentStatusPointer+3
+	LD	(IX+-47),HL	; spill
+	LD	IY,(IX+-44)
 	LEA	BC,IY+15
-	LD	HL,(IX+-44)	; unspill
+	LD	HL,(IX+-47)	; unspill
 	LD	(HL),BC
 ; 1135		}
 ; 1136		else {
@@ -10227,7 +10201,7 @@ L_639:
 	LD	IY,0
 	ADD	IY,SP
 	LD	DE,IY
-	PEA	IX+-38
+	PEA	IX+-41
 	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
@@ -10329,9 +10303,9 @@ L_640:
 ;_stats_CalculateStats               IMPORT  -----   function
 ;_playername                         STATIC     20   variable
 ;_currentplayer                      STATIC      1   variable
-;_party                              IMPORT   1224   variable
 ;_data_pokemon                       IMPORT  unknown variable
 ;_sprintf                            IMPORT  -----   function
+;_currentSave                        IMPORT   2604   variable
 ;_substitutehealth                   STATIC      4   variable
 ;_converted                          STATIC      2   variable
 ;_transformed                        STATIC      2   variable
@@ -10352,16 +10326,17 @@ L_640:
 ;_confusedturns                      STATIC      2   variable
 ;_statmods                           STATIC     14   variable
 ;_i                                  IMPORT      2   variable
+;temp627                              IX-17      3   variable
 ;temp623                              IX-14      3   variable
 ;temp619                              IX-11      3   variable
 ;temp631                               IX-8      3   variable
-;temp627                               IX-5      3   variable
+;G_170                                 IX-5      3   variable
 ;pokemonID                             IX-2      1   variable
 ;pokemonID                             IX-1      1   variable
 ;player                                IX+6      1   parameter
 
 
-; Stack Frame Size: 53 (bytes)
+; Stack Frame Size: 56 (bytes)
 ;       Spill Code: -3 (instruction)
 
 
@@ -10468,14 +10443,14 @@ L_650:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_648
-; 1167				if (party[currentplayer].currenthealth <= amount) {
+; 1167				if (currentSave.party[currentplayer].currenthealth <= amount) {
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-9),HL
-	LD	BC,_party
+	LD	(IX+-12),HL
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-15),HL
 	LD	IY,(IX+-15)
@@ -10486,7 +10461,7 @@ L_650:
 	OR	A,A
 	SBC	HL,BC
 	JP	M,L_644
-; 1168					party[currentplayer].currenthealth = 0;
+; 1168					currentSave.party[currentplayer].currenthealth = 0;
 	LD	IY,(IX+-15)
 	LD	(IY+13),0
 	LD	(IY+14),0
@@ -10494,9 +10469,9 @@ L_650:
 ; 1170				else {
 	JR	L_651
 L_644:
-; 1171					party[currentplayer].currenthealth -= amount;
-	LD	BC,_party
-	LD	HL,(IX+-9)
+; 1171					currentSave.party[currentplayer].currenthealth -= amount;
+	LD	BC,_currentSave+10
+	LD	HL,(IX+-12)
 	ADD	HL,BC
 	LD	(IX+-27),HL
 	LD	BC,(IX+9)
@@ -10518,7 +10493,7 @@ L_648:
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-12),HL
+	LD	(IX+-9),HL
 	LD	BC,_enemyparty
 	ADD	HL,BC
 	LD	(IX+-21),HL
@@ -10541,7 +10516,7 @@ L_648:
 L_646:
 ; 1179					enemyparty[currentenemy].currenthealth -= amount;
 	LD	BC,_enemyparty
-	LD	HL,(IX+-12)
+	LD	HL,(IX+-9)
 	ADD	HL,BC
 	LD	(IX+-30),HL
 	LD	BC,(IX+9)
@@ -10569,17 +10544,17 @@ L_651:
 ;_redrawcharacters                   IMPORT  -----   function
 ;_enemyparty                         STATIC    204   variable
 ;_currentenemy                       STATIC      1   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_currentplayer                      STATIC      1   variable
 ;_text_Display                       IMPORT  -----   function
 ;_substitutehealth                   STATIC      4   variable
 ;_bidedamage                         STATIC      4   variable
-;G_161                                IX-21      3   variable
-;G_155                                IX-18      3   variable
-;G_158                                IX-15      3   variable
-;G_162                                IX-12      3   variable
-;G_159                                 IX-9      3   variable
-;G_154                                 IX-6      3   variable
+;G_180                                IX-21      3   variable
+;G_173                                IX-18      3   variable
+;G_175                                IX-15      3   variable
+;G_178                                IX-12      3   variable
+;G_181                                 IX-9      3   variable
+;G_172                                 IX-6      3   variable
 ;amount                                IX+9      3   parameter
 ;player                                IX+6      1   parameter
 
@@ -10604,14 +10579,14 @@ _heal:
 	LD	A,(IX+6)
 	OR	A,A
 	JR	Z,L_656
-; 1187			party[currentplayer].currenthealth += amount;
+; 1187			currentSave.party[currentplayer].currenthealth += amount;
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-3),HL
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-9),HL
 	LD	BC,(IX+9)
@@ -10621,7 +10596,7 @@ _heal:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-; 1188			if (party[currentplayer].currenthealth >= stats[1].health) {
+; 1188			if (currentSave.party[currentplayer].currenthealth >= stats[1].health) {
 	LD	IY,_stats
 	LD	BC,(IY+12)
 	LD	IY,(IX+-9)
@@ -10629,9 +10604,9 @@ _heal:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_657
-; 1189				party[currentplayer].currenthealth = stats[1].health;
+; 1189				currentSave.party[currentplayer].currenthealth = stats[1].health;
 	LD	IY,_stats
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	LD	HL,(IX+-3)
 	ADD	HL,BC
 	LD	BC,(IY+12)
@@ -10691,10 +10666,10 @@ L_657:
 ;_enemyparty                         STATIC    204   variable
 ;_currentenemy                       STATIC      1   variable
 ;_stats                              STATIC     24   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_currentplayer                      STATIC      1   variable
-;G_166                                 IX-6      3   variable
-;G_164                                 IX-3      3   variable
+;G_186                                 IX-6      3   variable
+;G_184                                 IX-3      3   variable
 ;amount                                IX+9      3   parameter
 ;player                                IX+6      1   parameter
 
@@ -10708,7 +10683,7 @@ L_657:
 ; 1202	
 ; 1203	void addxp(void) {
 _addxp:
-	LD	HL,-68
+	LD	HL,-176
 	CALL	__frameset
 ; 1204		uint16_t xpgain = (enemyparty[currentenemy].level * data_pokemon[enemyparty[currentenemy].id].xpdrop) / 7;
 	LD	A,(_currentenemy)
@@ -10718,8 +10693,8 @@ _addxp:
 	CALL	__imul_b
 	LD	BC,_enemyparty
 	ADD	HL,BC
-	LD	(IX+-23),HL
-	LD	IY,(IX+-23)
+	LD	(IX+-47),HL
+	LD	IY,(IX+-47)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10731,7 +10706,7 @@ _addxp:
 	LD	BC,(IY+47)
 	CALL	__stoiu
 	LD	DE,HL
-	LD	IY,(IX+-23)
+	LD	IY,(IX+-47)
 	LD	A,(IY+9)
 	UEXT	HL
 	LD	L,A
@@ -10740,36 +10715,46 @@ _addxp:
 	CALL	__imuls
 	LD	BC,7
 	CALL	__idivs
-	LD	(IX+-14),L
-	LD	(IX+-13),H
-; 1205		party[currentplayer].xp += xpgain;
+	LD	(IX+-32),L
+	LD	(IX+-31),H
+; 1205		currentSave.party[currentplayer].xp += xpgain;
+	LD	BC,_currentSave+10
+	LD	(IX+-21),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
 	ADD	HL,BC
-	LD	(IX+-20),HL
-	LD	BC,(IX+-14)
+	LD	(IX+-44),HL
+	LD	BC,(IX+-32)
 	CALL	__stoiu
-	LD	IY,(IX+-20)
+	LD	IY,(IX+-44)
 	LD	BC,(IY+10)
 	ADD	HL,BC
 	LD	(IY+10),HL
-; 1206		while ((party[currentplayer].level < 100) && (party[currentplayer].xp >= xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1])) {
+; 1206		while ((currentSave.party[currentplayer].level < 100) && (currentSave.party[currentplayer].xp >= xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level + 1])) {
 	JR	L_675
 L_676:
-; 1207			party[currentplayer].level++;
-	LD	BC,_party
-	LD	HL,(IX+-3)
+; 1207			currentSave.party[currentplayer].level++;
+	LD	BC,(IX+-6)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-6)
+	LD	(IX+-15),BC
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-6)
 	ADD	HL,BC
-	LD	(IX+-26),HL
-	LD	IY,(IX+-26)
+	LD	(IX+-53),HL
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-6)
+	ADD	HL,BC
+	LD	(IX+-50),HL
+	LD	IY,(IX+-53)
 	LD	A,(IY+9)
 	INC	A
+	LD	IY,(IX+-50)
 	LD	(IY+9),A
-; 1208			sprintf(str, "%s leveled up", data_pokemon[party[currentplayer].id].name);
+; 1208			sprintf(str, "%s leveled up", data_pokemon[currentSave.party[currentplayer].id].name);
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10803,17 +10788,21 @@ L_676:
 	JR	L_671
 L_669:
 ; 1211			{
-; 1212				if (data_pokemon[party[currentplayer].id].movelevels[i] == party[currentplayer].level) {
+; 1212				if (data_pokemon[currentSave.party[currentplayer].id].movelevels[i] == currentSave.party[currentplayer].level) {
+	LD	BC,(IX+-18)
+	LD	(IX+-3),BC
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-6),HL
-	LD	BC,_party
+	LD	(IX+-24),HL
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-29),HL
-	LD	IY,(IX+-29)
+	LD	(IX+-59),HL
+	LD	(IX+-56),HL
+	LD	IY,(IX+-56)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10828,15 +10817,16 @@ L_669:
 	LEA	HL,IY+24
 	ADD	HL,BC
 	LD	A,(HL)
-	LD	IY,(IX+-29)
+	LD	IY,(IX+-56)
 	CP	A,(IY+9)
 	JR	NZ,L_668
-; 1213					sprintf(str, "%s wants to learn %s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
-	LD	BC,_party
-	LD	HL,(IX+-6)
+; 1213					sprintf(str, "%s wants to learn %s", data_pokemon[currentSave.party[currentplayer].id].name, data_moves[data_pokemon[currentSave.party[currentplayer].id].moveids[i]].name);
+	LD	BC,(IX+-24)
+	LD	HL,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-32),HL
-	LD	IY,(IX+-32)
+	LD	(IX+-65),HL
+	LD	(IX+-62),HL
+	LD	IY,(IX+-62)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10859,7 +10849,7 @@ L_669:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	LD	IY,(IX+-32)
+	LD	IY,(IX+-62)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -10886,13 +10876,13 @@ L_669:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1215					sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+; 1215					sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[currentSave.party[currentplayer].id].moveids[i]].name);
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -10933,24 +10923,28 @@ L_669:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-; 1217					switch (text_AskQuestion4(data_moves[party[currentplayer].moves[0]].name, data_moves[party[currentplayer].moves[1]].name, data_moves[party[currentplayer].moves[2]].name, data_moves[party[currentplayer].moves[3]].name, false))
+; 1217					switch (text_AskQuestion4(data_moves[currentSave.party[currentplayer].moves[0]].name, data_moves[currentSave.party[currentplayer].moves[1]].name, data_moves[currentSave.party[currentplayer].moves[2]].name, data_moves[currentSave.party[currentplayer].moves[3]].name, false))
+	LD	BC,(IX+-3)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-38),HL
-	LD	IY,(IX+-38)
+	LD	(IX+-71),HL
+	LD	IY,(IX+-71)
 	LEA	BC,IY+1
-	LD	(IX+-35),BC
+	LD	(IX+-68),BC
 	LD	BC,_data_moves
 	LD	DE,_data_moves
 	OR	A,A
 	SBC	HL,HL
 	PUSH	HL
-	LD	IY,(IX+-35)
+	LD	IY,(IX+-68)
 	LEA	HL,IY+3
 	LD	A,(HL)
 	UEXT	HL
@@ -10960,7 +10954,7 @@ L_669:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	LD	IY,(IX+-35)
+	LD	IY,(IX+-68)
 	LEA	HL,IY+2
 	LD	A,(HL)
 	UEXT	HL
@@ -10970,7 +10964,7 @@ L_669:
 	ADD	HL,DE
 	LD	IY,HL
 	PEA	IY+0
-	LD	HL,(IX+-35)
+	LD	HL,(IX+-68)
 	INC	HL
 	LD	A,(HL)
 	UEXT	HL
@@ -10980,7 +10974,7 @@ L_669:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	LD	HL,(IX+-35)
+	LD	HL,(IX+-68)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -11013,16 +11007,21 @@ L__362:
 ; 1218					{
 ; 1219					case 1:
 L_662:
-; 1220						party[currentplayer].moves[0] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1220						currentSave.party[currentplayer].moves[0] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
+	LD	BC,(IX+-3)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-41),HL
-	LD	IY,(IX+-41)
+	LD	(IX+-77),HL
+	LD	(IX+-74),HL
+	LD	IY,(IX+-74)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11035,7 +11034,7 @@ L_662:
 	CALL	__stoiu
 	LD	BC,HL
 	LEA	HL,IY+34
-	LD	IY,(IX+-41)
+	LD	IY,(IX+-74)
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+1),A
@@ -11043,16 +11042,21 @@ L_662:
 	JR	L_668
 ; 1222					case 2:
 L_663:
-; 1223						party[currentplayer].moves[1] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1223						currentSave.party[currentplayer].moves[1] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
+	LD	BC,(IX+-3)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-44),HL
-	LD	IY,(IX+-44)
+	LD	(IX+-83),HL
+	LD	(IX+-80),HL
+	LD	IY,(IX+-80)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11065,7 +11069,7 @@ L_663:
 	CALL	__stoiu
 	LD	BC,HL
 	LEA	HL,IY+34
-	LD	IY,(IX+-44)
+	LD	IY,(IX+-80)
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+2),A
@@ -11073,16 +11077,21 @@ L_663:
 	JR	L_668
 ; 1225					case 3:
 L_664:
-; 1226						party[currentplayer].moves[2] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1226						currentSave.party[currentplayer].moves[2] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
+	LD	BC,(IX+-3)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-47),HL
-	LD	IY,(IX+-47)
+	LD	(IX+-89),HL
+	LD	(IX+-86),HL
+	LD	IY,(IX+-86)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11095,7 +11104,7 @@ L_664:
 	CALL	__stoiu
 	LD	BC,HL
 	LEA	HL,IY+34
-	LD	IY,(IX+-47)
+	LD	IY,(IX+-86)
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+3),A
@@ -11103,16 +11112,21 @@ L_664:
 	JR	L_668
 ; 1228					case 4:
 L_665:
-; 1229						party[currentplayer].moves[3] = data_pokemon[party[currentplayer].id].moveids[i];
+; 1229						currentSave.party[currentplayer].moves[3] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
+	LD	BC,(IX+-3)
+	LD	(IX+-18),BC
+	LD	BC,(IX+-3)
+	LD	(IX+-15),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-50),HL
-	LD	IY,(IX+-50)
+	LD	(IX+-95),HL
+	LD	(IX+-92),HL
+	LD	IY,(IX+-92)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11125,7 +11139,7 @@ L_665:
 	CALL	__stoiu
 	LD	BC,HL
 	LEA	HL,IY+34
-	LD	IY,(IX+-50)
+	LD	IY,(IX+-92)
 	ADD	HL,BC
 	LD	A,(HL)
 	LD	(IY+4),A
@@ -11153,17 +11167,21 @@ L_671:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	C,L_669
-; 1235			if (party[currentplayer].level == data_pokemon[party[currentplayer].id].evolvelevel) {
+; 1235			if (currentSave.party[currentplayer].level == data_pokemon[currentSave.party[currentplayer].id].evolvelevel) {
+	LD	BC,(IX+-15)
+	LD	(IX+-12),BC
+	LD	(IX+-21),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-9),HL
-	LD	BC,_party
+	LD	(IX+-27),HL
+	LD	BC,(IX+-12)
 	ADD	HL,BC
-	LD	(IX+-53),HL
-	LD	IY,(IX+-53)
+	LD	(IX+-101),HL
+	LD	(IX+-98),HL
+	LD	IY,(IX+-98)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11173,12 +11191,14 @@ L_671:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+44)
-	LD	IY,(IX+-53)
+	LD	IY,(IX+-98)
 	CP	A,(IY+9)
 	JR	NZ,L_675
-; 1236				sprintf(str, "%s is evolving", data_pokemon[party[currentplayer].id].name);
-	LD	BC,_party
-	LD	HL,(IX+-9)
+; 1236				sprintf(str, "%s is evolving", data_pokemon[currentSave.party[currentplayer].id].name);
+	LD	BC,(IX+-12)
+	LD	(IX+-21),BC
+	LD	BC,(IX+-27)
+	LD	HL,(IX+-12)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -11221,16 +11241,19 @@ L_671:
 	OR	A,A
 	SBC	HL,BC
 	JR	NZ,L_675
-; 1239					party[currentplayer].id = data_pokemon[party[currentplayer].id].evolveid;
+; 1239					currentSave.party[currentplayer].id = data_pokemon[currentSave.party[currentplayer].id].evolveid;
+	LD	BC,(IX+-12)
+	LD	(IX+-21),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-12)
 	ADD	HL,BC
-	LD	(IX+-56),HL
-	LD	IY,(IX+-56)
+	LD	(IX+-107),HL
+	LD	(IX+-104),HL
+	LD	IY,(IX+-104)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11240,35 +11263,45 @@ L_671:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+45)
-	LD	IY,(IX+-56)
+	LD	IY,(IX+-104)
 	LD	(IY+0),A
 ; 1240				}
 ; 1241			}
 ; 1242		}
 L_675:
+	LD	BC,(IX+-21)
+	LD	(IX+-6),BC
 	LD	A,(_currentplayer)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-3),HL
-	LD	(IX+-12),HL
-	LD	HL,(IX+-3)
-	LD	BC,_party
+	LD	(IX+-9),HL
+	LD	BC,(IX+-6)
+	LD	(IX+-30),BC
+	LD	BC,(IX+-9)
+	LD	(IX+-35),BC
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-6)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+9)
 	CP	A,100
 	JR	NC,L_677
-	LD	BC,(IX+-3)
-	LD	(IX+-17),BC
-	LD	BC,(IX+-3)
-	LD	(IX+-12),BC
-	LD	HL,(IX+-3)
-	LD	BC,_party
+	LD	BC,(IX+-6)
+	LD	(IX+-41),BC
+	LD	BC,(IX+-6)
+	LD	(IX+-30),BC
+	LD	BC,(IX+-9)
+	LD	(IX+-38),BC
+	LD	BC,(IX+-9)
+	LD	(IX+-35),BC
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-6)
 	ADD	HL,BC
-	LD	(IX+-59),HL
-	LD	IY,(IX+-59)
+	LD	(IX+-113),HL
+	LD	(IX+-110),HL
+	LD	IY,(IX+-110)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11280,31 +11313,40 @@ L_675:
 	LD	A,(IY+49)
 	UEXT	HL
 	LD	L,A
-	LD	IY,(IX+-59)
+	LD	IY,(IX+-110)
 	LD	A,(IY+9)
 	LD	BC,303
 	CALL	__imulu
 	LD	BC,_xpPerLevel
 	ADD	HL,BC
-	LD	DE,HL
+	LD	BC,HL
 	UEXT	HL
 	LD	L,A
 	INC	HL
-	LD	BC,HL
+	LD	DE,HL
 	ADD	HL,HL
-	ADD	HL,BC
 	ADD	HL,DE
+	ADD	HL,BC
 	OR	A,A
 	LD	BC,(HL)
 	LD	HL,(IY+10)
 	SBC	HL,BC
 	JP	P,L_676
 L_677:
-; 1243		party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
-	LD	BC,_party
-	LD	HL,(IX+-12)
+; 1243		currentSave.party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
+	LD	BC,(IX+-30)
+	LEA	IY,IX+-128
+	LD	(IY+-12),BC
+	LD	HL,-140
+	LD	BC,IX
 	ADD	HL,BC
-	LD	(IX+-68),HL
+	LD	DE,(IX+-35)
+	LD	BC,DE
+	LD	HL,(HL)
+	ADD	HL,BC
+	LD	(IY+-9),HL
+	LD	BC,(IY+-9)
+	LD	(IY+-6),BC
 	LD	A,(_currentenemy)
 	UEXT	HL
 	LD	L,A
@@ -11312,8 +11354,8 @@ L_677:
 	CALL	__imul_b
 	LD	BC,_enemyparty
 	ADD	HL,BC
-	LD	(IX+-65),HL
-	LD	IY,(IX+-65)
+	LD	(IY+-3),HL
+	LD	IY,(IY+-3)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11323,16 +11365,51 @@ L_677:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	C,(IY+18)
+	LEA	IY,IX+-128
+	LD	HL,(IY+-6)
+	PUSH	IY
+	LD	(IY+-15),HL
+	POP	IY
+	LD	HL,(IY+-6)
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-18),HL	; unspill
+	LD	HL,(IY+-15)
+	POP	IY
+	LD	IY,HL
 	LD	B,0
-	LD	IY,(IX+-68)
-	LD	DE,(IY+22)
 	LD	HL,BC
-	ADD.SIS	HL,DE
+	LD	BC,(IY+22)
+	ADD.SIS	HL,BC
 	LD	BC,HL
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	HL,(IY+-18)
+	POP	IY
+	LD	IY,HL
 	LD	(IY+22),C
+; 1244		currentSave.party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
+	LD	HL,-140
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-21),DE
+	LD	(IY+-24),IX	; unspill
+	LD	DE,(IY+-21)
+	LD	(IY+-21),DE
+	LD	DE,(IY+-24)
+	POP	IY
+	ADD	HL,DE
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	DE,(IY+-21)
+	POP	IY
 	LD	(IY+23),B
-; 1244		party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
-	LD	IY,(IX+-65)
+	LD	HL,(HL)
+	LD	BC,DE
+	ADD	HL,BC
+	LD	(IX+-128),HL
+	LEA	IY,IX+-128
+	LD	IY,(IY+-3)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -11341,54 +11418,145 @@ L_677:
 	CALL	__imulu
 	LD	BC,_data_pokemon
 	ADD	HL,BC
-	LD	(IX+-62),HL
-	LD	IY,(IX+-62)
+	LD	(IX+-125),HL
+	LEA	IY,IX+-128
+	LD	HL,(IY+-6)
+	LD	IY,(IX+-125)
 	LD	C,(IY+19)
-	LD	IY,(IX+-68)
+	LD	IY,HL
 	LD	HL,(IY+24)
 	LD	B,0
 	ADD.SIS	HL,BC
 	LD	BC,HL
+	LD	IY,(IX+-128)
 	LD	(IY+24),C
+; 1245		currentSave.party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-27),DE
+	LD	(IY+-30),IX	; unspill
+	LD	DE,(IY+-27)
+	POP	IY
+	LD	HL,-140
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-27),DE
+	LD	DE,(IY+-30)
+	POP	IY
+	ADD	HL,DE
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	DE,(IY+-27)
+	POP	IY
 	LD	(IY+25),B
-; 1245		party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
-	LD	IY,(IX+-62)
+	LD	HL,(HL)
+	LD	BC,DE
+	ADD	HL,BC
+	LD	(IX+-122),HL
+	LD	IY,(IX+-125)
 	LD	C,(IY+20)
-	LD	IY,(IX+-68)
+	LD	IY,(IX+-128)
 	LD	HL,(IY+26)
 	LD	B,0
 	ADD.SIS	HL,BC
 	LD	BC,HL
+	LD	IY,(IX+-122)
 	LD	(IY+26),C
+; 1246		currentSave.party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-33),DE
+	LD	(IY+-36),IX	; unspill
+	LD	DE,(IY+-33)
+	POP	IY
+	LD	HL,-140
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-33),DE
+	LD	DE,(IY+-36)
+	POP	IY
+	ADD	HL,DE
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	DE,(IY+-33)
+	POP	IY
 	LD	(IY+27),B
-; 1246		party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
-	LD	IY,(IX+-62)
+	LD	HL,(HL)
+	LD	BC,DE
+	ADD	HL,BC
+	LD	(IX+-119),HL
+	LD	IY,(IX+-125)
 	LD	C,(IY+21)
-	LD	IY,(IX+-68)
+	LD	IY,(IX+-122)
 	LD	HL,(IY+28)
 	LD	B,0
 	ADD.SIS	HL,BC
 	LD	BC,HL
+	LD	IY,(IX+-119)
 	LD	(IY+28),C
+; 1247		currentSave.party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-39),DE
+	LD	(IY+-42),IX	; unspill
+	LD	DE,(IY+-39)
+	POP	IY
+	LD	HL,-140
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-39),DE
+	LD	DE,(IY+-42)
+	POP	IY
+	ADD	HL,DE
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	DE,(IY+-39)
+	POP	IY
 	LD	(IY+29),B
-; 1247		party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
-	LD	IY,(IX+-62)
+	LD	HL,(HL)
+	LD	BC,DE
+	ADD	HL,BC
+	LD	(IX+-116),HL
+	LD	IY,(IX+-125)
 	LD	C,(IY+22)
-	LD	IY,(IX+-68)
+	LD	IY,(IX+-119)
 	LD	HL,(IY+30)
 	LD	B,0
 	ADD.SIS	HL,BC
 	LD	BC,HL
+	LD	IY,(IX+-116)
 	LD	(IY+30),C
+; 1248		currentSave.party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-45),DE
+	LD	(IY+-48),IX	; unspill
+	LD	DE,(IY+-45)
+	POP	IY
+	LD	HL,-140
+	PUSH	IY
+	LEA	IY,IX+-128	; spill
+	LD	(IY+-45),DE
+	LD	DE,(IY+-48)
+	POP	IY
+	ADD	HL,DE
+	PUSH	IY
+	LEA	IY,IX+-128	; unspill
+	LD	DE,(IY+-45)
+	POP	IY
 	LD	(IY+31),B
-; 1248		party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
-	LD	IY,(IX+-62)
+	LD	IY,(IX+-125)
+	LD	HL,(HL)
+	LD	BC,DE
+	ADD	HL,BC
 	LD	C,(IY+23)
-	LD	IY,(IX+-68)
+	LD	IY,(IX+-116)
+	LD	DE,HL
 	LD	HL,(IY+32)
 	LD	B,0
 	ADD.SIS	HL,BC
 	LD	BC,HL
+	LD	IY,DE
 	LD	(IY+32),C
 	LD	(IY+33),B
 ; 1249	}
@@ -11407,21 +11575,29 @@ L_677:
 ;_text_Display                       IMPORT  -----   function
 ;_str                                IMPORT    100   variable
 ;_sprintf                            IMPORT  -----   function
-;_party                              IMPORT   1224   variable
 ;_currentplayer                      STATIC      1   variable
+;_currentSave                        IMPORT   2604   variable
 ;_data_pokemon                       IMPORT  unknown variable
 ;_enemyparty                         STATIC    204   variable
 ;_currentenemy                       STATIC      1   variable
-;G_167                                IX-17      3   variable
-;xpgain                               IX-14      2   variable
-;G_171                                IX-12      3   variable
-;G_169                                 IX-9      3   variable
-;G_168                                 IX-6      3   variable
-;G_170                                 IX-3      3   variable
+;G_187                                IX-41      3   variable
+;G_188                                IX-38      3   variable
+;G_206                                IX-35      3   variable
+;xpgain                               IX-32      2   variable
+;G_205                                IX-30      3   variable
+;G_200                                IX-27      3   variable
+;G_191                                IX-24      3   variable
+;G_202                                IX-21      3   variable
+;G_189                                IX-18      3   variable
+;G_198                                IX-15      3   variable
+;G_199                                IX-12      3   variable
+;G_204                                 IX-9      3   variable
+;G_203                                 IX-6      3   variable
+;G_190                                 IX-3      3   variable
 
 
-; Stack Frame Size: 74 (bytes)
-;       Spill Code: -3 (instruction)
+; Stack Frame Size: 182 (bytes)
+;       Spill Code: -21 (instruction)
 
 
 	SEGMENT STRSECT
@@ -11712,20 +11888,20 @@ L_716:
 	LD	(IX+-1),0
 	JR	L_711
 L_709:
-; 1313				if (party[slot].id == 0) {
+; 1313				if (currentSave.party[slot].id == 0) {
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	(IX+-14),HL
 	LD	IY,(IX+-14)
 	LD	A,(IY+0)
 	OR	A,A
 	JR	NZ,L_708
-; 1314					party[slot] = enemyparty[currentenemy];
+; 1314					currentSave.party[slot] = enemyparty[currentenemy];
 	LD	A,(_currentenemy)
 	LD	DE,(IX+-14)
 	LD	BC,34
@@ -11824,7 +12000,7 @@ L_718:
 ;**************************** _capture ***************************
 ;Name                         Addr/Register   Size   Type
 ;_i                                  IMPORT      2   variable
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;_str                                IMPORT    100   variable
 ;_sprintf                            IMPORT  -----   function
 ;_stats                              STATIC     24   variable
@@ -11835,8 +12011,8 @@ L_718:
 ;_rand                               IMPORT  -----   function
 ;_text_Display                       IMPORT  -----   function
 ;_wild                               STATIC      1   variable
-;G_174                                IX-14      3   variable
-;G_173                                IX-11      3   variable
+;G_209                                IX-14      3   variable
+;G_208                                IX-11      3   variable
 ;n2                                    IX-8      1   variable
 ;n1                                    IX-7      1   variable
 ;captured                              IX-6      1   variable
@@ -11846,7 +12022,7 @@ L_718:
 
 
 ; Stack Frame Size: 29 (bytes)
-;       Spill Code: -3 (instruction)
+;       Spill Code: -21 (instruction)
 
 
 	SEGMENT STRSECT
@@ -11877,9 +12053,7 @@ L__390:
 	XREF _items_UseItem:ROM
 	XREF _stats_NewCharacter:ROM
 	XREF _stats_CalculateStats:ROM
-	XREF _playerItems:ROM
-	XREF _playerMoney:ROM
-	XREF _party:ROM
+	XREF _currentSave:ROM
 	XREF _text_status2:ROM
 	XREF _textBoxType:ROM
 	XREF _text_DrawTextBox:ROM

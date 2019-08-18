@@ -6,29 +6,30 @@
 
 extern const char appVarName[];
 
-//struct saveGame
-//{
-//
-//};
+struct saveGame
+{
+	bool newGame;
+	uint8_t rivalPokemon;
+	uint16_t playerX;
+	uint16_t playerY;
+	uint16_t lastPlayerX;
+	uint16_t lastPlayerY;
+	struct pokemonData party[36];
+	uint16_t currentZone;
+	bool indoors;
+	bool surfing;
+	uint8_t currentBuilding;
+	uint32_t playerMoney;
+	uint8_t playerItems[185];
+	bool defeatedTrainers[16][16];
+	bool defeatedTrainersIndoors[16][16];
+	bool takenGifts[16][16];
+	bool takenGiftsIndoors[16][16];
+	uint8_t badgeCount;
+	uint8_t pokedex[151];
+};
 
-extern bool newGame;
-extern uint8_t rivalPokemon;
-extern uint16_t playerX;
-extern uint16_t playerY;
-extern uint16_t lastPlayerX;
-extern uint16_t lastPlayerY;
-extern struct pokemonData party[36];
-extern uint16_t currentZone;
-extern bool indoors;
-extern bool surfing;
-extern uint8_t currentBuilding;
-extern uint32_t playerMoney;
-extern uint8_t playerItems[185];
-extern bool defeatedTrainers[][4];
-extern bool defeatedTrainersIndoors[][4];
-extern bool takenGifts[][16];
-extern bool takenGiftsIndoors[][16];
-extern uint8_t badgeCount;
+extern struct saveGame currentSave;
 
 
 void save_Save(void);

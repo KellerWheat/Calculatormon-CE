@@ -99,14 +99,12 @@ _main:
 ;   66		}
 L_1:
 ;   67	
-;   68		surfing = false;
-	XOR	A,A
-	LD	(_surfing),A
-;   69		map_Setup();
+;   68		map_Setup();
 	CALL	_map_Setup
-;   70	
-;   71		map_LoadPokeballs();
+;   69	
+;   70		map_LoadPokeballs();
 	CALL	_map_LoadPokeballs
+;   71	
 ;   72	
 ;   73	
 ;   74		do {
@@ -195,7 +193,6 @@ L_12:
 ;_kb_Scan                            IMPORT  -----   function
 ;_map_LoadPokeballs                  IMPORT  -----   function
 ;_map_Setup                          IMPORT  -----   function
-;_surfing                            IMPORT      1   variable
 ;_FindColors                         IMPORT  -----   function
 ;_debugging                          IMPORT      1   variable
 ;_battle_Initialize                  IMPORT  -----   function
@@ -220,7 +217,6 @@ L_12:
 	XREF _map_Loop:ROM
 	XREF _map_Setup:ROM
 	XREF _map_Initialize:ROM
-	XREF _surfing:ROM
 	XREF _debugging:ROM
 	XREF _FindColors:ROM
 	XREF _gfx_SetMonospaceFont:ROM

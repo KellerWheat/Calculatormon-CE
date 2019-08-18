@@ -25,7 +25,7 @@ char str[100];
 uint16_t i;
 uint16_t e;
 /* Used to run functions when debugging */
-bool debugging = false;
+bool debugging = 0;
 
 #define COLORCOUNT 17
 
@@ -34,7 +34,7 @@ uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{8,1,232,148,130,185,0,44,108,130,26,130,0,201,69,102,74,},
+	{9,2,17,194,251,217,0,235,210,251,37,251,0,193,95,141,99,},
 	{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
 };
 

@@ -3,7 +3,7 @@
 #include "PKMNSD7.h"
 
 #include <fileioc.h>
-uint8_t *PKMNSD7[24] = {
+uint8_t *PKMNSD7[44] = {
  (uint8_t*)0,
  (uint8_t*)338,
  (uint8_t*)676,
@@ -28,6 +28,26 @@ uint8_t *PKMNSD7[24] = {
  (uint8_t*)7098,
  (uint8_t*)7436,
  (uint8_t*)7774,
+ (uint8_t*)8112,
+ (uint8_t*)8450,
+ (uint8_t*)8788,
+ (uint8_t*)9126,
+ (uint8_t*)9464,
+ (uint8_t*)9802,
+ (uint8_t*)10140,
+ (uint8_t*)10478,
+ (uint8_t*)10816,
+ (uint8_t*)11154,
+ (uint8_t*)11492,
+ (uint8_t*)11830,
+ (uint8_t*)12168,
+ (uint8_t*)12506,
+ (uint8_t*)12844,
+ (uint8_t*)13182,
+ (uint8_t*)13520,
+ (uint8_t*)13858,
+ (uint8_t*)14196,
+ (uint8_t*)14534,
 };
 
 bool PKMNSD7_init(void) {

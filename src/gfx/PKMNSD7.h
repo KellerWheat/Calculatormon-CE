@@ -6,9 +6,9 @@
 
 #include <stdbool.h>
 
-#define PKMNSD7_num 24
+#define PKMNSD7_num 44
 
-extern uint8_t *PKMNSD7[24];
+extern uint8_t *PKMNSD7[44];
 #define n000_width 16
 #define n000_height 21
 #define n000 ((gfx_sprite_t*)PKMNSD7[0])
@@ -81,6 +81,66 @@ extern uint8_t *PKMNSD7[24];
 #define n023_width 16
 #define n023_height 21
 #define n023 ((gfx_sprite_t*)PKMNSD7[23])
+#define n024_width 16
+#define n024_height 21
+#define n024 ((gfx_sprite_t*)PKMNSD7[24])
+#define n025_width 16
+#define n025_height 21
+#define n025 ((gfx_sprite_t*)PKMNSD7[25])
+#define n026_width 16
+#define n026_height 21
+#define n026 ((gfx_sprite_t*)PKMNSD7[26])
+#define n027_width 16
+#define n027_height 21
+#define n027 ((gfx_sprite_t*)PKMNSD7[27])
+#define n028_width 16
+#define n028_height 21
+#define n028 ((gfx_sprite_t*)PKMNSD7[28])
+#define n029_width 16
+#define n029_height 21
+#define n029 ((gfx_sprite_t*)PKMNSD7[29])
+#define n030_width 16
+#define n030_height 21
+#define n030 ((gfx_sprite_t*)PKMNSD7[30])
+#define n031_width 16
+#define n031_height 21
+#define n031 ((gfx_sprite_t*)PKMNSD7[31])
+#define n032_width 16
+#define n032_height 21
+#define n032 ((gfx_sprite_t*)PKMNSD7[32])
+#define n033_width 16
+#define n033_height 21
+#define n033 ((gfx_sprite_t*)PKMNSD7[33])
+#define n034_width 16
+#define n034_height 21
+#define n034 ((gfx_sprite_t*)PKMNSD7[34])
+#define n035_width 16
+#define n035_height 21
+#define n035 ((gfx_sprite_t*)PKMNSD7[35])
+#define sn000_width 16
+#define sn000_height 21
+#define sn000 ((gfx_sprite_t*)PKMNSD7[36])
+#define sn001_width 16
+#define sn001_height 21
+#define sn001 ((gfx_sprite_t*)PKMNSD7[37])
+#define sn002_width 16
+#define sn002_height 21
+#define sn002 ((gfx_sprite_t*)PKMNSD7[38])
+#define sn003_width 16
+#define sn003_height 21
+#define sn003 ((gfx_sprite_t*)PKMNSD7[39])
+#define sn004_width 16
+#define sn004_height 21
+#define sn004 ((gfx_sprite_t*)PKMNSD7[40])
+#define sn005_width 16
+#define sn005_height 21
+#define sn005 ((gfx_sprite_t*)PKMNSD7[41])
+#define sn006_width 16
+#define sn006_height 21
+#define sn006 ((gfx_sprite_t*)PKMNSD7[42])
+#define sn007_width 16
+#define sn007_height 21
+#define sn007 ((gfx_sprite_t*)PKMNSD7[43])
 bool PKMNSD7_init(void);
 
 #endif

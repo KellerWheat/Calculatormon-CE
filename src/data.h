@@ -97,6 +97,8 @@ struct zoneData {
 };
 
 /* Data from other structs */
+void LoadText(int index);
+extern char loadedText[256];
 
 extern struct pokemonType data_pokemon[];
 extern struct move data_moves[];

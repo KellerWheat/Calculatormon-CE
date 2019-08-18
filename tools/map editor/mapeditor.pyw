@@ -51,36 +51,16 @@ root.title('Map Editor')
 root.wm_state('zoomed')
 
 #---------------------------
-#Load Trainer/NPC Text Lists
+#Load Tilesets
 #---------------------------
 
 
-text = np.array(["                                "])
 tileSets = np.array([0])
 
-text[0] = ""
-
-if(os.path.isfile("text.npy")):
-    text = np.load('text.npy')
 if(os.path.isfile("tilesets.npy")):    
     tileSets = np.load('tilesets.npy')
 
-text = np.resize(text, (textCount))
 tileSets = np.resize(tileSets, mapCount)
-
-
-currentText = IntVar()
-Var_Text = StringVar()
-Var_Text.set(text[0])
-
-
-def UpdateText(new):
-    text[currentText.get()] = Var_Text.get()
-    currentText.set(new)
-    Var_Text.set(text[currentText.get()])
-    np.save('text.npy', text)
-
-UpdateText(0)
 
 
 #---------
@@ -146,12 +126,7 @@ def ChangeMap():
     SetupTileMap()
 
 def CopyAll():
-    UpdateText(currentText.get())
     copytext = ""
-    copytext += "char data_text["+str(textCount)+"][32] = {\n\t"
-    for i in range(0,textCount):
-        copytext += '"'+text[i]+'",'
-    copytext += "\n};\n"
     copytext += "uint8_t data_tileSets["+str(mapCount)+"] = {\n\t"
     for i in range(0,mapCount):
         copytext += str(tileSets[i])+','
@@ -232,7 +207,7 @@ ChangeMap()
 #Display Map
 #-----------
 
-TypeNames = [' ','BE','C','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','L','ST','R','T','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','N0','N1','N2','N3','N4','N5','N6','N7','N8','N9','NA','NB','NC','ND','NE','NF','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N']
+TypeNames = [' ','BE','R','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','L','ST','R','T','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','N0','N1','N2','N3','N4','N5','N6','N7','N8','N9','NA','NB','NC','ND','NE','NF','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N']
 
 SetupTileMap()
 
@@ -330,7 +305,7 @@ def draw():
 
 ModeList = ["Tiles","Ground Types","Grass","Exit","Door","Text","Trainer"]
 TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","Lab","Starter","Rock", "Tree","Rival"]
-TypeNumbers = [0,1,64,65,66,67,68,69,70,71,72]
+TypeNumbers = [0,1,64,65,66,67,68,69,70,71,2]
 def CalculateNumberToPaint():
     global editMode, numberToPaint, paintWidth, paintHeight
     Frame_ChangeNumber.grid_forget()
@@ -606,29 +581,6 @@ Button(Canvas_SetMap,text="Convert Pokemon to ID",command=pokemonid).grid(row=17
 Entry(Canvas_SetMap,textvar=Var_ItemToConvert).grid(row=18,column=0)
 Button(Canvas_SetMap,text="Convert Item to ID",command=itemid).grid(row=19,column=0)
 
-#Trainer:
-
-Canvas_SetMap.grid_rowconfigure(20, minsize=20)
-def DecreaseText():
-    if(currentText.get()-1==-1):
-        UpdateText(textCount-1)
-    else:
-        UpdateText(currentText.get()-1)
-def IncreaseText():
-    if(currentText.get()+1==textCount):
-        UpdateText(0)
-    else:
-        UpdateText(currentText.get()+1)
-
-Label(Canvas_SetMap,text="Text").grid(row=21,column=0)
-Frame_ChangeText = Frame(Canvas_SetMap)
-Button(Frame_ChangeText,command=DecreaseText,text="-").grid(row=0,column=0)
-Label(Frame_ChangeText,textvariable=currentText).grid(row=0,column=1)
-Button(Frame_ChangeText,command=IncreaseText,text="+").grid(row=0,column=2)
-Frame_ChangeText.grid(row=22,column=0)
-
-Entry(Canvas_SetMap,textvar=Var_Text).grid(row=23,column=0)
-
 #TileSet
 
 def DecreaseTS():
@@ -666,7 +618,6 @@ while running:
     draw()
     root.update()
 
-UpdateText(currentText.get())#saves
 np.save('tilesets.npy', tileSets)
 pygame.quit()
 root.destroy()

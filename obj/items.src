@@ -1857,7 +1857,7 @@ L_2:
 ;   82	
 ;   83	void items_ItemShop(void) {
 _items_ItemShop:
-	LD	HL,-8
+	LD	HL,-11
 	CALL	__frameset
 ;   84		uint8_t shopPage = 0;
 	LD	(IX+-2),0
@@ -2022,7 +2022,7 @@ L_9:
 	POP	BC
 	POP	BC
 	POP	BC
-;  104			sprintf(str, "%u", playerItems[i + shopPage]);
+;  104			sprintf(str, "%u", currentSave.playerItems[i + shopPage]);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	BC,HL
@@ -2030,7 +2030,7 @@ L_9:
 	UEXT	HL
 	LD	L,A
 	ADD	HL,BC
-	LD	BC,_playerItems
+	LD	BC,_currentSave+19
 	ADD	HL,BC
 	LD	A,(HL)
 	UEXT	HL
@@ -2238,7 +2238,7 @@ L_30:
 	LD	A,(16056338)
 	AND	A,32
 	JR	Z,L_31
-;  143				if (playerMoney >= itemPrices[shopCurrent + shopPage]) {
+;  143				if (currentSave.playerMoney >= itemPrices[shopCurrent + shopPage]) {
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -2252,14 +2252,14 @@ L_30:
 	ADD	HL,BC
 	LD	BC,(HL)
 	CALL	__stoiu
-	LD	A,(_playerMoney+3)
+	LD	A,(_currentSave+18)
 	LD	E,A
 	LD	BC,HL
 	XOR	A,A
-	LD	HL,(_playerMoney)
+	LD	HL,(_currentSave+15)
 	CALL	__lcmpu
 	JR	C,L_25
-;  144					playerMoney -= itemPrices[shopCurrent + shopPage];
+;  144					currentSave.playerMoney -= itemPrices[shopCurrent + shopPage];
 	LD	A,(IX+-1)
 	UEXT	HL
 	LD	L,A
@@ -2268,29 +2268,34 @@ L_30:
 	UEXT	HL
 	LD	L,A
 	ADD	HL,BC
-	LD	(IX+-8),HL
+	LD	(IX+-11),HL
 	ADD	HL,HL
 	LD	BC,_itemPrices
 	ADD	HL,BC
 	LD	BC,(HL)
 	CALL	__stoiu
-	LD	A,(_playerMoney+3)
+	LD	A,(_currentSave+18)
 	LD	E,A
 	LD	BC,HL
 	XOR	A,A
-	LD	HL,(_playerMoney)
+	LD	HL,(_currentSave+15)
 	CALL	__lsub
-	LD	(_playerMoney),HL
-;  145					playerItems[shopCurrent + shopPage]++;
-	LD	HL,_playerItems
+	LD	(_currentSave+15),HL
 	LD	A,E
-	LD	BC,(IX+-8)
+	LD	(_currentSave+18),A
+;  145					currentSave.playerItems[shopCurrent + shopPage]++;
+	LD	BC,_currentSave+19
+	LD	(IX+-8),BC
+	LD	HL,BC
+	LD	BC,(IX+-11)
 	ADD	HL,BC
-	LD	(_playerMoney+3),A
 	LD	(IX+-5),HL
-	LD	A,(HL)
+	LD	BC,(IX+-11)
+	LD	IY,(IX+-5)
+	LD	HL,(IX+-8)
+	ADD	HL,BC
+	LD	A,(IY)
 	INC	A
-	LD	HL,(IX+-5)
 	LD	(HL),A
 ;  146				}
 ;  147				while (kb_Data[1] & kb_2nd) { kb_Scan(); }
@@ -2322,9 +2327,8 @@ L_31:
 
 ;**************************** _items_ItemShop ***************************
 ;Name                         Addr/Register   Size   Type
-;_playerMoney                        IMPORT      4   variable
 ;_Wait                               IMPORT  -----   function
-;_playerItems                        IMPORT    185   variable
+;_currentSave                        IMPORT   2604   variable
 ;_str                                IMPORT    100   variable
 ;_itemPrices                         STATIC     40   variable
 ;_sprintf                            IMPORT  -----   function
@@ -2342,7 +2346,7 @@ L_31:
 ;shopCurrent                           IX-1      1   variable
 
 
-; Stack Frame Size: 14 (bytes)
+; Stack Frame Size: 17 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
@@ -2369,19 +2373,19 @@ L__16:
 ;  153	
 ;  154	bool items_UseItem(uint8_t index) {
 _items_UseItem:
-	LD	HL,-86
+	LD	HL,-92
 	CALL	__frameset
 ;  155		char itemName[20];
-;  156		if (index < 4 || playerItems[index] == 0) {
+;  156		if (index < 4 || currentSave.playerItems[index] == 0) {
 	LD	A,(IX+6)
 	CP	A,4
 	JR	C,L_37
+	LD	BC,_currentSave+1243
+	LD	(IX+-21),BC
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
-	LD	BC,_playerItems
 	ADD	HL,BC
-	LD	(IX+-3),HL
 	LD	A,(HL)
 	OR	A,A
 	JR	NZ,L_38
@@ -2401,23 +2405,26 @@ L_38:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  160		if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
+;  160		if (i == 0 || currentSave.party[i - 1].id == 0 || currentSave.party[i - 1].currenthealth == 0) {
 	LD	HL,(_i)
 	CALL	__scmpzero
 	JR	Z,L_41
+	LD	BC,_currentSave+10
+	LD	(IX+-3),BC
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	DEC	HL
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-21),HL
-	LD	IY,(IX+-21)
+	LD	(IX+-24),HL
+	LD	IY,(IX+-24)
 	LD	A,(IY+0)
 	OR	A,A
 	JR	Z,L_41
-	LD	IY,(IX+-21)
+	LD	IY,(IX+-24)
 	LD	HL,(IY+13)
 	CALL	__scmpzero
 	JR	NZ,L_42
@@ -2438,11 +2445,21 @@ L_42:
 	LD	A,(IX+6)
 	CP	A,8
 	JR	NC,L_65
-;  165			playerItems[index]--;
-	LD	HL,(IX+-3)
-	LD	A,(HL)
+;  165			currentSave.playerItems[index]--;
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+-21)
+	ADD	HL,BC
+	LD	(IX+-50),HL
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	IY,(IX+-50)
+	LD	BC,(IX+-21)
+	ADD	HL,BC
+	LD	A,(IY)
 	DEC	A
-	LD	HL,(IX+-3)
 	LD	(HL),A
 ;  166			HealHp(i, healAmounts[index - 4]);
 	LD	A,(IX+6)
@@ -2471,17 +2488,25 @@ L_65:
 	LD	A,(IX+6)
 	CP	A,10
 	JR	NC,L_63
-;  169			playerItems[index]--;
-	LD	HL,(IX+-3)
-	LD	A,(HL)
-	DEC	A
-	LD	HL,(IX+-3)
-	LD	(HL),A
+;  169			currentSave.playerItems[index]--;
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	A,(IX+6)
 ;  170			HealStatus(i, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,_currentSave+1243
+	ADD	HL,BC
+	LD	B,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	DE,_currentSave+1243
+	ADD	HL,DE
+	DEC	B
+	LD	(HL),B
 	LD	A,(_i)
 	LD	C,A
-	LD	DE,0
-	PUSH	DE
 	LD	B,0
 	PUSH	BC
 	CALL	_HealStatus
@@ -2549,19 +2574,27 @@ L_63:
 	LD	A,(IX+6)
 	CP	A,15
 	JR	NC,L_61
-;  180			playerItems[index]--;
-	LD	HL,(IX+-3)
-	LD	A,(HL)
+;  180			currentSave.playerItems[index]--;
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	BC,_currentSave+1243
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(IY)
 	DEC	A
-	LD	HL,(IX+-3)
 	LD	(HL),A
 ;  181			HealStatus(i, index-10);
 	LD	A,(IX+6)
 	SUB	A,10
 	LD	C,A
-	LD	A,(_i)
 	LD	B,0
 	PUSH	BC
+	LD	A,(_i)
 	LD	C,A
 	PUSH	BC
 	CALL	_HealStatus
@@ -2574,12 +2607,12 @@ L_61:
 	LD	A,(IX+6)
 	CP	A,20
 	JR	NC,L_74
-;  184			sprintf(str, "%s has evolved", data_pokemon[party[i].id].name);
+;  184			sprintf(str, "%s has evolved", data_pokemon[currentSave.party[i].id].name);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -2596,7 +2629,7 @@ L_61:
 	LD	BC,_str
 	PUSH	BC
 	CALL	_sprintf
-;  185			if (data_pokemon[party[i].id].evolvelevel == index + 86) {
+;  185			if (data_pokemon[currentSave.party[i].id].evolvelevel == index + 86) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	POP	BC
@@ -2604,8 +2637,8 @@ L_61:
 	POP	BC
 	LD	A,34
 	CALL	__imul_b
-	LD	(IX+-6),HL
-	LD	BC,_party
+	LD	(IX+-9),HL
+	LD	BC,(IX+-3)
 	ADD	HL,BC
 	LD	(IX+-18),HL
 	LD	IY,(IX+-18)
@@ -2630,12 +2663,13 @@ L_61:
 	LD	HL,BC
 	SBC	HL,DE
 	JR	NZ,L_56
-;  186				party[i].id = data_pokemon[party[i].id].evolveid;
-	LD	BC,_party
-	LD	HL,(IX+-6)
+;  186				currentSave.party[i].id = data_pokemon[currentSave.party[i].id].evolveid;
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-44),HL
-	LD	IY,(IX+-44)
+	LD	(IX+-56),HL
+	LD	(IX+-53),HL
+	LD	IY,(IX+-53)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -2645,10 +2679,10 @@ L_61:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+45)
-	LD	IY,(IX+-44)
+	LD	IY,(IX+-53)
 	LD	(IY+0),A
 ;  187			}
-;  188			else if (data_pokemon[party[i].id].evolvelevel == 106) {
+;  188			else if (data_pokemon[currentSave.party[i].id].evolvelevel == 106) {
 	JR	L_58
 L_56:
 	LD	IY,(IX+-18)
@@ -2665,22 +2699,23 @@ L_56:
 	JR	NZ,L_54
 ;  189				if (index = 19) {
 	LD	(IX+6),19
-;  190					party[i].id += 1;
-	LD	HL,(IX+-6)
-	LD	BC,_party
+;  190					currentSave.party[i].id += 1;
+	LD	BC,(IX+-9)
+	LD	HL,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-47),HL
-	LD	IY,(IX+-47)
+	LD	(IX+-62),HL
+	LD	(IX+-59),HL
+	LD	IY,(IX+-59)
 	LD	A,(IY+0)
 	INC	A
 	LD	(IY+0),A
 ;  191				}
 ;  192				else if (index = 17) {
 	JR	L_58
-;  193					party[i].id += 2;
+;  193					currentSave.party[i].id += 2;
 ;  194				}
 ;  195				else if (index = 15) {
-;  196					party[i].id += 3;
+;  196					currentSave.party[i].id += 3;
 ;  197				}
 ;  198				else {
 ;  199					return false;
@@ -2693,22 +2728,28 @@ L_54:
 	JR	L_76
 ;  204			}
 L_58:
-;  205			playerItems[index]--;
+;  205			currentSave.playerItems[index]--;
+	LD	BC,_currentSave+1243
+	LD	(IX+-74),BC
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
-	LD	BC,_playerItems
+	LD	BC,(IX+-74)
 	ADD	HL,BC
-	LD	(IX+-56),HL
-	LD	IY,(IX+-56)
+	LD	(IX+-71),HL
+	LD	A,(IX+6)
+	LD	DE,(IX+-74)
 ;  206			text_Display(str, false);
 	LD	BC,0
 	PUSH	BC
 	LD	BC,_str
 	PUSH	BC
-	LD	A,(HL)
-	DEC	A
-	LD	(IY),A
+	LD	B,(HL)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,DE
+	DEC	B
+	LD	(HL),B
 	CALL	_text_Display
 	POP	BC
 	POP	BC
@@ -2722,14 +2763,14 @@ L_74:
 	LD	A,(IX+6)
 	CP	A,20
 	JR	C,L_75
-;  211			if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
+;  211			if (data_pokemon[currentSave.party[i].id].element1 == data_moves[index - 19].element || data_pokemon[currentSave.party[i].id].element2 == data_moves[index - 19].element) {
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-12),HL
+	LD	(IX+-15),HL
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -2739,9 +2780,9 @@ L_74:
 	CALL	__imul_b
 	LD	BC,_data_moves
 	ADD	HL,BC
-	LD	(IX+-9),HL
-	LD	(IX+-15),HL
-	LD	IY,(IX+-12)
+	LD	(IX+-12),HL
+	LD	(IX+-27),HL
+	LD	IY,(IX+-15)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -2751,12 +2792,12 @@ L_74:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+16)
-	LD	IY,(IX+-9)
+	LD	IY,(IX+-12)
 	CP	A,(IY+14)
 	JR	Z,L_71
-	LD	BC,(IX+-9)
-	LD	(IX+-15),BC
-	LD	IY,(IX+-12)
+	LD	BC,(IX+-12)
+	LD	(IX+-27),BC
+	LD	IY,(IX+-15)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -2766,12 +2807,12 @@ L_74:
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+17)
-	LD	IY,(IX+-9)
+	LD	IY,(IX+-12)
 	CP	A,(IY+14)
 	JR	NZ,L_72
 L_71:
 ;  212				sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
-	LD	IY,(IX+-15)
+	LD	IY,(IX+-27)
 	PEA	IY+0
 	LD	BC,L__38
 	PUSH	BC
@@ -2789,23 +2830,25 @@ L_71:
 	CALL	_text_Display
 	POP	BC
 	POP	BC
-;  214				switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
+;  214				switch (text_AskQuestion4(data_moves[currentSave.party[i].moves[0]].name, data_moves[currentSave.party[i].moves[1]].name, data_moves[currentSave.party[i].moves[2]].name, data_moves[currentSave.party[i].moves[3]].name, false))
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-62),HL
-	LD	IY,(IX+-62)
+	LD	(IX+-80),HL
+	LD	IY,(IX+-80)
 	LEA	BC,IY+1
-	LD	(IX+-59),BC
+	LD	(IX+-77),BC
 	LD	BC,_data_moves
 	LD	DE,_data_moves
 	OR	A,A
 	SBC	HL,HL
 	PUSH	HL
-	LD	IY,(IX+-59)
+	LD	IY,(IX+-77)
 	LEA	HL,IY+3
 	LD	A,(HL)
 	UEXT	HL
@@ -2815,7 +2858,7 @@ L_71:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	LD	IY,(IX+-59)
+	LD	IY,(IX+-77)
 	LEA	HL,IY+2
 	LD	A,(HL)
 	UEXT	HL
@@ -2825,7 +2868,7 @@ L_71:
 	ADD	HL,DE
 	LD	IY,HL
 	PEA	IY+0
-	LD	HL,(IX+-59)
+	LD	HL,(IX+-77)
 	INC	HL
 	LD	A,(HL)
 	UEXT	HL
@@ -2835,7 +2878,7 @@ L_71:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	LD	HL,(IX+-59)
+	LD	HL,(IX+-77)
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
@@ -2868,135 +2911,152 @@ L__39:
 ;  215				{
 ;  216				case 1:
 L_67:
-;  217					party[i].moves[0] = index - 19;
+;  217					currentSave.party[i].moves[0] = index - 19;
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-65),HL
+	LD	BC,HL
+	LD	DE,BC
+	LD	HL,(IX+-3)
+	ADD	HL,DE
+	LD	(IX+-83),HL
 	LD	A,(IX+6)
 	SUB	A,19
-	LD	IY,(IX+-65)
+	LD	IY,(IX+-83)
 	LD	(IY+1),A
-;  218					party[i].pp[0] = data_moves[party[i].moves[0]].uses;
+;  218					currentSave.party[i].pp[0] = data_moves[currentSave.party[i].moves[0]].uses;
 	LD	A,(IY+1)
 	UEXT	HL
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,_data_moves
-	ADD	HL,BC
+	LD	DE,_data_moves
+	ADD	HL,DE
 	LD	IY,HL
 	LD	A,(IY+18)
-	LD	IY,(IX+-65)
+	LD	HL,(IX+-3)
+	ADD	HL,BC
+	LD	IY,HL
 	LD	(IY+5),A
 ;  219					break;
 	JR	L_75
 ;  220				case 2:
 L_68:
-;  221					party[i].moves[1] = index - 19;
+;  221					currentSave.party[i].moves[1] = index - 19;
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-68),HL
-	LD	IY,(IX+-68)
+	LD	BC,HL
+	LD	DE,BC
+	LD	HL,(IX+-3)
+	ADD	HL,DE
+	LD	(IX+-86),HL
+	LD	IY,(IX+-86)
 	LEA	HL,IY+1
 	INC	HL
 	LD	A,(IX+6)
 	SUB	A,19
 	LD	(HL),A
-;  222					party[i].pp[1] = data_moves[party[i].moves[1]].uses;
+;  222					currentSave.party[i].pp[1] = data_moves[currentSave.party[i].moves[1]].uses;
 	LEA	HL,IY+1
 	INC	HL
 	LD	A,(HL)
-	LEA	HL,IY+5
-	LD	(IX+-80),HL	; spill
 	UEXT	HL
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,_data_moves
+	LD	DE,_data_moves
+	ADD	HL,DE
+	LD	DE,HL
+	LD	HL,(IX+-3)
 	ADD	HL,BC
-	LD	(IX+-77),HL	; spill
-	LD	HL,(IX+-80)	; unspill
+	LD	IY,HL
+	LEA	HL,IY+5
 	INC	HL
-	LD	(IX+-80),HL	; spill
-	LD	IY,(IX+-77)
+	LD	IY,DE
 	LD	A,(IY+18)
-	LD	HL,(IX+-80)	; unspill
 	LD	(HL),A
 ;  223					break;
 	JR	L_75
 ;  224				case 3:
 L_69:
-;  225					party[i].moves[2] = index - 19;
+;  225					currentSave.party[i].moves[2] = index - 19;
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-71),HL
-	LD	IY,(IX+-71)
+	LD	BC,HL
+	LD	DE,BC
+	LD	HL,(IX+-3)
+	ADD	HL,DE
+	LD	(IX+-89),HL
+	LD	IY,(IX+-89)
 	LD	A,(IX+6)
 	SUB	A,19
 	LEA	HL,IY+3
 	LD	(HL),A
-;  226					party[i].pp[2] = data_moves[party[i].moves[2]].uses;
+;  226					currentSave.party[i].pp[2] = data_moves[currentSave.party[i].moves[2]].uses;
 	LEA	HL,IY+3
-	LD	(IX+-77),HL	; spill
-	LEA	HL,IY+7
-	LD	(IX+-86),HL	; spill
-	LD	HL,(IX+-77)	; unspill
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,_data_moves
+	LD	DE,_data_moves
+	ADD	HL,DE
+	LD	DE,HL
+	LD	HL,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
+	LEA	HL,IY+7
+	LD	IY,DE
 	LD	A,(IY+18)
-	LD	HL,(IX+-86)	; unspill
 	LD	(HL),A
 ;  227					break;
 	JR	L_75
 ;  228				case 4:
 L_70:
-;  229					party[i].moves[3] = index - 19;
+;  229					currentSave.party[i].moves[3] = index - 19;
+	LD	BC,(IX+-3)
+	LD	(IX+-6),BC
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
-	ADD	HL,BC
-	LD	(IX+-74),HL
-	LD	IY,(IX+-74)
+	LD	BC,HL
+	LD	DE,BC
+	LD	HL,(IX+-3)
+	ADD	HL,DE
+	LD	(IX+-92),HL
+	LD	IY,(IX+-92)
 	LD	A,(IX+6)
 	SUB	A,19
 	LEA	HL,IY+4
 	LD	(HL),A
-;  230					party[i].pp[3] = data_moves[party[i].moves[3]].uses;
+;  230					currentSave.party[i].pp[3] = data_moves[currentSave.party[i].moves[3]].uses;
 	LEA	HL,IY+4
-	LD	(IX+-77),HL	; spill
-	LEA	HL,IY+8
-	LD	(IX+-83),HL	; spill
-	LD	HL,(IX+-77)	; unspill
 	LD	A,(HL)
 	UEXT	HL
 	LD	L,A
 	LD	A,21
 	CALL	__imul_b
-	LD	BC,_data_moves
+	LD	DE,_data_moves
+	ADD	HL,DE
+	LD	DE,HL
+	LD	HL,(IX+-3)
 	ADD	HL,BC
 	LD	IY,HL
+	LEA	HL,IY+8
+	LD	IY,DE
 	LD	A,(IY+18)
-	LD	HL,(IX+-83)	; unspill
 	LD	(HL),A
 ;  231					break;
 	JR	L_75
@@ -3004,10 +3064,10 @@ L_70:
 ;  233			}
 ;  234			else {
 L_72:
-;  235				sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
-	LD	IY,(IX+-9)
-	PEA	IY+0
+;  235				sprintf(str, "%s cannot learn %s", data_pokemon[currentSave.party[i].id].name, data_moves[index - 19].name);
 	LD	IY,(IX+-12)
+	PEA	IY+0
+	LD	IY,(IX+-15)
 	LD	A,(IY+0)
 	UEXT	HL
 	LD	L,A
@@ -3045,16 +3105,16 @@ L_75:
 	LD	C,(IX+6)
 	LD	B,0
 	PUSH	BC
-	PEA	IX+-41
+	PEA	IX+-47
 	CALL	_items_IndexToName
 	POP	BC
 	POP	BC
-;  243		sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
+;  243		sprintf(str, "Used a %s on %s", itemName, data_pokemon[currentSave.party[i].id].name);
 	LD	BC,(_i)
 	CALL	__stoiu
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,(IX+-6)
 	ADD	HL,BC
 	LD	IY,HL
 	LD	A,(IY+0)
@@ -3066,7 +3126,7 @@ L_75:
 	ADD	HL,BC
 	LD	IY,HL
 	PEA	IY+0
-	PEA	IX+-41
+	PEA	IX+-47
 	LD	BC,L__41
 	PUSH	BC
 	LD	BC,_str
@@ -3105,23 +3165,24 @@ L_76:
 ;_HealStatus                         IMPORT  -----   function
 ;_healAmounts                        STATIC      8   variable
 ;_HealHp                             IMPORT  -----   function
-;_party                              IMPORT   1224   variable
 ;_i                                  IMPORT      2   variable
 ;_menu_PokemonMenu                   IMPORT  -----   function
-;_playerItems                        IMPORT    185   variable
-;itemName                             IX-41     20   variable
-;G_1                                  IX-21      3   variable
-;G_7                                  IX-18      3   variable
-;G_12                                 IX-15      3   variable
-;G_9                                  IX-12      3   variable
-;G_11                                  IX-9      3   variable
-;G_5                                   IX-6      3   variable
-;G_2                                   IX-3      3   variable
+;_currentSave                        IMPORT   2604   variable
+;itemName                             IX-47     20   variable
+;G_17                                 IX-27      3   variable
+;G_0                                  IX-24      3   variable
+;G_2                                  IX-21      3   variable
+;G_9                                  IX-18      3   variable
+;G_14                                 IX-15      3   variable
+;G_16                                 IX-12      3   variable
+;G_8                                   IX-9      3   variable
+;G_26                                  IX-6      3   variable
+;G_5                                   IX-3      3   variable
 ;index                                 IX+6      1   parameter
 
 
-; Stack Frame Size: 95 (bytes)
-;       Spill Code: -1 (instruction)
+; Stack Frame Size: 101 (bytes)
+;       Spill Code: 0 (instruction)
 
 
 	SEGMENT STRSECT
@@ -3141,16 +3202,17 @@ L__41:
 ;  247	
 ;  248	void HealHp(uint8_t index, uint16_t amount) {
 _HealHp:
-	LD	HL,-36
+	LD	HL,-39
 	CALL	__frameset
-;  249		party[index].currenthealth += amount;
+;  249		currentSave.party[index].currenthealth += amount;
+	LD	BC,_currentSave+10
+	LD	(IX+-9),BC
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
 	LD	(IX+-6),HL
-	LD	BC,_party
 	ADD	HL,BC
 	LD	(IX+-3),HL
 	LD	BC,(IX+9)
@@ -3160,9 +3222,9 @@ _HealHp:
 	LD	BC,HL
 	LD	(IY+13),C
 	LD	(IY+14),B
-;  250		if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
+;  250		if (currentSave.party[index].currenthealth > stats_CalculateStats(currentSave.party[index]).health) {
 	LD	HL,(IX+-6)
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,0
 	ADD	IY,SP
@@ -3170,7 +3232,7 @@ _HealHp:
 	LD	SP,IY
 	LD	IY,0
 	ADD	IY,SP
-	PEA	IX+-18
+	PEA	IX+-21
 	LD	BC,34
 	LD	DE,IY
 	LDIR	
@@ -3184,9 +3246,9 @@ _HealHp:
 	OR	A,A
 	SBC.SIS	HL,BC
 	JR	NC,L_78
-;  251			party[index].currenthealth = stats_CalculateStats(party[index]).health;
-	LD	BC,_party
-	LD	HL,(IX+-6)
+;  251			currentSave.party[index].currenthealth = stats_CalculateStats(currentSave.party[index]).health;
+	LD	BC,(IX+-6)
+	LD	HL,(IX+-9)
 	ADD	HL,BC
 	LD	IY,0
 	ADD	IY,SP
@@ -3194,20 +3256,20 @@ _HealHp:
 	LD	SP,IY
 	LD	IY,0
 	ADD	IY,SP
-	PEA	IX+-30
+	PEA	IX+-33
 	LD	DE,IY
 	LD	BC,34
 	LDIR	
 	CALL	_stats_CalculateStats
 	LD	IY,39
-	LD	(IX+-36),HL	; spill
+	LD	(IX+-39),HL	; spill
 	ADD	IY,SP
 	LD	SP,IY
-	LD	HL,(IX+-6)
-	LD	BC,_party
+	LD	BC,(IX+-6)
+	LD	HL,(IX+-9)
 	ADD	HL,BC
 	LD	IY,HL
-	LD	HL,(IX+-36)	; unspill
+	LD	HL,(IX+-39)	; unspill
 	LD	BC,(HL)
 	LD	(IY+13),C
 	LD	(IY+14),B
@@ -3222,26 +3284,27 @@ L_78:
 ;**************************** _HealHp ***************************
 ;Name                         Addr/Register   Size   Type
 ;_stats_CalculateStats               IMPORT  -----   function
-;_party                              IMPORT   1224   variable
-;G_16                                  IX-6      3   variable
+;_currentSave                        IMPORT   2604   variable
+;G_27                                  IX-9      3   variable
+;G_28                                  IX-6      3   variable
 ;amount                                IX+9      2   parameter
 ;index                                 IX+6      1   parameter
 
 
-; Stack Frame Size: 48 (bytes)
-;       Spill Code: -1 (instruction)
+; Stack Frame Size: 51 (bytes)
+;       Spill Code: 0 (instruction)
 
 
 ;  254	void HealStatus(uint8_t index, uint8_t type) {
 _HealStatus:
 	CALL	__frameset0
-;  255		party[index].currentstatus = 0;
+;  255		currentSave.party[index].currentstatus = 0;
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
 	LD	A,34
 	CALL	__imul_b
-	LD	BC,_party
+	LD	BC,_currentSave+10
 	ADD	HL,BC
 	LD	IY,HL
 	LD	(IY+15),0
@@ -3253,13 +3316,13 @@ _HealStatus:
 
 ;**************************** _HealStatus ***************************
 ;Name                         Addr/Register   Size   Type
-;_party                              IMPORT   1224   variable
+;_currentSave                        IMPORT   2604   variable
 ;type                                  IX+9      1   parameter
 ;index                                 IX+6      1   parameter
 
 
 ; Stack Frame Size: 12 (bytes)
-;       Spill Code: -1 (instruction)
+;       Spill Code: 0 (instruction)
 
 
 	XREF _menu_PokemonMenu:ROM
@@ -3271,9 +3334,7 @@ _HealStatus:
 	XREF _Wait:ROM
 	XREF _data_moves:ROM
 	XREF _data_pokemon:ROM
-	XREF _playerItems:ROM
-	XREF _playerMoney:ROM
-	XREF _party:ROM
+	XREF _currentSave:ROM
 	XREF _text_AskQuestion4:ROM
 	XREF _text_Display:ROM
 	XREF _kb_Scan:ROM

@@ -18,41 +18,58 @@ int textBoxType = 0;
 
 /* Text Functions */
 
-
+uint8_t lastTextIndex;
 /* canSkip determines whether holding down 2nd before the text box pops up can do anything */
 void text_Display(char text[], bool canSkip) {
 	char newText1[50] = "";
 	char newText2[50] = "";
+	int textIndex;
+	bool endText = false;
+	lastTextIndex = 0;
 
-	if (strlen(text) > 32) {
-		strncpy(newText1, text, 32);
-		strncpy(newText2, text + 32, (strlen(text) - 32));
-	}
-	else {
-		strncpy(newText1, text, strlen(text));
-	}
-	gfx_Blit(gfx_screen);
+	gfx_SetDrawScreen();
 	text_DrawTextBox();
+
+	gfx_SetTextXY(30, 190);
+	for (textIndex = 0; !endText; textIndex++) {
+		if (text[textIndex] == '\0') {
+			endText = true;
+		}
+		else if (text[textIndex] == '\n' && text[textIndex + 1] == '\n' && text[textIndex + 2] == '\n') {
+			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+			while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
+				kb_Scan();
+			}
+			endText = true;
+			lastTextIndex = textIndex;
+			gfx_SetDrawBuffer();
+			return;
+		}
+		else if (text[textIndex] == '\n' && text[textIndex + 1] == '\n') {
+			while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+			while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
+				kb_Scan();
+			}
+			gfx_SetTextXY(30, 190);
+			Wait(5);
+			text_DrawTextBox();
+			textIndex++;
+		}
+		else if (text[textIndex] == '\n') {
+			gfx_SetTextXY(30, gfx_GetTextY() + 15);
+		}
+		else {
+			gfx_PrintChar(text[textIndex]);
+			Wait(1);
+		}
+	}
 	
-	
-
-	gfx_PrintStringXY(newText1, 30, 190);
-	gfx_PrintStringXY(newText2, 30, 205);
-
-	gfx_SwapDraw();
-
 	Wait(10);
-
 	kb_Scan();
-	if (!canSkip) {
-		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
-	}
-	if (canSkip && (kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) {
-		Wait(delaytime);
-	}
-	while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
-		kb_Scan();
-	}
+	while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
+	while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) { kb_Scan(); }
+	
+	gfx_SetDrawBuffer();
 }
 int text_AskQuestion2(char text1[], char text2[], bool canSkip) {
 	int8_t tv1, tv2;
@@ -88,7 +105,7 @@ int text_AskQuestion2(char text1[], char text2[], bool canSkip) {
 				tv1 = 1;
 			}
 			gfx_FillRectangle(24, 185, 10, 45);
-			gfx_PrintStringXY(">", 25, 160 + 20 * tv1);
+			gfx_PrintStringXY(">", 25, 175 + 15 * tv1);
 			Wait(20);
 		}
 	}

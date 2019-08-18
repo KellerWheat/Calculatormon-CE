@@ -101,7 +101,7 @@ reloadshop:
 		gfx_PrintStringXY(itemNames[i + shopPage], 35, 25 + i * 20);
 		sprintf(str, "%u$", itemPrices[i + shopPage]);
 		gfx_PrintStringXY(str, 170, 25 + i * 20);
-		sprintf(str, "%u", playerItems[i + shopPage]);
+		sprintf(str, "%u", currentSave.playerItems[i + shopPage]);
 		gfx_PrintStringXY(str, 240, 25 + i * 20);
 		i++;
 	}
@@ -140,9 +140,9 @@ reloadshop:
 		}
 
 		if (kb_Data[1] & kb_2nd) {
-			if (playerMoney >= itemPrices[shopCurrent + shopPage]) {
-				playerMoney -= itemPrices[shopCurrent + shopPage];
-				playerItems[shopCurrent + shopPage]++;
+			if (currentSave.playerMoney >= itemPrices[shopCurrent + shopPage]) {
+				currentSave.playerMoney -= itemPrices[shopCurrent + shopPage];
+				currentSave.playerItems[shopCurrent + shopPage]++;
 			}
 			while (kb_Data[1] & kb_2nd) { kb_Scan(); }
 			goto reloadshop;
@@ -153,20 +153,20 @@ reloadshop:
 
 bool items_UseItem(uint8_t index) {
 	char itemName[20];
-	if (index < 4 || playerItems[index] == 0) {
+	if (index < 4 || currentSave.playerItems[index] == 0) {
 		return false;
 	}
 	i = menu_PokemonMenu(false);
-	if (i == 0 || party[i - 1].id == 0 || party[i - 1].currenthealth == 0) {
+	if (i == 0 || currentSave.party[i - 1].id == 0 || currentSave.party[i - 1].currenthealth == 0) {
 		return false;
 	}
 	i -= 1;
 	if (index < 8) {
-		playerItems[index]--;
+		currentSave.playerItems[index]--;
 		HealHp(i, healAmounts[index - 4]);
 	}
 	else if (index < 10) {
-		playerItems[index]--;
+		currentSave.playerItems[index]--;
 		HealStatus(i, 0);
 		HealStatus(i, 1);
 		HealStatus(i, 2);
@@ -177,23 +177,23 @@ bool items_UseItem(uint8_t index) {
 		}
 	}
 	else if (index < 15) {
-		playerItems[index]--;
+		currentSave.playerItems[index]--;
 		HealStatus(i, index-10);
 	}
 	else if (index < 20) {
-		sprintf(str, "%s has evolved", data_pokemon[party[i].id].name);
-		if (data_pokemon[party[i].id].evolvelevel == index + 86) {
-			party[i].id = data_pokemon[party[i].id].evolveid;
+		sprintf(str, "%s has evolved", data_pokemon[currentSave.party[i].id].name);
+		if (data_pokemon[currentSave.party[i].id].evolvelevel == index + 86) {
+			currentSave.party[i].id = data_pokemon[currentSave.party[i].id].evolveid;
 		}
-		else if (data_pokemon[party[i].id].evolvelevel == 106) {
+		else if (data_pokemon[currentSave.party[i].id].evolvelevel == 106) {
 			if (index = 19) {
-				party[i].id += 1;
+				currentSave.party[i].id += 1;
 			}
 			else if (index = 17) {
-				party[i].id += 2;
+				currentSave.party[i].id += 2;
 			}
 			else if (index = 15) {
-				party[i].id += 3;
+				currentSave.party[i].id += 3;
 			}
 			else {
 				return false;
@@ -202,37 +202,37 @@ bool items_UseItem(uint8_t index) {
 		else {
 			return false;
 		}
-		playerItems[index]--;
+		currentSave.playerItems[index]--;
 		text_Display(str, false);
 		return true;
 	}
 
 	if (index >= 20) {
-		if (data_pokemon[party[i].id].element1 == data_moves[index - 19].element || data_pokemon[party[i].id].element2 == data_moves[index - 19].element) {
+		if (data_pokemon[currentSave.party[i].id].element1 == data_moves[index - 19].element || data_pokemon[currentSave.party[i].id].element2 == data_moves[index - 19].element) {
 			sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
 			text_Display(str, false);
-			switch (text_AskQuestion4(data_moves[party[i].moves[0]].name, data_moves[party[i].moves[1]].name, data_moves[party[i].moves[2]].name, data_moves[party[i].moves[3]].name, false))
+			switch (text_AskQuestion4(data_moves[currentSave.party[i].moves[0]].name, data_moves[currentSave.party[i].moves[1]].name, data_moves[currentSave.party[i].moves[2]].name, data_moves[currentSave.party[i].moves[3]].name, false))
 			{
 			case 1:
-				party[i].moves[0] = index - 19;
-				party[i].pp[0] = data_moves[party[i].moves[0]].uses;
+				currentSave.party[i].moves[0] = index - 19;
+				currentSave.party[i].pp[0] = data_moves[currentSave.party[i].moves[0]].uses;
 				break;
 			case 2:
-				party[i].moves[1] = index - 19;
-				party[i].pp[1] = data_moves[party[i].moves[1]].uses;
+				currentSave.party[i].moves[1] = index - 19;
+				currentSave.party[i].pp[1] = data_moves[currentSave.party[i].moves[1]].uses;
 				break;
 			case 3:
-				party[i].moves[2] = index - 19;
-				party[i].pp[2] = data_moves[party[i].moves[2]].uses;
+				currentSave.party[i].moves[2] = index - 19;
+				currentSave.party[i].pp[2] = data_moves[currentSave.party[i].moves[2]].uses;
 				break;
 			case 4:
-				party[i].moves[3] = index - 19;
-				party[i].pp[3] = data_moves[party[i].moves[3]].uses;
+				currentSave.party[i].moves[3] = index - 19;
+				currentSave.party[i].pp[3] = data_moves[currentSave.party[i].moves[3]].uses;
 				break;
 			}
 		}
 		else {
-			sprintf(str, "%s cannot learn %s", data_pokemon[party[i].id].name, data_moves[index - 19].name);
+			sprintf(str, "%s cannot learn %s", data_pokemon[currentSave.party[i].id].name, data_moves[index - 19].name);
 			text_Display(str, false);
 			return false;
 		}
@@ -240,17 +240,17 @@ bool items_UseItem(uint8_t index) {
 
 
 	items_IndexToName(&itemName, index);
-	sprintf(str, "Used a %s on %s", itemName, data_pokemon[party[i].id].name);
+	sprintf(str, "Used a %s on %s", itemName, data_pokemon[currentSave.party[i].id].name);
 	text_Display(str, true);
 	return true;
 }
 
 void HealHp(uint8_t index, uint16_t amount) {
-	party[index].currenthealth += amount;
-	if (party[index].currenthealth > stats_CalculateStats(party[index]).health) {
-		party[index].currenthealth = stats_CalculateStats(party[index]).health;
+	currentSave.party[index].currenthealth += amount;
+	if (currentSave.party[index].currenthealth > stats_CalculateStats(currentSave.party[index]).health) {
+		currentSave.party[index].currenthealth = stats_CalculateStats(currentSave.party[index]).health;
 	}
 }
 void HealStatus(uint8_t index, uint8_t type) {
-	party[index].currentstatus = 0;
+	currentSave.party[index].currentstatus = 0;
 }

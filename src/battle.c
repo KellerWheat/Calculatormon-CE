@@ -112,7 +112,7 @@ void battle_Initialize(void) {
 void battle_Setup(void) {
 	int pokemonIndex;
 	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the pokemon sent out has not fainted
-		if (party[pokemonIndex].currenthealth != 0 && party[pokemonIndex].id != 0) {
+		if (currentSave.party[pokemonIndex].currenthealth != 0 && currentSave.party[pokemonIndex].id != 0) {
 			currentplayer = pokemonIndex;
 			pokemonIndex = 6;
 		}
@@ -125,7 +125,7 @@ void battle_Setup(void) {
 
 	
 	stats[0] = stats_CalculateStats(enemyparty[0]);
-	stats[1] = stats_CalculateStats(party[0]);
+	stats[1] = stats_CalculateStats(currentSave.party[0]);
 	currentenemy = 0;
 	attackturn = 0;
 
@@ -144,11 +144,11 @@ void SetupBattleGfx(void) {
 	playerSprite = gfx_MallocSprite(56, 56);
 	enemySprite = gfx_MallocSprite(56, 56);
 
-	if (party[currentplayer].id < 80) {
-		zx7_Decompress(playerSprite, PKMNSD2[party[currentplayer].id]);
+	if (currentSave.party[currentplayer].id < 80) {
+		zx7_Decompress(playerSprite, PKMNSD2[currentSave.party[currentplayer].id]);
 	}
 	else {
-		zx7_Decompress(playerSprite, PKMNSD3[party[currentplayer].id - 80]);
+		zx7_Decompress(playerSprite, PKMNSD3[currentSave.party[currentplayer].id - 80]);
 	}
 	if (enemyparty[currentenemy].id < 80) {
 		zx7_Decompress(enemySprite, PKMNSD0[enemyparty[currentenemy].id]);
@@ -172,21 +172,21 @@ int battle_Loop(void) {
 	/* Battle */
 	redrawcharacters();
 	/* Switch to a new poketmon or lose battle if health is 0 */
-	if (party[currentplayer].currenthealth == 0) {
+	if (currentSave.party[currentplayer].currenthealth == 0) {
 		sprintf(str, "%s fainted", playername);
 		text_Display(str, false);
 		attackturn = 0;
 
 		if (transformed[true]) {
-			party[currentplayer] = originalpokemon[true];
+			currentSave.party[currentplayer] = originalpokemon[true];
 		}
 		if (converted[true]) {
-			data_pokemon[party[currentplayer].id].element1 = 1;
+			data_pokemon[currentSave.party[currentplayer].id].element1 = 1;
 		}
 
 		i = 0;
 		while (i < 6) {
-			if (party[i].currenthealth != 0 && party[i].id != 0) {
+			if (currentSave.party[i].currenthealth != 0 && currentSave.party[i].id != 0) {
 				currentplayer = i;
 				resetstatus(true);
 				return 1;
@@ -220,7 +220,7 @@ int battle_Loop(void) {
 			i++;
 		}
 
-		playerMoney += payday;
+		currentSave.playerMoney += payday;
 		map_WinFight(wild, enemyparty[0].level * 40);
 		return 0;
 	}
@@ -305,7 +305,7 @@ bool playerturn() {
 			battle_End();
 			i = menu_PokemonMenu(false);
 			SetupBattleGfx();
-			if (i != 0 && (i - 1) != currentplayer && party[i - 1].id != 0) {
+			if (i != 0 && (i - 1) != currentplayer && currentSave.party[i - 1].id != 0) {
 				currentplayer = i - 1;
 				resetstatus(true);
 				redrawcharacters();
@@ -336,11 +336,11 @@ bool playerturn() {
 		selectedMove = selectMove();
 		battleMenuState1 = 0;
 		/* Checks if the move can be used */
-		if (selectedMove == 0 || party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
+		if (selectedMove == 0 || currentSave.party[currentplayer].pp[selectedMove - 1] == 0 || disabledmove[true] == selectedMove) {
 			return false;
 		}
-		chosenmove[true] = party[currentplayer].moves[selectedMove - 1];
-		party[currentplayer].pp[selectedMove - 1]--;
+		chosenmove[true] = currentSave.party[currentplayer].moves[selectedMove - 1];
+		currentSave.party[currentplayer].pp[selectedMove - 1]--;
 	}
 	/* Items */
 	else if (battleMenuState1 == 2) {
@@ -356,7 +356,7 @@ bool playerturn() {
 			redrawcharacters();
 			sprintf(str, "Used a %s", itemNames[chosenItem]);
 			text_Display(str, true);
-			playerItems[chosenItem]--;
+			currentSave.playerItems[chosenItem]--;
 			chosenmove[true] = 0;
 			if (capture(chosenItem + 1)) {
 				map_WinFight(wild, enemyparty[0].level * 40);
@@ -393,14 +393,14 @@ int selectMove(void) {
 
 
 	gfx_PrintStringXY(">", 15, 190);
-	gfx_PrintStringXY(data_moves[party[currentplayer].moves[0]].name, 25, 190);
-	gfx_PrintStringXY(data_moves[party[currentplayer].moves[1]].name, 25, 205);
-	gfx_PrintStringXY(data_moves[party[currentplayer].moves[2]].name, 145, 190);
-	gfx_PrintStringXY(data_moves[party[currentplayer].moves[3]].name, 145, 205);
+	gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[0]].name, 25, 190);
+	gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[1]].name, 25, 205);
+	gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[2]].name, 145, 190);
+	gfx_PrintStringXY(data_moves[currentSave.party[currentplayer].moves[3]].name, 145, 205);
 
-	if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
-		gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
-		sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+	if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+		gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+		sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 		gfx_PrintStringXY(str, 271, 209);
 	}
 	
@@ -427,9 +427,9 @@ int selectMove(void) {
 			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 
 			gfx_FillRectangle(263, 185, 48, 46);
-			if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
-				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
-				sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+			if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+				gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+				sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 				gfx_PrintStringXY(str, 271, 209);
 			}
 
@@ -447,9 +447,9 @@ int selectMove(void) {
 			gfx_PrintStringXY(">", 15 + tv2 * 120, 190 + 15 * tv1);
 
 			gfx_FillRectangle(263, 185, 48, 46);
-			if (party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
-				gfx_Sprite(typeIcons[data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
-				sprintf(str, "%u/%u", party[currentplayer].pp[tv1 + 2 * tv2], data_moves[party[currentplayer].moves[tv1 + 2 * tv2]].uses);
+			if (currentSave.party[currentplayer].moves[tv1 + 2 * tv2] != 0) {
+				gfx_Sprite(typeIcons[data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].element - 1], 271, 193);
+				sprintf(str, "%u/%u", currentSave.party[currentplayer].pp[tv1 + 2 * tv2], data_moves[currentSave.party[currentplayer].moves[tv1 + 2 * tv2]].uses);
 				gfx_PrintStringXY(str, 271, 209);
 			}
 
@@ -527,11 +527,11 @@ void redrawcharacters(void) {
 		gfx_TransparentSprite_NoClip(statusIcons[enemyparty[currentenemy].currentstatus - 1], 18, 41);
 	}
 
-	gfx_PrintStringXY(data_pokemon[party[currentplayer].id].name, 181, 129);
-	sprintf(str, "Lv%u", party[currentplayer].level);
+	gfx_PrintStringXY(data_pokemon[currentSave.party[currentplayer].id].name, 181, 129);
+	sprintf(str, "Lv%u", currentSave.party[currentplayer].level);
 	gfx_PrintStringXY(str, 264, 129);
 	gfx_Sprite(hpBarSprite, 204, 140);
-	healthRatio = (party[currentplayer].currenthealth * 78) / stats[1].health;
+	healthRatio = (currentSave.party[currentplayer].currenthealth * 78) / stats[1].health;
 	if (healthRatio > 34) {
 		gfx_SetColor(colors[8]);
 	}
@@ -543,17 +543,17 @@ void redrawcharacters(void) {
 	}
 	gfx_FillRectangle(222, 142, healthRatio, 6);
 	
-	sprintf(str, "%u/%u", party[currentplayer].currenthealth, stats[1].health);
+	sprintf(str, "%u/%u", currentSave.party[currentplayer].currenthealth, stats[1].health);
 	gfx_PrintStringXY(str, 247, 153);
 
 	gfx_SetTextFGColor(colors[11]);
 	gfx_PrintStringXY("XP", 193, 166);
 	gfx_SetColor(colors[7]);
-	if (party[currentplayer].level < 100) {
+	if (currentSave.party[currentplayer].level < 100) {
 		gfx_FillRectangle(210, 168, CalculateXpPercent(), 4);
 	}
-	if (party[currentplayer].currentstatus > 0) {
-		gfx_TransparentSprite_NoClip(statusIcons[party[currentplayer].currentstatus - 1], 182, 141);
+	if (currentSave.party[currentplayer].currentstatus > 0) {
+		gfx_TransparentSprite_NoClip(statusIcons[currentSave.party[currentplayer].currentstatus - 1], 182, 141);
 	}
 
 	gfx_SetColor(colors[0]);
@@ -563,9 +563,9 @@ void redrawcharacters(void) {
 
 uint8_t CalculateXpPercent(void) {
 	int cXp, sXp, mXp;
-	cXp = party[currentplayer].xp;
-	sXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level];
-	mXp = xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1];
+	cXp = currentSave.party[currentplayer].xp;
+	sXp = xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level];
+	mXp = xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level + 1];
 	return((uint8_t)((92 * (cXp - sXp)) / (mXp - sXp)));
 
 }
@@ -602,10 +602,10 @@ void attack(bool player, uint8_t move) {
 	if (player) {
 		strcpy(username, playername);
 		strcpy(nonusername, enemyname);
-		userlevel = party[currentplayer].level;
+		userlevel = currentSave.party[currentplayer].level;
 		nonuserlevel = enemyparty[currentenemy].level;
-		userelement1 = data_pokemon[party[currentplayer].id].element1;
-		userelement2 = data_pokemon[party[currentplayer].id].element2;
+		userelement1 = data_pokemon[currentSave.party[currentplayer].id].element1;
+		userelement2 = data_pokemon[currentSave.party[currentplayer].id].element2;
 		nonuserelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
 		nonuserelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
 
@@ -614,11 +614,11 @@ void attack(bool player, uint8_t move) {
 		strcpy(username, enemyname);
 		strcpy(nonusername, playername);
 		userlevel = enemyparty[currentenemy].level;
-		nonuserlevel = party[currentplayer].level;
+		nonuserlevel = currentSave.party[currentplayer].level;
 		userelement1 = data_pokemon[enemyparty[currentenemy].id].element1;
 		userelement2 = data_pokemon[enemyparty[currentenemy].id].element2;
-		nonuserelement1 = data_pokemon[party[currentplayer].id].element1;
-		nonuserelement2 = data_pokemon[party[currentplayer].id].element2;
+		nonuserelement1 = data_pokemon[currentSave.party[currentplayer].id].element1;
+		nonuserelement2 = data_pokemon[currentSave.party[currentplayer].id].element2;
 	}
 
 	if (flinch[player]) {
@@ -772,7 +772,7 @@ startattack:
 		/* Critical Hit */
 		if (data_moves[move].statustype == 24 || highcritratio[player] || data_moves[move].statustype == 36) {
 			if (player) {
-				if (data_pokemon[party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
+				if (data_pokemon[currentSave.party[currentplayer].id].basespeed * 4 < (rand() % 256)) {
 					damage *= (2 * userlevel + 5) / (userlevel + 5);
 				}
 			}
@@ -785,7 +785,7 @@ startattack:
 		}
 		else {
 			if (player) {
-				if (data_pokemon[party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
+				if (data_pokemon[currentSave.party[currentplayer].id].basespeed / 2 < (rand() % 256)) {
 					damage *= (2 * userlevel + 5) / (userlevel + 5);
 				}
 			}
@@ -896,12 +896,12 @@ startattack:
 	}
 	else if (data_moves[move].type == 18) {
 		if (player) {
-			originalpokemon[player] = party[currentplayer];
-			party[currentplayer] = enemyparty[currentenemy];
+			originalpokemon[player] = currentSave.party[currentplayer];
+			currentSave.party[currentplayer] = enemyparty[currentenemy];
 		}
 		else {
 			originalpokemon[player] = enemyparty[currentenemy];
-			enemyparty[currentenemy] = party[currentplayer];
+			enemyparty[currentenemy] = currentSave.party[currentplayer];
 		}
 	}
 	else if (data_moves[move].type == 20) {
@@ -910,10 +910,10 @@ startattack:
 	}
 	else if (data_moves[move].type == 21) {
 		if (player) {
-			data_pokemon[party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
+			data_pokemon[currentSave.party[currentplayer].id].element1 = data_pokemon[enemyparty[currentenemy].id].element1;
 		}
 		else {
-			data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[party[currentplayer].id].element1;
+			data_pokemon[enemyparty[currentenemy].id].element1 = data_pokemon[currentSave.party[currentplayer].id].element1;
 		}
 		converted[player] = true;
 	}
@@ -1032,7 +1032,7 @@ startattack:
 			rage[player] = true;
 		}
 		if (data_moves[move].statustype == 35 && player) {
-			payday += party[currentplayer].level*2;
+			payday += currentSave.party[currentplayer].level*2;
 		}
 	}
 
@@ -1121,17 +1121,17 @@ void resetstatus(bool player) {
 
 	if (player) {
 		uint8_t pokemonID;
-		sprintf(playername, "%s", data_pokemon[party[currentplayer].id].name);
-		stats[1] = stats_CalculateStats(party[currentplayer]);
+		sprintf(playername, "%s", data_pokemon[currentSave.party[currentplayer].id].name);
+		stats[1] = stats_CalculateStats(currentSave.party[currentplayer]);
 
-		pokemonID = party[currentplayer].id;
+		pokemonID = currentSave.party[currentplayer].id;
 		if (pokemonID < 80) {
 			zx7_Decompress(playerSprite, PKMNSD2[pokemonID]);
 		}
 		else {
 			zx7_Decompress(playerSprite, PKMNSD3[pokemonID - 80]);
 		}
-		currentStatusPointer[1] = &party[currentplayer].currentstatus;
+		currentStatusPointer[1] = &currentSave.party[currentplayer].currentstatus;
 	}
 	else {
 		uint8_t pokemonID;
@@ -1164,11 +1164,11 @@ void takedamage(bool player, int amount) {
 	}
 	else {
 		if (player) {
-			if (party[currentplayer].currenthealth <= amount) {
-				party[currentplayer].currenthealth = 0;
+			if (currentSave.party[currentplayer].currenthealth <= amount) {
+				currentSave.party[currentplayer].currenthealth = 0;
 			}
 			else {
-				party[currentplayer].currenthealth -= amount;
+				currentSave.party[currentplayer].currenthealth -= amount;
 			}
 		}
 		else {
@@ -1184,9 +1184,9 @@ void takedamage(bool player, int amount) {
 }
 void heal(bool player, int amount) {
 	if (player) {
-		party[currentplayer].currenthealth += amount;
-		if (party[currentplayer].currenthealth >= stats[1].health) {
-			party[currentplayer].currenthealth = stats[1].health;
+		currentSave.party[currentplayer].currenthealth += amount;
+		if (currentSave.party[currentplayer].currenthealth >= stats[1].health) {
+			currentSave.party[currentplayer].currenthealth = stats[1].health;
 		}
 	}
 	else {
@@ -1202,50 +1202,50 @@ void heal(bool player, int amount) {
 
 void addxp(void) {
 	uint16_t xpgain = (enemyparty[currentenemy].level * data_pokemon[enemyparty[currentenemy].id].xpdrop) / 7;
-	party[currentplayer].xp += xpgain;
-	while ((party[currentplayer].level < 100) && (party[currentplayer].xp >= xpPerLevel[data_pokemon[party[currentplayer].id].xptype][party[currentplayer].level + 1])) {
-		party[currentplayer].level++;
-		sprintf(str, "%s leveled up", data_pokemon[party[currentplayer].id].name);
+	currentSave.party[currentplayer].xp += xpgain;
+	while ((currentSave.party[currentplayer].level < 100) && (currentSave.party[currentplayer].xp >= xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level + 1])) {
+		currentSave.party[currentplayer].level++;
+		sprintf(str, "%s leveled up", data_pokemon[currentSave.party[currentplayer].id].name);
 		text_Display(str, false);
 		for (i = 0; i < 10; i++)
 		{
-			if (data_pokemon[party[currentplayer].id].movelevels[i] == party[currentplayer].level) {
-				sprintf(str, "%s wants to learn %s", data_pokemon[party[currentplayer].id].name, data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+			if (data_pokemon[currentSave.party[currentplayer].id].movelevels[i] == currentSave.party[currentplayer].level) {
+				sprintf(str, "%s wants to learn %s", data_pokemon[currentSave.party[currentplayer].id].name, data_moves[data_pokemon[currentSave.party[currentplayer].id].moveids[i]].name);
 				text_Display(str, false);
-				sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[party[currentplayer].id].moveids[i]].name);
+				sprintf(str, "Choose a move to replace with %s", data_moves[data_pokemon[currentSave.party[currentplayer].id].moveids[i]].name);
 				text_Display(str, false);
-				switch (text_AskQuestion4(data_moves[party[currentplayer].moves[0]].name, data_moves[party[currentplayer].moves[1]].name, data_moves[party[currentplayer].moves[2]].name, data_moves[party[currentplayer].moves[3]].name, false))
+				switch (text_AskQuestion4(data_moves[currentSave.party[currentplayer].moves[0]].name, data_moves[currentSave.party[currentplayer].moves[1]].name, data_moves[currentSave.party[currentplayer].moves[2]].name, data_moves[currentSave.party[currentplayer].moves[3]].name, false))
 				{
 				case 1:
-					party[currentplayer].moves[0] = data_pokemon[party[currentplayer].id].moveids[i];
+					currentSave.party[currentplayer].moves[0] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
 					break;
 				case 2:
-					party[currentplayer].moves[1] = data_pokemon[party[currentplayer].id].moveids[i];
+					currentSave.party[currentplayer].moves[1] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
 					break;
 				case 3:
-					party[currentplayer].moves[2] = data_pokemon[party[currentplayer].id].moveids[i];
+					currentSave.party[currentplayer].moves[2] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
 					break;
 				case 4:
-					party[currentplayer].moves[3] = data_pokemon[party[currentplayer].id].moveids[i];
+					currentSave.party[currentplayer].moves[3] = data_pokemon[currentSave.party[currentplayer].id].moveids[i];
 					break;
 				}
 			}
 			i++;
 		}
-		if (party[currentplayer].level == data_pokemon[party[currentplayer].id].evolvelevel) {
-			sprintf(str, "%s is evolving", data_pokemon[party[currentplayer].id].name);
+		if (currentSave.party[currentplayer].level == data_pokemon[currentSave.party[currentplayer].id].evolvelevel) {
+			sprintf(str, "%s is evolving", data_pokemon[currentSave.party[currentplayer].id].name);
 			text_Display(str, false);
 			if (text_AskQuestion2("Continue", "Stop", false) == 1) {
-				party[currentplayer].id = data_pokemon[party[currentplayer].id].evolveid;
+				currentSave.party[currentplayer].id = data_pokemon[currentSave.party[currentplayer].id].evolveid;
 			}
 		}
 	}
-	party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
-	party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
-	party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
-	party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
-	party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
-	party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
+	currentSave.party[currentplayer].healthEV += data_pokemon[enemyparty[currentenemy].id].basehealth;
+	currentSave.party[currentplayer].attackEV += data_pokemon[enemyparty[currentenemy].id].baseattack;
+	currentSave.party[currentplayer].defenceEV += data_pokemon[enemyparty[currentenemy].id].basedefence;
+	currentSave.party[currentplayer].specialattackEV += data_pokemon[enemyparty[currentenemy].id].basespecialattack;
+	currentSave.party[currentplayer].specialdefenceEV += data_pokemon[enemyparty[currentenemy].id].basespecialdefence;
+	currentSave.party[currentplayer].speedEV += data_pokemon[enemyparty[currentenemy].id].basespeed;
 }
 /* ball is 1-4 */
 bool capture(uint8_t ball) {
@@ -1310,8 +1310,8 @@ bool capture(uint8_t ball) {
 		sprintf(str, "%s was caught", data_pokemon[enemyparty[currentenemy].id].name);
 		text_Display(str, false);
 		for (slot = 0; slot < 36; slot++) {
-			if (party[slot].id == 0) {
-				party[slot] = enemyparty[currentenemy];
+			if (currentSave.party[slot].id == 0) {
+				currentSave.party[slot] = enemyparty[currentenemy];
 				slot = 40;
 			}
 			i++;
