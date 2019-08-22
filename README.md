@@ -71,11 +71,6 @@ Pallet Town - Bob799
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
 
-Viridian City - fabnt
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3777/
-  
-  
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
 Sprites - www.veekun.com/dex/downloads
