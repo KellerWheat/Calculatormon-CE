@@ -17,21 +17,21 @@ The tools folder includes some python scripts I made to help generate game data 
 
 
 
-Sprite Resources I used:
+Sprite Resources I used (and who created them):
 
-Hero & Heroine - Ripped by Previous
+Hero & Heroine - Previous
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/
 
-Overworld NPCs - Submitted by ebuddy and Silentninja (it doesn't say who ripped it but it was probably them)
+Overworld NPCs - ebuddy and Silentninja
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3698/
 
-Battle Backgrounds - Ripped By redblueyellow
+Battle Backgrounds - redblueyellow
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/
 
-HP Bars & In-battle Menu - Ripped By redblueyellow
+HP Bars & In-battle Menu - redblueyellow
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/
 
@@ -39,33 +39,41 @@ Status Icons - Superjustinbros
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/
 
-Pokémon Summary Menu - Ripped by Pnick0509
+Pokémon Summary Menu - Pnick0509
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/112720/
 
-Interface & Bag Screens - Ripped by Casquall, Redzagoon, and Waudby
+Interface & Bag Screens - Casquall, Redzagoon, and Waudby
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3865/
 
-Pokémon Menu - Ripped by Redzagoon
+Pokémon Menu - Redzagoon
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3854/
 
-PC Interface - Ripped by fabnt
+PC Interface - fabnt
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3861/
 
-Tileset 0 - Ripped by Hoeloe
+Tileset 0 - Hoeloe
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
 
-Tileset 1 - Ripped by fabnt
+Tileset 1 - fabnt
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/
 
-Tileset 2 - Ripped by fabnt
+Tileset 2 - fabnt
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
+
+Pallet Town - Bob799
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
+
+Viridian City - fabnt
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3777/
   
   
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
