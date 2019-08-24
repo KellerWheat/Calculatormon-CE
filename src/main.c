@@ -61,9 +61,7 @@ void main(void) {
 	battle_Initialize();
 
 
-	if (debugging) {
-		FindColors();
-	}
+	FindColors();
 
 	map_Setup();
 

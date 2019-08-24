@@ -94,6 +94,8 @@ struct zoneData {
 	uint8_t trainermovement[16];
 	uint8_t trainertext[16];
 	uint8_t trainerreward[16];//Reward is an item (number is one more than actual id)
+
+	uint8_t grounditems[16];//(number is one more than actual id)
 };
 
 /* Data from other structs */

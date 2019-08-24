@@ -24,8 +24,6 @@ char str[100];
 
 uint16_t i;
 uint16_t e;
-/* Used to run functions when debugging */
-bool debugging = 0;
 
 #define COLORCOUNT 17
 
@@ -34,7 +32,7 @@ uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{9,2,17,194,251,217,0,235,210,251,37,251,0,193,95,141,99,},
+	{8,6,15,192,169,222,0,227,208,169,35,169,0,190,92,136,97,},
 	{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
 };
 
@@ -83,10 +81,14 @@ void SetColors(uint8_t gameState) {
 
 /* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
 void FindColors(void) {
+#ifndef NDEBUG
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	FindBestColors();
 	gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
 	FindBestColors();
+#else
+	// run code in normal mode
+#endif
 }
 void FindBestColors(void) {
 	int paletteIndex, colorIndex, lowestDifference, bestColor;

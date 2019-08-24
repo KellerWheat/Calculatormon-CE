@@ -107,6 +107,8 @@ uint8_t moveState = 0;
 /* Direction Player is facing */
 uint8_t moveDir = 3;
 uint8_t playerState = 0;
+uint8_t jumpState = 0;
+uint8_t jumpHeights[17] = {1,3,6,9,12,14,15,16,16,15,14,12,9,6,3,1, 0 };
 
 gfx_tilemap_t tilemap;
 
@@ -157,6 +159,7 @@ void map_Initialize(void) {
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;
 	LoadMap();
+	dbg_SetBreakpoint(&map_Draw);
 }
 void map_Setup(void) {
 	map_SetupGfx();
@@ -285,12 +288,13 @@ int map_Loop(void) {
 					currentSave.party[0] = stats_NewCharacter((1 + (starter) * 3), 5);
 					currentTileMap[tilePos - tilemap.width]-=3;
 					currentSave.newGame = false;
+					currentSave.defeatedTrainers[0][15] = true;
 					currentSave.rivalPokemon = (starter + 1) % 3;
 				}
 				map_LoadPokeballs();
 			}
 			else {
-				text_Display("You already got a Pokemon", true);
+				text_Display("You already chose a Pokemon", true);
 			}
 		}
 		else if (nextTile == 0x46) {
@@ -385,6 +389,23 @@ int map_Loop(void) {
 		else if (nextTile >= 0x70 && nextTile < 0x80) {
 			ReadText(nextTile - 0x70);
 		}
+		else if (nextTile >= 0x80 && nextTile < 0x90) {
+			if (!currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80]) {
+				currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = true;
+				currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1]++;
+				items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
+				if (currentZoneData.grounditems[nextTile - 0x80] - 1 >= 20) {
+					sprintf(str, "Found the TM for %s", str1);
+				}
+				else {
+					sprintf(str, "Found a %s", str1);
+				}
+				text_Display(str, false);
+				currentTileMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
+				currentTypeMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
+				currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tilemap.width*ty, moveDir, 1);
+			}
+		}
 		else {
 			awaitSecond = false;
 		}
@@ -397,11 +418,17 @@ int map_Loop(void) {
 	}
 	/* If moving */
 	if (moveState > 0) {
-		Wait(1);
+		Wait(2);
 		moveState--;
+		if (jumpState) {
+			jumpState--;
+		}
 		if (running) {
-			Wait(1);
+			Wait(2);
 			moveState--;
+			if (jumpState) {
+				jumpState--;
+			}
 		}
 		if (moveDir == 1) {
 			currentSave.playerX += 2 * (1 + running);
@@ -449,6 +476,7 @@ int map_Loop(void) {
 
 		if (moveState == 0) {
 			currentRun = !currentRun;
+			playerState = 0;
 			/* Arrive At Tile*/
 			tx = currentSave.playerX / 16;
 			ty = currentSave.playerY / 16;
@@ -457,66 +485,74 @@ int map_Loop(void) {
 				/* Grass */
 				if ((rand() % 100) < battlechance) {
 					uint8_t wildSpawn;
+					map_Draw();
+					gfx_SwapDraw();
 					wildSpawn = rand() % 5;
 					battle_SpawnWild(currentZoneData.spawnids[wildSpawn][nextTile -16], currentZoneData.spawnminlevels[wildSpawn][nextTile - 16], currentZoneData.spawnmaxlevels[wildSpawn][nextTile - 16]);
 					return 1;
 				}
 			}
-			else if (nextTile == 0x01) {
-				ExitBuilding();
-			}
-			else if (nextTile == 0x02) {
-				if (((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentZone][15]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][15])) && currentZoneData.trainerdir[15] != 0) {
-					if (currentZoneData.trainerx[15] == 255) {
-						int walkState, xloc, yloc;
+			else if (nextTile != 0) {
+				map_Draw();
+				gfx_SwapDraw();
+				if (nextTile == 0x01) {
+					ExitBuilding();
+				}
+				else if (nextTile == 0x02) {
+					if (((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentZone][15]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][15])) && currentZoneData.trainerdir[15] != 0) {
+						if (currentZoneData.trainerx[15] == 255) {
+							int walkState, xloc, yloc;
 
-						xloc = (16 * (tx - (11 * ((currentZoneData.trainerdir[15] == 1) - (currentZoneData.trainerdir[15] == 2))))) - screenX - 8;
-						yloc = (16 * (ty - (7 * ((currentZoneData.trainerdir[15] == 3) - (currentZoneData.trainerdir[15] == 4))))) - screenY + 1;
-						//xloc = (16 * tx) - screenX;
-						//yloc = (16 * ty) - screenY;
+							xloc = (16 * (tx - (11 * ((currentZoneData.trainerdir[15] == 1) - (currentZoneData.trainerdir[15] == 2))))) - screenX - 8;
+							yloc = (16 * (ty - (7 * ((currentZoneData.trainerdir[15] == 3) - (currentZoneData.trainerdir[15] == 4))))) - screenY + 1;
+							//xloc = (16 * tx) - screenX;
+							//yloc = (16 * ty) - screenY;
 
-						if (currentZoneData.trainerdir[15] <= 2) {
-							walkState = 10 * 16;
+							if (currentZoneData.trainerdir[15] <= 2) {
+								walkState = 10 * 16;
+							}
+							else {
+								walkState = 6 * 16;
+							}
+							while (walkState > 0)
+							{
+								map_Draw();
+								xloc += ((currentZoneData.trainerdir[15] == 1) - (currentZoneData.trainerdir[15] == 2));
+								yloc += ((currentZoneData.trainerdir[15] == 3) - (currentZoneData.trainerdir[15] == 4));
+
+								gfx_TransparentSprite((gfx_sprite_t*)PKMNSD7[(currentZoneData.trainerskin[15] * 12) + ((currentZoneData.trainerdir[15] - 1) * 3) + ((walkState % 16) / 4 == 1) + 2 * ((walkState % 16) / 4 == 3)], xloc, yloc);
+
+								gfx_SwapDraw();
+
+								walkState--;
+							}
+							currentZoneData.trainerx[15] = tx + ((0 - currentZoneData.trainerdir[15] == 1) + (currentZoneData.trainerdir[15] == 2));
+							currentZoneData.trainery[15] = ty + ((0 - currentZoneData.trainerdir[15] == 3) + (currentZoneData.trainerdir[15] == 4));
+
+
 						}
-						else {
-							walkState = 6 * 16;
+						if (FightTrainer(15)) {
+							currentZoneData.trainerx[15] = 255;
+							currentZoneData.trainery[15] = 255;
+							return 1;
 						}
-						while (walkState > 0)
-						{
-							map_Draw();
-							xloc += ((currentZoneData.trainerdir[15] == 1) - (currentZoneData.trainerdir[15] == 2));
-							yloc += ((currentZoneData.trainerdir[15] == 3) - (currentZoneData.trainerdir[15] == 4));
-
-							gfx_TransparentSprite((gfx_sprite_t*)PKMNSD7[(currentZoneData.trainerskin[15] * 12) + ((currentZoneData.trainerdir[15] - 1) * 3) + ((walkState % 16) / 4 == 1) + 2 * ((walkState % 16) / 4 == 3)], xloc, yloc);
-
-							gfx_SwapDraw();
-
-							walkState--;
-						}
-						currentZoneData.trainerx[15] = tx + ((0-currentZoneData.trainerdir[15] == 1) + (currentZoneData.trainerdir[15] == 2));
-						currentZoneData.trainery[15] = ty + ((0-currentZoneData.trainerdir[15] == 3) + (currentZoneData.trainerdir[15] == 4));
-
-
 					}
-					if (FightTrainer(15)) {
-						currentZoneData.trainerx[15] = 255;
-						currentZoneData.trainery[15] = 255;
+				}
+				else if (currentSave.surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
+					currentSave.surfing = false;
+				}
+				else if (nextTile >= 0x20 && nextTile < 0x30) {
+					ExitZone(nextTile - 32);
+				}
+				else if (nextTile >= 0x30 && nextTile < 0x40) {
+					if (FightTrainer(nextTile - 48)) {
 						return 1;
 					}
 				}
-			}
-			else if (currentSave.surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
-				currentSave.surfing = false;
-			}
-			else if (nextTile >= 0x20 && nextTile < 0x30) {
-				ExitZone(nextTile - 32);
-			}
-			else if (nextTile >= 0x30 && nextTile < 0x40) {
-				if (FightTrainer(nextTile - 48)) {
-					return 1;
+				else if (nextTile == 0x48) {
+					moveState = 8;
 				}
 			}
-
 		}
 	}
 
@@ -539,6 +575,10 @@ int map_Loop(void) {
 		if (kb_Data[7]) {
 			if (GetNextTile(tx, ty, tilemap.width) < 64 && !(!currentSave.surfing && GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) < 0x20)) {
 				moveState = 8;
+			}
+			else if (GetNextTile(tx, ty, tilemap.width) == 0x48 && moveDir == 3) {
+				moveState = 8;
+				jumpState = 16;
 			}
 		}
 		running = ((kb_Data[2] & kb_Alpha) && moveState > 0 && !currentSave.surfing);
@@ -610,8 +650,7 @@ void map_Draw(void) {
 void DrawPlayer(void) {
 	GrassAnimation(0);
 
-
-	gfx_TransparentSprite_NoClip((gfx_sprite_t*)PKMNSD8[(24 * currentSave.surfing) + (12 * running) + (moveDir - 1) * (3 - currentSave.surfing) + playerState], currentSave.playerX - screenX - 8, currentSave.playerY - screenY + 4);
+	gfx_TransparentSprite_NoClip((gfx_sprite_t*)PKMNSD8[(24 * currentSave.surfing) + (12 * running) + (moveDir - 1) * (3 - currentSave.surfing) + playerState], currentSave.playerX - screenX - 8, currentSave.playerY - screenY + 4 - jumpHeights[16-jumpState]);
 
 	/* Draw overlay if player is in grass */
 	if (currentTileMap[tx + (moveDir == 1) - (moveDir == 2) + (ty + (moveDir == 3) - (moveDir == 4)) * tilemap.width] == 2 && !currentSave.indoors) {
@@ -636,11 +675,12 @@ void DrawPlayer(void) {
 	if (!(moveDir == 3 && moveState != 0) && currentTileMap[tx + ty * tilemap.width] == 2) {
 		gfx_TransparentSprite_NoClip(grassoverlay1, tx * 16 - screenX - 8, ty * 16 - screenY + 18);
 	}
+
 	GrassAnimation(1);
 }
 void GrassAnimation(bool part) {
 	if (grassAnimState1 > 0) {
-		if ((moveDir == 3 && moveState != 0 && ty == grassAnimY1 / 16) || (moveDir == 4 && (moveState == 1 || moveState == 2)) != part) {
+		if (part != ((moveDir == 3 && moveState != 0 && moveState != 8 && currentSave.playerY <= grassAnimY1 + 12) || (moveDir == 4 && ty != (grassAnimY1 / 16)))) {
 			if (grassAnimState1 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX1 - screenX - 8, grassAnimY1 - screenY + 13);
 			}
@@ -651,7 +691,7 @@ void GrassAnimation(bool part) {
 		grassAnimState1--;
 	}
 	if (grassAnimState2 > 0) {
-		if ((moveDir == 3 && moveState != 0 && ty == grassAnimY2 / 16) || (moveDir == 4 && (moveState == 1 || moveState == 2)) != part) {
+		if (part != ((moveDir == 3 && moveState != 0 && moveState != 8 && currentSave.playerY <= grassAnimY2 + 12) || (moveDir == 4 && ty != (grassAnimY2 / 16)))) {
 			if (grassAnimState2 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX2 - screenX - 8, grassAnimY2 - screenY + 13);
 			}
@@ -694,10 +734,7 @@ void EnterDoor(uint8_t index) {
 	currentSave.lastPlayerY = currentSave.playerY;
 	currentSave.indoors = true;
 	currentSave.currentBuilding = currentZoneData.doorzones[index];
-
-	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
-		zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
-	}
+	LoadTileset(true);
 	tilemap.width = 21;
 	tilemap.height = 15;
 	currentSave.playerX = currentZoneData.doorx[index] * 16;
@@ -762,7 +799,7 @@ bool FightTrainer(uint8_t index) {
 	}
 	else if (currentZoneData.trainertype[index] == 6) {
 		if (currentSave.newGame) {
-			text_Display("Professor Weed was looking for you\nHe is in his Laboratory", false);
+			text_Display("Professor Spruce was looking for you\nHe is in his Laboratory", false);
 		}
 		else {
 			if (!currentSave.takenGiftsIndoors[currentSave.currentBuilding][index]) {
@@ -801,14 +838,14 @@ void LoadMap(void) {
 	ti_var_t mapAV;
 	if (currentSave.indoors) {
 		mapAV = ti_Open("PKMNMD1", "r");
-		ti_Seek(((int)currentSave.currentBuilding) * 1302, 0, mapAV);
+		ti_Seek(((int)currentSave.currentBuilding) * 1318, 0, mapAV);
 		ti_Read(&currentTileMap, 315, 1, mapAV);
 		ti_Read(&currentTypeMap, 315, 1, mapAV);
 		ti_Read(&currentZoneData, sizeof(currentZoneData), 1, mapAV);
 	}
 	else {
 		mapAV = ti_Open("PKMNMD0", "r");
-		ti_Seek(((int)currentSave.currentZone) * 4512, 0, mapAV);
+		ti_Seek(((int)currentSave.currentZone) * 4528, 0, mapAV);
 		ti_Read(&currentTileMap, 1920, 1, mapAV);
 		ti_Read(&currentTypeMap, 1920, 1, mapAV);
 		ti_Read(&currentZoneData, sizeof(currentZoneData), 1, mapAV);
@@ -834,8 +871,13 @@ void LoadMap(void) {
 		npcOldTiles[npcIndex] = currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tilemap.width * currentZoneData.trainery[npcIndex])];
 		currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tilemap.width * currentZoneData.trainery[npcIndex])] = 96 + npcIndex;
 		npcSaidMessage[npcIndex] = false;
-		
+
+		if (currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][npcIndex]) {
+			currentTileMap[currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][npcIndex]] = 0;
+			currentTypeMap[currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][npcIndex]] = 0;
+		}
 	}
+	
 }
 
 int32_t Clamp(int32_t number, int min, int max) {
@@ -863,7 +905,7 @@ uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width) {
 }
 
 uint16_t ShiftTile(uint16_t value, uint8_t direction, uint8_t amount) {
-	return (value + (direction == 1 * amount) - (direction == 2 * amount) + (direction == 3 * tilemap.width * amount) - (direction == 4 * tilemap.width * amount));
+	return (value + ((direction == 1) * amount) - ((direction == 2) * amount) + ((direction == 3) * tilemap.width * amount) - ((direction == 4) * tilemap.width * amount));
 }
 
 uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
@@ -1037,7 +1079,7 @@ void map_LoseFight(void) {
 			currentSave.party[partyIndex].pp[moveIndex] = data_moves[currentSave.party[partyIndex].moves[moveIndex]].uses;
 		}
 	}
-	currentSave.playerX = 14*16;
+	currentSave.playerX = 16*16;
 	currentSave.playerY = 20*16;
 	currentSave.indoors = false;
 	currentSave.currentZone = 0;
@@ -1097,7 +1139,7 @@ void LoadTileset(bool freeOld) {
 		}
 		mapTiles[tileIndex] = gfx_MallocSprite(16, 16);
 		if (currentSave.indoors) {
-			zx7_Decompress(mapTiles[tileIndex], indoortileset_tiles_compressed[tileIndex]);
+			zx7_Decompress(mapTiles[tileIndex], indoortileset0_tiles_compressed[tileIndex]);
 		}
 		else {
 			if (data_tileSets[currentSave.currentZone] == 0) {

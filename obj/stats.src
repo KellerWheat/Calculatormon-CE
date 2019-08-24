@@ -452,7 +452,7 @@
 .TYPE 12
 .ENDEF
 .ENDREC "move"
-.BEGREC "zoneData",672
+.BEGREC "zoneData",688
 .DEFINE "spawnids"
 .VALUE 0
 .CLASS 8
@@ -574,6 +574,12 @@
 .ENDEF
 .DEFINE "trainerreward"
 .VALUE 656
+.CLASS 8
+.DIM 16
+.TYPE 108
+.ENDEF
+.DEFINE "grounditems"
+.VALUE 672
 .CLASS 8
 .DIM 16
 .TYPE 108

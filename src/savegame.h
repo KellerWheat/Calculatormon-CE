@@ -6,6 +6,9 @@
 
 extern const char appVarName[];
 
+#define AREACOUNT 16
+#define BUILDINGCOUNT 16
+
 struct saveGame
 {
 	bool newGame;
@@ -21,10 +24,12 @@ struct saveGame
 	uint8_t currentBuilding;
 	uint32_t playerMoney;
 	uint8_t playerItems[185];
-	bool defeatedTrainers[16][16];
-	bool defeatedTrainersIndoors[16][16];
-	bool takenGifts[16][16];
-	bool takenGiftsIndoors[16][16];
+	bool defeatedTrainers[AREACOUNT][16];
+	bool defeatedTrainersIndoors[BUILDINGCOUNT][16];
+	bool takenGifts[AREACOUNT][16];
+	bool takenGiftsIndoors[BUILDINGCOUNT][16];
+	bool takenGroundGifts[2][AREACOUNT][16];
+	uint16_t foundItemsPos[2][AREACOUNT][16];
 	uint8_t badgeCount;
 	uint8_t pokedex[151];
 };

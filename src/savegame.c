@@ -79,7 +79,7 @@ err:
 	currentSave.rivalPokemon = 0;
 	currentSave.playerX = 15 * 16;
 	currentSave.playerY = 10 * 16;
-	currentSave.lastPlayerX = 14 * 16;
+	currentSave.lastPlayerX = 16 * 16;
 	currentSave.lastPlayerY = 20 * 16;
 	currentSave.currentZone = 0;
 	currentSave.indoors = true;

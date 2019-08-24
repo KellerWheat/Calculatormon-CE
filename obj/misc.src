@@ -11,8 +11,6 @@ _i:
 _e:
 	DS	2*1
 	SEGMENT DATA
-_debugging:
-	DB	0
 _colors:
 	DB	0
 	DB	0
@@ -32,23 +30,23 @@ _colors:
 	DB	0
 	DB	0
 _colorSets:
-	DB	9
-	DB	2
-	DB	17
-	DB	194
-	DB	251
-	DB	217
+	DB	8
+	DB	6
+	DB	15
+	DB	192
+	DB	169
+	DB	222
 	DB	0
-	DB	235
-	DB	210
-	DB	251
-	DB	37
-	DB	251
+	DB	227
+	DB	208
+	DB	169
+	DB	35
+	DB	169
 	DB	0
-	DB	193
-	DB	95
-	DB	141
-	DB	99
+	DB	190
+	DB	92
+	DB	136
+	DB	97
 	DB	22
 	DB	7
 	DB	218
@@ -151,56 +149,54 @@ _categoryIcons:
 ;   24	
 ;   25	uint16_t i;
 ;   26	uint16_t e;
-;   27	/* Used to run functions when debugging */
-;   28	bool debugging = 0;
+;   27	
+;   28	#define COLORCOUNT 17
 ;   29	
-;   30	#define COLORCOUNT 17
-;   31	
+;   30	
+;   31	uint8_t colors[COLORCOUNT] = {0};
 ;   32	
-;   33	uint8_t colors[COLORCOUNT] = {0};
-;   34	
-;   35	
-;   36	uint8_t colorSets[2][COLORCOUNT] = {
-;   37		{9,2,17,194,251,217,0,235,210,251,37,251,0,193,95,141,99,},
-;   38		{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
-;   39	};
-;   40	
-;   41	uint8_t colorValues[COLORCOUNT][3] = {
-;   42		{247,247,247},//0
-;   43		{0,0,0},//1
-;   44		{127,0,127},//2
-;   45		{255,0,0},//3
-;   46		{255,255,0},//4
-;   47		{128,128,128},//5
-;   48		{0,255,255},//6
-;   49		{64,200,248},//7
-;   50		{62,255,90},//8
-;   51		{248,224,56},//9
-;   52		{248,88,56},//10
-;   53		{248,224,0},//11
-;   54		{0,200,200},//12
-;   55		{0,128,255},//13
-;   56		{40,48,48},//14
-;   57		{138,138,200},//15
-;   58		{200,200,216},//16
-;   59	};
-;   60	
-;   61	gfx_sprite_t *typeIcons[17];
-;   62	gfx_sprite_t *statusIcons[5];
-;   63	gfx_sprite_t *categoryIcons[3];
+;   33	
+;   34	uint8_t colorSets[2][COLORCOUNT] = {
+;   35		{8,6,15,192,169,222,0,227,208,169,35,169,0,190,92,136,97,},
+;   36		{22,7,218,23,45,87,0,20,44,176,150,110,0,112,4,86,11,},
+;   37	};
+;   38	
+;   39	uint8_t colorValues[COLORCOUNT][3] = {
+;   40		{247,247,247},//0
+;   41		{0,0,0},//1
+;   42		{127,0,127},//2
+;   43		{255,0,0},//3
+;   44		{255,255,0},//4
+;   45		{128,128,128},//5
+;   46		{0,255,255},//6
+;   47		{64,200,248},//7
+;   48		{62,255,90},//8
+;   49		{248,224,56},//9
+;   50		{248,88,56},//10
+;   51		{248,224,0},//11
+;   52		{0,200,200},//12
+;   53		{0,128,255},//13
+;   54		{40,48,48},//14
+;   55		{138,138,200},//15
+;   56		{200,200,216},//16
+;   57	};
+;   58	
+;   59	gfx_sprite_t *typeIcons[17];
+;   60	gfx_sprite_t *statusIcons[5];
+;   61	gfx_sprite_t *categoryIcons[3];
 	SEGMENT CODE
-;   64	
-;   65	/* Wait 10ms times amount */
-;   66	void Wait(uint16_t amount) {
+;   62	
+;   63	/* Wait 10ms times amount */
+;   64	void Wait(uint16_t amount) {
 _Wait:
 	CALL	__frameset0
-;   67		while (amount--)
+;   65		while (amount--)
 	JR	L_1
 L_2:
-;   68		{
-;   69			boot_WaitShort();
+;   66		{
+;   67			boot_WaitShort();
 	CALL	_boot_WaitShort
-;   70		}
+;   68		}
 L_1:
 	LD	IY,(IX+6)
 	LEA	HL,IY+-1
@@ -210,7 +206,7 @@ L_1:
 	LD	HL,BC
 	CALL	__scmpzero
 	JR	NZ,L_2
-;   71	}
+;   69	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -226,19 +222,19 @@ L_1:
 ;       Spill Code: 0 (instruction)
 
 
-;   72	
-;   73	/* Changes the colors list to one for the current palette and sets transparent text color */
-;   74	void SetColors(uint8_t gameState) {
+;   70	
+;   71	/* Changes the colors list to one for the current palette and sets transparent text color */
+;   72	void SetColors(uint8_t gameState) {
 _SetColors:
 	LD	HL,-6
 	CALL	__frameset
-;   75		int colorIndex;
-;   76		for (colorIndex = 0; colorIndex < sizeof(colors); colorIndex++) {
+;   73		int colorIndex;
+;   74		for (colorIndex = 0; colorIndex < sizeof(colors); colorIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_7
 L_5:
-;   77			colors[colorIndex] = colorSets[gameState][colorIndex];
+;   75			colors[colorIndex] = colorSets[gameState][colorIndex];
 	LD	A,(IX+6)
 	UEXT	HL
 	LD	L,A
@@ -257,15 +253,15 @@ L_5:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;   78			
-;   79		}
+;   76			
+;   77		}
 L_7:
 	LD	BC,17
 	LD	HL,(IX+-3)
 	OR	A,A
 	SBC	HL,BC
 	JR	C,L_5
-;   80		gfx_SetTextTransparentColor(colors[12]);
+;   78		gfx_SetTextTransparentColor(colors[12]);
 	LD	IY,_colors
 	LEA	IY,IY+12
 	LD	(IX+-6),IY
@@ -275,14 +271,14 @@ L_7:
 	PUSH	BC
 	CALL	_gfx_SetTextTransparentColor
 	POP	BC
-;   81		gfx_SetTextBGColor(colors[12]);
+;   79		gfx_SetTextBGColor(colors[12]);
 	LD	HL,(IX+-6)
 	LD	C,(HL)
 	LD	B,0
 	PUSH	BC
 	CALL	_gfx_SetTextBGColor
 	POP	BC
-;   82	}
+;   80	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -303,75 +299,51 @@ L_7:
 ;       Spill Code: 0 (instruction)
 
 
-;   83	
-;   84	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
-;   85	void FindColors(void) {
+;   81	
+;   82	/* Converts the RGB data from colorValues to 1555 data for colorSets and prints it in the debug console */
+;   83	void FindColors(void) {
 _FindColors:
-;   86		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD4+18
-	LD	BC,512
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
-;   87		FindBestColors();
-	CALL	_FindBestColors
-;   88		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
-	LD	BC,0
-	PUSH	BC
-	LD	HL,_PKMNSD5+99
-	LD	BC,512
-	PUSH	BC
-	LD	BC,(HL)
-	PUSH	BC
-	CALL	_gfx_SetPalette
-	POP	BC
-	POP	BC
-	POP	BC
-;   89		FindBestColors();
-	CALL	_FindBestColors
-;   90	}
+;   84	#ifndef NDEBUG
+;   85		gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
+;   86		FindBestColors();
+;   87		gfx_SetPalette(battle_gfx_pal, sizeof_battle_gfx_pal, 0);
+;   88		FindBestColors();
+;   89	#else
+;   90		// run code in normal mode
+;   91	#endif
+;   92	}
 	RET	
 
 
 ;**************************** _FindColors ***************************
 ;Name                         Addr/Register   Size   Type
-;_PKMNSD5                            IMPORT    102   variable
-;_FindBestColors                     IMPORT  -----   function
-;_PKMNSD4                            IMPORT     21   variable
-;_gfx_SetPalette                     IMPORT  -----   function
 
 
 ; Stack Frame Size: 6 (bytes)
 ;       Spill Code: 0 (instruction)
 
 
-;   91	void FindBestColors(void) {
+;   93	void FindBestColors(void) {
 _FindBestColors:
 	LD	HL,-15
 	CALL	__frameset
-;   92		int paletteIndex, colorIndex, lowestDifference, bestColor;
-;   93		dbg_sprintf(dbgout, "\n\t{");
-;   94		for (colorIndex = 0; colorIndex < COLORCOUNT; colorIndex++) {
+;   94		int paletteIndex, colorIndex, lowestDifference, bestColor;
+;   95		dbg_sprintf(dbgout, "\n\t{");
+;   96		for (colorIndex = 0; colorIndex < COLORCOUNT; colorIndex++) {
 	LD	BC,0
 	LD	(IX+-6),BC
 	JR	L_22
 L_20:
-;   95			lowestDifference = 10000;
+;   97			lowestDifference = 10000;
 	LD	BC,10000
 	LD	(IX+-9),BC
-;   96			bestColor = 0;
-;   97			for (paletteIndex = 0; paletteIndex < 256; paletteIndex++) {
+;   98			bestColor = 0;
+;   99			for (paletteIndex = 0; paletteIndex < 256; paletteIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_17
 L_15:
-;   98				if (ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]) < lowestDifference) {
+;  100				if (ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]) < lowestDifference) {
 	LD	HL,(IX+-6)
 	LD	BC,HL
 	ADD	HL,HL
@@ -427,7 +399,7 @@ L_15:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	P,L_16
-;   99					lowestDifference = ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]);
+;  101					lowestDifference = ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]);
 	LD	HL,(IX+-6)
 	LD	BC,HL
 	ADD	HL,HL
@@ -479,11 +451,11 @@ L_15:
 	POP	BC
 	POP	BC
 	LD	(IX+-9),HL
-;  100					bestColor = paletteIndex;
-;  101					//dbg_sprintf(dbgout, "\nNew Best Color: %d / %u / %u,%u,%u", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
-;  102					//dbg_sprintf(dbgout, "\nDifference: %u", ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]));
-;  103				}
-;  104			}
+;  102					bestColor = paletteIndex;
+;  103					//dbg_sprintf(dbgout, "\nNew Best Color: %d / %u / %u,%u,%u", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
+;  104					//dbg_sprintf(dbgout, "\nDifference: %u", ColorDifference(gfx_RGBTo1555(colorValues[colorIndex][0], colorValues[colorIndex][1], colorValues[colorIndex][2]), gfx_palette[paletteIndex]));
+;  105				}
+;  106			}
 L_16:
 	LD	BC,(IX+-3)
 	INC	BC
@@ -498,9 +470,9 @@ L_17:
 	LD	BC,(IX+-6)
 	INC	BC
 	LD	(IX+-6),BC
-;  105			//dbg_sprintf(dbgout, "\nFinal Best Color: %d / %u / %u,%u,%u\n\n\n", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
-;  106			dbg_sprintf(dbgout, "%d,", bestColor);
-;  107		}
+;  107			//dbg_sprintf(dbgout, "\nFinal Best Color: %d / %u / %u,%u,%u\n\n\n", bestColor, gfx_palette[bestColor], color_1555ToRGB(gfx_palette[bestColor])[0], color_1555ToRGB(gfx_palette[bestColor])[1], color_1555ToRGB(gfx_palette[bestColor])[2]);
+;  108			dbg_sprintf(dbgout, "%d,", bestColor);
+;  109		}
 L_22:
 	LD	BC,17
 	LD	HL,(IX+-6)
@@ -508,8 +480,8 @@ L_22:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_20
-;  108		dbg_sprintf(dbgout, "},");
-;  109	}
+;  110		dbg_sprintf(dbgout, "},");
+;  111	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -528,12 +500,12 @@ L_22:
 ;       Spill Code: 0 (instruction)
 
 
-;  110	
-;  111	int ColorDifference(uint16_t color1, uint16_t color2) {
+;  112	
+;  113	int ColorDifference(uint16_t color1, uint16_t color2) {
 _ColorDifference:
 	LD	HL,-19
 	CALL	__frameset
-;  112		return(abs(((int)(color_1555ToRGB(color1)[0])) - ((int)(color_1555ToRGB(color2)[0]))) + abs(((int)(color_1555ToRGB(color1)[1])) - ((int)(color_1555ToRGB(color2)[1]))) + abs(((int)(color_1555ToRGB(color1)[2])) - ((int)(color_1555ToRGB(color2)[2]))));
+;  114		return(abs(((int)(color_1555ToRGB(color1)[0])) - ((int)(color_1555ToRGB(color2)[0]))) + abs(((int)(color_1555ToRGB(color1)[1])) - ((int)(color_1555ToRGB(color2)[1]))) + abs(((int)(color_1555ToRGB(color1)[2])) - ((int)(color_1555ToRGB(color2)[2]))));
 	LD	BC,(IX+6)
 	PUSH	BC
 	CALL	_color_1555ToRGB
@@ -642,7 +614,7 @@ _ColorDifference:
 	LD	BC,(IX+-15)
 	POP	DE
 	ADD	HL,BC
-;  113	}
+;  115	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -660,15 +632,15 @@ _ColorDifference:
 ;       Spill Code: 0 (instruction)
 
 
-;  114	
-;  115	
-;  116	uint8_t * color_1555ToRGB(uint16_t input) {
+;  116	
+;  117	
+;  118	uint8_t * color_1555ToRGB(uint16_t input) {
 _color_1555ToRGB:
 	LD	HL,-3
 	CALL	__frameset
-;  117		uint8_t output[3];
-;  118	
-;  119		output[0] = (uint8_t)(((input & 0xFC00) >> 10) << 3);
+;  119		uint8_t output[3];
+;  120	
+;  121		output[0] = (uint8_t)(((input & 0xFC00) >> 10) << 3);
 	LD	HL,(IX+6)
 	LD	A,10
 	CALL	__sshru_b
@@ -680,7 +652,7 @@ _color_1555ToRGB:
 	ADD	A,A
 	ADD	A,A
 	LD	(IX+-3),A
-;  120		output[1] = (uint8_t)(((input & 0x03E0) >> 5) << 3);
+;  122		output[1] = (uint8_t)(((input & 0x03E0) >> 5) << 3);
 	LD	HL,(IX+6)
 	LD	A,5
 	CALL	__sshru_b
@@ -694,10 +666,10 @@ _color_1555ToRGB:
 	LEA	HL,IX+-3
 	INC	HL
 	LD	(HL),A
-;  121		output[2] = (uint8_t)((input & 0x001F) << 3);
+;  123		output[2] = (uint8_t)((input & 0x001F) << 3);
 	LD	A,(IX+6)
-;  122	
-;  123		return output;
+;  124	
+;  125		return output;
 	LEA	HL,IX+-3
 	LEA	IY,IX+-3
 	AND	A,31
@@ -705,7 +677,7 @@ _color_1555ToRGB:
 	ADD	A,A
 	ADD	A,A
 	LD	(IY+2),A
-;  124	}
+;  126	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -721,19 +693,19 @@ _color_1555ToRGB:
 ;       Spill Code: 0 (instruction)
 
 
-;  125	
-;  126	
-;  127	void MallocIcons(void) {
+;  127	
+;  128	
+;  129	void MallocIcons(void) {
 _MallocIcons:
 	LD	HL,-3
 	CALL	__frameset
-;  128		int iconIndex;
-;  129		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
+;  130		int iconIndex;
+;  131		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_32
 L_30:
-;  130			typeIcons[iconIndex] = gfx_MallocSprite(32, 12);
+;  132			typeIcons[iconIndex] = gfx_MallocSprite(32, 12);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,12
@@ -752,7 +724,7 @@ L_30:
 	LD	DE,_typeIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  131			zx7_Decompress(typeIcons[iconIndex], PKMNSD5[iconIndex]);
+;  133			zx7_Decompress(typeIcons[iconIndex], PKMNSD5[iconIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -774,7 +746,7 @@ L_30:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  132		}
+;  134		}
 L_32:
 	LD	BC,17
 	LD	HL,(IX+-3)
@@ -782,12 +754,12 @@ L_32:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_30
-;  133		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
+;  135		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_36
 L_34:
-;  134			statusIcons[iconIndex] = gfx_MallocSprite(20, 8);
+;  136			statusIcons[iconIndex] = gfx_MallocSprite(20, 8);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,8
@@ -806,7 +778,7 @@ L_34:
 	LD	DE,_statusIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  135			zx7_Decompress(statusIcons[iconIndex], PKMNSD5[17 + iconIndex]);
+;  137			zx7_Decompress(statusIcons[iconIndex], PKMNSD5[17 + iconIndex]);
 	LD	IY,(IX+-3)
 	LEA	HL,IY+17
 	LD	BC,HL
@@ -830,7 +802,7 @@ L_34:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  136		}
+;  138		}
 L_36:
 	LD	BC,5
 	LD	HL,(IX+-3)
@@ -838,12 +810,12 @@ L_36:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_34
-;  137		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
+;  139		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_41
 L_39:
-;  138			categoryIcons[iconIndex] = gfx_MallocSprite(32, 14);
+;  140			categoryIcons[iconIndex] = gfx_MallocSprite(32, 14);
 	LD	BC,_malloc
 	PUSH	BC
 	LD	BC,14
@@ -862,7 +834,7 @@ L_39:
 	LD	DE,_categoryIcons
 	ADD	HL,DE
 	LD	(HL),BC
-;  139			zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[22 + iconIndex]);
+;  141			zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[22 + iconIndex]);
 	LD	IY,(IX+-3)
 	LEA	HL,IY+22
 	LD	BC,HL
@@ -886,7 +858,7 @@ L_39:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  140		}
+;  142		}
 L_41:
 	LD	BC,3
 	LD	HL,(IX+-3)
@@ -894,7 +866,7 @@ L_41:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_39
-;  141	}
+;  143	}
 	LD	SP,IX
 	POP	IX
 	RET	
@@ -916,17 +888,17 @@ L_41:
 ;       Spill Code: 0 (instruction)
 
 
-;  142	void FreeIcons(void) {
+;  144	void FreeIcons(void) {
 _FreeIcons:
 	LD	HL,-3
 	CALL	__frameset
-;  143		int iconIndex;
-;  144		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
+;  145		int iconIndex;
+;  146		for (iconIndex = 0; iconIndex < 17; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_47
 L_45:
-;  145			free(typeIcons[iconIndex]);
+;  147			free(typeIcons[iconIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -940,7 +912,7 @@ L_45:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  146		}
+;  148		}
 L_47:
 	LD	BC,17
 	LD	HL,(IX+-3)
@@ -948,12 +920,12 @@ L_47:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_45
-;  147		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
+;  149		for (iconIndex = 0; iconIndex < 5; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_51
 L_49:
-;  148			free(statusIcons[iconIndex]);
+;  150			free(statusIcons[iconIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -967,7 +939,7 @@ L_49:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  149		}
+;  151		}
 L_51:
 	LD	BC,5
 	LD	HL,(IX+-3)
@@ -975,12 +947,12 @@ L_51:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_49
-;  150		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
+;  152		for (iconIndex = 0; iconIndex < 3; iconIndex++) {
 	LD	BC,0
 	LD	(IX+-3),BC
 	JR	L_56
 L_54:
-;  151			free(categoryIcons[iconIndex]);
+;  153			free(categoryIcons[iconIndex]);
 	LD	HL,(IX+-3)
 	LD	BC,HL
 	ADD	HL,HL
@@ -994,7 +966,7 @@ L_54:
 	LD	BC,(IX+-3)
 	INC	BC
 	LD	(IX+-3),BC
-;  152		}
+;  154		}
 L_56:
 	LD	BC,3
 	LD	HL,(IX+-3)
@@ -1021,11 +993,9 @@ L_56:
 
 
 	XREF _PKMNSD5:ROM
-	XREF _PKMNSD4:ROM
 	XREF _zx7_Decompress:ROM
 	XREF _gfx_SetTextTransparentColor:ROM
 	XREF _gfx_SetTextBGColor:ROM
-	XREF _gfx_SetPalette:ROM
 	XREF _gfx_AllocSprite:ROM
 	XREF _boot_WaitShort:ROM
 	XREF _abs:ROM
@@ -1055,7 +1025,6 @@ L_56:
 	XDEF _colorValues
 	XDEF _colorSets
 	XDEF _colors
-	XDEF _debugging
 	XDEF _e
 	XDEF _i
 	XDEF _str

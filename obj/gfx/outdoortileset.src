@@ -1,8 +1,9 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
-; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
 	FILE	"SRC\GFX\OUTDOORTILESET.C"
 	.assume ADL=1
+.DEBUG "C"
 	SEGMENT DATA
 _outdoortileset_tiles_compressed:
 	DW24	0
@@ -133,6 +134,13 @@ _outdoortileset_tiles_compressed:
 	DW24	8295
 	DW24	8356
 	DW24	8387
+.DEFINE "outdoortileset_tiles_compressed"
+.ALIAS "_outdoortileset_tiles_compressed"
+.CLASS 69
+.VALUE _outdoortileset_tiles_compressed
+.DIM 128
+.TYPE 364
+.ENDEF
 	XDEF _outdoortileset_tiles_compressed
 ;    1	// convpng v7.0
 ;    2	#include <stdint.h>

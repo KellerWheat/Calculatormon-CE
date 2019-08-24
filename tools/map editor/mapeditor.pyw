@@ -16,7 +16,7 @@ Setting_BSizeX = 21
 Setting_BSizeY = 15
 tilesetname = 'outdoortileset'
 indoortilesetname = 'indoortileset.png'
-dataCount = 42
+dataCount = 43
 textCount = 32
 tilesetCount = 32
 mapCount = 32
@@ -41,6 +41,7 @@ txtemp = 0
 tytemp = 0
 copyingMap = False
 copyingTypeMap = False
+trainerSprites= []
 
 #-------------
 #Start Tkinter
@@ -62,6 +63,9 @@ if(os.path.isfile("tilesets.npy")):
 
 tileSets = np.resize(tileSets, mapCount)
 
+for x in range(4):
+    tileset = Image.open("trainer"+str(x)+".png")
+    trainerSprites.append(pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode))
 
 #---------
 #SelectMap
@@ -207,7 +211,15 @@ ChangeMap()
 #Display Map
 #-----------
 
-TypeNames = [' ','BE','R','N','N','N','N','N','N','N','N','N','N','N','N','N','G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF','E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF','V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF','W','H','S','B','L','ST','R','T','N','N','N','N','N','N','N','N','D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF','T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF','N0','N1','N2','N3','N4','N5','N6','N7','N8','N9','NA','NB','NC','ND','NE','NF','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N']
+TypeNames  = [' ','BE','R','N','N','N','N','N','N','N','N','N','N','N','N','N',]
+TypeNames += ['G0','G1','G2','G3','G4','G5','G6','G7','G8','G9','GA','GB','GC','GD','GE','GF',]
+TypeNames += ['E0','E1','E2','E3','E4','E5','E6','E7','E8','E9','EA','EB','EC','ED','EE','EF',]
+TypeNames += ['V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','VA','VB','VC','VD','VE','VF',]
+TypeNames += ['W','H','S','B','L','ST','R','T','LG','N','N','N','N','N','N','N',]
+TypeNames += ['D0','D1','D2','D3','D4','D5','D6','D7','D8','D9','DA','DB','DC','DD','DE','DF',]
+TypeNames += ['T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF',]
+TypeNames += ['T0','T1','T2','T3','T4','T5','T6','T7','T8','T9','TA','TB','TC','TD','TE','TF',]
+TypeNames += ['I0','I1','I2','I3','I4','I5','I6','I7','I8','I9','IA','IB','IC','ID','IE','IF',]
 
 SetupTileMap()
 
@@ -222,7 +234,7 @@ pygame.display.flip()
 tilefont = pygame.font.SysFont('comicsansms', 10)
 infofont = pygame.font.SysFont('comicsansms', 30)
 def draw():
-    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode, copyingMap, copyingTypeMap
+    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode, copyingMap, copyingTypeMap, zonedata
     events = pygame.event.get()
     
     keys = pygame.key.get_pressed()
@@ -256,7 +268,6 @@ def draw():
                             tilemap[tx+x+sizeX*(ty+y)] = numberToPaint+x+16*y       
             elif numberToPaint != 256:
                 typemap[tx+sizeX*ty] = numberToPaint
-    
     for x in range(sizeX):
         for y in range(sizeY):
             screen.blit(tiles[tilemap[x+sizeX*y]],(16*x,16*y))
@@ -293,7 +304,11 @@ def draw():
                     txtemp = tx
                     tytemp = ty
         
-        
+    if(numberToPaint == 256):
+        for x in range(0,16):
+            if(zonedata[((22+14)*16) + x] != 0 and zonedata[((22+14)*16) + x] - 1 < 4):
+                screen.blit(trainerSprites[zonedata[((22+14)*16) + x] - 1], (zonedata[((22+12)*16) + x]*16, zonedata[((22+13)*16) + x]*16 - 5))
+                screen.blit(tilefont.render(str(x), True, (255, 0, 255)),(zonedata[((22+12)*16) + x]*16+5, zonedata[((22+13)*16) + x]*16))
 
     pygame.display.flip()
 
@@ -303,15 +318,15 @@ def draw():
 
 
 
-ModeList = ["Tiles","Ground Types","Grass","Exit","Door","Text","Trainer"]
-TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","Lab","Starter","Rock", "Tree","Rival"]
-TypeNumbers = [0,1,64,65,66,67,68,69,70,71,2]
+ModeList = ["Tiles","Ground Types","Grass","Exit","Door","Text","Trainer", "Items"]
+TypeList = ["Ground","Building Exit","Wall","Healing","Shop","Box","Lab","Starter","Rock", "Tree","Rival","Ledge"]
+TypeNumbers = [0,1,64,65,66,67,68,69,70,71,2,72]
 def CalculateNumberToPaint():
     global editMode, numberToPaint, paintWidth, paintHeight
     Frame_ChangeNumber.grid_forget()
     Frame_ChangeType.grid_forget()
     Frame_CopyMap.grid_forget()
-    for i in range(0,5):
+    for i in range(0,6):
         DataFrames[i].grid_forget()
     if(editMode>1):
         Frame_ChangeNumber.grid(row=0,column=1)
@@ -342,6 +357,9 @@ def CalculateNumberToPaint():
     if(editMode==6):
         numberToPaint = 256
         DataFrames[4].grid(row=1,column=0,sticky=N)
+    if(editMode==7):
+        numberToPaint = 128 + Var_Number.get()
+        DataFrames[5].grid(row=1,column=0,sticky=N)
 
 def ChangeMode(value):
     global editMode
@@ -428,6 +446,10 @@ for i in range(0,1):
 TrainerVars = []
 for i in range(0,20):
     TrainerVars.append(IntVar())
+ItemVars = []
+for i in range(0,1):
+    ItemVars.append(IntVar())
+
 
 
 def LoadVars():
@@ -442,6 +464,8 @@ def LoadVars():
         TextVars[i].set(zonedata[((21+i)*16) + Var_Number.get()])
     for i in range(0,20):
         TrainerVars[i].set(zonedata[((22+i)*16) + Var_Number.get()])
+    for i in range(0,1):
+        ItemVars[i].set(zonedata[((42+i)*16) + Var_Number.get()])
 
 
 def SaveVars():
@@ -456,6 +480,8 @@ def SaveVars():
         zonedata[((21+i)*16) + Var_Number.get()] = TextVars[i].get()
     for i in range(0,20):
         zonedata[((22+i)*16) + Var_Number.get()] = TrainerVars[i].get()
+    for i in range(0,1):
+        zonedata[((42+i)*16) + Var_Number.get()] = ItemVars[i].get()
 
 
 def SwitchNumber(newNumber):
@@ -466,7 +492,7 @@ def SwitchNumber(newNumber):
 LoadVars()
 
 DataFrames = []
-for i in range(0,5):
+for i in range(0,6):
     DataFrames.append(Frame(Frame_DataEditor))
     
 
@@ -537,7 +563,8 @@ Entry(DataFrames[4],textvariable=TrainerVars[18]).grid(row=18,column=0,columnspa
 Label(DataFrames[4],text="Reward").grid(row=19,column=0,columnspan=2)
 Entry(DataFrames[4],textvariable=TrainerVars[19]).grid(row=20,column=0,columnspan=2)
 
-
+Label(DataFrames[5],text="Item ID").grid(row=0,column=0)
+Entry(DataFrames[5],textvariable=ItemVars[0]).grid(row=0,column=1)
 
 #-----
 #Tools
