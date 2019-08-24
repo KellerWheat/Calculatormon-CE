@@ -418,13 +418,13 @@ int map_Loop(void) {
 	}
 	/* If moving */
 	if (moveState > 0) {
-		Wait(2);
+		Wait(1);
 		moveState--;
 		if (jumpState) {
 			jumpState--;
 		}
 		if (running) {
-			Wait(2);
+			Wait(1);
 			moveState--;
 			if (jumpState) {
 				jumpState--;
@@ -505,8 +505,6 @@ int map_Loop(void) {
 
 							xloc = (16 * (tx - (11 * ((currentZoneData.trainerdir[15] == 1) - (currentZoneData.trainerdir[15] == 2))))) - screenX - 8;
 							yloc = (16 * (ty - (7 * ((currentZoneData.trainerdir[15] == 3) - (currentZoneData.trainerdir[15] == 4))))) - screenY + 1;
-							//xloc = (16 * tx) - screenX;
-							//yloc = (16 * ty) - screenY;
 
 							if (currentZoneData.trainerdir[15] <= 2) {
 								walkState = 10 * 16;
@@ -658,7 +656,7 @@ void DrawPlayer(void) {
 		if (moveDir <= 2 && moveState > 0) {
 			gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
 		}
-		if (moveState == 1 || running && moveState == 2) {
+		if ((moveDir == 1 && moveState == 1 + running) || (moveDir == 2 && moveState == 1 + running) || (moveDir == 3 && moveState == 3 + running) || (moveDir == 4 && moveState == 1 + running)) {
 			if (grassAnimNext) {
 				grassAnimState1 = 10;
 				grassAnimX1 = (tx + (moveDir == 1) - (moveDir == 2)) * 16;
@@ -680,7 +678,7 @@ void DrawPlayer(void) {
 }
 void GrassAnimation(bool part) {
 	if (grassAnimState1 > 0) {
-		if (part != ((moveDir == 3 && moveState != 0 && moveState != 8 && currentSave.playerY <= grassAnimY1 + 12) || (moveDir == 4 && ty != (grassAnimY1 / 16)))) {
+		if (part != ((moveDir == 3 && (currentSave.playerY + 16 > grassAnimY1 + 16) && (currentSave.playerY - 4 < grassAnimY1 + 10)) || (moveDir == 4 && ty != (grassAnimY1 / 16)))) {
 			if (grassAnimState1 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX1 - screenX - 8, grassAnimY1 - screenY + 13);
 			}
@@ -691,7 +689,7 @@ void GrassAnimation(bool part) {
 		grassAnimState1--;
 	}
 	if (grassAnimState2 > 0) {
-		if (part != ((moveDir == 3 && moveState != 0 && moveState != 8 && currentSave.playerY <= grassAnimY2 + 12) || (moveDir == 4 && ty != (grassAnimY2 / 16)))) {
+		if (part != ((moveDir == 3 && (currentSave.playerY + 16 > grassAnimY2 + 16) && (currentSave.playerY - 4 < grassAnimY2 + 10)) || (moveDir == 4 && ty != (grassAnimY2 / 16)))) {
 			if (grassAnimState2 > 5) {
 				gfx_TransparentSprite_NoClip(grassoverlay3, grassAnimX2 - screenX - 8, grassAnimY2 - screenY + 13);
 			}
