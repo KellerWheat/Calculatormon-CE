@@ -18,14 +18,14 @@ int textBoxType = 0;
 
 /* Text Functions */
 
-uint8_t lastTextIndex;
+uint16_t lastTextIndex = 0;
+uint16_t lastTextID = 0;
 /* canSkip determines whether holding down 2nd before the text box pops up can do anything */
 void text_Display(char text[], bool canSkip) {
 	char newText1[50] = "";
 	char newText2[50] = "";
-	int textIndex;
+	int textIndex = 0;
 	bool endText = false;
-	lastTextIndex = 0;
 
 	gfx_SetDrawScreen();
 	text_DrawTextBox();
@@ -41,7 +41,7 @@ void text_Display(char text[], bool canSkip) {
 				kb_Scan();
 			}
 			endText = true;
-			lastTextIndex = textIndex;
+			lastTextIndex = textIndex + 3;
 			gfx_SetDrawBuffer();
 			return;
 		}
@@ -60,7 +60,9 @@ void text_Display(char text[], bool canSkip) {
 		}
 		else {
 			gfx_PrintChar(text[textIndex]);
-			Wait(1);
+			if (text[textIndex] == ' ') {
+				Wait(2);
+			}
 		}
 	}
 	

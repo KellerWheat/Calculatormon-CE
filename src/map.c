@@ -766,12 +766,16 @@ bool FightTrainer(uint8_t index) {
 	if (currentZoneData.trainertype[index] <=1) {
 		currentTrainer = index;
 		if (currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][currentTrainer]) {
+			lastTextIndex = 0;
+			lastTextID = currentZoneData.trainertext[index];
 			LoadText(currentZoneData.trainertext[index]);
 			text_Display(loadedText, true);
 			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 			return true;
 		}
 		else if (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][currentTrainer]) {
+			lastTextIndex = 0;
+			lastTextID = currentZoneData.trainertext[index];
 			LoadText(currentZoneData.trainertext[index]);
 			text_Display(loadedText, true);
 			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
@@ -1092,6 +1096,11 @@ void map_LoseFight(void) {
 void map_WinFight(bool wild, uint16_t rewardMoney) {
 	char str1[16];
 	if (!wild) {
+		if (lastTextIndex > 0) {
+			map_Draw();
+			LoadText(lastTextID);
+			text_Display(loadedText + lastTextIndex , true);
+		}
 		currentSave.playerMoney += rewardMoney;
 		if (currentSave.indoors) {
 			currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][currentTrainer] = true;

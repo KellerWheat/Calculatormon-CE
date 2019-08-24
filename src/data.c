@@ -1,4 +1,5 @@
 #include "data.h";
+#include "text.h";
 #include <fileioc.h>
 
 void LoadText(int index) {

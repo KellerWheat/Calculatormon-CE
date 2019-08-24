@@ -13,6 +13,7 @@ void text_DrawTextBox(void);
 extern int textBoxType;
 extern char text_status2[7][16];
 extern char text_movecategories[18][10];
-extern uint8_t lastTextIndex;
+extern uint16_t lastTextIndex;
+extern uint16_t lastTextID;
 
 #endif
