@@ -60,9 +60,7 @@ void text_Display(char text[], bool canSkip) {
 		}
 		else {
 			gfx_PrintChar(text[textIndex]);
-			if (text[textIndex] == ' ') {
-				Wait(2);
-			}
+			Wait(2);
 		}
 	}
 	
