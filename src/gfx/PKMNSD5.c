@@ -1,4 +1,4 @@
-// convpng v7.0
+// convpng v7.2
 #include <stdint.h>
 #include "PKMNSD5.h"
 
