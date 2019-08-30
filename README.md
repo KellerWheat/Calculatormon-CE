@@ -15,7 +15,9 @@ The tools folder includes some python scripts I made to help generate game data 
 
 # Credits
 
+This game was made using the C SDK, which was created by MateoConLechuga:
 
+https://github.com/CE-Programming/toolchain
 
 Sprite Resources I used (and who created them):
 
@@ -70,6 +72,8 @@ www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
 Pallet Town - Bob799
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
+
+CeruleanCity
 
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
