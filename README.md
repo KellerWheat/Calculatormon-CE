@@ -25,9 +25,9 @@ Hero & Heroine - Previous
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/
 
-Overworld NPCs - ebuddy and Silentninja
+Overworld NPCs - Cast
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3698/
+https://www.pokecommunity.com/showthread.php?t=284932
 
 Battle Backgrounds - redblueyellow
 
