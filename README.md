@@ -57,6 +57,10 @@ PC Interface - fabnt
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3861/
 
+Overworld Sprites - Cast
+
+https://www.pokecommunity.com/showthread.php?t=284932
+
 Tileset 0 - Hoeloe
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
@@ -73,7 +77,13 @@ Pallet Town - Bob799
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
 
-CeruleanCity
+Cerulean City - Bob799
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3769/
+
+Rooms - Grynz
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3724/
 
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
