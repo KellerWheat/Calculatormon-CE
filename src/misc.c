@@ -25,7 +25,7 @@ char str[100];
 uint16_t i;
 uint16_t e;
 
-bool debugging = 1;
+bool debugging = 0;
 
 #define COLORCOUNT 17
 

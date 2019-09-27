@@ -60,6 +60,9 @@ void main(void) {
 	map_Initialize();
 	battle_Initialize();
 
+	if (kb_Data[3] & kb_0) {
+		debugging = true;
+	}
 
 	FindColors();
 
@@ -67,7 +70,8 @@ void main(void) {
 
 	map_LoadPokeballs();
 
-
+	kb_Scan();
+	
 
 	do {
 		kb_Scan();

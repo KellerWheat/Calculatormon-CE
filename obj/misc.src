@@ -12,7 +12,7 @@ _e:
 	DS	2*1
 	SEGMENT DATA
 _debugging:
-	DB	1
+	DB	0
 _colors:
 	DB	0
 	DB	0
@@ -152,7 +152,7 @@ _categoryIcons:
 ;   25	uint16_t i;
 ;   26	uint16_t e;
 ;   27	
-;   28	bool debugging = 1;
+;   28	bool debugging = 0;
 ;   29	
 ;   30	#define COLORCOUNT 17
 ;   31	

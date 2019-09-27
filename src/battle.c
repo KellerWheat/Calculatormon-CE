@@ -232,7 +232,7 @@ int battle_Loop(void) {
 		if (run) {
 			return 0;
 		}
-		if (kb_Data[6] & kb_Div) {
+		if ((kb_Data[6] & kb_Div) && debugging) {
 			enemyparty[currentenemy].currenthealth = 0;
 		}
 		else {

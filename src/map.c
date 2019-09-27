@@ -568,25 +568,27 @@ int map_Loop(void) {
 
 	/* If not moving */
 	else {
-		if (kb_Data[6] & kb_Add) {
-			if (currentSave.indoors) {
-				currentSave.currentBuilding++;
+		if (debugging) {
+			if (kb_Data[6] & kb_Add) {
+				if (currentSave.indoors) {
+					currentSave.currentBuilding++;
+				}
+				else {
+					currentSave.currentZone++;
+				}
+				LoadTileset(true);
+				LoadMap();
 			}
-			else {
-				currentSave.currentZone++;
+			if (kb_Data[6] & kb_Sub) {
+				if (currentSave.indoors) {
+					currentSave.currentBuilding--;
+				}
+				else {
+					currentSave.currentZone--;
+				}
+				LoadTileset(true);
+				LoadMap();
 			}
-			LoadTileset(true);
-			LoadMap();
-		}
-		if (kb_Data[6] & kb_Sub) {
-			if (currentSave.indoors) {
-				currentSave.currentBuilding--;
-			}
-			else {
-				currentSave.currentZone--;
-			}
-			LoadTileset(true);
-			LoadMap();
 		}
 		if (kb_Data[7] & kb_Right) {
 			moveDir = 1;
@@ -603,7 +605,7 @@ int map_Loop(void) {
 		}
 		
 		if (kb_Data[7]) {
-			if (kb_Data[6] & kb_Mul) {
+			if ((kb_Data[6] & kb_Mul) && debugging) {
 				currentSave.playerX += 16 * (moveDir == 1);
 				currentSave.playerX -= 16 * (moveDir == 2);
 				currentSave.playerY += 16 * (moveDir == 3);
@@ -895,7 +897,8 @@ bool FightTrainer(uint8_t index) {
 				currentSave.takenGiftsIndoors[currentSave.currentBuilding][index] = true;
 			}
 			else {
-				text_Display("Good luck on your adventure!", true);
+				text_Display("Let me heal your Pokemon.", true);
+				HealParty();
 			}
 		}
 	}
@@ -1021,7 +1024,7 @@ void ProcessNpcs(void) {
 						if (currentZoneData.trainertype[npcIndex] == 0 || (currentZoneData.trainertype[npcIndex] == 2 && !npcSaidMessage[npcIndex]) || currentZoneData.trainertype[npcIndex] == 4 || (currentZoneData.trainertype[npcIndex] == 6 && !npcSaidMessage[npcIndex] && currentSave.newGame)) {
 							npcSaidMessage[npcIndex] = true;
 							npcToFight = npcIndex;
-							if ((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex])) {
+							if ((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex]) && !(moveState != 0 && currentZoneData.trainertype[npcIndex] == 5)) {
 								showExclamationPoint = 2;
 							}
 						}
