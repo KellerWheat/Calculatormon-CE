@@ -227,19 +227,27 @@ int battle_Loop(void) {
 	/* If 0 determine who attacks first, if 1 or 2 let other character attack, if 3 do end of turn stuff */
 	if (attackturn == 0) {
 		while (!playerturn()) {};
+		kb_Scan();
 		while (!enemyturn()) {};
 		if (run) {
 			return 0;
 		}
-		/* Paralysis gets a speed reduction */
-		if ((((stats[0].speed / (1+(((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) || data_moves[chosenmove[false]].statustype == 31) && data_moves[chosenmove[true]].statustype != 31) {
-			attack(false, chosenmove[false]);
-			attackturn = 1;
+		if (kb_Data[6] & kb_Div) {
+			enemyparty[currentenemy].currenthealth = 0;
 		}
 		else {
-			attack(true, chosenmove[true]);
-			
-			attackturn = 2;
+			/* Paralysis gets a speed reduction */
+			if ((((stats[0].speed / (1 + (((*currentStatusPointer[0]) == 4) * 3))) > (stats[1].speed / (1 + (((*currentStatusPointer[1]) == 4) * 3)))) || data_moves[chosenmove[false]].statustype == 31) && data_moves[chosenmove[true]].statustype != 31) {
+				attack(false, chosenmove[false]);
+				attackturn = 1;
+			}
+			else {
+				attack(true, chosenmove[true]);
+				attackturn = 2;
+			}
+			if (run) {
+				return 0;
+			}
 		}
 	}
 	else if(attackturn < 3) {
@@ -349,11 +357,11 @@ bool playerturn() {
 		battle_End();
 		chosenItem = menu_Items(true);
 		SetupBattleGfx();
+		redrawcharacters();
 		if (chosenItem == -1) {
 			return false;
 		}
 		if (chosenItem < 4) {
-			redrawcharacters();
 			sprintf(str, "Used a %s", itemNames[chosenItem]);
 			text_Display(str, true);
 			currentSave.playerItems[chosenItem]--;
@@ -1256,7 +1264,7 @@ bool capture(uint8_t ball) {
 	uint8_t slot = 0;
 	/* Check if pokemon is captured*/
 	if (!wild) {
-		text_Display("You cannot catch trainer pokemon", true);
+		text_Display("You cannot catch trainer\npokemon.", true);
 		return false;
 	}
 	if (ball == 4) {
@@ -1307,7 +1315,7 @@ bool capture(uint8_t ball) {
 	}
 	/* Find open slot if pokemon is captured */
 	if (captured) {
-		sprintf(str, "%s was caught", data_pokemon[enemyparty[currentenemy].id].name);
+		sprintf(str, "%s was caught.", data_pokemon[enemyparty[currentenemy].id].name);
 		text_Display(str, false);
 		for (slot = 0; slot < 36; slot++) {
 			if (currentSave.party[slot].id == 0) {
@@ -1317,11 +1325,11 @@ bool capture(uint8_t ball) {
 			i++;
 		}
 		if (slot == 36) {
-			text_Display("No open slots for pokemon", false);
+			text_Display("No open slots for pokemon.", false);
 		}
 	}
 	else {
-		sprintf(str, "%s broke free", data_pokemon[enemyparty[currentenemy].id].name);
+		sprintf(str, "%s broke free.", data_pokemon[enemyparty[currentenemy].id].name);
 		text_Display(str, true);
 	}
 	return captured;

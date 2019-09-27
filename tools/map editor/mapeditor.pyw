@@ -15,11 +15,10 @@ Setting_SizeY = 40
 Setting_BSizeX = 21
 Setting_BSizeY = 15
 tilesetname = 'outdoortileset'
-indoortilesetname = 'indoortileset.png'
-dataCount = 43
-textCount = 32
-tilesetCount = 32
+indoortilesetname = 'indoortileset'
+dataCount = 45
 mapCount = 32
+mapCountB = 32
 
 #------------
 #Current Data
@@ -63,6 +62,13 @@ if(os.path.isfile("tilesets.npy")):
 
 tileSets = np.resize(tileSets, mapCount)
 
+tileSetsB = np.array([0])
+
+if(os.path.isfile("tilesetsB.npy")):    
+    tileSetsB = np.load('tilesetsB.npy')
+
+tileSetsB = np.resize(tileSetsB, mapCountB)
+
 for x in range(4):
     tileset = Image.open("trainer"+str(x)+".png")
     trainerSprites.append(pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode))
@@ -74,7 +80,7 @@ for x in range(4):
 def SetupTileMap():
     global tiles, tilesetimage, tilesetname, indoortilesetname
     if(Var_IsBuilding.get()==1):
-        tileset = Image.open(indoortilesetname)
+        tileset = Image.open(indoortilesetname + str(tileSetsB[Var_MapIndex.get()]) + ".png")
     else:
         tileset = Image.open(tilesetname + str(tileSets[Var_MapIndex.get()]) + ".png")
     tilesetimage = pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode)
@@ -135,6 +141,10 @@ def CopyAll():
     for i in range(0,mapCount):
         copytext += str(tileSets[i])+','
     copytext += "\n};\n"
+    copytext += "uint8_t data_indoortileSets["+str(mapCountB)+"] = {\n\t"
+    for i in range(0,mapCountB):
+        copytext += str(tileSetsB[i])+','
+    copytext += "\n};\n"
     
     pyperclip.copy(copytext)
 
@@ -154,7 +164,7 @@ def ExportFile():
     #with open('PKMNMD1.bin', 'wb') as f:
     #    f.write(output1.astype('B'))
     output0.astype('B').tofile('PKMNMD0.bin')
-    print(output0.astype('B'))
+    print(len(output0))
     output1.astype('B').tofile('PKMNMD1.bin')
     os.startfile("convertmaps.bat")
     
@@ -260,10 +270,11 @@ def draw():
                     for y in range(0,paintHeight):
                         if copyingMap:
                             if ctrl:
-                                if not copyingTypeMap:
-                                    tilemap[tx+x+sizeX*(ty+y)] = tilemap[numberToPaint+x+sizeX*y]
-                                else:
-                                    typemap[tx+x+sizeX*(ty+y)] = typemap[numberToPaint+x+sizeX*y] 
+                                if(tx+x+sizeX*(ty+y) < 1920):
+                                    if not copyingTypeMap:
+                                        tilemap[tx+x+sizeX*(ty+y)] = tilemap[numberToPaint+x+sizeX*y]
+                                    else:
+                                        typemap[tx+x+sizeX*(ty+y)] = typemap[numberToPaint+x+sizeX*y] 
                         else:
                             tilemap[tx+x+sizeX*(ty+y)] = numberToPaint+x+16*y       
             elif numberToPaint != 256:
@@ -444,7 +455,7 @@ TextVars = []
 for i in range(0,1):
     TextVars.append(IntVar())
 TrainerVars = []
-for i in range(0,20):
+for i in range(0,22):
     TrainerVars.append(IntVar())
 ItemVars = []
 for i in range(0,1):
@@ -462,10 +473,10 @@ def LoadVars():
         DoorVars[i].set(zonedata[((18+i)*16) + Var_Number.get()])
     for i in range(0,1):
         TextVars[i].set(zonedata[((21+i)*16) + Var_Number.get()])
-    for i in range(0,20):
+    for i in range(0,22):
         TrainerVars[i].set(zonedata[((22+i)*16) + Var_Number.get()])
     for i in range(0,1):
-        ItemVars[i].set(zonedata[((42+i)*16) + Var_Number.get()])
+        ItemVars[i].set(zonedata[((44+i)*16) + Var_Number.get()])
 
 
 def SaveVars():
@@ -478,10 +489,10 @@ def SaveVars():
         zonedata[((18+i)*16) + Var_Number.get()] = DoorVars[i].get()
     for i in range(0,1):
         zonedata[((21+i)*16) + Var_Number.get()] = TextVars[i].get()
-    for i in range(0,20):
+    for i in range(0,22):
         zonedata[((22+i)*16) + Var_Number.get()] = TrainerVars[i].get()
     for i in range(0,1):
-        zonedata[((42+i)*16) + Var_Number.get()] = ItemVars[i].get()
+        zonedata[((44+i)*16) + Var_Number.get()] = ItemVars[i].get()
 
 
 def SwitchNumber(newNumber):
@@ -562,6 +573,10 @@ Label(DataFrames[4],text="Text ID").grid(row=17,column=0,columnspan=2)
 Entry(DataFrames[4],textvariable=TrainerVars[18]).grid(row=18,column=0,columnspan=2)
 Label(DataFrames[4],text="Reward").grid(row=19,column=0,columnspan=2)
 Entry(DataFrames[4],textvariable=TrainerVars[19]).grid(row=20,column=0,columnspan=2)
+Label(DataFrames[4],text="Min WorldState").grid(row=21,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[20]).grid(row=22,column=0,columnspan=2)
+Label(DataFrames[4],text="Max WorldState").grid(row=23,column=0,columnspan=2)
+Entry(DataFrames[4],textvariable=TrainerVars[21]).grid(row=24,column=0,columnspan=2)
 
 Label(DataFrames[5],text="Item ID").grid(row=0,column=0)
 Entry(DataFrames[5],textvariable=ItemVars[0]).grid(row=0,column=1)
@@ -611,19 +626,19 @@ Button(Canvas_SetMap,text="Convert Item to ID",command=itemid).grid(row=19,colum
 #TileSet
 
 def DecreaseTS():
-    if(tileSets[Var_MapIndex.get()]-1==-1):
-        tileSets[Var_MapIndex.get()] = 0
+    if(Var_IsBuilding.get()):
+        tileSetsB[Var_MapIndex.get()] -= 1
     else:
         tileSets[Var_MapIndex.get()] -= 1
     SetupTileMap()
 def IncreaseTS():
-    if(tileSets[Var_MapIndex.get()]+1==tilesetCount):
-        tileSets[Var_MapIndex.get()] = tilesetCount
+    if(Var_IsBuilding.get()):
+        tileSetsB[Var_MapIndex.get()] += 1
     else:
         tileSets[Var_MapIndex.get()] += 1
     SetupTileMap()
 
-Label(Canvas_SetMap,text="TileSet (Outdooor)").grid(row=24,column=0)
+Label(Canvas_SetMap,text="TileSet").grid(row=24,column=0)
 Frame_ChangeTS = Frame(Canvas_SetMap)
 Button(Frame_ChangeTS,command=DecreaseTS,text="-").grid(row=0,column=0)
 Button(Frame_ChangeTS,command=IncreaseTS,text="+").grid(row=0,column=1)
@@ -646,6 +661,7 @@ while running:
     root.update()
 
 np.save('tilesets.npy', tileSets)
+np.save('tilesetsB.npy', tileSets)
 pygame.quit()
 root.destroy()
 sys.exit()

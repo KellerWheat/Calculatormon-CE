@@ -94,6 +94,8 @@ struct zoneData {
 	uint8_t trainermovement[16];
 	uint8_t trainertext[16];
 	uint8_t trainerreward[16];//Reward is an item (number is one more than actual id)
+	uint8_t minworldstate[16];
+	uint8_t maxworldstate[16];
 
 	uint8_t grounditems[16];//(number is one more than actual id)
 };
@@ -110,6 +112,8 @@ extern int xpPerLevel[4][101];
 
 extern char data_text[][32];
 extern uint8_t data_tileSets[32];
+extern uint8_t data_indoortileSets[32];
+
 
 #endif
 

@@ -5,7 +5,7 @@ The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from c
 
 Controls: 2nd is A, clear is B, enter opens the menu. In the menu, enter will move a pokemon or a move to the top.
 
-Put every .8xv or .8xp file on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs a lot of RAM to run (I have not calculated the exact value), so make sure you archive as many other programs as possible.
+Put every file in the downlaod folder on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). Make sure nothing important is on the calculator; the game is still under development so it might crash. The game needs a lot of RAM to run (I have not calculated the exact value), so make sure you archive as many other programs as possible. Tell me if you have any suggestions or notice any bugs.
 
 
 The tools folder includes some python scripts I made to help generate game data (move list, maps, and pokemon stats)

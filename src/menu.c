@@ -411,11 +411,12 @@ void menu_PokemonDetails(int pokemonIndex) {
 		}
 	}
 	free(backgroundSprite);
+	FreeIcons();
 }
 int menu_Items(bool inBattle) {
 	int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
 	gfx_sprite_t *backgroundSprite;
-
+	MallocIcons();
 
 	/* Generate Usable Items List */
 	usableItemCount = 0;
@@ -547,6 +548,7 @@ int menu_Items(bool inBattle) {
 				itemToUse = usableTMs[menuState + cursorState];
 			}
 			free(backgroundSprite);
+			FreeIcons();
 			gfx_SetDrawBuffer();
 			return itemToUse;
 		}

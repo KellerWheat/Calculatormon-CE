@@ -87,6 +87,7 @@ err:
 	currentSave.currentBuilding = 1;
 	currentSave.playerMoney = 1000;
 	currentSave.badgeCount = 0;
+	currentSave.worldState = 1;
 
 	ti_CloseAll();
 }

@@ -57,10 +57,11 @@ void text_Display(char text[], bool canSkip) {
 		}
 		else if (text[textIndex] == '\n') {
 			gfx_SetTextXY(30, gfx_GetTextY() + 15);
+			Wait(5);
 		}
 		else {
 			gfx_PrintChar(text[textIndex]);
-			Wait(2);
+			Wait(1);
 		}
 	}
 	

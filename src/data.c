@@ -6,6 +6,7 @@ void LoadText(int index) {
 	ti_var_t textAV = ti_Open("PKMNTD", "r");
 	ti_Seek(256*index, 0, textAV);
 	ti_Read(&loadedText, 256, 1, textAV);
+	ti_CloseAll();
 }
 char loadedText[256];
 

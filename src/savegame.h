@@ -32,6 +32,7 @@ struct saveGame
 	uint16_t foundItemsPos[2][AREACOUNT][16];
 	uint8_t badgeCount;
 	uint8_t pokedex[151];
+	uint16_t worldState;
 };
 
 extern struct saveGame currentSave;

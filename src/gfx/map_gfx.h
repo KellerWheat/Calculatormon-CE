@@ -26,6 +26,11 @@ extern uint8_t grassoverlay2_data[162];
 #define grassoverlay3_size 178
 extern uint8_t grassoverlay3_data[178];
 #define grassoverlay3 ((gfx_sprite_t*)grassoverlay3_data)
+#define exclamationpoint_width 12
+#define exclamationpoint_height 10
+#define exclamationpoint_size 122
+extern uint8_t exclamationpoint_data[122];
+#define exclamationpoint ((gfx_sprite_t*)exclamationpoint_data)
 #define animatedwater1_width 16
 #define animatedwater1_height 16
 #define animatedwater1_size 258

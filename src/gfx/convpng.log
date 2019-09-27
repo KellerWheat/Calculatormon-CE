@@ -3,95 +3,220 @@ opened convpng.ini
 --- map_gfx (C) ---
 building palette with [256] available indices ...
 built palette with [256] indices.
-palette quality : 99.98%
+palette quality : 99.46%
 transparent color index : 0
 transparent color : 0x8318
-89:
- mapcursorsmall : 99.59%
+217:
+ mapcursorsmall : 94.77%
  grassoverlay1 : 100.00%
- grassoverlay2 : 100.00%
- grassoverlay3 : 100.00%
+ grassoverlay2 : 97.63%
+ grassoverlay3 : 97.62%
+ exclamationpoint : 76.12%
  animatedwater1 : 100.00%
  animatedwater2 : 100.00%
- n000 : 100.00%
- n001 : 100.00%
- n002 : 100.00%
- n003 : 100.00%
- n004 : 100.00%
- n005 : 100.00%
- n006 : 100.00%
- n007 : 100.00%
- n008 : 100.00%
- n009 : 100.00%
- n010 : 100.00%
- n011 : 100.00%
- n012 : 100.00%
- n013 : 100.00%
- n014 : 100.00%
- n015 : 100.00%
- n016 : 100.00%
- n017 : 100.00%
- n018 : 100.00%
- n019 : 100.00%
- n020 : 100.00%
- n021 : 100.00%
- n022 : 100.00%
- n023 : 100.00%
- n024 : 100.00%
- n025 : 100.00%
- n026 : 100.00%
- n027 : 100.00%
- n028 : 100.00%
- n029 : 100.00%
- n030 : 100.00%
- n031 : 100.00%
- n032 : 100.00%
- n033 : 100.00%
- n034 : 100.00%
- n035 : 100.00%
- sn000 : 99.76%
- sn001 : 99.76%
- sn002 : 99.53%
- sn003 : 99.73%
- sn004 : 100.00%
- sn005 : 100.00%
- sn006 : 100.00%
- sn007 : 100.00%
- player00 : 99.97%
- player01 : 99.96%
- player02 : 99.98%
- player03 : 99.97%
- player04 : 99.96%
- player05 : 99.98%
- player06 : 99.92%
- player07 : 99.96%
- player08 : 99.95%
- player09 : 99.93%
- player10 : 99.95%
- player11 : 99.95%
- player12 : 99.98%
- player13 : 99.97%
- player14 : 99.97%
- player15 : 99.98%
- player16 : 99.97%
- player17 : 99.97%
- player18 : 100.00%
- player19 : 99.98%
- player20 : 99.99%
- player21 : 99.95%
- player22 : 99.96%
- player23 : 99.97%
- player24 : 99.99%
- player25 : 99.99%
- player26 : 99.99%
- player27 : 99.99%
- player28 : 99.95%
- player29 : 99.95%
- player30 : 99.99%
- player31 : 99.99%
+ player00 : 98.90%
+ player01 : 98.78%
+ player02 : 99.18%
+ player03 : 98.89%
+ player04 : 98.80%
+ player05 : 99.17%
+ player06 : 98.82%
+ player07 : 98.95%
+ player08 : 98.95%
+ player09 : 97.58%
+ player10 : 97.81%
+ player11 : 97.82%
+ player12 : 98.93%
+ player13 : 98.98%
+ player14 : 98.38%
+ player15 : 98.92%
+ player16 : 98.98%
+ player17 : 98.38%
+ player18 : 99.20%
+ player19 : 98.73%
+ player20 : 98.71%
+ player21 : 97.90%
+ player22 : 97.92%
+ player23 : 97.92%
+ player24 : 99.40%
+ player25 : 99.42%
+ player26 : 99.39%
+ player27 : 99.42%
+ player28 : 99.21%
+ player29 : 99.31%
+ player30 : 98.58%
+ player31 : 98.70%
+ n000 : 99.89%
+ n001 : 99.89%
+ n002 : 99.89%
+ n003 : 99.89%
+ n004 : 99.89%
+ n005 : 99.89%
+ n006 : 99.90%
+ n007 : 99.89%
+ n008 : 99.89%
+ n009 : 99.92%
+ n010 : 99.92%
+ n011 : 99.92%
+ n100 : 99.91%
+ n101 : 99.91%
+ n102 : 99.91%
+ n103 : 99.92%
+ n104 : 99.91%
+ n105 : 99.92%
+ n106 : 99.91%
+ n107 : 99.92%
+ n108 : 99.92%
+ n109 : 99.94%
+ n110 : 99.94%
+ n111 : 99.94%
+ n200 : 99.92%
+ n201 : 99.91%
+ n202 : 99.91%
+ n203 : 99.92%
+ n204 : 99.91%
+ n205 : 99.91%
+ n206 : 99.90%
+ n207 : 99.91%
+ n208 : 99.91%
+ n209 : 99.93%
+ n210 : 99.94%
+ n211 : 99.94%
+ n300 : 98.33%
+ n301 : 98.89%
+ n302 : 98.87%
+ n303 : 98.36%
+ n304 : 98.87%
+ n305 : 98.89%
+ n306 : 94.99%
+ n307 : 96.45%
+ n308 : 96.44%
+ n309 : 95.39%
+ n310 : 94.07%
+ n311 : 94.05%
+ n400 : 99.60%
+ n401 : 99.63%
+ n402 : 99.62%
+ n403 : 99.60%
+ n404 : 99.62%
+ n405 : 99.63%
+ n406 : 99.66%
+ n407 : 99.66%
+ n408 : 99.66%
+ n409 : 99.61%
+ n410 : 99.61%
+ n411 : 99.61%
+ n500 : 99.89%
+ n501 : 99.89%
+ n502 : 99.89%
+ n503 : 99.89%
+ n504 : 99.89%
+ n505 : 99.89%
+ n506 : 99.86%
+ n507 : 99.86%
+ n508 : 99.86%
+ n509 : 99.92%
+ n510 : 99.92%
+ n511 : 99.92%
+ n600 : 99.94%
+ n601 : 99.93%
+ n602 : 99.93%
+ n603 : 99.94%
+ n604 : 99.93%
+ n605 : 99.93%
+ n606 : 99.89%
+ n607 : 99.90%
+ n608 : 99.89%
+ n609 : 99.91%
+ n610 : 99.91%
+ n611 : 99.91%
+ n700 : 99.68%
+ n701 : 99.65%
+ n702 : 99.66%
+ n703 : 99.68%
+ n704 : 99.67%
+ n705 : 99.65%
+ n706 : 99.85%
+ n707 : 99.90%
+ n708 : 99.90%
+ n709 : 99.60%
+ n710 : 99.63%
+ n711 : 99.63%
+ n800 : 99.91%
+ n801 : 99.89%
+ n802 : 99.90%
+ n803 : 99.91%
+ n804 : 99.90%
+ n805 : 99.90%
+ n806 : 99.88%
+ n807 : 99.86%
+ n808 : 99.86%
+ n809 : 99.85%
+ n810 : 99.84%
+ n811 : 99.84%
+ n900 : 99.93%
+ n901 : 99.93%
+ n902 : 99.95%
+ n903 : 99.93%
+ n904 : 99.95%
+ n905 : 99.93%
+ n906 : 99.88%
+ n907 : 99.88%
+ n908 : 99.88%
+ n909 : 99.92%
+ n910 : 99.92%
+ n911 : 99.92%
+ sn000 : 99.62%
+ sn001 : 99.62%
+ sn002 : 99.35%
+ sn003 : 99.33%
+ sn010 : 97.66%
+ sn011 : 97.71%
+ sn012 : 96.62%
+ sn013 : 95.93%
+ sn020 : 93.53%
+ sn021 : 93.62%
+ sn022 : 93.55%
+ sn023 : 92.08%
+ sn030 : 95.81%
+ sn031 : 95.84%
+ sn032 : 96.34%
+ sn033 : 96.48%
+ sn040 : 99.14%
+ sn041 : 99.14%
+ sn042 : 98.56%
+ sn043 : 97.89%
+ sn050 : 97.24%
+ sn051 : 97.25%
+ sn052 : 97.14%
+ sn053 : 97.32%
+ sn060 : 96.10%
+ sn061 : 96.07%
+ sn062 : 95.18%
+ sn063 : 96.39%
+ sn070 : 97.25%
+ sn071 : 97.31%
+ sn072 : 96.19%
+ sn073 : 97.05%
+ sn080 : 99.99%
+ sn081 : 99.99%
+ sn082 : 99.77%
+ sn083 : 99.98%
+ sn090 : 97.34%
+ sn091 : 97.36%
+ sn092 : 95.50%
+ sn093 : 94.48%
+ sn100 : 99.16%
+ sn101 : 99.16%
+ sn102 : 99.03%
+ sn103 : 99.31%
+ sn110 : 99.87%
+ sn111 : 99.87%
+ sn112 : 99.89%
+ sn113 : 99.85%
  pausemenu : 100.00% (10754 > 66 bytes)
- shop : 100.00% (11258 > 98 bytes)
- indoortileset0 : 99.94%
+ shop : 99.82% (11258 > 98 bytes)
+ indoortileset0 : 98.95%
  indoortileset0_tile_0_compressed (258 > 151 bytes)
  indoortileset0_tile_1_compressed (258 > 150 bytes)
  indoortileset0_tile_2_compressed (258 > 13 bytes)
@@ -126,10 +251,10 @@ transparent color : 0x8318
  indoortileset0_tile_31_compressed (258 > 66 bytes)
  indoortileset0_tile_32_compressed (258 > 29 bytes)
  indoortileset0_tile_33_compressed (258 > 9 bytes)
- indoortileset0_tile_34_compressed (258 > 27 bytes)
- indoortileset0_tile_35_compressed (258 > 63 bytes)
- indoortileset0_tile_36_compressed (258 > 30 bytes)
- indoortileset0_tile_37_compressed (258 > 64 bytes)
+ indoortileset0_tile_34_compressed (258 > 43 bytes)
+ indoortileset0_tile_35_compressed (258 > 58 bytes)
+ indoortileset0_tile_36_compressed (258 > 34 bytes)
+ indoortileset0_tile_37_compressed (258 > 60 bytes)
  indoortileset0_tile_38_compressed (258 > 52 bytes)
  indoortileset0_tile_39_compressed (258 > 48 bytes)
  indoortileset0_tile_40_compressed (258 > 56 bytes)
@@ -142,10 +267,10 @@ transparent color : 0x8318
  indoortileset0_tile_47_compressed (258 > 55 bytes)
  indoortileset0_tile_48_compressed (258 > 41 bytes)
  indoortileset0_tile_49_compressed (258 > 25 bytes)
- indoortileset0_tile_50_compressed (258 > 60 bytes)
- indoortileset0_tile_51_compressed (258 > 67 bytes)
- indoortileset0_tile_52_compressed (258 > 30 bytes)
- indoortileset0_tile_53_compressed (258 > 65 bytes)
+ indoortileset0_tile_50_compressed (258 > 25 bytes)
+ indoortileset0_tile_51_compressed (258 > 60 bytes)
+ indoortileset0_tile_52_compressed (258 > 39 bytes)
+ indoortileset0_tile_53_compressed (258 > 59 bytes)
  indoortileset0_tile_54_compressed (258 > 45 bytes)
  indoortileset0_tile_55_compressed (258 > 47 bytes)
  indoortileset0_tile_56_compressed (258 > 39 bytes)
@@ -170,13 +295,13 @@ transparent color : 0x8318
  indoortileset0_tile_75_compressed (258 > 133 bytes)
  indoortileset0_tile_76_compressed (258 > 74 bytes)
  indoortileset0_tile_77_compressed (258 > 79 bytes)
- indoortileset0_tile_78_compressed (258 > 9 bytes)
- indoortileset0_tile_79_compressed (258 > 9 bytes)
+ indoortileset0_tile_78_compressed (258 > 79 bytes)
+ indoortileset0_tile_79_compressed (258 > 86 bytes)
  indoortileset0_tile_80_compressed (258 > 65 bytes)
  indoortileset0_tile_81_compressed (258 > 58 bytes)
  indoortileset0_tile_82_compressed (258 > 82 bytes)
  indoortileset0_tile_83_compressed (258 > 78 bytes)
- indoortileset0_tile_84_compressed (258 > 72 bytes)
+ indoortileset0_tile_84_compressed (258 > 71 bytes)
  indoortileset0_tile_85_compressed (258 > 29 bytes)
  indoortileset0_tile_86_compressed (258 > 53 bytes)
  indoortileset0_tile_87_compressed (258 > 46 bytes)
@@ -186,8 +311,8 @@ transparent color : 0x8318
  indoortileset0_tile_91_compressed (258 > 108 bytes)
  indoortileset0_tile_92_compressed (258 > 97 bytes)
  indoortileset0_tile_93_compressed (258 > 107 bytes)
- indoortileset0_tile_94_compressed (258 > 9 bytes)
- indoortileset0_tile_95_compressed (258 > 9 bytes)
+ indoortileset0_tile_94_compressed (258 > 75 bytes)
+ indoortileset0_tile_95_compressed (258 > 85 bytes)
  indoortileset0_tile_96_compressed (258 > 75 bytes)
  indoortileset0_tile_97_compressed (258 > 65 bytes)
  indoortileset0_tile_98_compressed (258 > 66 bytes)
@@ -196,19 +321,19 @@ transparent color : 0x8318
  indoortileset0_tile_101_compressed (258 > 100 bytes)
  indoortileset0_tile_102_compressed (258 > 71 bytes)
  indoortileset0_tile_103_compressed (258 > 63 bytes)
- indoortileset0_tile_104_compressed (258 > 9 bytes)
- indoortileset0_tile_105_compressed (258 > 9 bytes)
- indoortileset0_tile_106_compressed (258 > 9 bytes)
+ indoortileset0_tile_104_compressed (258 > 29 bytes)
+ indoortileset0_tile_105_compressed (258 > 21 bytes)
+ indoortileset0_tile_106_compressed (258 > 29 bytes)
  indoortileset0_tile_107_compressed (258 > 9 bytes)
  indoortileset0_tile_108_compressed (258 > 9 bytes)
  indoortileset0_tile_109_compressed (258 > 9 bytes)
- indoortileset0_tile_110_compressed (258 > 9 bytes)
- indoortileset0_tile_111_compressed (258 > 9 bytes)
+ indoortileset0_tile_110_compressed (258 > 77 bytes)
+ indoortileset0_tile_111_compressed (258 > 79 bytes)
  indoortileset0_tile_112_compressed (258 > 51 bytes)
  indoortileset0_tile_113_compressed (258 > 33 bytes)
- indoortileset0_tile_114_compressed (258 > 85 bytes)
- indoortileset0_tile_115_compressed (258 > 30 bytes)
- indoortileset0_tile_116_compressed (258 > 70 bytes)
+ indoortileset0_tile_114_compressed (258 > 76 bytes)
+ indoortileset0_tile_115_compressed (258 > 38 bytes)
+ indoortileset0_tile_116_compressed (258 > 67 bytes)
  indoortileset0_tile_117_compressed (258 > 126 bytes)
  indoortileset0_tile_118_compressed (258 > 66 bytes)
  indoortileset0_tile_119_compressed (258 > 50 bytes)
@@ -220,7 +345,265 @@ transparent color : 0x8318
  indoortileset0_tile_125_compressed (258 > 9 bytes)
  indoortileset0_tile_126_compressed (258 > 9 bytes)
  indoortileset0_tile_127_compressed (258 > 9 bytes)
- outdoortileset0 : 99.99%
+ indoortileset1 : 99.65%
+ indoortileset1_tile_0_compressed (258 > 62 bytes)
+ indoortileset1_tile_1_compressed (258 > 37 bytes)
+ indoortileset1_tile_2_compressed (258 > 61 bytes)
+ indoortileset1_tile_3_compressed (258 > 25 bytes)
+ indoortileset1_tile_4_compressed (258 > 22 bytes)
+ indoortileset1_tile_5_compressed (258 > 46 bytes)
+ indoortileset1_tile_6_compressed (258 > 39 bytes)
+ indoortileset1_tile_7_compressed (258 > 50 bytes)
+ indoortileset1_tile_8_compressed (258 > 22 bytes)
+ indoortileset1_tile_9_compressed (258 > 22 bytes)
+ indoortileset1_tile_10_compressed (258 > 9 bytes)
+ indoortileset1_tile_11_compressed (258 > 9 bytes)
+ indoortileset1_tile_12_compressed (258 > 9 bytes)
+ indoortileset1_tile_13_compressed (258 > 9 bytes)
+ indoortileset1_tile_14_compressed (258 > 9 bytes)
+ indoortileset1_tile_15_compressed (258 > 9 bytes)
+ indoortileset1_tile_16_compressed (258 > 26 bytes)
+ indoortileset1_tile_17_compressed (258 > 30 bytes)
+ indoortileset1_tile_18_compressed (258 > 99 bytes)
+ indoortileset1_tile_19_compressed (258 > 60 bytes)
+ indoortileset1_tile_20_compressed (258 > 19 bytes)
+ indoortileset1_tile_21_compressed (258 > 56 bytes)
+ indoortileset1_tile_22_compressed (258 > 62 bytes)
+ indoortileset1_tile_23_compressed (258 > 52 bytes)
+ indoortileset1_tile_24_compressed (258 > 61 bytes)
+ indoortileset1_tile_25_compressed (258 > 63 bytes)
+ indoortileset1_tile_26_compressed (258 > 9 bytes)
+ indoortileset1_tile_27_compressed (258 > 9 bytes)
+ indoortileset1_tile_28_compressed (258 > 9 bytes)
+ indoortileset1_tile_29_compressed (258 > 9 bytes)
+ indoortileset1_tile_30_compressed (258 > 9 bytes)
+ indoortileset1_tile_31_compressed (258 > 9 bytes)
+ indoortileset1_tile_32_compressed (258 > 81 bytes)
+ indoortileset1_tile_33_compressed (258 > 61 bytes)
+ indoortileset1_tile_34_compressed (258 > 126 bytes)
+ indoortileset1_tile_35_compressed (258 > 29 bytes)
+ indoortileset1_tile_36_compressed (258 > 28 bytes)
+ indoortileset1_tile_37_compressed (258 > 9 bytes)
+ indoortileset1_tile_38_compressed (258 > 9 bytes)
+ indoortileset1_tile_39_compressed (258 > 9 bytes)
+ indoortileset1_tile_40_compressed (258 > 9 bytes)
+ indoortileset1_tile_41_compressed (258 > 9 bytes)
+ indoortileset1_tile_42_compressed (258 > 9 bytes)
+ indoortileset1_tile_43_compressed (258 > 9 bytes)
+ indoortileset1_tile_44_compressed (258 > 9 bytes)
+ indoortileset1_tile_45_compressed (258 > 9 bytes)
+ indoortileset1_tile_46_compressed (258 > 9 bytes)
+ indoortileset1_tile_47_compressed (258 > 9 bytes)
+ indoortileset1_tile_48_compressed (258 > 88 bytes)
+ indoortileset1_tile_49_compressed (258 > 85 bytes)
+ indoortileset1_tile_50_compressed (258 > 9 bytes)
+ indoortileset1_tile_51_compressed (258 > 84 bytes)
+ indoortileset1_tile_52_compressed (258 > 73 bytes)
+ indoortileset1_tile_53_compressed (258 > 9 bytes)
+ indoortileset1_tile_54_compressed (258 > 9 bytes)
+ indoortileset1_tile_55_compressed (258 > 9 bytes)
+ indoortileset1_tile_56_compressed (258 > 9 bytes)
+ indoortileset1_tile_57_compressed (258 > 9 bytes)
+ indoortileset1_tile_58_compressed (258 > 9 bytes)
+ indoortileset1_tile_59_compressed (258 > 9 bytes)
+ indoortileset1_tile_60_compressed (258 > 9 bytes)
+ indoortileset1_tile_61_compressed (258 > 9 bytes)
+ indoortileset1_tile_62_compressed (258 > 9 bytes)
+ indoortileset1_tile_63_compressed (258 > 9 bytes)
+ indoortileset1_tile_64_compressed (258 > 29 bytes)
+ indoortileset1_tile_65_compressed (258 > 21 bytes)
+ indoortileset1_tile_66_compressed (258 > 29 bytes)
+ indoortileset1_tile_67_compressed (258 > 46 bytes)
+ indoortileset1_tile_68_compressed (258 > 45 bytes)
+ indoortileset1_tile_69_compressed (258 > 9 bytes)
+ indoortileset1_tile_70_compressed (258 > 9 bytes)
+ indoortileset1_tile_71_compressed (258 > 9 bytes)
+ indoortileset1_tile_72_compressed (258 > 9 bytes)
+ indoortileset1_tile_73_compressed (258 > 9 bytes)
+ indoortileset1_tile_74_compressed (258 > 9 bytes)
+ indoortileset1_tile_75_compressed (258 > 9 bytes)
+ indoortileset1_tile_76_compressed (258 > 9 bytes)
+ indoortileset1_tile_77_compressed (258 > 9 bytes)
+ indoortileset1_tile_78_compressed (258 > 9 bytes)
+ indoortileset1_tile_79_compressed (258 > 9 bytes)
+ indoortileset1_tile_80_compressed (258 > 9 bytes)
+ indoortileset1_tile_81_compressed (258 > 9 bytes)
+ indoortileset1_tile_82_compressed (258 > 9 bytes)
+ indoortileset1_tile_83_compressed (258 > 9 bytes)
+ indoortileset1_tile_84_compressed (258 > 9 bytes)
+ indoortileset1_tile_85_compressed (258 > 9 bytes)
+ indoortileset1_tile_86_compressed (258 > 9 bytes)
+ indoortileset1_tile_87_compressed (258 > 9 bytes)
+ indoortileset1_tile_88_compressed (258 > 9 bytes)
+ indoortileset1_tile_89_compressed (258 > 9 bytes)
+ indoortileset1_tile_90_compressed (258 > 9 bytes)
+ indoortileset1_tile_91_compressed (258 > 9 bytes)
+ indoortileset1_tile_92_compressed (258 > 9 bytes)
+ indoortileset1_tile_93_compressed (258 > 9 bytes)
+ indoortileset1_tile_94_compressed (258 > 9 bytes)
+ indoortileset1_tile_95_compressed (258 > 9 bytes)
+ indoortileset1_tile_96_compressed (258 > 9 bytes)
+ indoortileset1_tile_97_compressed (258 > 9 bytes)
+ indoortileset1_tile_98_compressed (258 > 9 bytes)
+ indoortileset1_tile_99_compressed (258 > 9 bytes)
+ indoortileset1_tile_100_compressed (258 > 9 bytes)
+ indoortileset1_tile_101_compressed (258 > 9 bytes)
+ indoortileset1_tile_102_compressed (258 > 9 bytes)
+ indoortileset1_tile_103_compressed (258 > 9 bytes)
+ indoortileset1_tile_104_compressed (258 > 9 bytes)
+ indoortileset1_tile_105_compressed (258 > 9 bytes)
+ indoortileset1_tile_106_compressed (258 > 9 bytes)
+ indoortileset1_tile_107_compressed (258 > 9 bytes)
+ indoortileset1_tile_108_compressed (258 > 9 bytes)
+ indoortileset1_tile_109_compressed (258 > 9 bytes)
+ indoortileset1_tile_110_compressed (258 > 9 bytes)
+ indoortileset1_tile_111_compressed (258 > 9 bytes)
+ indoortileset1_tile_112_compressed (258 > 9 bytes)
+ indoortileset1_tile_113_compressed (258 > 9 bytes)
+ indoortileset1_tile_114_compressed (258 > 9 bytes)
+ indoortileset1_tile_115_compressed (258 > 9 bytes)
+ indoortileset1_tile_116_compressed (258 > 9 bytes)
+ indoortileset1_tile_117_compressed (258 > 9 bytes)
+ indoortileset1_tile_118_compressed (258 > 9 bytes)
+ indoortileset1_tile_119_compressed (258 > 9 bytes)
+ indoortileset1_tile_120_compressed (258 > 9 bytes)
+ indoortileset1_tile_121_compressed (258 > 9 bytes)
+ indoortileset1_tile_122_compressed (258 > 9 bytes)
+ indoortileset1_tile_123_compressed (258 > 9 bytes)
+ indoortileset1_tile_124_compressed (258 > 9 bytes)
+ indoortileset1_tile_125_compressed (258 > 9 bytes)
+ indoortileset1_tile_126_compressed (258 > 9 bytes)
+ indoortileset1_tile_127_compressed (258 > 9 bytes)
+ indoortileset2 : 99.21%
+ indoortileset2_tile_0_compressed (258 > 9 bytes)
+ indoortileset2_tile_1_compressed (258 > 35 bytes)
+ indoortileset2_tile_2_compressed (258 > 26 bytes)
+ indoortileset2_tile_3_compressed (258 > 26 bytes)
+ indoortileset2_tile_4_compressed (258 > 35 bytes)
+ indoortileset2_tile_5_compressed (258 > 9 bytes)
+ indoortileset2_tile_6_compressed (258 > 9 bytes)
+ indoortileset2_tile_7_compressed (258 > 9 bytes)
+ indoortileset2_tile_8_compressed (258 > 9 bytes)
+ indoortileset2_tile_9_compressed (258 > 9 bytes)
+ indoortileset2_tile_10_compressed (258 > 9 bytes)
+ indoortileset2_tile_11_compressed (258 > 9 bytes)
+ indoortileset2_tile_12_compressed (258 > 9 bytes)
+ indoortileset2_tile_13_compressed (258 > 9 bytes)
+ indoortileset2_tile_14_compressed (258 > 9 bytes)
+ indoortileset2_tile_15_compressed (258 > 9 bytes)
+ indoortileset2_tile_16_compressed (258 > 44 bytes)
+ indoortileset2_tile_17_compressed (258 > 44 bytes)
+ indoortileset2_tile_18_compressed (258 > 52 bytes)
+ indoortileset2_tile_19_compressed (258 > 56 bytes)
+ indoortileset2_tile_20_compressed (258 > 118 bytes)
+ indoortileset2_tile_21_compressed (258 > 9 bytes)
+ indoortileset2_tile_22_compressed (258 > 9 bytes)
+ indoortileset2_tile_23_compressed (258 > 9 bytes)
+ indoortileset2_tile_24_compressed (258 > 9 bytes)
+ indoortileset2_tile_25_compressed (258 > 9 bytes)
+ indoortileset2_tile_26_compressed (258 > 9 bytes)
+ indoortileset2_tile_27_compressed (258 > 9 bytes)
+ indoortileset2_tile_28_compressed (258 > 9 bytes)
+ indoortileset2_tile_29_compressed (258 > 9 bytes)
+ indoortileset2_tile_30_compressed (258 > 9 bytes)
+ indoortileset2_tile_31_compressed (258 > 9 bytes)
+ indoortileset2_tile_32_compressed (258 > 139 bytes)
+ indoortileset2_tile_33_compressed (258 > 71 bytes)
+ indoortileset2_tile_34_compressed (258 > 71 bytes)
+ indoortileset2_tile_35_compressed (258 > 64 bytes)
+ indoortileset2_tile_36_compressed (258 > 64 bytes)
+ indoortileset2_tile_37_compressed (258 > 9 bytes)
+ indoortileset2_tile_38_compressed (258 > 9 bytes)
+ indoortileset2_tile_39_compressed (258 > 9 bytes)
+ indoortileset2_tile_40_compressed (258 > 9 bytes)
+ indoortileset2_tile_41_compressed (258 > 9 bytes)
+ indoortileset2_tile_42_compressed (258 > 9 bytes)
+ indoortileset2_tile_43_compressed (258 > 9 bytes)
+ indoortileset2_tile_44_compressed (258 > 9 bytes)
+ indoortileset2_tile_45_compressed (258 > 9 bytes)
+ indoortileset2_tile_46_compressed (258 > 9 bytes)
+ indoortileset2_tile_47_compressed (258 > 9 bytes)
+ indoortileset2_tile_48_compressed (258 > 74 bytes)
+ indoortileset2_tile_49_compressed (258 > 61 bytes)
+ indoortileset2_tile_50_compressed (258 > 63 bytes)
+ indoortileset2_tile_51_compressed (258 > 122 bytes)
+ indoortileset2_tile_52_compressed (258 > 115 bytes)
+ indoortileset2_tile_53_compressed (258 > 9 bytes)
+ indoortileset2_tile_54_compressed (258 > 9 bytes)
+ indoortileset2_tile_55_compressed (258 > 9 bytes)
+ indoortileset2_tile_56_compressed (258 > 9 bytes)
+ indoortileset2_tile_57_compressed (258 > 9 bytes)
+ indoortileset2_tile_58_compressed (258 > 9 bytes)
+ indoortileset2_tile_59_compressed (258 > 9 bytes)
+ indoortileset2_tile_60_compressed (258 > 9 bytes)
+ indoortileset2_tile_61_compressed (258 > 9 bytes)
+ indoortileset2_tile_62_compressed (258 > 9 bytes)
+ indoortileset2_tile_63_compressed (258 > 9 bytes)
+ indoortileset2_tile_64_compressed (258 > 61 bytes)
+ indoortileset2_tile_65_compressed (258 > 33 bytes)
+ indoortileset2_tile_66_compressed (258 > 65 bytes)
+ indoortileset2_tile_67_compressed (258 > 116 bytes)
+ indoortileset2_tile_68_compressed (258 > 116 bytes)
+ indoortileset2_tile_69_compressed (258 > 9 bytes)
+ indoortileset2_tile_70_compressed (258 > 9 bytes)
+ indoortileset2_tile_71_compressed (258 > 9 bytes)
+ indoortileset2_tile_72_compressed (258 > 9 bytes)
+ indoortileset2_tile_73_compressed (258 > 9 bytes)
+ indoortileset2_tile_74_compressed (258 > 9 bytes)
+ indoortileset2_tile_75_compressed (258 > 9 bytes)
+ indoortileset2_tile_76_compressed (258 > 9 bytes)
+ indoortileset2_tile_77_compressed (258 > 9 bytes)
+ indoortileset2_tile_78_compressed (258 > 9 bytes)
+ indoortileset2_tile_79_compressed (258 > 9 bytes)
+ indoortileset2_tile_80_compressed (258 > 25 bytes)
+ indoortileset2_tile_81_compressed (258 > 19 bytes)
+ indoortileset2_tile_82_compressed (258 > 26 bytes)
+ indoortileset2_tile_83_compressed (258 > 86 bytes)
+ indoortileset2_tile_84_compressed (258 > 84 bytes)
+ indoortileset2_tile_85_compressed (258 > 9 bytes)
+ indoortileset2_tile_86_compressed (258 > 9 bytes)
+ indoortileset2_tile_87_compressed (258 > 9 bytes)
+ indoortileset2_tile_88_compressed (258 > 9 bytes)
+ indoortileset2_tile_89_compressed (258 > 9 bytes)
+ indoortileset2_tile_90_compressed (258 > 9 bytes)
+ indoortileset2_tile_91_compressed (258 > 9 bytes)
+ indoortileset2_tile_92_compressed (258 > 9 bytes)
+ indoortileset2_tile_93_compressed (258 > 9 bytes)
+ indoortileset2_tile_94_compressed (258 > 9 bytes)
+ indoortileset2_tile_95_compressed (258 > 9 bytes)
+ indoortileset2_tile_96_compressed (258 > 9 bytes)
+ indoortileset2_tile_97_compressed (258 > 9 bytes)
+ indoortileset2_tile_98_compressed (258 > 9 bytes)
+ indoortileset2_tile_99_compressed (258 > 9 bytes)
+ indoortileset2_tile_100_compressed (258 > 9 bytes)
+ indoortileset2_tile_101_compressed (258 > 9 bytes)
+ indoortileset2_tile_102_compressed (258 > 9 bytes)
+ indoortileset2_tile_103_compressed (258 > 9 bytes)
+ indoortileset2_tile_104_compressed (258 > 9 bytes)
+ indoortileset2_tile_105_compressed (258 > 9 bytes)
+ indoortileset2_tile_106_compressed (258 > 9 bytes)
+ indoortileset2_tile_107_compressed (258 > 9 bytes)
+ indoortileset2_tile_108_compressed (258 > 9 bytes)
+ indoortileset2_tile_109_compressed (258 > 9 bytes)
+ indoortileset2_tile_110_compressed (258 > 9 bytes)
+ indoortileset2_tile_111_compressed (258 > 9 bytes)
+ indoortileset2_tile_112_compressed (258 > 9 bytes)
+ indoortileset2_tile_113_compressed (258 > 9 bytes)
+ indoortileset2_tile_114_compressed (258 > 9 bytes)
+ indoortileset2_tile_115_compressed (258 > 9 bytes)
+ indoortileset2_tile_116_compressed (258 > 9 bytes)
+ indoortileset2_tile_117_compressed (258 > 9 bytes)
+ indoortileset2_tile_118_compressed (258 > 9 bytes)
+ indoortileset2_tile_119_compressed (258 > 9 bytes)
+ indoortileset2_tile_120_compressed (258 > 9 bytes)
+ indoortileset2_tile_121_compressed (258 > 9 bytes)
+ indoortileset2_tile_122_compressed (258 > 9 bytes)
+ indoortileset2_tile_123_compressed (258 > 9 bytes)
+ indoortileset2_tile_124_compressed (258 > 9 bytes)
+ indoortileset2_tile_125_compressed (258 > 9 bytes)
+ indoortileset2_tile_126_compressed (258 > 9 bytes)
+ indoortileset2_tile_127_compressed (258 > 9 bytes)
+ outdoortileset0 : 99.48%
  outdoortileset0_tile_0_compressed (258 > 19 bytes)
  outdoortileset0_tile_1_compressed (258 > 32 bytes)
  outdoortileset0_tile_2_compressed (258 > 126 bytes)
@@ -302,9 +685,9 @@ transparent color : 0x8318
  outdoortileset0_tile_78_compressed (258 > 45 bytes)
  outdoortileset0_tile_79_compressed (258 > 96 bytes)
  outdoortileset0_tile_80_compressed (258 > 26 bytes)
- outdoortileset0_tile_81_compressed (258 > 31 bytes)
- outdoortileset0_tile_82_compressed (258 > 34 bytes)
- outdoortileset0_tile_83_compressed (258 > 26 bytes)
+ outdoortileset0_tile_81_compressed (258 > 33 bytes)
+ outdoortileset0_tile_82_compressed (258 > 36 bytes)
+ outdoortileset0_tile_83_compressed (258 > 28 bytes)
  outdoortileset0_tile_84_compressed (258 > 88 bytes)
  outdoortileset0_tile_85_compressed (258 > 78 bytes)
  outdoortileset0_tile_86_compressed (258 > 108 bytes)
@@ -318,9 +701,9 @@ transparent color : 0x8318
  outdoortileset0_tile_94_compressed (258 > 9 bytes)
  outdoortileset0_tile_95_compressed (258 > 67 bytes)
  outdoortileset0_tile_96_compressed (258 > 90 bytes)
- outdoortileset0_tile_97_compressed (258 > 109 bytes)
- outdoortileset0_tile_98_compressed (258 > 99 bytes)
- outdoortileset0_tile_99_compressed (258 > 90 bytes)
+ outdoortileset0_tile_97_compressed (258 > 111 bytes)
+ outdoortileset0_tile_98_compressed (258 > 100 bytes)
+ outdoortileset0_tile_99_compressed (258 > 91 bytes)
  outdoortileset0_tile_100_compressed (258 > 82 bytes)
  outdoortileset0_tile_101_compressed (258 > 93 bytes)
  outdoortileset0_tile_102_compressed (258 > 9 bytes)
@@ -333,8 +716,8 @@ transparent color : 0x8318
  outdoortileset0_tile_109_compressed (258 > 83 bytes)
  outdoortileset0_tile_110_compressed (258 > 24 bytes)
  outdoortileset0_tile_111_compressed (258 > 90 bytes)
- outdoortileset0_tile_112_compressed (258 > 96 bytes)
- outdoortileset0_tile_113_compressed (258 > 73 bytes)
+ outdoortileset0_tile_112_compressed (258 > 97 bytes)
+ outdoortileset0_tile_113_compressed (258 > 74 bytes)
  outdoortileset0_tile_114_compressed (258 > 35 bytes)
  outdoortileset0_tile_115_compressed (258 > 82 bytes)
  outdoortileset0_tile_116_compressed (258 > 9 bytes)
@@ -349,7 +732,7 @@ transparent color : 0x8318
  outdoortileset0_tile_125_compressed (258 > 61 bytes)
  outdoortileset0_tile_126_compressed (258 > 31 bytes)
  outdoortileset0_tile_127_compressed (258 > 43 bytes)
- outdoortileset1 : 99.98%
+ outdoortileset1 : 99.73%
  outdoortileset1_tile_0_compressed (258 > 19 bytes)
  outdoortileset1_tile_1_compressed (258 > 32 bytes)
  outdoortileset1_tile_2_compressed (258 > 126 bytes)
@@ -431,9 +814,9 @@ transparent color : 0x8318
  outdoortileset1_tile_78_compressed (258 > 9 bytes)
  outdoortileset1_tile_79_compressed (258 > 9 bytes)
  outdoortileset1_tile_80_compressed (258 > 26 bytes)
- outdoortileset1_tile_81_compressed (258 > 31 bytes)
- outdoortileset1_tile_82_compressed (258 > 34 bytes)
- outdoortileset1_tile_83_compressed (258 > 26 bytes)
+ outdoortileset1_tile_81_compressed (258 > 33 bytes)
+ outdoortileset1_tile_82_compressed (258 > 36 bytes)
+ outdoortileset1_tile_83_compressed (258 > 28 bytes)
  outdoortileset1_tile_84_compressed (258 > 62 bytes)
  outdoortileset1_tile_85_compressed (258 > 33 bytes)
  outdoortileset1_tile_86_compressed (258 > 55 bytes)
@@ -447,9 +830,9 @@ transparent color : 0x8318
  outdoortileset1_tile_94_compressed (258 > 42 bytes)
  outdoortileset1_tile_95_compressed (258 > 9 bytes)
  outdoortileset1_tile_96_compressed (258 > 90 bytes)
- outdoortileset1_tile_97_compressed (258 > 109 bytes)
- outdoortileset1_tile_98_compressed (258 > 99 bytes)
- outdoortileset1_tile_99_compressed (258 > 90 bytes)
+ outdoortileset1_tile_97_compressed (258 > 111 bytes)
+ outdoortileset1_tile_98_compressed (258 > 100 bytes)
+ outdoortileset1_tile_99_compressed (258 > 91 bytes)
  outdoortileset1_tile_100_compressed (258 > 96 bytes)
  outdoortileset1_tile_101_compressed (258 > 64 bytes)
  outdoortileset1_tile_102_compressed (258 > 74 bytes)
@@ -462,8 +845,8 @@ transparent color : 0x8318
  outdoortileset1_tile_109_compressed (258 > 78 bytes)
  outdoortileset1_tile_110_compressed (258 > 18 bytes)
  outdoortileset1_tile_111_compressed (258 > 9 bytes)
- outdoortileset1_tile_112_compressed (258 > 96 bytes)
- outdoortileset1_tile_113_compressed (258 > 73 bytes)
+ outdoortileset1_tile_112_compressed (258 > 97 bytes)
+ outdoortileset1_tile_113_compressed (258 > 74 bytes)
  outdoortileset1_tile_114_compressed (258 > 35 bytes)
  outdoortileset1_tile_115_compressed (258 > 82 bytes)
  outdoortileset1_tile_116_compressed (258 > 60 bytes)
@@ -478,7 +861,7 @@ transparent color : 0x8318
  outdoortileset1_tile_125_compressed (258 > 86 bytes)
  outdoortileset1_tile_126_compressed (258 > 33 bytes)
  outdoortileset1_tile_127_compressed (258 > 9 bytes)
- outdoortileset2 : 99.98%
+ outdoortileset2 : 99.18%
  outdoortileset2_tile_0_compressed (258 > 19 bytes)
  outdoortileset2_tile_1_compressed (258 > 32 bytes)
  outdoortileset2_tile_2_compressed (258 > 126 bytes)
@@ -607,7 +990,136 @@ transparent color : 0x8318
  outdoortileset2_tile_125_compressed (258 > 53 bytes)
  outdoortileset2_tile_126_compressed (258 > 101 bytes)
  outdoortileset2_tile_127_compressed (258 > 9 bytes)
- pokeball : 100.00%
+ outdoortileset3 : 99.60%
+ outdoortileset3_tile_0_compressed (258 > 19 bytes)
+ outdoortileset3_tile_1_compressed (258 > 32 bytes)
+ outdoortileset3_tile_2_compressed (258 > 126 bytes)
+ outdoortileset3_tile_3_compressed (258 > 105 bytes)
+ outdoortileset3_tile_4_compressed (258 > 85 bytes)
+ outdoortileset3_tile_5_compressed (258 > 110 bytes)
+ outdoortileset3_tile_6_compressed (258 > 115 bytes)
+ outdoortileset3_tile_7_compressed (258 > 100 bytes)
+ outdoortileset3_tile_8_compressed (258 > 96 bytes)
+ outdoortileset3_tile_9_compressed (258 > 91 bytes)
+ outdoortileset3_tile_10_compressed (258 > 111 bytes)
+ outdoortileset3_tile_11_compressed (258 > 94 bytes)
+ outdoortileset3_tile_12_compressed (258 > 45 bytes)
+ outdoortileset3_tile_13_compressed (258 > 96 bytes)
+ outdoortileset3_tile_14_compressed (258 > 9 bytes)
+ outdoortileset3_tile_15_compressed (258 > 9 bytes)
+ outdoortileset3_tile_16_compressed (258 > 20 bytes)
+ outdoortileset3_tile_17_compressed (258 > 30 bytes)
+ outdoortileset3_tile_18_compressed (258 > 59 bytes)
+ outdoortileset3_tile_19_compressed (258 > 42 bytes)
+ outdoortileset3_tile_20_compressed (258 > 52 bytes)
+ outdoortileset3_tile_21_compressed (258 > 65 bytes)
+ outdoortileset3_tile_22_compressed (258 > 65 bytes)
+ outdoortileset3_tile_23_compressed (258 > 75 bytes)
+ outdoortileset3_tile_24_compressed (258 > 102 bytes)
+ outdoortileset3_tile_25_compressed (258 > 67 bytes)
+ outdoortileset3_tile_26_compressed (258 > 113 bytes)
+ outdoortileset3_tile_27_compressed (258 > 59 bytes)
+ outdoortileset3_tile_28_compressed (258 > 9 bytes)
+ outdoortileset3_tile_29_compressed (258 > 67 bytes)
+ outdoortileset3_tile_30_compressed (258 > 9 bytes)
+ outdoortileset3_tile_31_compressed (258 > 9 bytes)
+ outdoortileset3_tile_32_compressed (258 > 44 bytes)
+ outdoortileset3_tile_33_compressed (258 > 40 bytes)
+ outdoortileset3_tile_34_compressed (258 > 47 bytes)
+ outdoortileset3_tile_35_compressed (258 > 20 bytes)
+ outdoortileset3_tile_36_compressed (258 > 45 bytes)
+ outdoortileset3_tile_37_compressed (258 > 126 bytes)
+ outdoortileset3_tile_38_compressed (258 > 122 bytes)
+ outdoortileset3_tile_39_compressed (258 > 91 bytes)
+ outdoortileset3_tile_40_compressed (258 > 76 bytes)
+ outdoortileset3_tile_41_compressed (258 > 81 bytes)
+ outdoortileset3_tile_42_compressed (258 > 98 bytes)
+ outdoortileset3_tile_43_compressed (258 > 83 bytes)
+ outdoortileset3_tile_44_compressed (258 > 24 bytes)
+ outdoortileset3_tile_45_compressed (258 > 90 bytes)
+ outdoortileset3_tile_46_compressed (258 > 9 bytes)
+ outdoortileset3_tile_47_compressed (258 > 9 bytes)
+ outdoortileset3_tile_48_compressed (258 > 35 bytes)
+ outdoortileset3_tile_49_compressed (258 > 41 bytes)
+ outdoortileset3_tile_50_compressed (258 > 53 bytes)
+ outdoortileset3_tile_51_compressed (258 > 44 bytes)
+ outdoortileset3_tile_52_compressed (258 > 59 bytes)
+ outdoortileset3_tile_53_compressed (258 > 97 bytes)
+ outdoortileset3_tile_54_compressed (258 > 97 bytes)
+ outdoortileset3_tile_55_compressed (258 > 75 bytes)
+ outdoortileset3_tile_56_compressed (258 > 69 bytes)
+ outdoortileset3_tile_57_compressed (258 > 63 bytes)
+ outdoortileset3_tile_58_compressed (258 > 79 bytes)
+ outdoortileset3_tile_59_compressed (258 > 9 bytes)
+ outdoortileset3_tile_60_compressed (258 > 9 bytes)
+ outdoortileset3_tile_61_compressed (258 > 9 bytes)
+ outdoortileset3_tile_62_compressed (258 > 9 bytes)
+ outdoortileset3_tile_63_compressed (258 > 9 bytes)
+ outdoortileset3_tile_64_compressed (258 > 63 bytes)
+ outdoortileset3_tile_65_compressed (258 > 28 bytes)
+ outdoortileset3_tile_66_compressed (258 > 30 bytes)
+ outdoortileset3_tile_67_compressed (258 > 67 bytes)
+ outdoortileset3_tile_68_compressed (258 > 48 bytes)
+ outdoortileset3_tile_69_compressed (258 > 28 bytes)
+ outdoortileset3_tile_70_compressed (258 > 62 bytes)
+ outdoortileset3_tile_71_compressed (258 > 85 bytes)
+ outdoortileset3_tile_72_compressed (258 > 46 bytes)
+ outdoortileset3_tile_73_compressed (258 > 88 bytes)
+ outdoortileset3_tile_74_compressed (258 > 30 bytes)
+ outdoortileset3_tile_75_compressed (258 > 9 bytes)
+ outdoortileset3_tile_76_compressed (258 > 9 bytes)
+ outdoortileset3_tile_77_compressed (258 > 9 bytes)
+ outdoortileset3_tile_78_compressed (258 > 9 bytes)
+ outdoortileset3_tile_79_compressed (258 > 9 bytes)
+ outdoortileset3_tile_80_compressed (258 > 26 bytes)
+ outdoortileset3_tile_81_compressed (258 > 33 bytes)
+ outdoortileset3_tile_82_compressed (258 > 36 bytes)
+ outdoortileset3_tile_83_compressed (258 > 28 bytes)
+ outdoortileset3_tile_84_compressed (258 > 62 bytes)
+ outdoortileset3_tile_85_compressed (258 > 33 bytes)
+ outdoortileset3_tile_86_compressed (258 > 55 bytes)
+ outdoortileset3_tile_87_compressed (258 > 58 bytes)
+ outdoortileset3_tile_88_compressed (258 > 58 bytes)
+ outdoortileset3_tile_89_compressed (258 > 31 bytes)
+ outdoortileset3_tile_90_compressed (258 > 45 bytes)
+ outdoortileset3_tile_91_compressed (258 > 19 bytes)
+ outdoortileset3_tile_92_compressed (258 > 19 bytes)
+ outdoortileset3_tile_93_compressed (258 > 19 bytes)
+ outdoortileset3_tile_94_compressed (258 > 52 bytes)
+ outdoortileset3_tile_95_compressed (258 > 9 bytes)
+ outdoortileset3_tile_96_compressed (258 > 90 bytes)
+ outdoortileset3_tile_97_compressed (258 > 111 bytes)
+ outdoortileset3_tile_98_compressed (258 > 100 bytes)
+ outdoortileset3_tile_99_compressed (258 > 91 bytes)
+ outdoortileset3_tile_100_compressed (258 > 96 bytes)
+ outdoortileset3_tile_101_compressed (258 > 64 bytes)
+ outdoortileset3_tile_102_compressed (258 > 74 bytes)
+ outdoortileset3_tile_103_compressed (258 > 64 bytes)
+ outdoortileset3_tile_104_compressed (258 > 77 bytes)
+ outdoortileset3_tile_105_compressed (258 > 101 bytes)
+ outdoortileset3_tile_106_compressed (258 > 63 bytes)
+ outdoortileset3_tile_107_compressed (258 > 39 bytes)
+ outdoortileset3_tile_108_compressed (258 > 31 bytes)
+ outdoortileset3_tile_109_compressed (258 > 39 bytes)
+ outdoortileset3_tile_110_compressed (258 > 64 bytes)
+ outdoortileset3_tile_111_compressed (258 > 56 bytes)
+ outdoortileset3_tile_112_compressed (258 > 97 bytes)
+ outdoortileset3_tile_113_compressed (258 > 74 bytes)
+ outdoortileset3_tile_114_compressed (258 > 35 bytes)
+ outdoortileset3_tile_115_compressed (258 > 82 bytes)
+ outdoortileset3_tile_116_compressed (258 > 60 bytes)
+ outdoortileset3_tile_117_compressed (258 > 45 bytes)
+ outdoortileset3_tile_118_compressed (258 > 94 bytes)
+ outdoortileset3_tile_119_compressed (258 > 36 bytes)
+ outdoortileset3_tile_120_compressed (258 > 94 bytes)
+ outdoortileset3_tile_121_compressed (258 > 50 bytes)
+ outdoortileset3_tile_122_compressed (258 > 56 bytes)
+ outdoortileset3_tile_123_compressed (258 > 46 bytes)
+ outdoortileset3_tile_124_compressed (258 > 81 bytes)
+ outdoortileset3_tile_125_compressed (258 > 44 bytes)
+ outdoortileset3_tile_126_compressed (258 > 55 bytes)
+ outdoortileset3_tile_127_compressed (258 > 110 bytes)
+ pokeball : 99.90%
  pokeball_tile_0_compressed (258 > 65 bytes)
  pokeball_tile_1_compressed (258 > 65 bytes)
  pokeball_tile_2_compressed (258 > 9 bytes)
@@ -1423,9 +1935,12 @@ exporting appvar: PKMNSD3.8xv
  cb151
 exporting appvar: PKMNSD4.8xv
  indoortileset0
+ indoortileset1
+ indoortileset2
  outdoortileset0
  outdoortileset1
  outdoortileset2
+ outdoortileset3
  pausemenu
  pokeball
  map_gfx (palette)
@@ -1630,38 +2145,114 @@ exporting appvar: PKMNSD7.8xv
  n009
  n010
  n011
- n012
- n013
- n014
- n015
- n016
- n017
- n018
- n019
- n020
- n021
- n022
- n023
- n024
- n025
- n026
- n027
- n028
- n029
- n030
- n031
- n032
- n033
- n034
- n035
- sn000
- sn001
- sn002
- sn003
- sn004
- sn005
- sn006
- sn007
+ n100
+ n101
+ n102
+ n103
+ n104
+ n105
+ n106
+ n107
+ n108
+ n109
+ n110
+ n111
+ n200
+ n201
+ n202
+ n203
+ n204
+ n205
+ n206
+ n207
+ n208
+ n209
+ n210
+ n211
+ n300
+ n301
+ n302
+ n303
+ n304
+ n305
+ n306
+ n307
+ n308
+ n309
+ n310
+ n311
+ n400
+ n401
+ n402
+ n403
+ n404
+ n405
+ n406
+ n407
+ n408
+ n409
+ n410
+ n411
+ n500
+ n501
+ n502
+ n503
+ n504
+ n505
+ n506
+ n507
+ n508
+ n509
+ n510
+ n511
+ n600
+ n601
+ n602
+ n603
+ n604
+ n605
+ n606
+ n607
+ n608
+ n609
+ n610
+ n611
+ n700
+ n701
+ n702
+ n703
+ n704
+ n705
+ n706
+ n707
+ n708
+ n709
+ n710
+ n711
+ n800
+ n801
+ n802
+ n803
+ n804
+ n805
+ n806
+ n807
+ n808
+ n809
+ n810
+ n811
+ n900
+ n901
+ n902
+ n903
+ n904
+ n905
+ n906
+ n907
+ n908
+ n909
+ n910
+ n911
 exporting appvar: PKMNSD8.8xv
  player00
  player01
@@ -1695,8 +2286,56 @@ exporting appvar: PKMNSD8.8xv
  player29
  player30
  player31
+ sn000
+ sn001
+ sn002
+ sn003
+ sn010
+ sn011
+ sn012
+ sn013
+ sn020
+ sn021
+ sn022
+ sn023
+ sn030
+ sn031
+ sn032
+ sn033
+ sn040
+ sn041
+ sn042
+ sn043
+ sn050
+ sn051
+ sn052
+ sn053
+ sn060
+ sn061
+ sn062
+ sn063
+ sn070
+ sn071
+ sn072
+ sn073
+ sn080
+ sn081
+ sn082
+ sn083
+ sn090
+ sn091
+ sn092
+ sn093
+ sn100
+ sn101
+ sn102
+ sn103
+ sn110
+ sn111
+ sn112
+ sn113
 
-converted in 12 s
+converted in 13 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 

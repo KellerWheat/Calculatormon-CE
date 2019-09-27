@@ -7,6 +7,7 @@
 _data_tileSets:
 	DB	2
 	DB	0
+	DB	3
 	DB	0
 	DB	0
 	DB	0
@@ -36,11 +37,47 @@ _data_tileSets:
 	DB	0
 	DB	0
 	DB	0
+_data_indoortileSets:
 	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	0
+	DB	0
+	DB	2
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	XDEF _data_indoortileSets
 	XDEF _data_tileSets
 ;    1	#include "data.h";
 ;    2	
 ;    3	/* Map Data */
 ;    4	
 ;    5	uint8_t data_tileSets[32] = {
+;    6		2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+;    7	};
+;    8	uint8_t data_indoortileSets[32] = {
 	END
