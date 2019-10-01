@@ -1,2 +1,6 @@
 obj/
+bin/
 CEmu.exe.lnk
+src/gfx/*.c
+src/gfx/*.h
+src/gfx/convpng.log

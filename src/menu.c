@@ -343,15 +343,16 @@ void menu_PokemonDetails(int pokemonIndex) {
 
 			if (currentSave.party[pokemonIndex].moves[menuState] != 0) {
 				gfx_SetTextScale(1, 1);
-				strncpy(description, data_moveDescriptions[currentSave.party[pokemonIndex].moves[menuState] - 1], 18);
+				LoadMoveDesc(currentSave.party[pokemonIndex].moves[menuState] - 1);
+				strncpy(description, loadedText, 18);
 				gfx_PrintStringXY(description, 170, 185);
-				strncpy(description, data_moveDescriptions[currentSave.party[pokemonIndex].moves[menuState] - 1] + 18, 18);
+				strncpy(description, loadedText + 18, 18);
 				gfx_PrintStringXY(description, 170, 194);
-				strncpy(description, data_moveDescriptions[currentSave.party[pokemonIndex].moves[menuState] - 1] + 36, 18);
+				strncpy(description, loadedText + 36, 18);
 				gfx_PrintStringXY(description, 170, 203);
-				strncpy(description, data_moveDescriptions[currentSave.party[pokemonIndex].moves[menuState] - 1] + 54, 18);
+				strncpy(description, loadedText + 54, 18);
 				gfx_PrintStringXY(description, 170, 212);
-				strncpy(description, data_moveDescriptions[currentSave.party[pokemonIndex].moves[menuState] - 1]+72, 6);
+				strncpy(description, loadedText + 72, 6);
 				gfx_PrintStringXY(description, 170, 221);
 				gfx_SetTextScale(2, 2);
 			}
@@ -487,11 +488,12 @@ int menu_Items(bool inBattle) {
 			}
 
 			if (usableTMCount > 0) {
-				strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20], 36);
+				LoadMoveDesc(usableTMs[menuState + cursorState] - 20);
+				strncpy(description, loadedText, 36);
 				gfx_PrintStringXY(description, 14, 185);
-				strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20] + 36, 36);
+				strncpy(description, loadedText + 36, 36);
 				gfx_PrintStringXY(description, 14, 200);
-				strncpy(description, data_moveDescriptions[usableTMs[menuState + cursorState] - 20] + 72, 6);
+				strncpy(description, loadedText + 72, 6);
 				gfx_PrintStringXY(description, 14, 215);
 			}
 

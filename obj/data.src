@@ -80,6 +80,79 @@ L__0:
 L__1:
 	DB	"PKMNTD"
 	DB	0
+	SEGMENT CODE
+;   11	void LoadMoveDesc(int index) {
+_LoadMoveDesc:
+	LD	HL,-1
+	CALL	__frameset
+;   12		ti_var_t textAV = ti_Open("PKMNTDM", "r");
+	LD	BC,L__3
+	PUSH	BC
+	LD	BC,L__4
+	PUSH	BC
+	CALL	_ti_Open
+	POP	BC
+	POP	BC
+	LD	(IX+-1),A
+;   13		ti_Seek(78 * index, 0, textAV);
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	HL,(IX+6)
+	LD	A,78
+	CALL	__imul_b
+	PUSH	HL
+	CALL	_ti_Seek
+	POP	BC
+	POP	BC
+	POP	BC
+;   14		ti_Read(&loadedText, 78, 1, textAV);
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,78
+	PUSH	BC
+	LD	BC,_loadedText
+	PUSH	BC
+	CALL	_ti_Read
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   15		ti_CloseAll();
+	CALL	_ti_CloseAll
+;   16	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _LoadMoveDesc ***************************
+;Name                         Addr/Register   Size   Type
+;_ti_CloseAll                        IMPORT  -----   function
+;_loadedText                         IMPORT    256   variable
+;_ti_Read                            IMPORT  -----   function
+;_ti_Seek                            IMPORT  -----   function
+;_ti_Open                            IMPORT  -----   function
+;textAV                                IX-1      1   variable
+;index                                 IX+6      3   parameter
+
+
+; Stack Frame Size: 10 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__3:
+	DB	"r"
+	DB	0
+L__4:
+	DB	"PKMNTDM"
+	DB	0
 	SEGMENT BSS
 _loadedText:
 	DS	256
@@ -1223,35 +1296,37 @@ _xpPerLevel:
 	XREF _ti_Open:ROM
 	XREF _ti_CloseAll:ROM
 	XREF __frameset:ROM
+	XREF __imul_b:ROM
 	XREF __ishl_b:ROM
 	XDEF _xpPerLevel
 	XDEF _elements
 	XDEF _loadedText
+	XDEF _LoadMoveDesc
 	XDEF _LoadText
-;   11	char loadedText[256];
-;   12	
-;   13	/* Elemental damage multipliers */
-;   14	uint8_t elements[18][18] = {
-;   15		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},//None - 0
-;   16		{2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,2,2,1},//Normal - 1
-;   17		{2,2,1,1,2,4,4,2,2,2,2,2,4,1,2,1,2,4},//Fire - 2
-;   18		{2,2,4,1,2,1,2,2,2,4,2,2,2,4,2,1,2,2},//Water - 3
-;   19		{2,2,2,4,1,1,2,2,2,0,4,2,2,2,2,1,2,2},//Electric - 4
-;   20		{2,2,1,4,2,1,2,2,1,4,1,2,1,4,2,1,2,1},//Grass - 5
-;   21		{2,2,1,1,2,4,1,2,2,4,4,2,2,2,2,4,2,1},//Ice - 6
-;   22		{2,4,2,2,2,2,4,2,1,2,1,1,1,4,0,2,4,4},//Fighting - 7
-;   23		{2,2,2,2,2,4,2,2,1,1,2,2,2,1,1,2,2,0},//Poison - 8
-;   24		{2,2,4,2,4,1,2,2,4,2,0,2,1,4,2,2,2,4},//Ground - 9
-;   25		{2,2,2,2,1,4,2,4,2,2,2,2,4,1,2,2,2,1},//Flying - 10
-;   26		{2,2,2,2,2,2,2,4,4,2,2,1,2,2,2,2,0,1},//Psychic - 11
-;   27		{2,2,1,2,2,4,2,1,1,2,1,4,2,2,1,2,4,1},//Bug - 12
-;   28		{2,2,4,2,2,2,4,1,2,1,4,2,4,2,2,2,2,1},//Rock - 13
-;   29		{2,0,2,2,2,2,2,2,2,2,2,4,2,2,4,2,1,1},//Ghost - 14
-;   30		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,1},//Dragon - 15
-;   31		{2,2,2,2,2,2,2,1,2,2,2,4,2,2,4,2,1,1},//Dark - 16
-;   32		{2,2,1,1,1,2,4,2,2,2,2,2,2,4,2,2,2,1},//Steel - 17
-;   33	};
-;   34	
-;   35	/*Slow, Medium Slow, Medium Fast, Fast*/
-;   36	int xpPerLevel[4][101] = {
+;   17	char loadedText[256];
+;   18	
+;   19	/* Elemental damage multipliers */
+;   20	uint8_t elements[18][18] = {
+;   21		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},//None - 0
+;   22		{2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,2,2,1},//Normal - 1
+;   23		{2,2,1,1,2,4,4,2,2,2,2,2,4,1,2,1,2,4},//Fire - 2
+;   24		{2,2,4,1,2,1,2,2,2,4,2,2,2,4,2,1,2,2},//Water - 3
+;   25		{2,2,2,4,1,1,2,2,2,0,4,2,2,2,2,1,2,2},//Electric - 4
+;   26		{2,2,1,4,2,1,2,2,1,4,1,2,1,4,2,1,2,1},//Grass - 5
+;   27		{2,2,1,1,2,4,1,2,2,4,4,2,2,2,2,4,2,1},//Ice - 6
+;   28		{2,4,2,2,2,2,4,2,1,2,1,1,1,4,0,2,4,4},//Fighting - 7
+;   29		{2,2,2,2,2,4,2,2,1,1,2,2,2,1,1,2,2,0},//Poison - 8
+;   30		{2,2,4,2,4,1,2,2,4,2,0,2,1,4,2,2,2,4},//Ground - 9
+;   31		{2,2,2,2,1,4,2,4,2,2,2,2,4,1,2,2,2,1},//Flying - 10
+;   32		{2,2,2,2,2,2,2,4,4,2,2,1,2,2,2,2,0,1},//Psychic - 11
+;   33		{2,2,1,2,2,4,2,1,1,2,1,4,2,2,1,2,4,1},//Bug - 12
+;   34		{2,2,4,2,2,2,4,1,2,1,4,2,4,2,2,2,2,1},//Rock - 13
+;   35		{2,0,2,2,2,2,2,2,2,2,2,4,2,2,4,2,1,1},//Ghost - 14
+;   36		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,1},//Dragon - 15
+;   37		{2,2,2,2,2,2,2,1,2,2,2,4,2,2,4,2,1,1},//Dark - 16
+;   38		{2,2,1,1,1,2,4,2,2,2,2,2,2,4,2,2,2,1},//Steel - 17
+;   39	};
+;   40	
+;   41	/*Slow, Medium Slow, Medium Fast, Fast*/
+;   42	int xpPerLevel[4][101] = {
 	END

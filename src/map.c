@@ -541,11 +541,11 @@ int map_Loop(void) {
 							currentZoneData.trainerx[15] = tx + ((0 - currentZoneData.trainerdir[15] == 1) + (currentZoneData.trainerdir[15] == 2));
 							currentZoneData.trainery[15] = ty + ((0 - currentZoneData.trainerdir[15] == 3) + (currentZoneData.trainerdir[15] == 4));
 						}
-						if (FightTrainer(15)) {
-							currentZoneData.trainerx[15] = 255;
-							currentZoneData.trainery[15] = 255;
-							return 1;
-						}
+						FightTrainer(15);
+						currentSave.defeatedTrainers[currentSave.currentZone][15] = true;
+						currentZoneData.trainerx[15] = 255;
+						currentZoneData.trainery[15] = 255;
+						return 1;
 					}
 				}
 				else if (currentSave.surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
@@ -1011,24 +1011,32 @@ void ProcessNpcs(void) {
 				int trainerDir = currentZoneData.trainerdir[npcIndex];
 				canMove = true;
 				for (tileIndex = 1; tileIndex < 5; tileIndex++) {
+					/* Checks for walls*/
 					if (currentTypeMap[(currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) + tilemap.width * (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex)] >= 64) {
 						if (tileIndex == 1 && (npcMoveState[npcIndex] % 16 == 0) && npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] == 4) {
 							canMove = false;
 						}
 						break;
 					}
-					if ((currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) == tx && (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex) == ty) {
+					/* Checks for player */
+					if (((currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) == tx && (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex) == ty)) {
 						if (tileIndex == 1 && (npcMoveState[npcIndex] % 16 == 0) && npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] == 4) {
 							canMove = false;
 						}
 						if (currentZoneData.trainertype[npcIndex] == 0 || (currentZoneData.trainertype[npcIndex] == 2 && !npcSaidMessage[npcIndex]) || currentZoneData.trainertype[npcIndex] == 4 || (currentZoneData.trainertype[npcIndex] == 6 && !npcSaidMessage[npcIndex] && currentSave.newGame)) {
 							npcSaidMessage[npcIndex] = true;
 							npcToFight = npcIndex;
-							if ((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex]) && !(moveState != 0 && currentZoneData.trainertype[npcIndex] == 5)) {
+							if ((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex]) && !(moveState != 0 && currentZoneData.trainertype[npcIndex] == 4)) {
 								showExclamationPoint = 2;
 							}
 						}
 						break;
+					}
+					/* Checks for the space player is about to move into*/
+					if (moveState != 0 && (currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) == (tx + (moveDir == 1) - (moveDir == 2)) && (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex) == (ty + (moveDir == 3) - (moveDir == 4))) {
+						if (tileIndex == 1 && (npcMoveState[npcIndex] % 16 == 0) && npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] == 4) {
+							canMove = false;
+						}
 					}
 				}
 				if (npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] == 1 && npcMoveState[npcIndex] % 16 == 8) {

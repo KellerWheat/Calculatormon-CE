@@ -102,11 +102,11 @@ struct zoneData {
 
 /* Data from other structs */
 void LoadText(int index);
+void LoadMoveDesc(int index);
 extern char loadedText[256];
 
 extern struct pokemonType data_pokemon[];
 extern struct move data_moves[];
-extern char data_moveDescriptions[][78];
 extern uint8_t elements[18][18];
 extern int xpPerLevel[4][101];
 
