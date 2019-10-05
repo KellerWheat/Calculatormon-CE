@@ -89,6 +89,10 @@ Rooms - Grynz
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3724/
 
+Cerulean Cave - Kaori
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3779/
+
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
 Sprites - www.veekun.com/dex/downloads
