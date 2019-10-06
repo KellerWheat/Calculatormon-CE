@@ -204,7 +204,7 @@ int map_Loop(void) {
 	if ((kb_Data[1] & kb_2nd)) {
 		bool awaitSecond = true;
 		nextTile = GetNextTile(tx, ty, tilemap.width);
-		if (GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) <= 0x20) {
+		if (GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) < 0x20) {
 			int partyIndex, moveIndex;
 			bool hasUser = false;
 			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
@@ -235,7 +235,7 @@ int map_Loop(void) {
 				ty = currentSave.playerY / 16;
 			}
 			else {
-				text_Display("A Pokemon with Surf could bring you across this water", true);
+				text_Display("A Pokemon with Surf could bring you\nacross this water", true);
 			}
 		}
 		else if (nextTile == 0x41) {
@@ -336,7 +336,7 @@ int map_Loop(void) {
 				currentTypeMap[newTile] = tempTile;
 			}
 			else if (currentTypeMap[newTile] == 0) {
-				text_Display("This boulder could be moved by a strong Pokemon", true);
+				text_Display("This boulder could be moved by a\nstrong Pokemon", true);
 			}
 		}
 		else if (nextTile == 0x47) {
@@ -389,19 +389,26 @@ int map_Loop(void) {
 		else if (nextTile >= 0x80 && nextTile < 0x90) {
 			if (!currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80]) {
 				char str1[20];
-				currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = true;
-				currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1]++;
-				items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
-				if (currentZoneData.grounditems[nextTile - 0x80] - 1 >= 20) {
-					sprintf(str, "Found the TM for %s", str1);
+				if (currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1] == 255) {
+					items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
+					sprintf(str, "You cannot hold this %s", str1);
+					text_Display(str, false);
 				}
 				else {
-					sprintf(str, "Found a %s", str1);
+					currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = true;
+					currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1]++;
+					items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
+					if (currentZoneData.grounditems[nextTile - 0x80] - 1 >= 20) {
+						sprintf(str, "Found the TM for %s", str1);
+					}
+					else {
+						sprintf(str, "Found a %s", str1);
+					}
+					text_Display(str, false);
+					currentTileMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
+					currentTypeMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
+					currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tilemap.width*ty, moveDir, 1);
 				}
-				text_Display(str, false);
-				currentTileMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
-				currentTypeMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
-				currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tilemap.width*ty, moveDir, 1);
 			}
 		}
 		else {
@@ -823,20 +830,22 @@ void AddItem(uint8_t index) {
 			currentSave.worldState++;
 		}
 		else {
-			currentSave.playerItems[index - 1]++;
-			items_IndexToName(str1, index - 1);
-			if (index - 1 >= 20) {
-				sprintf(str, "You recieved the TM for\n%s", str1);
+			if (currentSave.playerItems[index - 1] != 255) {
+				currentSave.playerItems[index - 1]++;
+				items_IndexToName(str1, index - 1);
+				if (index - 1 >= 20) {
+					sprintf(str, "You recieved the TM for\n%s", str1);
+				}
+				else {
+					sprintf(str, "You recieved a %s", str1);
+				}
 			}
-			else {
-				sprintf(str, "You recieved a %s", str1);
+			if (index != 254) {
+				text_Display(str, false);
 			}
-		}
-		if (index != 254) {
-			text_Display(str, false);
 		}
 	}
-}
+}	
 bool FightTrainer(uint8_t index) {
 	if (currentZoneData.trainertype[index] <=1) {
 		currentTrainer = index;
@@ -1006,7 +1015,7 @@ void ProcessNpcs(void) {
 			xlocMod = 0;
 			ylocMod = 0;
 
-			if (xloc < 336 && yloc < 240 && xloc >= 0 && yloc >= 0) {
+			if (xloc < 352 && yloc < 256 && xloc >= -16 && yloc >= -16) {
 				bool canMove;
 				int trainerDir = currentZoneData.trainerdir[npcIndex];
 				canMove = true;
@@ -1246,7 +1255,7 @@ void LoadTileset(bool freeOld) {
 				zx7_Decompress(mapTiles[tileIndex], outdoortileset3_tiles_compressed[tileIndex]);
 			}
 			else if (data_tileSets[currentSave.currentZone] == 4) {
-				//zx7_Decompress(mapTiles[tileIndex], outdoortileset4_tiles_compressed[tileIndex]);
+				zx7_Decompress(mapTiles[tileIndex], outdoortileset4_tiles_compressed[tileIndex]);
 			}
 			else if (data_tileSets[currentSave.currentZone] == 5) {
 				//zx7_Decompress(mapTiles[tileIndex], outdoortileset5_tiles_compressed[tileIndex]);
