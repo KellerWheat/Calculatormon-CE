@@ -57,7 +57,7 @@ void GrassAnimation(bool part);
 
 
 /* Chance for enemy to spawn out of 100 */
-const int battlechance = 10; 
+const int battlechance = 6; 
 uint8_t pokeballdata[] = {
 	0,0,0,0,0,0
 };
@@ -112,6 +112,8 @@ uint8_t jumpState = 0;
 uint8_t jumpHeights[17] = {1,3,6,9,12,14,15,16,16,15,14,12,9,6,3,1, 0 };
 
 gfx_tilemap_t tilemap;
+uint8_t tileMapWidth = OUTDOORHEIGHT;
+uint8_t tileMapHeight = OUTDOORWIDTH;
 
 gfx_sprite_t *mapTiles[128];
 gfx_sprite_t *pokeballSprites[3];
@@ -154,6 +156,8 @@ void map_Initialize(void) {
 	if (currentSave.indoors) {
 		tilemap.width = 21;
 		tilemap.height = 15;
+		tileMapWidth = 21;
+		tileMapHeight = 15;
 	}
 
 	tx = currentSave.playerX / 16;
@@ -203,8 +207,8 @@ int map_Loop(void) {
 	/* If player presses 2nd */
 	if ((kb_Data[1] & kb_2nd)) {
 		bool awaitSecond = true;
-		nextTile = GetNextTile(tx, ty, tilemap.width);
-		if (GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) < 0x20) {
+		nextTile = GetNextTile(tx, ty, tileMapWidth);
+		if (GetNextTile(tx, ty, tileMapWidth) >= 0x1A && GetNextTile(tx, ty, tileMapWidth) < 0x20) {
 			int partyIndex, moveIndex;
 			bool hasUser = false;
 			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
@@ -267,7 +271,7 @@ int map_Loop(void) {
 		else if (nextTile == 0x45) {
 			if (currentSave.newGame) {
 				uint8_t starter = 2;
-				int tilePos = tx + (moveDir == 1) - (moveDir == 2) + ((ty + (moveDir == 3) - (moveDir == 4)) * tilemap.width);
+				int tilePos = tx + (moveDir == 1) - (moveDir == 2) + ((ty + (moveDir == 3) - (moveDir == 4)) * tileMapWidth);
 
 				sprintf(str, "Choose Squirtle as your starter?");
 				if (currentTypeMap[tilePos + 1] == 0x45) {
@@ -405,9 +409,9 @@ int map_Loop(void) {
 						sprintf(str, "Found a %s", str1);
 					}
 					text_Display(str, false);
-					currentTileMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
-					currentTypeMap[ShiftTile(tx + tilemap.width*ty, moveDir, 1)] = 0;
-					currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tilemap.width*ty, moveDir, 1);
+					currentTileMap[ShiftTile(tx + tileMapWidth *ty, moveDir, 1)] = 0;
+					currentTypeMap[ShiftTile(tx + tileMapWidth *ty, moveDir, 1)] = 0;
+					currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tileMapWidth *ty, moveDir, 1);
 				}
 			}
 		}
@@ -480,7 +484,7 @@ int map_Loop(void) {
 			/* Arrive At Tile*/
 			tx = currentSave.playerX / 16;
 			ty = currentSave.playerY / 16;
-			nextTile = GetTypeMapData(tx, ty, tilemap.width);
+			nextTile = GetTypeMapData(tx, ty, tileMapWidth);
 			if (nextTile >= 0x10 && nextTile < 0x20) {
 				/* Grass */
 				if ((rand() % 100) < battlechance) {
@@ -621,10 +625,11 @@ int map_Loop(void) {
 				ty = currentSave.playerY / 16;
 			}
 			else {
-				if (GetNextTile(tx, ty, tilemap.width) < 64 && !(!currentSave.surfing && GetNextTile(tx, ty, tilemap.width) >= 0x1A && GetNextTile(tx, ty, tilemap.width) < 0x20)) {
+				if (GetNextTile(tx, ty, tileMapWidth) < 64 && !(!currentSave.surfing && GetNextTile(tx, ty, tileMapWidth) >= 0x1A && GetNextTile(tx, ty, tileMapWidth) < 0x20) && !((moveDir == 2 && tx == 0 ) || (moveDir == 1 && tx == tileMapWidth-1) || (moveDir == 4 && ty == 0) || (moveDir == 3 && ty == tileMapHeight-1))) {
+
 					moveState = 8;
 				}
-				else if (GetNextTile(tx, ty, tilemap.width) == 0x48 && moveDir == 3) {
+				else if (GetNextTile(tx, ty, tileMapWidth) == 0x48 && moveDir == 3) {
 					moveState = 8;
 					jumpState = 16;
 				}
@@ -708,7 +713,7 @@ void DrawPlayer(void) {
 	gfx_TransparentSprite((gfx_sprite_t*)PKMNSD8[(24 * currentSave.surfing) + (12 * running) + (moveDir - 1) * (3 - currentSave.surfing) + playerState], currentSave.playerX - screenX - 8, currentSave.playerY - screenY + 4 - jumpHeights[16-jumpState]);
 
 	/* Draw overlay if player is in grass */
-	if (currentTileMap[tx + (moveDir == 1) - (moveDir == 2) + (ty + (moveDir == 3) - (moveDir == 4)) * tilemap.width] == 2 && !currentSave.indoors) {
+	if (currentTileMap[tx + (moveDir == 1) - (moveDir == 2) + (ty + (moveDir == 3) - (moveDir == 4)) * tileMapWidth] == 2 && !currentSave.indoors) {
 		/* Always draw grass overlay if moving sideways*/
 		if (moveDir <= 2 && moveState > 0) {
 			gfx_TransparentSprite_NoClip(grassoverlay1, (tx + (moveDir == 1) - (moveDir == 2)) * 16 - screenX - 8, (ty + (moveDir == 3) - (moveDir == 4)) * 16 - screenY + 18);
@@ -727,7 +732,7 @@ void DrawPlayer(void) {
 			grassAnimNext = !grassAnimNext;
 		}
 	}
-	if (!(moveDir == 3 && moveState != 0) && currentTileMap[tx + ty * tilemap.width] == 2 && !currentSave.indoors) {
+	if (!(moveDir == 3 && moveState != 0) && currentTileMap[tx + ty * tileMapWidth] == 2 && !currentSave.indoors) {
 		gfx_TransparentSprite_NoClip(grassoverlay1, tx * 16 - screenX - 8, ty * 16 - screenY + 18);
 	}
 
@@ -790,6 +795,8 @@ void EnterDoor(uint8_t index) {
 	LoadTileset(true);
 	tilemap.width = 21;
 	tilemap.height = 15;
+	tileMapWidth = 21;
+	tileMapHeight = 15;
 	currentSave.playerX = currentZoneData.doorx[index] * 16;
 	currentSave.playerY = currentZoneData.doory[index] * 16;
 	tx = currentSave.playerX / 16;
@@ -803,6 +810,8 @@ void ExitBuilding(void) {
 	currentSave.indoors = false;
 	tilemap.width = OUTDOORWIDTH;
 	tilemap.height = OUTDOORHEIGHT;
+	tileMapWidth = OUTDOORWIDTH;
+	tileMapHeight = OUTDOORHEIGHT;
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;
 	LoadTileset(true);
@@ -959,9 +968,9 @@ void LoadMap(void) {
 
 		npcMoveState[npcIndex] = 0;
 		npcGrassAnimState[npcIndex] = 0;
-		npcOldTiles[npcIndex] = currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tilemap.width * currentZoneData.trainery[npcIndex])];
+		npcOldTiles[npcIndex] = currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tileMapWidth * currentZoneData.trainery[npcIndex])];
 		if (currentZoneData.trainerdir[npcIndex] != 0) {
-			currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tilemap.width * currentZoneData.trainery[npcIndex])] = 96 + npcIndex;
+			currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tileMapWidth * currentZoneData.trainery[npcIndex])] = 96 + npcIndex;
 		}
 		npcSaidMessage[npcIndex] = false;
 
@@ -996,7 +1005,7 @@ uint8_t GetNextTile(uint8_t tx, uint8_t ty, int width) {
 	return 0;
 }
 uint16_t ShiftTile(uint16_t value, uint8_t direction, uint8_t amount) {
-	return (value + ((direction == 1) * amount) - ((direction == 2) * amount) + ((direction == 3) * tilemap.width * amount) - ((direction == 4) * tilemap.width * amount));
+	return (value + ((direction == 1) * amount) - ((direction == 2) * amount) + ((direction == 3) * tileMapWidth * amount) - ((direction == 4) * tileMapWidth * amount));
 }
 uint8_t GetTypeMapData(uint8_t tx, uint8_t ty, int width) {
 	if (currentSave.indoors) {
@@ -1021,7 +1030,7 @@ void ProcessNpcs(void) {
 				canMove = true;
 				for (tileIndex = 1; tileIndex < 5; tileIndex++) {
 					/* Checks for walls*/
-					if (currentTypeMap[(currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) + tilemap.width * (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex)] >= 64) {
+					if (currentTypeMap[(currentZoneData.trainerx[npcIndex] + (trainerDir == 1)*tileIndex - (trainerDir == 2)*tileIndex) + tileMapWidth * (currentZoneData.trainery[npcIndex] + (trainerDir == 3) * tileIndex - (trainerDir == 4) * tileIndex)] >= 64) {
 						if (tileIndex == 1 && (npcMoveState[npcIndex] % 16 == 0) && npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] == 4) {
 							canMove = false;
 						}
@@ -1035,7 +1044,7 @@ void ProcessNpcs(void) {
 						if (currentZoneData.trainertype[npcIndex] == 0 || (currentZoneData.trainertype[npcIndex] == 2 && !npcSaidMessage[npcIndex]) || currentZoneData.trainertype[npcIndex] == 4 || (currentZoneData.trainertype[npcIndex] == 6 && !npcSaidMessage[npcIndex] && currentSave.newGame)) {
 							npcSaidMessage[npcIndex] = true;
 							npcToFight = npcIndex;
-							if ((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex]) && !(moveState != 0 && currentZoneData.trainertype[npcIndex] == 4)) {
+							if (((currentSave.indoors && !currentSave.defeatedTrainersIndoors[currentSave.currentBuilding][npcIndex]) || (!currentSave.indoors && !currentSave.defeatedTrainers[currentSave.currentZone][npcIndex])) && !(moveState != 0 && currentZoneData.trainertype[npcIndex] == 4)) {
 								showExclamationPoint = 2;
 							}
 						}
@@ -1099,10 +1108,10 @@ void ProcessNpcs(void) {
 						ylocMod -= (npcMoveState[npcIndex] % 16);
 					}
 					if (npcMoveState[npcIndex] % 16 == 0) {
-						currentTypeMap[(currentZoneData.trainerx[npcIndex] + (trainerDir == 1) - (trainerDir == 2) - (trainerDir != 1)) + (tilemap.width * (currentZoneData.trainery[npcIndex] + (trainerDir == 3) - (trainerDir == 4)))] = 96 + npcIndex;
+						currentTypeMap[(currentZoneData.trainerx[npcIndex] + (trainerDir == 1) - (trainerDir == 2) - (trainerDir != 1)) + (tileMapWidth * (currentZoneData.trainery[npcIndex] + (trainerDir == 3) - (trainerDir == 4)))] = 96 + npcIndex;
 					}
 					if (npcMoveState[npcIndex] % 16 == 15) {
-						currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tilemap.width * currentZoneData.trainery[npcIndex])] = 0;
+						currentTypeMap[(currentZoneData.trainerx[npcIndex]) + (tileMapWidth * currentZoneData.trainery[npcIndex])] = 0;
 						currentZoneData.trainerx[npcIndex] += ((trainerDir == 1) - (trainerDir == 2));
 						currentZoneData.trainery[npcIndex] += ((trainerDir == 3) - (trainerDir == 4));
 					}
@@ -1122,7 +1131,7 @@ void ProcessNpcs(void) {
 				}
 				
 				/* Grass */
-				if (currentTileMap[currentZoneData.trainerx[npcIndex] + tilemap.width * currentZoneData.trainery[npcIndex]] == 2 && !currentSave.indoors) {
+				if (currentTileMap[currentZoneData.trainerx[npcIndex] + tileMapWidth * currentZoneData.trainery[npcIndex]] == 2 && !currentSave.indoors) {
 					if (trainerDir != 3 || npcMoveState[npcIndex] % 16 <= 1 || !canMove || npcPatterns[currentZoneData.trainermovement[npcIndex]][npcMoveState[npcIndex] / 16] != 4) {
 						if (npcGrassAnimState[npcIndex] > 5 && npcMoveState[npcIndex] % 16 < 14) {
 							gfx_TransparentSprite(grassoverlay3, xloc - 8, yloc + 13);
@@ -1200,6 +1209,8 @@ void map_LoseFight(void) {
 	moveDir = 3;
 	tilemap.width = OUTDOORWIDTH;
 	tilemap.height = OUTDOORHEIGHT;
+	tileMapWidth = OUTDOORWIDTH;
+	tileMapHeight = OUTDOORHEIGHT;
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;
 	LoadMap();
