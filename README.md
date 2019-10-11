@@ -77,6 +77,22 @@ Tileset 2 - fabnt
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
 
+Gym 1 and 2 - LF
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3716/
+
+Gym 3 and 4 - LF
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3717/
+
+Gym 5 and 6 - LF
+
+https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3718/
+
+Gym 7 and 8 - LF
+
+spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3719/
+
 Pallet Town - Bob799
 
 https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
