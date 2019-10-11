@@ -45,9 +45,7 @@ Status Icons - Superjustinbros
 
 www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/
 
-Pokémon Summary Menu - Pnick0509
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/112720/
+[Pokémon Summary Menu - Pnick0509](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/112720/)
 
 Interface & Bag Screens - Casquall, Redzagoon, and Waudby
 
