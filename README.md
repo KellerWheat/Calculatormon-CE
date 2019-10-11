@@ -15,97 +15,53 @@ The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from c
 The tools folder includes some python scripts I made to help generate game data (move list, maps, and pokemon stats)
 
 
-
-
 # Credits
 
-This game was made using the C SDK, which was created by MateoConLechuga:
-
-https://github.com/CE-Programming/toolchain
+[This game was made using the C SDK, which was created by MateoConLechuga](https://github.com/CE-Programming/toolchain)
 
 Sprite Resources I used (and who created them):
 
-Hero & Heroine - Previous
+[Hero & Heroine - Previous](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/)
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/
+[Overworld NPCs - Cast](https://www.pokecommunity.com/showthread.php?t=284932)
 
-Overworld NPCs - Cast
+[Battle Backgrounds - redblueyellow](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/)
 
-https://www.pokecommunity.com/showthread.php?t=284932
+[HP Bars & In-battle Menu - redblueyellow](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/)
 
-Battle Backgrounds - redblueyellow
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3866/
-
-HP Bars & In-battle Menu - redblueyellow
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/33690/
-
-Status Icons - Superjustinbros
-
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/
+[Status Icons - Superjustinbros](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/64370/)
 
 [Pokémon Summary Menu - Pnick0509](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/112720/)
 
-Interface & Bag Screens - Casquall, Redzagoon, and Waudby
+[Interface & Bag Screens - Casquall, Redzagoon, and Waudby](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3865/)
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3865/
+[Pokémon Menu - Redzagoon](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3854/)
 
-Pokémon Menu - Redzagoon
+[PC Interface - fabnt](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3861/)
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3854/
+[Overworld Sprites - Cast](https://www.pokecommunity.com/showthread.php?t=284932)
 
-PC Interface - fabnt
+[Tileset 0 - Hoeloe](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/)
 
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3861/
+[Tileset 1 - fabnt](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/)
 
-Overworld Sprites - Cast
+[Tileset 2 - fabnt](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/)
 
-https://www.pokecommunity.com/showthread.php?t=284932
+[Gym 1 and 2 - LF](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3716/)
 
-Tileset 0 - Hoeloe
+[Gym 3 and 4 - LF](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3717/)
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3870/
+[Gym 5 and 6 - LF](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3718/)
 
-Tileset 1 - fabnt
+[Gym 7 and 8 - LF](spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3719/)
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3862/
+[Pallet Town - Bob799](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/)
 
-Tileset 2 - fabnt
+[Cerulean City - Bob799](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3769/)
 
-www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3863/
+[Rooms - Grynz](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3724/)
 
-Gym 1 and 2 - LF
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3716/
-
-Gym 3 and 4 - LF
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3717/
-
-Gym 5 and 6 - LF
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3718/
-
-Gym 7 and 8 - LF
-
-spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3719/
-
-Pallet Town - Bob799
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3771/
-
-Cerulean City - Bob799
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3769/
-
-Rooms - Grynz
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3724/
-
-Cerulean Cave - Kaori
-
-https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3779/
+[Cerulean Cave - Kaori](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3779/)
 
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
