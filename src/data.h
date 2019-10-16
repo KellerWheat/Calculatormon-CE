@@ -111,8 +111,8 @@ extern uint8_t elements[18][18];
 extern int xpPerLevel[4][101];
 
 extern char data_text[][32];
-extern uint8_t data_tileSets[32];
-extern uint8_t data_indoortileSets[32];
+extern uint8_t data_tileSets[];
+extern uint8_t data_indoortileSets[];
 
 
 #endif

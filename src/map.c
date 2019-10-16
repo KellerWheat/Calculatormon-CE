@@ -92,11 +92,11 @@ bool npcSaidMessage[16];
 
 /*0 = wait, 1 = rotate counterclockwise, 2 = turn around, 3 = rotate clockwise, 4 = walk, 5 = repeat*/
 uint8_t npcPatterns[8][16] = {
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	{0,4,4,4,2,5,0,0,0,0,0,0,0,0,0,0},
-	{0,4,4,4,3,5,0,0,0,0,0,0,0,0,0,0},
-	{0,3,0,0,0,1,0,0,5,0,0,0,0,0,0,0},
-	{4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,5},
+	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},// 0 - Stand
+	{0,4,4,4,2,5,0,0,0,0,0,0,0,0,0,0},// 1 - Pace back and forth
+	{0,4,4,4,3,5,0,0,0,0,0,0,0,0,0,0},// 2 - Circle
+	{0,3,0,0,0,1,0,0,5,0,0,0,0,0,0,0},// 3 - Look clockwise then turn back
+	{4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,5},// 4 - Long Pace
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -112,8 +112,8 @@ uint8_t jumpState = 0;
 uint8_t jumpHeights[17] = {1,3,6,9,12,14,15,16,16,15,14,12,9,6,3,1, 0 };
 
 gfx_tilemap_t tilemap;
-uint8_t tileMapWidth = OUTDOORHEIGHT;
-uint8_t tileMapHeight = OUTDOORWIDTH;
+uint8_t tileMapWidth = OUTDOORWIDTH;
+uint8_t tileMapHeight = OUTDOORHEIGHT;
 
 gfx_sprite_t *mapTiles[128];
 gfx_sprite_t *pokeballSprites[3];
@@ -163,6 +163,7 @@ void map_Initialize(void) {
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;
 	LoadMap();
+	
 }
 void map_Setup(void) {
 	map_SetupGfx();
@@ -547,15 +548,15 @@ int map_Loop(void) {
 								walkState--;
 							}
 							if (currentZoneData.trainerdir[15] == 3) {
+								gfx_TransparentSprite((gfx_sprite_t*)PKMNSD7[(currentZoneData.trainerskin[15] * 12) + ((currentZoneData.trainerdir[15] - 1) * 3)], xloc, yloc);
 								DrawPlayer();
+								gfx_SwapDraw();
 							}
-							currentZoneData.trainerx[15] = tx + ((0 - currentZoneData.trainerdir[15] == 1) + (currentZoneData.trainerdir[15] == 2));
-							currentZoneData.trainery[15] = ty + ((0 - currentZoneData.trainerdir[15] == 3) + (currentZoneData.trainerdir[15] == 4));
+							currentZoneData.trainerx[15] = 255;
+							currentZoneData.trainery[15] = 255;
 						}
 						FightTrainer(15);
 						currentSave.defeatedTrainers[currentSave.currentZone][15] = true;
-						currentZoneData.trainerx[15] = 255;
-						currentZoneData.trainery[15] = 255;
 						return 1;
 					}
 				}
@@ -818,8 +819,12 @@ void ExitBuilding(void) {
 	LoadMap();
 }
 void ExitZone(uint8_t index) {
-	currentSave.playerX = currentZoneData.exitx[index] * 16;
-	currentSave.playerY = currentZoneData.exity[index] * 16;
+	if (currentZoneData.exitx[index] != 255) {
+		currentSave.playerX = currentZoneData.exitx[index] * 16;
+	}
+	if (currentZoneData.exity[index] != 255) {
+		currentSave.playerY = currentZoneData.exity[index] * 16;
+	}
 	currentSave.currentZone = currentZoneData.exitzone[index];
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;

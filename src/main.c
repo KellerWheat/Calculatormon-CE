@@ -96,6 +96,11 @@ void main(void) {
 				battle_End();
 			}
 		}
+		if (debugging) {
+			if (kb_Data[4] & kb_DecPnt) {
+				Wait(15);
+			}
+		}
 	} while (gameState < 2);
 
 	map_End();

@@ -63,6 +63,7 @@ char itemDescriptions[20][68] = {
 	"Makes certain species of Pokemon evolve",
 	"Makes certain species of Pokemon evolve",
 };
+
 /* Used in shop */
 uint16_t itemPrices[20] = {
 	200,600,1200,15000,300,700,1200,2500,600,3000,100,250,200,250,200,2100,2100,2100,2100,2100
@@ -77,81 +78,6 @@ void items_IndexToName(char *name, uint8_t index) {
 	else {
 		sprintf(name, data_moves[index-19].name);
 	}
-}
-
-void items_ItemShop(void) {
-	uint8_t shopPage, shopCurrent;
-	bool reloadshop;
-	shopPage = 0;
-	shopCurrent = 1;
-
-	gfx_SetDrawScreen();
-
-	
-	while (!(kb_Data[6] & kb_Clear)) {
-		reloadshop = false;
-		gfx_SetColor(colors[0]);
-		gfx_FillRectangle(20, 20, 290, 200);
-		gfx_SetColor(colors[1]);
-		gfx_Rectangle(20, 20, 290, 200);
-		gfx_SetColor(colors[0]);
-		gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-		map_DrawInformationBar();
-		while (kb_Data[1] & kb_2nd) { kb_Scan(); }
-
-		i = 0;
-		while (i < 10) {
-			gfx_PrintStringXY(itemNames[i + shopPage], 35, 25 + i * 20);
-			sprintf(str, "%u$", itemPrices[i + shopPage]);
-			gfx_PrintStringXY(str, 170, 25 + i * 20);
-			sprintf(str, "%u", currentSave.playerItems[i + shopPage]);
-			gfx_PrintStringXY(str, 240, 25 + i * 20);
-			i++;
-		}
-		while (!(kb_Data[6] & kb_Clear) && !reloadshop)
-		{
-			kb_Scan();
-			if (kb_Data[7] & kb_Up) {
-				if (shopCurrent != 0) {
-					shopCurrent--;
-					gfx_FillRectangle(25, 25, 9, 190);
-					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-					Wait(20);
-				}
-			}
-			if (kb_Data[7] & kb_Down) {
-				if (shopCurrent != 9) {
-					shopCurrent++;
-					gfx_FillRectangle(25, 25, 9, 190);
-					gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-					Wait(20);
-				}
-			}
-			if ((kb_Data[7] & kb_Right) || (kb_Data[7] & kb_Left)) {
-				if (shopPage == 10) {
-					shopPage = 0;
-				}
-				else {
-					shopPage = 10;
-				}
-				shopCurrent = 0;
-				gfx_FillRectangle(25, 25, 9, 190);
-				gfx_PrintStringXY(">", 25, 25 + shopCurrent * 20);
-				Wait(20);
-				reloadshop = true;
-			}
-
-			if (kb_Data[1] & kb_2nd) {
-				if (currentSave.playerMoney >= itemPrices[shopCurrent + shopPage]) {
-					currentSave.playerMoney -= itemPrices[shopCurrent + shopPage];
-					currentSave.playerItems[shopCurrent + shopPage]++;
-				}
-				while (kb_Data[1] & kb_2nd) { kb_Scan(); }
-				reloadshop = true;
-			}
-		}
-	}
-	gfx_SetDrawBuffer();
 }
 
 bool items_UseItem(uint8_t index) {

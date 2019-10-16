@@ -5,7 +5,7 @@ import sys
 import pyperclip
 
 root = Tk()
-root.title('Map Editor')
+root.title('Text Editor')
 root.wm_state('zoomed')
 
 textCount = 255

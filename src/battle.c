@@ -156,7 +156,7 @@ void SetupBattleGfx(void) {
 	else {
 		zx7_Decompress(enemySprite, PKMNSD1[enemyparty[currentenemy].id - 80]);
 	}
-
+	
 
 	MallocIcons();
 
@@ -367,6 +367,9 @@ bool playerturn() {
 			currentSave.playerItems[chosenItem]--;
 			chosenmove[true] = 0;
 			if (capture(chosenItem + 1)) {
+				if (transformed[1]) {
+					enemyparty[1] = originalpokemon[1];
+				}
 				map_WinFight(wild, enemyparty[0].level * 40);
 				run = true;
 				return true;
@@ -906,10 +909,22 @@ startattack:
 		if (player) {
 			originalpokemon[player] = currentSave.party[currentplayer];
 			currentSave.party[currentplayer] = enemyparty[currentenemy];
+			if (currentSave.party[currentplayer].id < 80) {
+				zx7_Decompress(playerSprite, PKMNSD2[currentSave.party[currentplayer].id]);
+			}
+			else {
+				zx7_Decompress(playerSprite, PKMNSD3[currentSave.party[currentplayer].id - 80]);
+			}
 		}
 		else {
 			originalpokemon[player] = enemyparty[currentenemy];
 			enemyparty[currentenemy] = currentSave.party[currentplayer];
+			if (enemyparty[currentenemy].id < 80) {
+				zx7_Decompress(enemySprite, PKMNSD0[enemyparty[currentenemy].id]);
+			}
+			else {
+				zx7_Decompress(enemySprite, PKMNSD1[enemyparty[currentenemy].id - 80]);
+			}
 		}
 	}
 	else if (data_moves[move].type == 20) {

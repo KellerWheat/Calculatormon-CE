@@ -5,6 +5,7 @@ import pygame
 from PIL import Image
 import sys
 import pyperclip
+import random 
 
 
 #--------
@@ -73,6 +74,15 @@ for x in range(4):
     tileset = Image.open("trainer"+str(x)+".png")
     trainerSprites.append(pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode))
 
+Var_ZoneCount = IntVar()
+Var_BuildingCount = IntVar()
+if(os.path.isfile("zonecount.npy")):    
+    Var_ZoneCount.set(np.load("zonecount.npy"))
+if(os.path.isfile("buildingcount.npy")):    
+    Var_BuildingCount.set(np.load("buildingcount.npy"))
+
+
+
 #---------
 #SelectMap
 #---------
@@ -137,12 +147,12 @@ def ChangeMap():
 
 def CopyAll():
     copytext = ""
-    copytext += "uint8_t data_tileSets["+str(mapCount)+"] = {\n\t"
-    for i in range(0,mapCount):
+    copytext += "uint8_t data_tileSets["+str(Var_ZoneCount.get())+"] = {\n\t"
+    for i in range(0,Var_ZoneCount.get()):
         copytext += str(tileSets[i])+','
     copytext += "\n};\n"
-    copytext += "uint8_t data_indoortileSets["+str(mapCountB)+"] = {\n\t"
-    for i in range(0,mapCountB):
+    copytext += "uint8_t data_indoortileSets["+str(Var_BuildingCount.get())+"] = {\n\t"
+    for i in range(0,Var_BuildingCount.get()):
         copytext += str(tileSetsB[i])+','
     copytext += "\n};\n"
     
@@ -168,7 +178,7 @@ def ExportFile():
     output1.astype('B').tofile('PKMNMD1.bin')
     os.startfile("convertmaps.bat")
     
-        
+
 
 Canvas_SetMap = Frame(root)
 Canvas_SetMap.grid(row=0,column=0, padx=16, sticky=N)
@@ -197,13 +207,12 @@ Button_ChangeMap.grid(row=7,column=0)
 
 Canvas_SetMap.grid_rowconfigure(8, minsize=20)
 
-Var_ZoneCount = IntVar()
+
 Label_ZoneCount = Label(Canvas_SetMap,text="Zone Count: ")
 Label_ZoneCount.grid(row=9,column=0)
 Input_ZoneCount = Entry(Canvas_SetMap,textvariable=Var_ZoneCount)
 Input_ZoneCount.grid(row=10,column=0)
 
-Var_BuildingCount = IntVar()
 Label_BuildingCount = Label(Canvas_SetMap,text="Building Count: ")
 Label_BuildingCount.grid(row=11,column=0)
 Input_BuildingCount = Entry(Canvas_SetMap,textvariable=Var_BuildingCount)
@@ -644,6 +653,19 @@ Button(Frame_ChangeTS,command=DecreaseTS,text="-").grid(row=0,column=0)
 Button(Frame_ChangeTS,command=IncreaseTS,text="+").grid(row=0,column=1)
 Frame_ChangeTS.grid(row=25,column=0)
 
+grassChances = np.array([0,0,0,0,0,0,0,1,16,17])
+def RandomGrass():
+    if(Var_IsBuilding.get()):
+        asd = 315
+    else:
+        asd = 1920
+    for x in range(0,asd):
+        if(tilemap[x] == 0 or tilemap[x] == 1 or tilemap[x] == 16 or tilemap[x] == 17):
+            tilemap[x] = grassChances[random.randint(0, 9)]
+
+
+Button(Canvas_SetMap,text="Randomize Grass",command=RandomGrass).grid(row=26,column=0)
+
 #----
 #Loop
 #----
@@ -661,7 +683,10 @@ while running:
     root.update()
 
 np.save('tilesets.npy', tileSets)
-np.save('tilesetsB.npy', tileSets)
+np.save('tilesetsB.npy', tileSetsB)
+np.save('zonecount.npy', Var_ZoneCount.get())
+np.save('buildingcount.npy', Var_BuildingCount.get())
+
 pygame.quit()
 root.destroy()
 sys.exit()
