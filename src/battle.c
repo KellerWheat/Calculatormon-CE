@@ -37,7 +37,6 @@ bool enemyturn(void);
 int selectMove(void);
 void redrawcharacters(void);
 void attack(bool player, uint8_t move);
-
 uint8_t CalculateXpPercent(void);
 void applystatus(bool player);
 void resetstatus(bool player);
@@ -86,13 +85,13 @@ bool converted[2];
 struct pokemonData originalpokemon[2];
 uint16_t bidedamage[2];
 uint16_t substitutehealth[2];
-
 uint8_t disabledmove[2];
 uint8_t disabledturns[2];
 uint8_t lastmove[2];
 uint8_t attackturns[2];
 bool air[2];
 uint16_t payday;
+
 bool run;
 
 uint8_t battleMenuState1 = 0;
@@ -273,6 +272,13 @@ int battle_Loop(void) {
 
 	return 1;
 }
+void battle_End(void) {
+	free(playerSprite);
+	free(enemySprite);
+	free(backgroundSprite);
+	free(hpBarSprite);
+	FreeIcons();
+}
 
 
 void battle_SpawnWild(uint8_t id, uint8_t minlevel, uint8_t maxlevel) {
@@ -391,7 +397,6 @@ bool playerturn() {
 	}
 	return true;
 }
-
 int selectMove(void) {
 	int8_t tv1, tv2, iconIndex;
 	tv1 = 0;
@@ -475,7 +480,6 @@ int selectMove(void) {
 	textBoxType = 1;
 	return (tv1 + 1 + 2 * (tv2));
 }
-
 bool enemyturn() {
 	if (attackturns[false] > 0) {
 		chosenmove[false] = lastmove[false];
@@ -510,6 +514,7 @@ bool enemyturn() {
 	}
 	return true;
 }
+
 void redrawcharacters(void) {
 	int statusIndex, healthRatio;
 	gfx_SetColor(colors[1]);
@@ -579,14 +584,6 @@ uint8_t CalculateXpPercent(void) {
 	mXp = xpPerLevel[data_pokemon[currentSave.party[currentplayer].id].xptype][currentSave.party[currentplayer].level + 1];
 	return((uint8_t)((92 * (cXp - sXp)) / (mXp - sXp)));
 
-}
-
-void battle_End(void) {
-	free(playerSprite);
-	free(enemySprite);
-	free(backgroundSprite);
-	free(hpBarSprite);
-	FreeIcons();
 }
 
 void attack(bool player, uint8_t move) {

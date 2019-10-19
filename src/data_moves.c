@@ -19,10 +19,10 @@
 15 - one hit ko
 16 - random move
 17 - copy enemy move
-18 - transform
+18 - transform (not working)
 19 - counter
 20 - bide
-21 - conversion
+21 - conversion (not working)
 22 - substitute
 */
 
