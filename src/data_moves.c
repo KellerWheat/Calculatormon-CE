@@ -77,7 +77,7 @@
 38 - charge attack may flinch
 */
 
-/* name, element, type, power, accuracy, pp, statustype, statuschance */
+/* name, element, type, power, accuracy, pp, statustype, statuschance, special effect */
 struct move data_moves[] = {
 	{"Empty",0,0,0,0,0,0,0},// 0
 	{"Absorb",5,1,20,100,25,21,0},// 1 - User recovers half the HP inflicted on opponent.

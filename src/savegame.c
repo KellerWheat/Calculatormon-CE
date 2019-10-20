@@ -39,13 +39,13 @@ void save_Save(void) {
 	}
 	ti_SetArchiveStatus(true, save);
 	ti_CloseAll();
-	text_Display("Your progress has been saved", true);
+	text_Display("Your progress has been saved");
 	return;
 
 err:
 	ti_Delete(appVarName);
 	ti_CloseAll();
-	text_Display("SAVE FAILED", false);
+	text_Display("SAVE FAILED");
 }
 
 void save_Load(void) {
@@ -60,7 +60,7 @@ void save_Load(void) {
 			goto err;
 		}
 		if (version != readVersion) {
-			text_Display("Wrong save file version", false);
+			text_Display("Wrong save file version");
 			goto err; /* do not load if wrong version */
 		}
 		if (ti_Read(&currentSave, sizeof(currentSave), 1, save) != 1) {
@@ -97,7 +97,7 @@ void save_SelectSave(void) {
 	int answer;
 	answer = 0;
 	while (answer == 0) {
-		answer = text_AskQuestion2("Save Slot 1", "Save Slot 2", false);
+		answer = text_AskQuestion2("Save Slot 1", "Save Slot 2");
 	}
 	if(answer == 1){
 		strcpy(appVarName, "PKMNSV1");

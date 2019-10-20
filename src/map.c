@@ -115,8 +115,9 @@ gfx_tilemap_t tilemap;
 uint8_t tileMapWidth = OUTDOORWIDTH;
 uint8_t tileMapHeight = OUTDOORHEIGHT;
 
-gfx_sprite_t *mapTiles[128];
+gfx_sprite_t *mapTiles[129];
 gfx_sprite_t *pokeballSprites[3];
+//gfx_sprite_t *animatedWaters[8];
 
 /* What map looks like */
 uint8_t currentTileMap[1920];
@@ -131,6 +132,16 @@ void map_Initialize(void) {
 	PKMNSD4_init();
 	PKMNSD7_init();
 	PKMNSD8_init();
+
+	/*animatedWaters[0] = animatedwater0;
+	animatedWaters[1] = animatedwater1;
+	animatedWaters[2] = animatedwater2;
+	animatedWaters[3] = animatedwater3;
+	animatedWaters[4] = animatedwater4;
+	animatedWaters[5] = animatedwater5;
+	animatedWaters[6] = animatedwater6;
+	animatedWaters[7] = animatedwater7;
+	mapTiles[128] = animatedwater0;*/
 
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
@@ -209,7 +220,7 @@ int map_Loop(void) {
 	if ((kb_Data[1] & kb_2nd)) {
 		bool awaitSecond = true;
 		nextTile = GetNextTile(tx, ty, tileMapWidth);
-		if (GetNextTile(tx, ty, tileMapWidth) >= 0x1A && GetNextTile(tx, ty, tileMapWidth) < 0x20) {
+		if (GetNextTile(tx, ty, tileMapWidth) >= 0x1A && GetNextTile(tx, ty, tileMapWidth) < 0x20 && !currentSave.surfing) {
 			int partyIndex, moveIndex;
 			bool hasUser = false;
 			for (partyIndex = 0; partyIndex < 6; partyIndex++) {
@@ -222,7 +233,7 @@ int map_Loop(void) {
 				}
 			}
 			if (hasUser) {
-				text_Display(str,true);
+				text_Display(str);
 				if (moveDir == 1) {
 					currentSave.playerX += 16;
 				}
@@ -240,7 +251,7 @@ int map_Loop(void) {
 				ty = currentSave.playerY / 16;
 			}
 			else {
-				text_Display("A Pokemon with Surf could bring you\nacross this water", true);
+				text_Display("A Pokemon with Surf could bring you\nacross this water");
 			}
 		}
 		else if (nextTile == 0x41) {
@@ -285,8 +296,8 @@ int map_Loop(void) {
 				}
 
 				
-				text_Display(str, false);
-				if (text_AskQuestion2("Yes", "No", false) == 1) {
+				text_Display(str);
+				if (text_AskQuestion2("Yes", "No") == 1) {
 					currentSave.party[0] = stats_NewCharacter((1 + (starter) * 3), 5);
 					currentTileMap[tilePos]-=3;
 					currentSave.newGame = false;
@@ -296,7 +307,7 @@ int map_Loop(void) {
 				map_LoadPokeballs();
 			}
 			else {
-				text_Display("You already chose a Pokemon", true);
+				text_Display("You already chose a Pokemon");
 			}
 		}
 		else if (nextTile == 0x46) {
@@ -332,7 +343,7 @@ int map_Loop(void) {
 				}
 			}
 			if (hasUser && currentTypeMap[newTile] == 0) {
-				text_Display(str, true);
+				text_Display(str);
 				tempTile = currentTileMap[oldTile];
 				currentTileMap[oldTile] = currentTileMap[newTile];
 				currentTileMap[newTile] = tempTile;
@@ -341,7 +352,7 @@ int map_Loop(void) {
 				currentTypeMap[newTile] = tempTile;
 			}
 			else if (currentTypeMap[newTile] == 0) {
-				text_Display("This boulder could be moved by a\nstrong Pokemon", true);
+				text_Display("This boulder could be moved by a\nstrong Pokemon");
 			}
 		}
 		else if (nextTile == 0x47) {
@@ -357,7 +368,7 @@ int map_Loop(void) {
 				}
 			}
 			if (hasUser) {
-				text_Display(str, true);
+				text_Display(str);
 				if (moveDir == 1) {
 					currentTypeMap[(tx + 1) + (ty)* OUTDOORWIDTH] = 0;
 					currentTileMap[(tx + 1) + (ty)* OUTDOORWIDTH] = 0;
@@ -376,7 +387,7 @@ int map_Loop(void) {
 				}
 			}
 			else {
-				text_Display("This tree could be cut down", true);
+				text_Display("This tree could be cut down");
 			}
 		}
 		
@@ -397,7 +408,7 @@ int map_Loop(void) {
 				if (currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1] == 255) {
 					items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
 					sprintf(str, "You cannot hold this %s", str1);
-					text_Display(str, false);
+					text_Display(str);
 				}
 				else {
 					currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = true;
@@ -409,7 +420,7 @@ int map_Loop(void) {
 					else {
 						sprintf(str, "Found a %s", str1);
 					}
-					text_Display(str, false);
+					text_Display(str);
 					currentTileMap[ShiftTile(tx + tileMapWidth *ty, moveDir, 1)] = 0;
 					currentTypeMap[ShiftTile(tx + tileMapWidth *ty, moveDir, 1)] = 0;
 					currentSave.foundItemsPos[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = ShiftTile(tx + tileMapWidth *ty, moveDir, 1);
@@ -501,6 +512,9 @@ int map_Loop(void) {
 				running = false;
 				map_Draw();
 				gfx_SwapDraw();
+				if (currentSave.surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
+					currentSave.surfing = false;
+				}
 				if (nextTile == 0x01) {
 					ExitBuilding();
 				}
@@ -559,9 +573,6 @@ int map_Loop(void) {
 						currentSave.defeatedTrainers[currentSave.currentZone][15] = true;
 						return 1;
 					}
-				}
-				else if (currentSave.surfing && !(nextTile >= 0x1A && nextTile < 0x20)) {
-					currentSave.surfing = false;
 				}
 				else if (nextTile >= 0x20 && nextTile < 0x30) {
 					ExitZone(nextTile - 32);
@@ -682,18 +693,14 @@ void map_Draw(void) {
 		DrawPlayer();
 	}
 	else {
-		/* Animate Water Every 20 Frames */
-		/*if (data_tileSets[currentSave.currentZone] == 0) {
-			if (currentWater == 20) {
-				memcpy(mapTiles[29], animatedwater1, 258);
-			}
-			if (currentWater == 0) {
-				memcpy(mapTiles[29], animatedwater2, 258);
-			}
-			currentWater++;
-			if (currentWater == 40) {
-				currentWater = 0;
-			}
+		/* Animate Water Every 20 Frames (NOT WORKING) */
+		/*if ((currentWater % 20) == 0) {
+			mapTiles[128] = animatedWaters[currentWater / 20];
+		}
+		currentWater++;
+		currentWater++;
+		if (currentWater == 80) {
+			currentWater = 0;
 		}*/
 
 		screenX = Clamp(currentSave.playerX - 160, 0, MAX_X);
@@ -702,7 +709,7 @@ void map_Draw(void) {
 		gfx_Tilemap(&tilemap, screenX, screenY);
 
 		DrawPlayer();
-		
+
 
 	}
 	ProcessNpcs();
@@ -772,7 +779,7 @@ void HealParty(void) {
 			currentSave.party[pokemonIndex].pp[moveIndex] = data_moves[currentSave.party[pokemonIndex].moves[moveIndex]].uses;
 		}
 	}
-	text_Display("Your party has been healed", false);
+	text_Display("Your party has been healed");
 	map_LoadPokeballs();
 }
 void OpenBox(void) {
@@ -785,7 +792,7 @@ void OpenBox(void) {
 }
 void ReadText(uint8_t index) {
 	LoadText(currentZoneData.textIds[index]);
-	text_Display(loadedText, true);
+	text_Display(loadedText);
 }
 void EnterDoor(uint8_t index) {
 	int tileIndex;
@@ -855,7 +862,7 @@ void AddItem(uint8_t index) {
 				}
 			}
 			if (index != 254) {
-				text_Display(str, false);
+				text_Display(str);
 			}
 		}
 	}
@@ -870,7 +877,7 @@ bool FightTrainer(uint8_t index) {
 			lastTextIndex = 0;
 			lastTextID = currentZoneData.trainertext[index];
 			LoadText(currentZoneData.trainertext[index]);
-			text_Display(loadedText, true);
+			text_Display(loadedText);
 			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 			return true;
 		}
@@ -878,7 +885,7 @@ bool FightTrainer(uint8_t index) {
 			lastTextIndex = 0;
 			lastTextID = currentZoneData.trainertext[index];
 			LoadText(currentZoneData.trainertext[index]);
-			text_Display(loadedText, true);
+			text_Display(loadedText);
 			battle_SpawnTrainer(currentZoneData.trainerspawnids, currentZoneData.trainerspawnlevels, index);
 			return true;
 		}
@@ -886,7 +893,7 @@ bool FightTrainer(uint8_t index) {
 	}
 	else if (currentZoneData.trainertype[index] <= 3) {
 		LoadText(currentZoneData.trainertext[index]);
-		text_Display(loadedText, true);
+		text_Display(loadedText);
 		if (currentSave.indoors && !currentSave.takenGiftsIndoors[currentSave.currentBuilding][index]) {
 			AddItem(currentZoneData.trainerreward[index]);
 			currentSave.takenGiftsIndoors[currentSave.currentBuilding][index] = true;
@@ -898,29 +905,29 @@ bool FightTrainer(uint8_t index) {
 	}
 	else if (currentZoneData.trainertype[index] == 4 && moveState == 0) {
 		LoadText(currentZoneData.trainertext[index]);
-		text_Display(loadedText, true);
+		text_Display(loadedText);
 		moveDir = moveDir + 1 - 2 * !(moveDir % 2);
 		moveState = 8;
 
 	}
 	else if (currentZoneData.trainertype[index] == 5 && moveState == 0) {
 		LoadText(currentZoneData.trainertext[index]);
-		text_Display(loadedText, true);
+		text_Display(loadedText);
 		moveDir = moveDir + 1 - 2 * !(moveDir % 2);
 		moveState = 8;
 	}
 	else if (currentZoneData.trainertype[index] == 6) {
 		if (currentSave.newGame) {
-			text_Display("Professor Spruce was looking for\nyou. He is in his Laboratory.", false);
+			text_Display("Professor Spruce was looking for\nyou. He is in his Laboratory.");
 		}
 		else {
 			if (!currentSave.takenGiftsIndoors[currentSave.currentBuilding][index]) {
-				text_Display("You can use these to catch\nmore Pokemon.\n\nRecieved 5 pokeballs.", true);
+				text_Display("You can use these to catch\nmore Pokemon.\n\nRecieved 5 pokeballs.");
 				currentSave.playerItems[0] += 5;
 				currentSave.takenGiftsIndoors[currentSave.currentBuilding][index] = true;
 			}
 			else {
-				text_Display("Let me heal your Pokemon.", true);
+				text_Display("Let me heal your Pokemon.");
 				HealParty();
 			}
 		}
@@ -1199,7 +1206,7 @@ void map_DrawInformationBar(void) {
 }
 void map_LoseFight(void) {
 	int tileIndex, partyIndex, moveIndex;
-	text_Display("All your pokemon have fainted", false);
+	text_Display("All your pokemon have fainted");
 	for (partyIndex = 0; partyIndex < 6; partyIndex++) {
 		currentSave.party[partyIndex].currenthealth = stats_CalculateStats(currentSave.party[partyIndex]).health;
 		currentSave.party[partyIndex].currentstatus = 0;
@@ -1225,7 +1232,7 @@ void map_WinFight(bool wild, uint16_t rewardMoney) {
 	if (!wild) {
 		if (lastTextIndex > 0) {
 			LoadText(lastTextID);
-			text_Display(loadedText + lastTextIndex , true);
+			text_Display(loadedText + lastTextIndex );
 		}
 		currentSave.playerMoney += rewardMoney;
 		if (currentSave.indoors) {

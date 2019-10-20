@@ -132,15 +132,15 @@ bool items_UseItem(uint8_t index) {
 			return false;
 		}
 		currentSave.playerItems[index]--;
-		text_Display(str, false);
+		text_Display(str);
 		return true;
 	}
 
 	if (index >= 20) {
 		if (data_pokemon[currentSave.party[i].id].element1 == data_moves[index - 19].element || data_pokemon[currentSave.party[i].id].element2 == data_moves[index - 19].element) {
 			sprintf(str, "Choose a move to replace with %s", data_moves[index - 19].name);
-			text_Display(str, false);
-			switch (text_AskQuestion4(data_moves[currentSave.party[i].moves[0]].name, data_moves[currentSave.party[i].moves[1]].name, data_moves[currentSave.party[i].moves[2]].name, data_moves[currentSave.party[i].moves[3]].name, false))
+			text_Display(str);
+			switch (text_AskQuestion4(data_moves[currentSave.party[i].moves[0]].name, data_moves[currentSave.party[i].moves[1]].name, data_moves[currentSave.party[i].moves[2]].name, data_moves[currentSave.party[i].moves[3]].name))
 			{
 			case 1:
 				currentSave.party[i].moves[0] = index - 19;
@@ -162,7 +162,7 @@ bool items_UseItem(uint8_t index) {
 		}
 		else {
 			sprintf(str, "%s cannot learn %s", data_pokemon[currentSave.party[i].id].name, data_moves[index - 19].name);
-			text_Display(str, false);
+			text_Display(str);
 			return false;
 		}
 	}
@@ -170,7 +170,7 @@ bool items_UseItem(uint8_t index) {
 
 	items_IndexToName(&itemName, index);
 	sprintf(str, "Used a %s on %s", itemName, data_pokemon[currentSave.party[i].id].name);
-	text_Display(str, true);
+	text_Display(str);
 	return true;
 }
 
