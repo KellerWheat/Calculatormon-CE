@@ -28,6 +28,7 @@
 #include "gfx/PKMNSD4.h"
 #include "gfx/PKMNSD7.h"
 #include "gfx/PKMNSD8.h"
+#include "gfx/PKMNSD9.h"
 
 #define OUTDOORWIDTH 48
 #define OUTDOORHEIGHT 40
@@ -115,9 +116,9 @@ gfx_tilemap_t tilemap;
 uint8_t tileMapWidth = OUTDOORWIDTH;
 uint8_t tileMapHeight = OUTDOORHEIGHT;
 
-gfx_sprite_t *mapTiles[129];
+gfx_sprite_t *mapTiles[128+9];
 gfx_sprite_t *pokeballSprites[3];
-//gfx_sprite_t *animatedWaters[8];
+gfx_sprite_t *animatedWaters[9][8];
 
 /* What map looks like */
 uint8_t currentTileMap[1920];
@@ -129,19 +130,27 @@ struct zoneData currentZoneData;
 uint8_t currentTrainer = 0; /* 0-15 */
 
 void map_Initialize(void) {
+	int waterIndex1, waterIndex2;
 	PKMNSD4_init();
 	PKMNSD7_init();
 	PKMNSD8_init();
+	PKMNSD9_init();
 
-	/*animatedWaters[0] = animatedwater0;
-	animatedWaters[1] = animatedwater1;
-	animatedWaters[2] = animatedwater2;
-	animatedWaters[3] = animatedwater3;
-	animatedWaters[4] = animatedwater4;
-	animatedWaters[5] = animatedwater5;
-	animatedWaters[6] = animatedwater6;
-	animatedWaters[7] = animatedwater7;
-	mapTiles[128] = animatedwater0;*/
+	animatedWaters[0][1] = animatedwater0;
+	animatedWaters[0][2] = animatedwater1;
+	animatedWaters[0][3] = animatedwater2;
+	animatedWaters[0][4] = animatedwater3;
+	animatedWaters[0][5] = animatedwater4;
+	animatedWaters[0][6] = animatedwater5;
+	animatedWaters[0][7] = animatedwater6;
+	animatedWaters[0][0] = animatedwater7;
+	for (waterIndex1 = 1; waterIndex1 < 9; waterIndex1++) {
+		for (waterIndex2 = 0; waterIndex2 < 8; waterIndex2++) {
+			animatedWaters[waterIndex1][waterIndex2] = (gfx_sprite_t*)PKMNSD9[(waterIndex1 - 1) * 8 + waterIndex2];
+		}
+		mapTiles[128 + waterIndex1] = animatedWaters[waterIndex1][0];
+	}
+	mapTiles[128] = animatedwater0;
 
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
@@ -694,14 +703,18 @@ void map_Draw(void) {
 	}
 	else {
 		/* Animate Water Every 20 Frames (NOT WORKING) */
-		/*if ((currentWater % 20) == 0) {
-			mapTiles[128] = animatedWaters[currentWater / 20];
+		if ((currentWater % 10) == 0) {
+			uint8_t waterIndex;
+			
+			for (waterIndex = 0; waterIndex < 9; waterIndex++) {
+				mapTiles[128+waterIndex] = animatedWaters[waterIndex][currentWater / 10];
+			}
 		}
 		currentWater++;
 		currentWater++;
 		if (currentWater == 80) {
 			currentWater = 0;
-		}*/
+		}
 
 		screenX = Clamp(currentSave.playerX - 160, 0, MAX_X);
 		screenY = Clamp(currentSave.playerY - 112, 0, MAX_Y);

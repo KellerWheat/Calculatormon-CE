@@ -5,3 +5,4 @@ src/gfx/*.c
 src/gfx/*.h
 src/gfx/convpng.log
 tools/map_editor/*.bin
+tools/map editor/water1water.png

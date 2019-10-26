@@ -20,6 +20,7 @@ indoortilesetname = 'indoortileset'
 dataCount = 45
 mapCount = 32
 mapCountB = 32
+waterObjectCount = 9
 
 #------------
 #Current Data
@@ -89,7 +90,7 @@ if(os.path.isfile("buildingcount.npy")):
 #---------
 
 def SetupTileMap():
-    global tiles, tilesetimage, tilesetname, indoortilesetname, waterTiles, waterTileIndex
+    global tiles, tilesetimage, tilesetname, indoortilesetname, waterTiles, waterObjectCount
     if(Var_IsBuilding.get()==1):
         tileset = Image.open(indoortilesetname + str(tileSetsB[Var_MapIndex.get()]) + ".png")
     else:
@@ -99,17 +100,19 @@ def SetupTileMap():
     tilex=int(tilex/16)
     tiley=int(tiley/16)
     tilecount = (tilex*tiley)
-    tiles = [None] * (tilecount+1)
+    tiles = [None] * (tilecount+waterObjectCount)
     for x in range(tilex):
         for y in range(tiley):
             image = tileset.crop((x*16,y*16,x*16+16,y*16+16))
             tiles[tilex*y+x] = pygame.image.fromstring(image.tobytes(),image.size,image.mode)
     image1 = Image.open("water.png")
-    waterTiles = [None] * 8
+    waterTiles = [None] * 8 * waterObjectCount
     for x in range(8):
-        image = image1.crop((x*16,0,x*16+16,16))
-        waterTiles[x] = pygame.image.fromstring(image.tobytes(),image.size,image.mode)
-    tiles[128] = waterTiles[0]
+        for y in range(waterObjectCount):
+            image = image1.crop((x*16,y*16,x*16+16,y*16+16))
+            waterTiles[x+8*y] = pygame.image.fromstring(image.tobytes(),image.size,image.mode)
+    for x in range(waterObjectCount):
+        tiles[128+x] = waterTiles[8*x]
 
 def LoadVars():
     pass
@@ -260,7 +263,7 @@ pygame.display.flip()
 tilefont = pygame.font.SysFont('comicsansms', 10)
 infofont = pygame.font.SysFont('comicsansms', 30)
 def draw():
-    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode, copyingMap, copyingTypeMap, zonedata, waterTiles, waterTileIndex
+    global txtemp, tytemp, numberToPaint, paintWidth, paintHeight, sizeX, sizeY, editMode, copyingMap, copyingTypeMap, zonedata, waterTiles, waterTileIndex, waterObjectCount
     events = pygame.event.get()
     
     keys = pygame.key.get_pressed()
@@ -279,9 +282,10 @@ def draw():
     ty = int(mouse[1]/16)
 
     waterTileIndex+=1
-    if(waterTileIndex == 80):
+    if(waterTileIndex == 160):
         waterTileIndex = 0
-    tiles[128] = waterTiles[int(waterTileIndex/10)]
+    for x in range(waterObjectCount):
+        tiles[128+x] = waterTiles[8*x+int(waterTileIndex/20)]
     
     if tx<sizeX and ty<sizeY :
         screen.blit(infofont.render(str(tx)+","+str(ty), True, (0, 0, 0)),((sizeX*16)+10,-5))
@@ -309,11 +313,12 @@ def draw():
     if editMode == 0:
         if(not copyingMap):
             screen.blit(tilesetimage,((sizeX*16)+16,112))
-            screen.blit(tiles[128], ((sizeX*16)+16,240))
+            for x in range(waterObjectCount):
+                screen.blit(tiles[128+x], ((sizeX*16)+(16*x)+16,240))
             pygame.draw.rect(screen,(0,0,160),(((sizeX*16)+16+(numberToPaint % 16)*16),(112+int(numberToPaint/16)*16),16*paintWidth,16*paintHeight),1)
         else:
             pygame.draw.rect(screen,(0,0,160),(((numberToPaint % sizeX)*16),(int(numberToPaint/sizeX)*16),16*paintWidth,16*paintHeight),1)
-        if(tx > (sizeX) and ty > 6 and ty < 15 and not copyingMap):
+        if(tx > (sizeX) and ty > 6 and ty < 16 and not copyingMap):
             if pygame.mouse.get_pressed()[0]:
                 if(shift):
                     paintWidth = 1+tx-txtemp
@@ -324,9 +329,6 @@ def draw():
                     paintHeight = 1
                     txtemp = tx
                     tytemp = ty
-        if(tx == sizeX+1 and ty == 15 and not copyingMap):
-            if pygame.mouse.get_pressed()[0]:
-                numberToPaint = 128
         if(tx >= 0 and tx < sizeX and ty >= 0 and ty < sizeY and copyingMap and not ctrl):
             if pygame.mouse.get_pressed()[0]:
                 if(shift):
