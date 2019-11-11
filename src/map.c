@@ -116,7 +116,6 @@ uint8_t tileMapWidth = OUTDOORWIDTH;
 uint8_t tileMapHeight = OUTDOORHEIGHT;
 
 gfx_sprite_t *mapTiles[128+9];
-gfx_sprite_t *pokeballSprites[3];
 gfx_sprite_t *animatedWaters[9][8];
 
 /* What map looks like */
@@ -193,10 +192,6 @@ void map_Setup(void) {
 void map_SetupGfx(void) {
 	int tileIndex = 0;
 	LoadTileset(false);
-	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
-		pokeballSprites[tileIndex] = gfx_MallocSprite(16, 16);
-		zx7_Decompress(pokeballSprites[tileIndex], pokeball_tiles_compressed[tileIndex]);
-	}
 	textBoxType = 0;
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
@@ -685,9 +680,6 @@ void map_End(void) {
 	int tileIndex = 0;
 	for (tileIndex = 0; tileIndex < 128; tileIndex++) {
 		free(mapTiles[tileIndex]);
-	}
-	for (tileIndex = 0; tileIndex < 3; tileIndex++) {
-		free(pokeballSprites[tileIndex]);
 	}
 }
 void map_Draw(void) {
@@ -1211,7 +1203,13 @@ void map_DrawInformationBar(void) {
 	gfx_SetColor(colors[0]);
 	gfx_FillRectangle(0, 0, 320, 16);
 	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {
-		gfx_TransparentSprite_NoClip(pokeballSprites[pokeballdata[pokemonIndex]], 16 * pokemonIndex, 0);
+		if (pokeballdata[pokemonIndex] == 0) {
+			gfx_TransparentSprite_NoClip(pokeball1, 16 * pokemonIndex, 0);
+		}
+		else if (pokeballdata[pokemonIndex] == 1) {
+			gfx_TransparentSprite_NoClip(pokeball2, 16 * pokemonIndex, 0);
+		}
+		
 	}
 	sprintf(str, "%u$", currentSave.playerMoney);
 	gfx_PrintStringXY(str, 100, 5);

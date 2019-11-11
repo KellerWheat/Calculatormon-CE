@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-extern const char appVarName[];
+extern char appVarName[];
+extern uint8_t loadType;
 
 #define AREACOUNT 16
 #define BUILDINGCOUNT 16
