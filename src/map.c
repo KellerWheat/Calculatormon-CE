@@ -22,7 +22,6 @@
 #include "savegame.h"
 #include "stats.h"
 #include "gfx/map_gfx.h"
-#include "gfx/test_gfx.h"
 #include "items.h"
 
 #include "gfx/PKMNSD4.h"
