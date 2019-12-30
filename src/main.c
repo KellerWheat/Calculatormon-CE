@@ -38,6 +38,16 @@
 #include "gfx/battle_gfx.h"
 #include "gfx/map_gfx.h"
 
+#include "gfx/PKMNSD0.h"
+#include "gfx/PKMNSD1.h"
+#include "gfx/PKMNSD2.h"
+#include "gfx/PKMNSD3.h"
+#include "gfx/PKMNSD4.h"
+//#include "gfx/PKMNSD5.h"
+#include "gfx/PKMNSD6.h"
+#include "gfx/PKMNSD7.h"
+#include "gfx/PKMNSD8.h"
+
 
 /* Variables */
 
@@ -57,12 +67,23 @@ void main(void) {
 
 	srand(seed);
 
+	PKMNSD0_init();
+	PKMNSD1_init();
+	PKMNSD2_init();
+	PKMNSD3_init();
+	PKMNSD4_init();
+	//PKMNSD5_init();
+	PKMNSD6_init();
+	PKMNSD7_init();
+	PKMNSD8_init();
+
 	map_Initialize();
 	battle_Initialize();
 
 	if (kb_Data[3] & kb_0) {
 		debugging = true;
 	}
+
 
 	FindColors();
 
@@ -72,7 +93,6 @@ void main(void) {
 
 	kb_Scan();
 	
-
 	do {
 		kb_Scan();
 		if (gameState == 0) {
@@ -102,8 +122,6 @@ void main(void) {
 			}
 		}
 	} while (gameState < 2);
-
-	map_End();
 
 
 	gfx_End();

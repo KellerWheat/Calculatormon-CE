@@ -19,6 +19,12 @@ The tools folder includes some python scripts I made to help generate game data 
 
 [This game was made using the C SDK, which was created by MateoConLechuga](https://github.com/CE-Programming/toolchain)
 
+Programmed in Visual Studio
+
+Sprites were edited/put together using paint.net
+
+Some sprites were manually ripped using VisualBoyAdvance
+
 Sprite Resources I used (and who created them):
 
 [Hero & Heroine - Previous](www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/52432/)
@@ -63,20 +69,10 @@ Sprite Resources I used (and who created them):
 
 [Cerulean Cave - Kaori](https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/sheet/3779/)
 
+[Pokemon Sprites](www.veekun.com/dex/downloads)
+
 All information about game mechanics is from www.bulbapedia.bulbagarden.net
 
-Sprites - www.veekun.com/dex/downloads
+[Move data](www.pokemondb.net/move/generation/1)
 
-Move data - www.pokemondb.net/move/generation/1
-
-What moves pokemon learn - www.gamefaqs.gamespot.com/gameboy/367023-pokemon-red-version/faqs/5764
-
-Pokemon stats - www.bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_base_stats_(Generation_VII-present)
-
-Pokemon types - www.bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_Kanto_Pokédex_number
-
-Base xp yield - www.bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_effort_value_yield
-
-xp types - www.bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_experience_type
-
-Evolution levels - www.pokemondb.net/evolution#evo-g1
+[What moves pokemon learn](www.gamefaqs.gamespot.com/gameboy/367023-pokemon-red-version/faqs/5764)

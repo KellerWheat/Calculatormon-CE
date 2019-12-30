@@ -18,7 +18,9 @@ textFrames = []
 currentTitleVar = np.array([],dtype=object)
 currentContentVar = np.array([],dtype=object)
 
-
+# Idk how this works but some random person on stack overflow told me it allows pickle to work for some reason even though this program doesn't use pickle but I don't care because I don't feel like fixing another bug
+np_load_old = np.load
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
 
 def ExportData():
     global textTitles, textContent, textCount, output, outputstring

@@ -27,8 +27,7 @@
 #include "gfx/PKMNSD1.h"
 #include "gfx/PKMNSD2.h"
 #include "gfx/PKMNSD3.h"
-#include "gfx/PKMNSD5.h"
-#include "gfx/PKMNSD6.h"chosenmove
+#include "gfx/PKMNSD6.h"
 
 void SetupBattleGfx(void);
 
@@ -67,7 +66,7 @@ gfx_sprite_t *statusSprites[5];
 struct pokemonData enemyParty[6];
 uint8_t attackTurn = 0;
 uint8_t chosenMove[2];
-bool wild;
+bool wild = false;
 
 struct pokemonStats stats[2];
 uint8_t *currentStatusPointer[2];
@@ -98,27 +97,30 @@ uint8_t attackTurns[2];
 bool air[2];
 
 uint16_t payday;
+bool ft;
 bool run;
 
 uint8_t battleMenuState1 = 0;
 uint8_t battleMenuState2 = 0;
 uint8_t battleMenuCurrent = 1;
+bool textExit = false;//This allow the Sto Key to make AskQuestion4() return 5
 
 const uint8_t statuscolors[5] = { 2,3,4,5,6 };
 
 void battle_Initialize(void) {
-	PKMNSD0_init();
-	PKMNSD1_init();
-	PKMNSD2_init();
-	PKMNSD3_init();
-	PKMNSD5_init();
-	PKMNSD6_init();
+
 }
 void battle_Setup(void) {
 	int pokemonIndex;
-	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the pokemon sent out has not fainted
+	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the player pokemon sent out has not fainted
 		if (currentSave.party[pokemonIndex].currenthealth != 0 && currentSave.party[pokemonIndex].id != 0) {
 			currentPlayer = pokemonIndex;
+			pokemonIndex = 6;
+		}
+	}
+	for (pokemonIndex = 0; pokemonIndex < 6; pokemonIndex++) {//This makes sure the enemy pokemon sent out has not fainted
+		if (enemyParty[pokemonIndex].currenthealth != 0 && enemyParty[pokemonIndex].id != 0) {
+			currentEnemy = pokemonIndex;
 			pokemonIndex = 6;
 		}
 	}
@@ -131,12 +133,12 @@ void battle_Setup(void) {
 	
 	stats[0] = stats_CalculateStats(enemyParty[0]);
 	stats[1] = stats_CalculateStats(currentSave.party[0]);
-	currentEnemy = 0;
 	attackTurn = 0;
 
 	ResetStatus(true);
 	ResetStatus(false);
 	payday = 0;
+	ft = true;
 
 	run = false;
 }
@@ -232,6 +234,10 @@ int battle_Loop(void) {
 	/* If 0 determine who Attacks first, if 1 or 2 let other character Attack, if 3 do end of turn stuff */
 	if (attackTurn == 0) {
 		while (!PlayerTurn()) {};
+		if (currentSave.inFight == true) {
+			save_Save();
+			return 2;
+		}
 		kb_Scan();
 		while (!EnemyTurn()) {};
 		if (run) {
@@ -272,6 +278,7 @@ int battle_Loop(void) {
 		flinch[true] = false;
 		flinch[false] = false;
 		attackTurn = 0;
+		ft = false;
 		return 1;
 	}
 	
@@ -311,6 +318,7 @@ bool PlayerTurn() {
 	}
 	i = 0;
 	/* Select Whether to fight, run, ect */
+	textExit = true;
 	if (battleMenuState1 == 0) {
 		switch (text_AskQuestion4("Fight","Item","Switch","Run"))
 		{
@@ -349,7 +357,15 @@ bool PlayerTurn() {
 				return true;
 			}
 			return false;
+		case 5:
+			text_Display("Would you like to save and\nexit the battle?");
+			if (text_AskQuestion2("Yes", "No") == 1) {
+				currentSave.inFight = true;
+				return 1;
+			}
+			return false;
 		}
+		
 	}
 	/* Select which move to use */
 	if (battleMenuState1 == 1) {
@@ -374,12 +390,12 @@ bool PlayerTurn() {
 		if (chosenItem == -1) {
 			return false;
 		}
-		if (chosenItem < 4) {
+		if (chosenItem < 3 || (chosenItem >= 20 && chosenItem < 26) ){
 			sprintf(str, "Used a %s", itemNames[chosenItem]);
 			text_Display(str);
 			currentSave.playerItems[chosenItem]--;
 			chosenMove[true] = 0;
-			if (Capture(chosenItem + 1)) {
+			if (Capture(chosenItem)) {
 				if (transformed[1]) {
 					enemyParty[1] = originalpokemon[1];
 				}
@@ -1342,8 +1358,26 @@ void AddXp(void) {
 	currentSave.party[currentPlayer].specialattackEV += data_pokemon[enemyParty[currentEnemy].id].basespecialattack;
 	currentSave.party[currentPlayer].specialdefenceEV += data_pokemon[enemyParty[currentEnemy].id].basespecialdefence;
 	currentSave.party[currentPlayer].speedEV += data_pokemon[enemyParty[currentEnemy].id].basespeed;
+	if (currentSave.party[currentPlayer].healthEV >= 65200) {
+		currentSave.party[currentPlayer].healthEV = 65200;
+	}
+	if (currentSave.party[currentPlayer].attackEV >= 65200) {
+		currentSave.party[currentPlayer].attackEV = 65200;
+	}
+	if (currentSave.party[currentPlayer].defenceEV >= 65200) {
+		currentSave.party[currentPlayer].defenceEV = 65200;
+	}
+	if (currentSave.party[currentPlayer].specialattackEV >= 65200) {
+		currentSave.party[currentPlayer].specialattackEV = 65200;
+	}
+	if (currentSave.party[currentPlayer].specialdefenceEV >= 65200) {
+		currentSave.party[currentPlayer].specialdefenceEV = 65200;
+	}
+	if (currentSave.party[currentPlayer].speedEV >= 65200) {
+		currentSave.party[currentPlayer].speedEV = 65200;
+	}
 }
-/* ball is 1-4 */
+
 bool Capture(uint8_t ball) {
 	uint8_t n1;
 	uint8_t n2;
@@ -1355,49 +1389,51 @@ bool Capture(uint8_t ball) {
 		text_Display("You cannot catch trainer\npokemon.");
 		return false;
 	}
-	if (ball == 4) {
+	if (ball == 20) {
 		Captured = true;
 	}
 	else {
-		if (ball = 1) {
-			n1 = rand() % 255;
+		f = stats[false].health * 3;
+		f -= 2 * enemyParty[currentEnemy].currenthealth;
+		f *= data_pokemon[enemyParty[currentEnemy].id].catchrate;
+
+		if (ball == 1) {
+			f *= 3;
+			f /= 2;
 		}
-		if (ball = 2) {
-			n1 = rand() % 200;
+		if (ball == 2) {
+			f *= 2;
 		}
-		if (ball = 3) {
-			n1 = rand() % 150;
+		if (ball == 21 && ft) {
+			f *= 5;
+			f /= 2;
 		}
-		n2 = n1;
+		
+		if (ball == 22) {
+			f *= 5;
+			f /= 2;
+		}
+		if (ball == 23 && currentSave.party[currentPlayer].level > enemyParty[currentEnemy].level) {
+			f *= 5;
+			f /= 2;
+		}
+		if (ball == 25 && (data_pokemon[enemyParty[currentEnemy].id].element1 == 3 || data_pokemon[enemyParty[currentEnemy].id].element2 == 3)) {
+			f *= 5;
+			f /= 2;
+		}
+
+		f /= stats[false].health * 3;
 		if (*currentStatusPointer[false] == 4 || *currentStatusPointer[false] == 5) {
-			if (n1 < 25) {
-				Captured = true;
-			}
-			else {
-				n2 -= 25;
-			}
+			f += 10;
 		}
 		if (*currentStatusPointer[false] == 1 || *currentStatusPointer[false] == 2 || *currentStatusPointer[false] == 3) {
-			if (n1 < 12) {
-				Captured = true;
-			}
-			else {
-				n2 -= 12;
-			}
+			f += 20;
 		}
-		if (n2 <= data_pokemon[enemyParty[currentEnemy].id].catchrate) {
-			f = stats[false].health;
-			f *= 255;
-			f *= 4;
-			f /= enemyParty[currentEnemy].currenthealth;
-			if (ball == 2) {
-				f /= 8;
-			}
-			else {
-				f /= 12;
-			}
-			if (f >= (rand() % 255)) {
-				Captured = true;
+
+		if (f >= (rand() % 255)) {
+			Captured = true;
+			if (ball == 24) {
+				enemyParty[currentEnemy].currenthealth = stats[0].health;
 			}
 		}
 	}

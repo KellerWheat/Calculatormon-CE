@@ -5,3 +5,5 @@ cd..
 
 move "tools\map editor\PKMNMD0.8xv" "src\maps"
 move "tools\map editor\PKMNMD1.8xv" "src\maps"
+
+copy "tools\map editor\*tileset*.png" "src\gfx\sprites\tilesets"

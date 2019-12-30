@@ -27,7 +27,6 @@
 #include "gfx/PKMNSD4.h"
 #include "gfx/PKMNSD7.h"
 #include "gfx/PKMNSD8.h"
-#include "gfx/PKMNSD9.h"
 
 #define OUTDOORWIDTH 48
 #define OUTDOORHEIGHT 40
@@ -115,8 +114,8 @@ gfx_tilemap_t tilemap;
 uint8_t tileMapWidth = OUTDOORWIDTH;
 uint8_t tileMapHeight = OUTDOORHEIGHT;
 
-gfx_sprite_t *mapTiles[128+9];
-gfx_sprite_t *animatedWaters[9][8];
+gfx_sprite_t *mapTiles[128+13];
+gfx_sprite_t *animatedWaters[13][8];
 
 /* What map looks like */
 uint8_t currentTileMap[1920];
@@ -129,10 +128,6 @@ uint8_t currentTrainer = 0; /* 0-15 */
 
 void map_Initialize(void) {
 	int waterIndex1, waterIndex2;
-	PKMNSD4_init();
-	PKMNSD7_init();
-	PKMNSD8_init();
-	PKMNSD9_init();
 
 	animatedWaters[0][1] = animatedwater0;
 	animatedWaters[0][2] = animatedwater1;
@@ -142,13 +137,17 @@ void map_Initialize(void) {
 	animatedWaters[0][6] = animatedwater5;
 	animatedWaters[0][7] = animatedwater6;
 	animatedWaters[0][0] = animatedwater7;
-	for (waterIndex1 = 1; waterIndex1 < 9; waterIndex1++) {
+
+	for (waterIndex1 = 1; waterIndex1 < 13; waterIndex1++) {
 		for (waterIndex2 = 0; waterIndex2 < 8; waterIndex2++) {
-			animatedWaters[waterIndex1][waterIndex2] = (gfx_sprite_t*)PKMNSD9[(waterIndex1 - 1) * 8 + waterIndex2];
+			animatedWaters[waterIndex1][waterIndex2] = (gfx_sprite_t*)PKMNSD8[88 + (waterIndex1 - 1) * 8 + waterIndex2];
 		}
+		
+	}
+	
+	for (waterIndex1 = 0; waterIndex1 < 13; waterIndex1++) {
 		mapTiles[128 + waterIndex1] = animatedWaters[waterIndex1][0];
 	}
-	mapTiles[128] = animatedwater0;
 
 	gfx_SetPalette(map_gfx_pal, sizeof_map_gfx_pal, 0);
 	SetColors(0);
@@ -200,7 +199,15 @@ void map_SetupGfx(void) {
 	map_LoadPokeballs();
 }
 int map_Loop(void) {
-	
+	if(currentSave.inFight){
+		lastTextIndex = 0;
+		lastTextID = currentZoneData.trainertext[currentTrainer];
+		LoadText(currentZoneData.trainertext[currentTrainer]);
+		text_Display(loadedText);
+		currentSave.inFight = false;
+		
+		return 1;
+	}
 	/* Open Menu */
 	if (kb_Data[6] & kb_Enter) {
 		int menuReturn;
@@ -417,7 +424,7 @@ int map_Loop(void) {
 					currentSave.takenGroundGifts[currentSave.indoors][(currentSave.currentZone * !currentSave.indoors) + (currentSave.currentBuilding * currentSave.indoors)][nextTile - 0x80] = true;
 					currentSave.playerItems[currentZoneData.grounditems[nextTile - 0x80] - 1]++;
 					items_IndexToName(str1, currentZoneData.grounditems[nextTile - 0x80] - 1);
-					if (currentZoneData.grounditems[nextTile - 0x80] - 1 >= 20) {
+					if (currentZoneData.grounditems[nextTile - 0x80] - 1 >= 40) {
 						sprintf(str, "Found the TM for %s", str1);
 					}
 					else {
@@ -693,13 +700,14 @@ void map_Draw(void) {
 		DrawPlayer();
 	}
 	else {
-		/* Animate Water Every 20 Frames (NOT WORKING) */
+		/* Animate Water Every 20 Frames */
 		if ((currentWater % 10) == 0) {
 			uint8_t waterIndex;
 			
-			for (waterIndex = 0; waterIndex < 9; waterIndex++) {
+			for (waterIndex = 0; waterIndex < 13; waterIndex++) {
 				mapTiles[128+waterIndex] = animatedWaters[waterIndex][currentWater / 10];
 			}
+			
 		}
 		currentWater++;
 		currentWater++;
@@ -836,7 +844,24 @@ void ExitZone(uint8_t index) {
 	if (currentZoneData.exity[index] != 255) {
 		currentSave.playerY = currentZoneData.exity[index] * 16;
 	}
-	currentSave.currentZone = currentZoneData.exitzone[index];
+	
+	if (currentZoneData.exitzone[index] >= 128) {
+		currentSave.currentBuilding = currentZoneData.exitzone[index] - 128;
+		currentSave.indoors = true;
+		tilemap.width = 21;
+		tilemap.height = 15;
+		tileMapWidth = 21;
+		tileMapHeight = 15;
+	}
+	else {
+		currentSave.currentZone = currentZoneData.exitzone[index];
+		currentSave.indoors = false;
+		tilemap.width = OUTDOORWIDTH;
+		tilemap.height = OUTDOORHEIGHT;
+		tileMapWidth = OUTDOORWIDTH;
+		tileMapHeight = OUTDOORHEIGHT;
+	}
+
 	tx = currentSave.playerX / 16;
 	ty = currentSave.playerY / 16;
 	LoadTileset(true);
@@ -858,7 +883,7 @@ void AddItem(uint8_t index) {
 			if (currentSave.playerItems[index - 1] != 255) {
 				currentSave.playerItems[index - 1]++;
 				items_IndexToName(str1, index - 1);
-				if (index - 1 >= 20) {
+				if (index - 1 >= 40) {
 					sprintf(str, "You recieved the TM for\n%s", str1);
 				}
 				else {
@@ -1291,7 +1316,7 @@ void LoadTileset(bool freeOld) {
 				zx7_Decompress(mapTiles[tileIndex], outdoortileset4_tiles_compressed[tileIndex]);
 			}
 			else if (data_tileSets[currentSave.currentZone] == 5) {
-				//zx7_Decompress(mapTiles[tileIndex], outdoortileset5_tiles_compressed[tileIndex]);
+				zx7_Decompress(mapTiles[tileIndex], outdoortileset5_tiles_compressed[tileIndex]);
 			}
 			else if (data_tileSets[currentSave.currentZone] == 6) {
 				//zx7_Decompress(mapTiles[tileIndex], outdoortileset6_tiles_compressed[tileIndex]);

@@ -8,7 +8,7 @@ void LoadText(int index) {
 	ti_Read(&loadedText, 256, 1, textAV);
 	ti_CloseAll();
 }
-void LoadMoveDesc(int index) {
+void LoadDesc(int index) {
 	ti_var_t textAV = ti_Open("PKMNTDM", "r");
 	ti_Seek(78 * index, 0, textAV);
 	ti_Read(&loadedText, 78, 1, textAV);

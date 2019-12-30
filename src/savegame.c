@@ -8,9 +8,11 @@
 #include "savegame.h"
 #include "data.h"
 #include "text.h"
+#include "battle.h"
+#include "map.h"
 
 char appVarName[] = "PKMNSV ";
-const int version = 1;
+const int version = 2;
 int readVersion = 0;
 
 struct saveGame currentSave;
@@ -33,6 +35,13 @@ void save_Save(void) {
 		if (ti_Write(&currentSave, sizeof(currentSave), 1, save) != 1) {
 			goto err;
 		}
+		if (ti_Write(&enemyParty, sizeof(enemyParty), 1, save) != 1) {
+			goto err;
+		}
+		if (ti_Write(&currentTrainer, sizeof(currentTrainer), 1, save) != 1) {
+			goto err;
+		}
+		
 	}
 	else {
 		goto err;
@@ -60,11 +69,26 @@ void save_Load(void) {
 			goto err;
 		}
 		if (version != readVersion) {
-			text_Display("Wrong save file version");
-			goto err; /* do not load if wrong version */
+			if (readVersion == 1) {
+				if (ti_Read(&currentSave, sizeof(currentSave)-1, 1, save) != 1) {
+					goto err;
+				}
+			}
+			else {
+				text_Display("This save file is from a\ndifferent version of the game.\n It cannot be loaded.");
+				goto err; /* do not load if wrong version */
+			}
 		}
-		if (ti_Read(&currentSave, sizeof(currentSave), 1, save) != 1) {
-			goto err;
+		else {
+			if (ti_Read(&currentSave, sizeof(currentSave), 1, save) != 1) {
+				goto err;
+			}
+			if (ti_Read(&enemyParty, sizeof(enemyParty), 1, save) != 1) {
+				goto err;
+			}
+			if (ti_Read(&currentTrainer, sizeof(currentTrainer), 1, save) != 1) {
+				goto err;
+			}
 		}
 	}
 	else {
@@ -78,7 +102,7 @@ err:
 	currentSave.newGame = true;
 	currentSave.rivalPokemon = 0;
 	currentSave.playerX = 15 * 16;
-	currentSave.playerY = 10 * 16;
+	currentSave.playerY = 6 * 16;
 	currentSave.lastPlayerX = 16 * 16;
 	currentSave.lastPlayerY = 20 * 16;
 	currentSave.currentZone = 0;
@@ -88,6 +112,7 @@ err:
 	currentSave.playerMoney = 1000;
 	currentSave.badgeCount = 0;
 	currentSave.worldState = 1;
+	currentSave.inFight = false;
 
 	ti_CloseAll();
 }

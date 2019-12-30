@@ -26,7 +26,6 @@
 #include "gfx/PKMNSD1.h"
 #include "gfx/PKMNSD2.h"
 #include "gfx/PKMNSD3.h"
-#include "gfx/PKMNSD5.h"
 #include "gfx/PKMNSD6.h"
 
 void MoveMenuCursor(int max);
@@ -343,7 +342,7 @@ void menu_PokemonDetails(int pokemonIndex) {
 
 			if (currentSave.party[pokemonIndex].moves[menuState] != 0) {
 				gfx_SetTextScale(1, 1);
-				LoadMoveDesc(currentSave.party[pokemonIndex].moves[menuState] - 1);
+				LoadDesc(currentSave.party[pokemonIndex].moves[menuState] - 1);
 				strncpy(description, loadedText, 18);
 				gfx_PrintStringXY(description, 170, 185);
 				strncpy(description, loadedText + 18, 18);
@@ -415,22 +414,22 @@ void menu_PokemonDetails(int pokemonIndex) {
 	FreeIcons();
 }
 int menu_Items(bool inBattle) {
-	int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[20], usableTMCount, usableTMs[165];
+	int page, menuState, cursorState, itemIndex, usableItemCount, usableItems[40], usableTMCount, usableTMs[165];
 	gfx_sprite_t *backgroundSprite;
 	MallocIcons();
 
 	/* Generate Usable Items List */
 	usableItemCount = 0;
 	usableTMCount = 0;
-	for (itemIndex = 0; itemIndex < 20; itemIndex++) {
+	for (itemIndex = 0; itemIndex < 40; itemIndex++) {
 		if (currentSave.playerItems[itemIndex] > 0) {
 			usableItems[usableItemCount] = itemIndex;
 			usableItemCount++;
 		}
 	}
 	for (itemIndex = 0; itemIndex < 165; itemIndex++) {
-		if (currentSave.playerItems[itemIndex + 20] > 0) {
-			usableTMs[usableTMCount] = itemIndex + 20;
+		if (currentSave.playerItems[itemIndex + 40] > 0) {
+			usableTMs[usableTMCount] = itemIndex + 40;
 			usableTMCount++;
 		}
 	}
@@ -466,9 +465,10 @@ int menu_Items(bool inBattle) {
 			}
 
 			if (usableItemCount > 0) {
-				strncpy(description, itemDescriptions[usableItems[menuState + cursorState]], 36);
+				LoadDesc(usableItems[menuState + cursorState] + 165);
+				strncpy(description, loadedText, 36);
 				gfx_PrintStringXY(description, 14, 185);
-				strncpy(description, itemDescriptions[usableItems[menuState + cursorState]] + 36, 32);
+				strncpy(description, loadedText + 36, 32);
 				gfx_PrintStringXY(description, 14, 200);
 			}
 
@@ -483,12 +483,12 @@ int menu_Items(bool inBattle) {
 			gfx_PrintStringXY("TMs", 12, 19);
 			gfx_SetTextScale(1, 1);
 			for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < usableTMCount; itemIndex++) {
-				sprintf(str, "TM%u %s", usableTMs[itemIndex] - 19, data_moves[usableTMs[itemIndex] - 19].name);
+				sprintf(str, "TM%u %s", usableTMs[itemIndex] - 39, data_moves[usableTMs[itemIndex] - 39].name);
 				gfx_PrintStringXY(str, 140, 21 + 14 * (itemIndex - menuState));
 			}
 
 			if (usableTMCount > 0) {
-				LoadMoveDesc(usableTMs[menuState + cursorState] - 20);
+				LoadDesc(usableTMs[menuState + cursorState] - 40);
 				strncpy(description, loadedText, 36);
 				gfx_PrintStringXY(description, 14, 185);
 				strncpy(description, loadedText + 36, 36);
@@ -580,7 +580,7 @@ void menu_Box() {
 	largeSprite = gfx_MallocSprite(56, 56);
 	for (pokemonIndex = 0; pokemonIndex < 36; pokemonIndex++) {
 		pokemonSprites[pokemonIndex] = gfx_MallocSprite(30, 24);
-		zx7_Decompress(pokemonSprites[pokemonIndex], PKMNSD6[currentSave.party[pokemonIndex].id]);
+		zx7_Decompress(pokemonSprites[pokemonIndex], PKMNSD6[25 + currentSave.party[pokemonIndex].id]);
 	}
 	
 

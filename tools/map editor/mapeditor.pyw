@@ -20,7 +20,7 @@ indoortilesetname = 'indoortileset'
 dataCount = 45
 mapCount = 32
 mapCountB = 32
-waterObjectCount = 9
+waterObjectCount = 13
 
 #------------
 #Current Data
@@ -42,7 +42,8 @@ txtemp = 0
 tytemp = 0
 copyingMap = False
 copyingTypeMap = False
-trainerSprites= []
+trainerSprites = []
+trainerSpritesS = []
 waterTileIndex = 0
 
 #-------------
@@ -72,9 +73,28 @@ if(os.path.isfile("tilesetsB.npy")):
 
 tileSetsB = np.resize(tileSetsB, mapCountB)
 
-for x in range(4):
-    tileset = Image.open("trainer"+str(x)+".png")
-    trainerSprites.append(pygame.image.fromstring(tileset.tobytes(),tileset.size,tileset.mode))
+for x in range(12*4):
+    tileset = Image.open("npcs/n"+hex(int(x/4))[-1:]+format(int(x%4)*3, '02d')+".png")
+    tileset = tileset.convert("RGBA")
+    pixdata = list(tileset.tobytes())
+    width, height = tileset.size
+    for y in range(height):
+        for x in range(width):
+            if (pixdata[4*(y*width+x)] == 0 and pixdata[4*(y*width+x)+1] == 200 and pixdata[4*(y*width+x)+2] == 200):
+                    pixdata[4*(y*width+x)+3] = 0
+    trainerSprites.append(pygame.image.fromstring(bytes(pixdata),tileset.size,tileset.mode))
+
+for x in range(12*4):
+    tileset = Image.open("npcs/sn"+format(int(x/4), '02d')+format(int(x%4), '01d')+".png")
+    tileset = tileset.convert("RGBA")
+    pixdata = list(tileset.tobytes())
+    width, height = tileset.size
+    for y in range(height):
+        for x in range(width):
+            if (pixdata[4*(y*width+x)] == 0 and pixdata[4*(y*width+x)+1] == 200 and pixdata[4*(y*width+x)+2] == 200):
+                    pixdata[4*(y*width+x)+3] = 0
+    trainerSpritesS.append(pygame.image.fromstring(bytes(pixdata),tileset.size,tileset.mode))
+
 
 Var_ZoneCount = IntVar()
 Var_BuildingCount = IntVar()
@@ -345,7 +365,10 @@ def draw():
     if(numberToPaint == 256):
         for x in range(0,16):
             if(zonedata[((22+14)*16) + x] != 0 and zonedata[((22+14)*16) + x] - 1 < 4):
-                screen.blit(trainerSprites[zonedata[((22+14)*16) + x] - 1], (zonedata[((22+12)*16) + x]*16, zonedata[((22+13)*16) + x]*16 - 5))
+                if(zonedata[((23+14)*16) + x] >= 128):
+                    screen.blit(trainerSpritesS[4*(zonedata[((23+14)*16) + x]-128) + zonedata[((22+14)*16) + x] - 1], (zonedata[((22+12)*16) + x]*16, zonedata[((22+13)*16) + x]*16 - 5))
+                else:
+                    screen.blit(trainerSprites[4*zonedata[((23+14)*16) + x] + zonedata[((22+14)*16) + x] - 1], (zonedata[((22+12)*16) + x]*16, zonedata[((22+13)*16) + x]*16 - 5))
                 screen.blit(tilefont.render(str(x), True, (255, 0, 255)),(zonedata[((22+12)*16) + x]*16+5, zonedata[((22+13)*16) + x]*16))
 
     pygame.display.flip()
@@ -615,7 +638,7 @@ Entry(DataFrames[5],textvariable=ItemVars[0]).grid(row=0,column=1)
 Pokemon_Names = "None,Bulbasaur,Ivysaur,Venusaur,Charmander,Charmeleon,Charizard,Squirtle,Wartortle,Blastoise,Caterpie,Metapod,Butterfree,Weedle,Kakuna,Beedrill,Pidgey,Pidgeotto,Pidgeot,Rattata,Raticate,Spearow,Fearow,Ekans,Arbok,Pikachu,Raichu,Sandshrew,Sandslash,Nidoran(F),Nidorina,Nidoqueen,Nidoran(M),Nidorino,Nidoking,Clefairy,Clefable,Vulpix,Ninetales,Jigglypuff,Wigglytuff,Zubat,Golbat,Oddish,Gloom,Vileplume,Paras,Parasect,Venonat,Venomoth,Diglett,Dugtrio,Meowth,Persian,Psyduck,Golduck,Mankey,Primeape,Growlithe,Arcanine,Poliwag,Poliwhirl,Poliwrath,Abra,Kadabra,Alakazam,Machop,Machoke,Machamp,Bellsprout,Weepinbell,Victreebel,Tentacool,Tentacruel,Geodude,Graveler,Golem,Ponyta,Rapidash,Slowpoke,Slowbro,Magnemite,Magneton,Farfetch'd,Doduo,Dodrio,Seel,Dewgong,Grimer,Muk,Shellder,Cloyster,Gastly,Haunter,Gengar,Onix,Drowzee,Hypno,Krabby,Kingler,Voltorb,Electrode,Exeggcute,Exeggutor,Cubone,Marowak,Hitmonlee,Hitmonchan,Lickitung,Koffing,Weezing,Rhyhorn,Rhydon,Chansey,Tangela,Kangaskhan,Horsea,Seadra,Goldeen,Seaking,Staryu,Starmie,Mr. Mime,Scyther,Jynx,Electabuzz,Magmar,Pinsir,Tauros,Magikarp,Gyarados,Lapras,Ditto,Eevee,Vaporeon,Jolteon,Flareon,Porygon,Omanyte,Omastar,Kabuto,Kabutops,Aerodactyl,Snorlax,Articuno,Zapdos,Moltres,Dratini,Dragonair,Dragonite,Mewtwo,Mew,"
 Pokemon_Names = Pokemon_Names.split(',')
 Item_Names = 'Absorb,Acid,Acid Armor,Agility,Amnesia,Aurora Beam,Barrage,Barrier,Bide,Bind,Bite,Blizzard,Body Slam,Bone Club,Bonemerang,Bubble,Bubble Beam,Clamp,Comet Punch,Confuse Ray,Confusion,Constrict,Conversion,Counter,Crabhammer,Cut,Defense Curl,Dig,Disable,Dizzy Punch,Double Kick,Double Slap,Double Team,Double-Edge,Dragon Rage,Dream Eater,Drill Peck,Earthquake,Egg Bomb,Ember,Explosion,Fire Blast,Fire Punch,Fire Spin,Fissure,Flamethrower,Flash,Fly,Focus Energy,Fury Attack,Fury Swipes,Glare,Growl,Growth,Guillotine,Gust,Harden,Haze,Headbutt,High Jump Kick,Horn Attack,Horn Drill,Hydro Pump,Hyper Beam,Hyper Fang,Hypnosis,Ice Beam,Ice Punch,Jump Kick,Karate Chop,Kinesis,Leech Life,Leech Seed,Leer,Lick,Light Screen,Lovely Kiss,Low Kick,Meditate,Mega Drain,Mega Kick,Mega Punch,Metronome,Mimic,Minimize,Mirror Move,Mist,Night Shade,Pay Day,Peck,Petal Dance,Pin Missile,Poison Gas,Poison Powder,Poison Sting,Pound,Psybeam,Psychic,Psywave,Quick Attack,Rage,Razor Leaf,Razor Wind,Recover,Reflect,Rest,Roar,Rock Slide,Rock Throw,Rolling Kick,Sand Attack,Scratch,Screech,Seismic Toss,Self-Destruct,Sharpen,Sing,Skull Bash,Sky Attack,Slam,Slash,Sleep Powder,Sludge,Smog,Smokescreen,Soft-Boiled,Solar Beam,Sonic Boom,Spike Cannon,Splash,Spore,Stomp,Strength,String Shot,Struggle,Stun Spore,Submission,Substitute,Super Fang,Supersonic,Surf,Swift,Swords Dance,Tackle,Tail Whip,Take Down,Teleport,Thrash,Thunder,Thunder Punch,Thunder Shock,Thunder Wave,Thunderbolt,Toxic,Transform,Tri Attack,Twineedle,Vice Grip,Vine Whip,Water Gun,Waterfall,Whirlwind,Wing Attack,Withdraw,Wrap'
-Item_Names = ["","Pokeball","Great Ball","Ultra Ball","Master Ball","Potion","Super Potion","Hyper Potion","Max Potion","Status Heal","Full Restore","Antidote","Burn Heal","Parlyz Heal","Ice Heal","Awakening","Thunder Stone","Moon Stone","Fire Stone","Leaf Stone","Water Stone"] + Item_Names.split(',')
+Item_Names = ["","Poke Ball","Great Ball","Ultra Ball","Potion","Super Potion","Hyper Potion","Max Potion","Full Heal","Full Restore","Antidote","Burn Heal","Parlyz Heal","Ice Heal","Awakening","Revive","Thunder Stone","Moon Stone","Fire Stone","Leaf Stone","Water Stone","Master Ball","Quick Ball","Net Ball","Level Ball","Heal Ball","Nest Ball","Max Revive","Elixir","Rare Candy","Fresh Water","Soda Pop","Lemonade","Moomoo Milk","Magic Dice","HP Up","Protein","Iron","Calcium","Zinc","Carbos",] + Item_Names.split(',')
 
 def IsInt(s):
     try: 

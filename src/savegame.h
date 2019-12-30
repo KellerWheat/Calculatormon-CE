@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 extern char appVarName[];
-extern uint8_t loadType;
 
 #define AREACOUNT 16
 #define BUILDINGCOUNT 16
@@ -34,6 +33,7 @@ struct saveGame
 	uint8_t badgeCount;
 	uint8_t pokedex[151];
 	uint16_t worldState;
+	uint8_t inFight;
 };
 
 extern struct saveGame currentSave;

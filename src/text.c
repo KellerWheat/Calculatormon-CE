@@ -8,6 +8,7 @@
 
 #include "text.h"
 #include "misc.h"
+#include "battle.h"
 
 
 /* If holding down second, the time to pause before moving to next text */
@@ -133,7 +134,7 @@ int text_AskQuestion4(char text1[], char text2[], char text3[], char text4[]) {
 	kb_Scan();
 	while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
 	kb_Scan();
-	while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear))) {
+	while (!((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear) || ((kb_Data[2] & kb_Sto) && textExit))) {
 		kb_Scan();
 		if ((kb_Data[7] & kb_Down) || (kb_Data[7] & kb_Up)) {
 			tv1 = !tv1;
@@ -150,6 +151,11 @@ int text_AskQuestion4(char text1[], char text2[], char text3[], char text4[]) {
 			Wait(20);
 		}
 	}
+	if ((kb_Data[2] & kb_Sto) && textExit) {
+		textExit = false;
+		return 5;
+	}
+	textExit = false;
 	if (kb_Data[6] & kb_Clear) {
 		while ((kb_Data[1] & kb_2nd) || (kb_Data[6] & kb_Clear)) { kb_Scan(); }
 		return(0);

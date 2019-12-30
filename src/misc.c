@@ -8,13 +8,10 @@
 #include <compression.h>
 
 #include "misc.h"
-#include "gfx/PKMNSD4.h"
-#include "gfx/PKMNSD5.h"
+#include "gfx/map_gfx.h"
+#include "gfx/battle_gfx.h"
 
-/* For FindColors */
-#include "map.h"
-#include "menu.h"
-#include "battle.h"
+#include "gfx/PKMNSD6.h"
 
 int ColorDifference(uint16_t color1, uint16_t color2);
 void FindBestColors(void);
@@ -29,12 +26,30 @@ bool debugging = 0;
 
 #define COLORCOUNT 17
 
-
+/*.
+   0: white
+   1: black
+   2: poison
+   3: burn
+   4: paralysis
+   5: sleep
+   6: frozen
+   7: exp
+   8: high health
+   9: mid health
+   10: low health
+   11: xpbartext
+   12: transparent
+   13: textboxblue
+   14: textboxblack
+   15: textboxpurple
+   16: textboxgrey
+*/
 uint8_t colors[COLORCOUNT] = {0};
 
 
 uint8_t colorSets[2][COLORCOUNT] = {
-	{8,4,249,243,138,115,253,253,158,138,72,138,0,0,128,211,153,},
+	{8,9,112,246,124,146,253,253,193,171,95,124,0,0,159,234,189,},
 	{23,8,155,24,83,231,0,21,47,173,113,109,0,112,4,178,11,},
 };
 
@@ -72,6 +87,7 @@ void Wait(uint16_t amount) {
 
 /* Changes the colors list to one for the current palette and sets transparent text color */
 void SetColors(uint8_t gameState) {
+	
 	int colorIndex;
 	for (colorIndex = 0; colorIndex < sizeof(colors); colorIndex++) {
 		colors[colorIndex] = colorSets[gameState][colorIndex];
@@ -132,15 +148,15 @@ void MallocIcons(void) {
 	int iconIndex;
 	for (iconIndex = 0; iconIndex < 17; iconIndex++) {
 		typeIcons[iconIndex] = gfx_MallocSprite(32, 12);
-		zx7_Decompress(typeIcons[iconIndex], PKMNSD5[iconIndex]);
+		zx7_Decompress(typeIcons[iconIndex], PKMNSD6[iconIndex]);
 	}
 	for (iconIndex = 0; iconIndex < 5; iconIndex++) {
 		statusIcons[iconIndex] = gfx_MallocSprite(20, 8);
-		zx7_Decompress(statusIcons[iconIndex], PKMNSD5[17 + iconIndex]);
+		zx7_Decompress(statusIcons[iconIndex], PKMNSD6[17 + iconIndex]);
 	}
 	for (iconIndex = 0; iconIndex < 3; iconIndex++) {
 		categoryIcons[iconIndex] = gfx_MallocSprite(32, 14);
-		zx7_Decompress(categoryIcons[iconIndex], PKMNSD5[22 + iconIndex]);
+		zx7_Decompress(categoryIcons[iconIndex], PKMNSD6[22 + iconIndex]);
 	}
 }
 void FreeIcons(void) {
