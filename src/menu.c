@@ -685,7 +685,7 @@ void menu_ItemShop(gfx_sprite_t *shopSprite) {
 		gfx_ScaledTransparentSprite_NoClip(shopSprite, 26, 46, 2, 2);
 		gfx_TransparentSprite_NoClip(mapcursorsmall, 47, 61 + 14 * cursorState);
 
-		for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < 20; itemIndex++) {
+		for (itemIndex = menuState; itemIndex < menuState + 10 && itemIndex < 15; itemIndex++) {
 			gfx_PrintStringXY(itemNames[itemIndex], 60, 63 + 14 * (itemIndex - menuState));
 			sprintf(str, "%u", currentSave.playerItems[itemIndex]);
 			gfx_PrintStringXY(str, 172, 63 + 14 * (itemIndex - menuState));
@@ -709,10 +709,10 @@ void menu_ItemShop(gfx_sprite_t *shopSprite) {
 			}
 		}
 		if (kb_Data[7] & kb_Down) {
-			if (menuState + 10 < 20 && cursorState >= 3) {
+			if (menuState + 10 < 15 && cursorState >= 3) {
 				menuState++;
 			}
-			else if (menuState + cursorState < 19) {
+			else if (menuState + cursorState < 14) {
 				cursorState++;
 			}
 		}
