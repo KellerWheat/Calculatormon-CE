@@ -7,7 +7,7 @@ The game mostly uses gen 1 pokemon and mechanics. The pokemon sprites are from c
 
 **Controls: 2nd is A, clear is B, alpha is run, enter opens the menu. In the menu, enter will move a pokemon or a move to the top.**
 
-**Put every .8xv or .8xp file on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs a lot of RAM to run (I have not calculated the exact value), so make sure you archive as many other programs as possible.**
+**Put every file in the download folder on your calculator to play. It requires the Ti-84 plus CE C libraries to run (they are in the download folder). The game needs a lot of RAM to run (I have not calculated the exact value), so make sure you archive as many other programs as possible.**
 
 **For Debuggers, hold 0 while selecting the save and you will go into debug mode. + and - will change the area, holding x lets you move through walls, and holding ÷ will make any attack one-shot.**
 
